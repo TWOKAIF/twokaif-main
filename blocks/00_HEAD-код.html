@@ -75,14 +75,80 @@
         "@type": "OfferCatalog",
         "name": "Услуги ТУКАЙФ",
         "itemListElement": [
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Дизайн обложек для ивента", "description": "Серия обложек в едином стиле для соцсетей и презентаций"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Афиши и плакаты", "description": "Печатные и цифровые афиши для мероприятий"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Презентации", "description": "Победные презентации для тендеров и питчей"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Сайты ивент-агентств", "description": "Лендинги и сайты-портфолио на собственном движке"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Интерактивы", "description": "Цифровые интерактивы для ведущих и свадебных церемоний"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Анкеты молодожёнам", "description": "Персональные анкеты-приложения с PDF-выгрузкой"}}
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-covers"}, "priceCurrency": "RUB", "price": "5000", "priceSpecification": {"@type": "UnitPriceSpecification", "price": "5000", "priceCurrency": "RUB", "valueAddedTaxIncluded": true, "referenceQuantity": {"@type": "QuantitativeValue", "value": "1", "unitCode": "C62"}}},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-posters"}, "priceCurrency": "RUB", "price": "7000"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-presentations"}, "priceCurrency": "RUB", "price": "15000"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-websites"}, "priceCurrency": "RUB", "price": "30000"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-bots"}, "priceCurrency": "RUB", "price": "4900"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-anketas"}, "priceCurrency": "RUB", "price": "7000"}
         ]
       }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-covers",
+      "name": "Дизайн обложек для ивента",
+      "description": "Серия обложек в едином стиле для соцсетей и презентаций ведущих, ивент-агентств и артистов. Каждый комплект — под конкретное событие, без шаблонов.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Графический дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "5000", "priceSpecification": {"@type": "UnitPriceSpecification", "price": "5000", "priceCurrency": "RUB"}},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-posters",
+      "name": "Афиши и плакаты",
+      "description": "Печатные и цифровые афиши для мероприятий, концертов, свадеб и корпоративов. Дизайн под событие, без шаблонов.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Графический дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "7000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-presentations",
+      "name": "Победные презентации",
+      "description": "Презентации для тендеров, питчей и сложных продаж. Помогаем выигрывать. Структура, дизайн, тексты — всё под конкретную задачу.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Графический дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "15000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-websites",
+      "name": "Сайты для ивент-индустрии",
+      "description": "Лендинги и сайты-портфолио для ведущих, ивент-агентств и артистов. Свой движок, без шаблонов и Tilda. Резиновая вёрстка, анимации, индексация в Яндексе.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Веб-дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "30000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-bots",
+      "name": "Telegram-боты для ведущих",
+      "description": "Telegram-боты для ведущих: автоматическая генерация обложек концертов, напоминания клиентам, мини-приложения. Свой движок без шаблонов и подписок.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Разработка программного обеспечения",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "4900"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-anketas",
+      "name": "Анкеты молодожёнам",
+      "description": "Персональные анкеты для свадебных ведущих. Молодожёны заполняют — ведущий получает готовый PDF/DOCX-отчёт со всеми деталями. Кастомизация под бренд каждого ведущего.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Разработка программного обеспечения",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "7000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
     },
     {
       "@type": "WebSite",
