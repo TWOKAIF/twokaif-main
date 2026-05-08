@@ -1,0 +1,323 @@
+<!-- ============================================
+     БЛОК 8А2: ПОРТФОЛИО — АФИШИ
+     T123 блок — горизонтальная бесконечная карусель, тёмный фон
+
+     Здесь меняй:
+     — Карточки: массив POSTERS в скрипте (src — ссылка на афишу)
+     — Скорость: переменная --poster-speed (сейчас 35s)
+
+     ФОРМАТ АФИШ:
+     — Вертикальное 9:16, минимум 600×1060 px
+     — Формат: JPG, до 300 КБ
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Высота карточки: 420px
+     — Карусель движется бесконечно, пауза при наведении
+     — Клик — полноэкранный просмотр
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Высота карточки: 320px
+     ============================================ -->
+<style>
+.posters{padding:0 0 80px;background:#000;color:#fff;position:relative;width:100vw;margin-left:calc(50% - 50vw)}
+
+/* Шапка */
+.posters-header{padding:40px var(--edge) 40px;display:flex;justify-content:space-between;align-items:flex-end}
+.posters-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(8px,1.5vw,16px)}
+.posters-title{font-size:var(--text-headline);font-weight:700;letter-spacing:-1px;line-height:.9;color:#fff;width:100%}
+.posters-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.posters-tag{font-size:13px;font-weight:400;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);padding:5px 12px;white-space:nowrap}
+.posters-sub{display:none;font-size:14px;font-weight:400;letter-spacing:-.2px;color:rgba(255,255,255,.45)}
+.posters-sub::before{content:'— '}
+
+/* Карусель — управление через JS, без CSS-анимации */
+.posters-track-wrap{overflow:hidden;position:relative;cursor:grab;perspective:1200px}
+.posters-track-wrap:active{cursor:grabbing}
+.posters-track{display:flex;gap:16px;will-change:transform;width:max-content}
+
+/* Карточка */
+.poster-card{flex-shrink:0;height:420px;aspect-ratio:9/16;overflow:hidden;cursor:pointer;position:relative;will-change:transform,opacity;transition:box-shadow .4s var(--ease-out)}
+.poster-card:hover{box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.poster-card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.15);transition:filter .5s var(--ease-out),transform .5s var(--ease-out)}
+.poster-card:hover img{filter:grayscale(0);transform:scale(1.04)}
+
+/* Просмотрщик — переиспользуем стили twk-viewer из блока обложек */
+
+/* === Адаптив === */
+@media(max-width:960px){
+  .posters{padding:0 0 64px}
+  .posters-header{padding:32px var(--edge) 32px}
+  .poster-card{height:360px}
+}
+@media(max-width:640px){
+  .posters{padding:0 0 48px}
+  .posters-header{padding:24px var(--edge) 24px;flex-direction:column;align-items:stretch;gap:8px}
+  .posters-tags{display:none}
+  .posters-sub{display:block}
+  .poster-card{height:320px}
+  .posters-track{gap:10px}
+}
+</style>
+
+<section class="posters" id="posters-portfolio">
+  <div class="posters-header">
+    <div class="posters-top">
+      <h2 class="posters-title">Афиши</h2>
+      <div class="posters-tags">
+        <span class="posters-tag">Портфолио</span>
+      </div>
+      <div class="posters-sub">Афиши</div>
+    </div>
+  </div>
+
+  <div class="posters-track-wrap">
+    <div class="posters-track" id="postersTrack"></div>
+  </div>
+
+  <!-- Просмотрщик (twk-viewer — как в обложках) -->
+  <div class="twk-viewer" id="posterViewer">
+    <div class="twk-viewer__bg"></div>
+    <div class="twk-viewer__content">
+      <button class="twk-viewer__close" id="posterViewerClose" type="button" aria-label="Закрыть"></button>
+      <img class="twk-viewer__img" src="" alt="Просмотр афиши">
+    </div>
+  </div>
+
+  <!-- Кнопка «Все работы» — ссылка на Яндекс.Диск -->
+  <div style="padding:40px var(--edge) 0;text-align:left">
+    <a href="https://disk.yandex.ru/d/6Xd_N3GJVkA0Hw" target="_blank" rel="noopener" class="portfolio-more-btn">Больше афиш на&nbsp;диске
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+  </div>
+</section>
+
+<script>
+(function() {
+  var track = document.getElementById('postersTrack');
+  var wrap = track ? track.parentElement : null;
+  var viewer = document.getElementById('posterViewer');
+  var viewerClose = document.getElementById('posterViewerClose');
+  var viewerImg = viewer ? viewer.querySelector('.twk-viewer__img') : null;
+  if (!track || !wrap) return;
+
+  var POSTERS = [
+    'https://static.tildacdn.com/tild3337-3733-4531-b935-616630323865/03.jpg',
+    'https://static.tildacdn.com/tild6634-3237-4238-a464-306332633236/17_.jpg',
+    'https://static.tildacdn.com/tild3764-3562-4334-b366-353831373263/01.jpg',
+    'https://static.tildacdn.com/tild3561-3033-4163-b439-633935343561/_.jpg',
+    'https://static.tildacdn.com/tild3734-6262-4431-b533-376139396363/05.jpg',
+    'https://static.tildacdn.com/tild6162-3931-4136-b536-653065616535/photo.jpg',
+    'https://static.tildacdn.com/tild3363-3865-4136-b638-366234633831/04.jpg',
+    'https://static.tildacdn.com/tild6164-3137-4135-b763-323339383639/_.jpg',
+    'https://static.tildacdn.com/tild3431-3437-4539-a535-366332663833/02.jpg',
+    'https://static.tildacdn.com/tild3661-3331-4633-a438-323666346336/16_.jpg',
+    'https://static.tildacdn.com/tild3132-3037-4462-a662-316435643538/photo.jpg',
+    'https://static.tildacdn.com/tild3737-6132-4362-a239-623337343530/10.jpg'
+  ];
+
+  /* Дублируем для бесконечного скролла (5 копий) */
+  var html = '';
+  for (var r = 0; r < 5; r++) {
+    POSTERS.forEach(function(src, i) {
+      html += '<div class="poster-card" data-src="' + src + '"><img src="' + src + '" alt="Афиша ' + (i + 1) + '" loading="lazy"></div>';
+    });
+  }
+  track.innerHTML = html;
+
+  /* === Физика карусели с инерцией (Apple-стиль) === */
+  var pos = 0;
+  var velocity = 0;
+  var autoSpeed = -0.5; /* авто-скролл влево */
+  var isDragging = false;
+  var isUserInteracting = false;
+  var dragStartX = 0;
+  var dragStartPos = 0;
+  var hasDragged = false;
+  var lastMoveX = 0;
+  var lastMoveTime = 0;
+  var friction = 0.95; /* инерция — чем ближе к 1, тем дольше скользит */
+  var returnToAutoTimer = null;
+
+  /* Размер одного набора (10 афиш) для зацикливания */
+  var gap = 16;
+  function getSetWidth() {
+    var card = track.querySelector('.poster-card');
+    if (!card) return 1;
+    return (card.offsetWidth + gap) * POSTERS.length;
+  }
+
+  function applyTransform() {
+    track.style.transform = 'translate3d(' + pos + 'px,0,0)';
+  }
+
+  /* Бесконечный цикл — перематываем когда уходим за набор */
+  function loopPos() {
+    var setW = getSetWidth();
+    if (setW <= 0) return;
+    while (pos < -setW * 2) pos += setW;
+    while (pos > 0) pos -= setW;
+  }
+
+  /* Главный цикл анимации */
+  function tick() {
+    if (!isDragging) {
+      if (isUserInteracting) {
+        /* Инерция после отпускания */
+        pos += velocity;
+        velocity *= friction;
+        if (Math.abs(velocity) < 0.3) {
+          velocity = 0;
+          isUserInteracting = false;
+          /* Плавно возвращаемся к авто-скроллу */
+          clearTimeout(returnToAutoTimer);
+          returnToAutoTimer = setTimeout(function() { isUserInteracting = false; }, 100);
+        }
+      } else {
+        /* Авто-скролл */
+        pos += autoSpeed;
+      }
+    }
+    loopPos();
+    applyTransform();
+    updateCardEffects();
+    requestAnimationFrame(tick);
+  }
+
+  /* Эффект перспективы — карточки ближе к краям наклоняются и затемняются */
+  /* На мобиле отключаем тяжёлые эффекты — только translate */
+  var isMobilePosters = window.innerWidth <= 640;
+  function updateCardEffects() {
+    if (isMobilePosters) return;
+    var wrapRect = wrap.getBoundingClientRect();
+    var center = wrapRect.left + wrapRect.width / 2;
+    var halfW = wrapRect.width / 2;
+    var cards = track.querySelectorAll('.poster-card');
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var cardRect = card.getBoundingClientRect();
+      var cardCenter = cardRect.left + cardRect.width / 2;
+      /* -1 (лево) ... 0 (центр) ... 1 (право) */
+      var ratio = (cardCenter - center) / halfW;
+      ratio = Math.max(-1, Math.min(1, ratio));
+      /* Наклон: до 4deg у краёв */
+      var rotateY = ratio * -4;
+      /* Затемнение: центр 1, края 0.6 */
+      var opacity = 1 - Math.abs(ratio) * 0.4;
+      /* Масштаб: центр 1, края 0.95 */
+      var scale = 1 - Math.abs(ratio) * 0.05;
+      card.style.transform = 'perspective(1200px) rotateY(' + rotateY + 'deg) scale(' + scale + ')';
+      card.style.opacity = opacity;
+    }
+  }
+  requestAnimationFrame(tick);
+
+  /* === Тачпад (wheel) — горизонтальный скролл === */
+  wrap.addEventListener('wheel', function(e) {
+    var dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : 0;
+    if (Math.abs(dx) < 1) return;
+    e.preventDefault();
+    isUserInteracting = true;
+    velocity = -dx * 1.2;
+    clearTimeout(returnToAutoTimer);
+    returnToAutoTimer = setTimeout(function() { isUserInteracting = false; }, 2000);
+  }, { passive: false });
+
+  /* === Мышь — drag с инерцией === */
+  wrap.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    hasDragged = false;
+    dragStartX = e.clientX;
+    dragStartPos = pos;
+    lastMoveX = e.clientX;
+    lastMoveTime = Date.now();
+    velocity = 0;
+    isUserInteracting = true;
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    var dx = e.clientX - dragStartX;
+    if (Math.abs(dx) > 5) hasDragged = true;
+    pos = dragStartPos + dx;
+
+    /* Считаем скорость для инерции */
+    var now = Date.now();
+    var dt = now - lastMoveTime;
+    if (dt > 0) {
+      velocity = (e.clientX - lastMoveX) / dt * 16; /* нормализуем к 60fps */
+      lastMoveX = e.clientX;
+      lastMoveTime = now;
+    }
+  });
+
+  window.addEventListener('mouseup', function() {
+    if (!isDragging) return;
+    isDragging = false;
+    /* Инерция продолжается в tick() */
+    clearTimeout(returnToAutoTimer);
+    returnToAutoTimer = setTimeout(function() { isUserInteracting = false; }, 3000);
+  });
+
+  /* === Тач (мобиле) — свайп с инерцией === */
+  var touchStartX = 0;
+  var touchStartPos = 0;
+  var touchLastX = 0;
+  var touchLastTime = 0;
+  var touchHasDragged = false;
+
+  wrap.addEventListener('touchstart', function(e) {
+    isDragging = true;
+    touchHasDragged = false;
+    touchStartX = e.touches[0].clientX;
+    touchStartPos = pos;
+    touchLastX = touchStartX;
+    touchLastTime = Date.now();
+    velocity = 0;
+    isUserInteracting = true;
+  }, { passive: true });
+
+  wrap.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    var dx = e.touches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 5) touchHasDragged = true;
+    pos = touchStartPos + dx;
+
+    var now = Date.now();
+    var dt = now - touchLastTime;
+    if (dt > 0) {
+      velocity = (e.touches[0].clientX - touchLastX) / dt * 16;
+      touchLastX = e.touches[0].clientX;
+      touchLastTime = now;
+    }
+  }, { passive: true });
+
+  wrap.addEventListener('touchend', function() {
+    isDragging = false;
+    clearTimeout(returnToAutoTimer);
+    returnToAutoTimer = setTimeout(function() { isUserInteracting = false; }, 3000);
+  }, { passive: true });
+
+  /* === Просмотрщик — открывается только если не было drag === */
+  track.addEventListener('click', function(e) {
+    if (hasDragged || touchHasDragged) return;
+    var card = e.target.closest('.poster-card');
+    if (!card || !viewer) return;
+    viewerImg.src = card.getAttribute('data-src');
+    viewer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeViewer() {
+    viewer.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  if (viewerClose) viewerClose.addEventListener('click', closeViewer);
+  if (viewer) viewer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('twk-viewer__bg') || e.target.classList.contains('twk-viewer__close')) closeViewer();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && viewer.classList.contains('is-open')) closeViewer();
+  });
+})();
+</script>

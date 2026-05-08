@@ -1,0 +1,172 @@
+<!-- ============================================
+     БЛОК 2: ПРЕЛОАДЕР
+     T123 блок — минималистичная заставка при загрузке
+
+     Здесь меняй:
+     — Текст логотипа: class="loader-text" (сейчас ТУКАЙФ)
+     — Время показа: в функции runLoader(), setTimeout (сейчас 1200мс)
+     — Размер снежинки: .loader-snowflake width/height (сейчас 28×28px)
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Фон: чёрный (#000), текст и снежинка белые
+     — Снежинка: 28×28px, вращение 3с
+     — Текст: 32px, вес 700, letter-spacing -0.32px (как в навигации)
+     — Время показа лоадера: 1200мс → сворачивание 600мс → исчезновение 500мс
+
+     НАСТРОЙКИ МОБИЛЕ:
+     — Всё то же самое, размеры не меняются (лоадер по центру экрана)
+     ============================================ -->
+
+<style>
+/* --- Прелоадер: полноэкранный оверлей --- */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Контейнер логотипа: снежинка + текст --- */
+.loader-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  will-change: transform, opacity;
+}
+
+/* --- Снежинка: светлая, вращающаяся --- */
+.loader-snowflake {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  flex-shrink: 0;
+  animation: loaderSpin 3s linear infinite;
+}
+
+@keyframes loaderSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* --- Текст логотипа: появляется с задержкой --- */
+.loader-text {
+  font-family: 'Inter Tight', -apple-system, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.32px;
+  line-height: 1;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: loaderTextIn 0.6s var(--ease-out) 0.2s forwards;
+}
+
+@keyframes loaderTextIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Фаза сворачивания: логотип уменьшается --- */
+.loader.collapse .loader-logo {
+  transition: transform 0.7s var(--ease-out), opacity 0.5s var(--ease-out);
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+/* --- Фаза ухода: фон растворяется --- */
+.loader.fade-out {
+  transition: opacity 0.5s var(--ease-out);
+  opacity: 0;
+  pointer-events: none;
+}
+</style>
+
+<div class="loader" id="loader">
+  <div class="loader-logo">
+    <!-- Снежинка — логотип ТУКАЙФ -->
+    <svg class="loader-snowflake" viewBox="-3 18 81 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
+    </svg>
+    <!-- Здесь меняй текст логотипа -->
+    <span class="loader-text">ТУКАЙФ</span>
+  </div>
+</div>
+
+<script>
+// Скрыть навигацию при загрузке
+(function() {
+  var nav = document.getElementById('nav');
+  if (nav) { nav.style.opacity = '0'; nav.style.pointerEvents = 'none'; }
+})();
+
+// --- Функция запуска лоадера (используется при загрузке и при клике на логотип) ---
+function runLoader() {
+  var loader = document.getElementById('loader');
+  if (!loader) return;
+
+  // Фаза 1: показ логотипа (1.2с — быстро, не раздражает)
+  setTimeout(function() {
+    loader.classList.add('collapse');
+
+    // Фаза 2: растворение фона (0.5с)
+    setTimeout(function() {
+      loader.classList.add('fade-out');
+
+      // Запуск section-reveal анимаций после ухода лоадера
+      document.querySelectorAll('.section-reveal').forEach(function(el) {
+        el.classList.add('revealed');
+      });
+
+      // Показать навигацию
+      var nav = document.getElementById('nav');
+      if (nav) {
+        nav.style.transition = 'opacity 0.6s var(--ease-out)';
+        nav.style.opacity = '1';
+        nav.style.pointerEvents = '';
+      }
+
+      // Убрать лоадер из DOM
+      setTimeout(function() { loader.style.display = 'none'; }, 500);
+    }, 600);
+  }, 1200);
+}
+
+// --- Перезапуск лоадера (вызывается при клике на логотип) ---
+window.restartLoader = function() {
+  var loader = document.getElementById('loader');
+  if (!loader) return;
+
+  // Сбросить состояние
+  loader.style.display = '';
+  loader.style.opacity = '';
+  loader.style.pointerEvents = '';
+  loader.classList.remove('collapse', 'fade-out');
+
+  // Перезапустить анимацию текста
+  var text = loader.querySelector('.loader-text');
+  if (text) {
+    text.style.animation = 'none';
+    text.offsetHeight; /* форсируем reflow */
+    text.style.animation = '';
+  }
+
+  // Скрыть навигацию на время лоадера
+  var nav = document.getElementById('nav');
+  if (nav) { nav.style.opacity = '0'; nav.style.pointerEvents = 'none'; }
+
+  // Запустить анимацию лоадера
+  runLoader();
+};
+
+/* Запускаем сразу при готовности DOM, не ждём загрузки всех ресурсов */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() { runLoader(); });
+} else {
+  runLoader();
+}
+</script>

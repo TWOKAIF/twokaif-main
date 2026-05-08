@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- ============================================
+     БЛОК 0: HEAD-КОД
+     Всё, что идёт в <head> — title, description, мета,
+     микроразметка, шрифты, аналитика.
+
+     ДАННЫЕ САЙТА:
+     — Название: ТУКАЙФ — ивент-дизайнер для профессионалов
+     — Описание: Цифровой дизайн для ивент-индустрии: обложки,
+       афиши, презентации, сайты, интерактивы
+     — Домен: https://twokaif.ru
+     — Яндекс.Метрика: 108388166
+     ============================================ -->
+
+<!-- TITLE + DESCRIPTION -->
+<title>ТУКАЙФ — ивент-дизайнер для профессионалов</title>
+<meta name="description" content="Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="ТУКАЙФ — ивент-дизайнер для профессионалов">
+<meta property="og:description" content="Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы">
+<meta property="og:url" content="https://twokaif.ru">
+<meta property="og:image" content="https://static.tildacdn.com/tild3137-3034-4336-a233-633532323632/_.jpg">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ТУКАЙФ — ивент-дизайнер для профессионалов">
+<meta name="twitter:description" content="Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы">
+<meta name="twitter:image" content="https://static.tildacdn.com/tild3137-3034-4336-a233-633532323632/_.jpg">
+
+<!-- Микроразметка Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "ТУКАЙФ",
+  "url": "https://twokaif.ru",
+  "description": "Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы",
+  "image": "https://static.tildacdn.com/tild3137-3034-4336-a233-633532323632/_.jpg",
+  "founder": { "@type": "Person", "name": "Руслан Тукаев" },
+  "serviceType": ["Графический дизайн", "Веб-дизайн", "Дизайн мероприятий"],
+  "areaServed": "RU",
+  "sameAs": [
+    "https://t.me/twokaif",
+    "https://vk.com/twokaif",
+    "https://www.instagram.com/twokaif.design"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "url": "https://t.me/twokaif_ruslan"
+  }
+}
+</script>
+
+<!-- Подтверждение для Google Search Console -->
+<meta name="google-site-verification" content="H8iItXU7tnn8s2mpSYgTzqBXxVJ97Vxjr0iV6PlP-f0" />
+
+<!-- Ускорение загрузки -->
+<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Theme color -->
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
+
+<!-- GSAP (анимации) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Фавикон SVG — снежинка ТУКАЙФ -->
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>path{fill:%230a0a0a}@media(prefers-color-scheme:dark){path{fill:%23EAEAF2}}</style><g transform="translate(5,-1.35) scale(0.2951)"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></g></svg>'>
+
+<!-- Сброс -->
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:#0a0a0a;}
+@media(hover:hover) and (pointer:fine){*{cursor:none !important;}}
+</style>
+
+<!-- Яндекс.Метрика 108388166 -->
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ym(108388166, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108388166" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+
+<!-- ═══ 01_Глобальные-стили ═══ -->
+<meta charset="UTF-8">
+<!-- ============================================
+     БЛОК 1: ГЛОБАЛЬНЫЕ СТИЛИ + ШРИФТ + GSAP + SCROLLTRIGGER
+     T123 блок — ставится ПЕРВЫМ на каждой странице
+
+     Здесь меняй:
+     — Цвета: :root
+     — Типографику: брейкпоинты 1200/960/640/480
+     — Отступы: --edge (48/32/20/16px)
+     — Шрифт: --font-body
+     ============================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger (анимации при скролле) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Lenis отключён для отладки — нативный скролл -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script> -->
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* --- Фиксы Тильды: убираем отступы и фоны контейнеров --- */
+#allrecords { background-color: #ffffff !important; }
+.t-rec { padding: 0 !important; margin: 0 !important; background-color: transparent !important; }
+.t-rec .t123 { padding: 0 !important; }
+.t123__col { padding: 0 !important; }
+.t-body { background-color: #ffffff !important; }
+body { background-color: #ffffff !important; }
+#allrecords .t-rec { overflow: visible !important; }
+
+/* Тильда перебивает цвета ссылок — сбрасываем точечно */
+.portfolio-more-btn { color: #fff !important; text-decoration: none !important; }
+.portfolio-more-btn:hover { color: #1d1d1f !important; }
+.nav-cta { color: #fff !important; }
+.nav-cta:hover { color: #1d1d1f !important; }
+.menu-cta { color: #fff !important; }
+.menu-cta:hover { color: #1d1d1f !important; }
+.pricing-card-btn { color: #fff !important; }
+.pricing-card-btn:hover { color: #1d1d1f !important; }
+.pricing-card.active .pricing-card-btn { color: #1d1d1f !important; }
+.pricing-card.active .pricing-card-btn:hover { color: #fff !important; }
+
+/* --- Палитра и токены --- */
+:root {
+  --font-body: 'Inter Tight', sans-serif;
+
+  /* Цвета — светлая тема */
+  --bg: #ffffff;
+  --surface: #f5f5f7;
+  --surface2: #e8e8ed;
+  --border: rgba(29, 29, 31, 0.08);
+  --border-row: rgba(29, 29, 31, 0.16);
+  --text: #1d1d1f;
+  --muted: #86868b;
+
+  /* Отступы — Desktop (>1200px) */
+  --edge: 48px;
+  --gap: 24px;
+
+  /* Анимации */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Типографика — Desktop (крупнее) */
+  --text-hero: 140px;
+  --text-display: 80px;
+  --text-headline: 56px;
+  --text-title: 32px;
+  --text-body-lg: 24px;
+  --text-body: 19px;
+  --text-caption: 16px;
+  --text-micro: 14px;
+}
+
+/* --- Tablet (≤1200px) --- */
+@media (max-width: 1200px) {
+  :root {
+    --edge: 32px;
+    --text-hero: 100px;
+    --text-display: 64px;
+    --text-headline: 48px;
+    --text-title: 28px;
+    --text-body-lg: 22px;
+  }
+}
+
+/* --- Small tablet (≤960px) --- */
+@media (max-width: 960px) {
+  :root {
+    --edge: 24px;
+    --text-hero: 72px;
+    --text-display: 48px;
+    --text-headline: 36px;
+    --text-title: 24px;
+    --text-body-lg: 20px;
+  }
+}
+
+/* --- Mobile (≤640px) --- */
+@media (max-width: 640px) {
+  :root {
+    --edge: 20px;
+    --text-hero: 52px;
+    --text-display: 40px;
+    --text-headline: 30px;
+    --text-title: 22px;
+    --text-body-lg: 18px;
+    --text-body: 17px;
+    --text-caption: 15px;
+  }
+}
+
+/* --- Small mobile (≤480px) --- */
+@media (max-width: 480px) {
+  :root {
+    --edge: 16px;
+    --text-hero: 44px;
+    --text-display: 32px;
+    --text-headline: 26px;
+    --text-title: 20px;
+    --text-body-lg: 17px;
+    --text-body: 16px;
+  }
+}
+
+html {
+  overflow-x: clip;
+  background: var(--bg);
+  background-color: #ffffff;
+  scroll-behavior: smooth;
+}
+/* Lenis отключён */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: rgba(29, 29, 31, 0.15); }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- Появление секций при скролле --- */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Кастомный курсор—снежинка (только десктоп) ---
+   Здесь меняй:
+   — Размер снежинки: width/height (сейчас 10px)
+   — Размер при наведении на кнопки: .cursor-dot.hover width/height (сейчас 30px)
+   — Скорость вращения: animation spin (сейчас 4 секунды)
+   — Цвет: color (сейчас #fff, инвертируется через mix-blend-mode)
+   — Плавность следования за мышью: в скрипте коэффициент 0.25 (больше = быстрее, макс 1)
+*/
+.cursor-dot {
+  width: 10px; height: 10px; /* размер снежинки */
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), opacity 0.3s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference; /* на белом — чёрная, на чёрном — белая */
+  opacity: 0;
+  color: #fff; /* базовый цвет (инвертируется автоматически) */
+}
+.cursor-dot svg {
+  width: 100%; height: 100%;
+  display: block;
+  animation: spin 4s linear infinite; /* скорость вращения */
+}
+.cursor-dot.visible { opacity: 1; }
+.cursor-dot.hover {
+  width: 30px; height: 30px; /* размер при наведении на кнопки/ссылки */
+}
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot { display: none !important; } /* скрываем на тачскринах */
+}
+
+/* --- Магнитные кнопки --- */
+.magnetic { transition: transform 0.3s var(--ease-out); }
+
+/* --- Анимация появления текста по словам --- */
+.text-reveal .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.text-reveal.visible .word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Кнопка с заливкой слева (универсальная) --- */
+.btn-fill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: var(--text) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--text) !important;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  text-decoration: none !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-out);
+}
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-out);
+  z-index: 0;
+}
+.btn-fill span, .btn-fill svg { position: relative; z-index: 1; color: inherit !important; }
+.btn-fill:hover::before { transform: scaleX(1); }
+.btn-fill:hover { color: #1d1d1f !important; }
+.btn-fill:active { transform: scale(0.97); }
+.btn-fill svg {
+  width: 18px; height: 18px;
+  transition: transform 0.4s var(--ease-out);
+}
+.btn-fill:hover svg { transform: translateX(4px); }
+
+/* --- Кнопка-контур (ghost) --- */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-row);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
+}
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.5s var(--ease-out);
+  z-index: 0;
+}
+.btn-ghost span { position: relative; z-index: 1; }
+.btn-ghost:hover::before { transform: scaleY(1); }
+.btn-ghost:hover { color: var(--bg); border-color: var(--text); }
+.btn-ghost:active { transform: scale(0.97); }
+
+/* --- Бейдж Тильды --- */
+.t-tildalаbеl { background: #0a0a0a !important; }
+</style>
+
+<script>
+// --- Убиваем inline-стили Тильды ---
+function applyThemeColors() {
+  document.documentElement.style.backgroundColor = '#ffffff';
+  document.body.style.backgroundColor = '#ffffff';
+  document.body.style.color = '#1d1d1f';
+  var allrec = document.getElementById('allrecords');
+  if (allrec) allrec.style.backgroundColor = '#ffffff';
+  document.querySelectorAll('.t-rec').forEach(function(el) {
+    el.style.backgroundColor = 'transparent';
+  });
+}
+document.addEventListener('DOMContentLoaded', applyThemeColors);
+
+
+// --- Lenis отключён — нативный скролл ---
+var lenis = null;
+
+// --- Анимированный фавикон (плавное вращение, адаптация под тему) ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  var canvas = document.createElement('canvas');
+  canvas.width = 32; canvas.height = 32;
+  var ctx = canvas.getContext('2d');
+  var link = document.querySelector('link[rel="icon"]') || document.createElement('link');
+  link.rel = 'icon'; link.type = 'image/png';
+  if (!link.parentNode) document.head.appendChild(link);
+  var path = new Path2D('M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z');
+  var darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+  var scale = 0.22;
+  var speed = Math.PI * 2 / 30000;
+  var start = Date.now();
+  function draw() {
+    var angle = (Date.now() - start) * speed;
+    ctx.clearRect(0, 0, 32, 32);
+    ctx.save();
+    ctx.translate(16, 16);
+    ctx.rotate(angle);
+    ctx.scale(scale, scale);
+    ctx.translate(-37.27, -58.78);
+    ctx.fillStyle = darkMq.matches ? '#ffffff' : '#1d1d1f';
+    ctx.fill(path);
+    ctx.restore();
+    link.href = canvas.toDataURL('image/png');
+  }
+  draw();
+  setInterval(draw, 200);
+})();
+
+// --- IntersectionObserver для section-reveal ---
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+
+function observeSections() {
+  document.querySelectorAll('.section-reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+}
+window.addEventListener('load', observeSections);
+setTimeout(observeSections, 2000);
+
+// --- Анимация текста по словам (.text-reveal) ---
+(function() {
+  function wrapWords() {
+    document.querySelectorAll('.text-reveal').forEach(function(el) {
+      if (el.dataset.wrapped) return;
+      var text = el.textContent.trim();
+      var words = text.split(/\s+/);
+      el.innerHTML = words.map(function(word, i) {
+        return '<span class="word" style="transition-delay:' + (i * 0.04) + 's">' + word + '</span>';
+      }).join(' ');
+      el.dataset.wrapped = 'true';
+    });
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  function init() {
+    wrapWords();
+    document.querySelectorAll('.text-reveal').forEach(function(el) { obs.observe(el); });
+  }
+  window.addEventListener('load', init);
+  setTimeout(init, 2000);
+})();
+
+// --- Магнитные кнопки ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  document.addEventListener('mousemove', function(e) {
+    document.querySelectorAll('.magnetic').forEach(function(btn) {
+      var rect = btn.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = e.clientX - cx, dy = e.clientY - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var threshold = Math.max(rect.width, rect.height) * 0.8;
+      if (dist < threshold) {
+        var mx = Math.max(-4, Math.min(4, dx * 0.06));
+        var my = Math.max(-4, Math.min(4, dy * 0.06));
+        btn.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+      } else {
+        btn.style.transform = 'translate(0,0)';
+      }
+    });
+  });
+})();
+
+// --- Кастомный курсор—снежинка ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  var dot = document.createElement('div');
+  dot.classList.add('cursor-dot');
+  dot.innerHTML = '<svg viewBox="-3 18 81 81" fill="currentColor"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></svg>';
+  document.body.appendChild(dot);
+  var mx = 0, my = 0, dx = 0, dy = 0;
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    if (!dot.classList.contains('visible')) dot.classList.add('visible');
+  });
+  document.addEventListener('mouseleave', function() { dot.classList.remove('visible'); });
+  function anim() {
+    dx += (mx - dx) * 0.25;
+    dy += (my - dy) * 0.25;
+    dot.style.left = dx + 'px';
+    dot.style.top = dy + 'px';
+    requestAnimationFrame(anim);
+  }
+  anim();
+  document.addEventListener('mouseover', function(e) {
+    if (e.target.closest('a, button, [role="button"], .btn-fill, .btn-ghost, .magnetic')) dot.classList.add('hover');
+  });
+  document.addEventListener('mouseout', function(e) {
+    if (e.target.closest('a, button, [role="button"], .btn-fill, .btn-ghost, .magnetic')) dot.classList.remove('hover');
+  });
+})();
+</script>
+
+<!-- ═══ 03_Навигация ═══ -->
+<!-- ============================================
+     БЛОК 3: НАВИГАЦИЯ
+     T123 блок — фиксированная шапка + бургер-меню
+
+     Здесь меняй:
+     — Логотип: текст «ТУКАЙФ» в class="logo-text"
+     — Подпись логотипа: class="logo-sub"
+     — Десктопные ссылки: class="nav-links" (href + текст)
+     — Мобильные ссылки: class="menu-links" (href + текст)
+     — Кнопка «Написать»: class="nav-cta" (href — ссылка на Телеграм)
+     — Соцсети: class="menu-social-links" (href — ссылки)
+     — Часы: автоматические, часовой пояс МСК
+     ============================================ -->
+<style>
+/* --- Навбар --- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:48px;padding-top:env(safe-area-inset-top,0px);background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(29,29,31,.08)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 var(--edge);max-width:100%;position:relative}
+
+/* --- Логотип --- */
+.logo-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0;text-decoration:none;cursor:pointer}
+.logo-mark{width:13px;height:13px;flex-shrink:0;overflow:hidden;display:block;color:#1d1d1f}
+.snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite;will-change:transform}
+.logo-text{font-size:16px;font-weight:700;letter-spacing:-.32px;line-height:1;color:#1d1d1f}
+.logo-sep{width:1px;height:26px;background:rgba(29,29,31,.08);flex-shrink:0;margin:0 12px}
+.logo-sub{font-size:11px;font-weight:400;letter-spacing:-.16px;line-height:.9;color:#86868b}
+
+/* --- Центральные ссылки (десктоп) --- */
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;padding:0!important;margin:0!important;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-links a{font-size:12px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f;text-decoration:none;position:relative;display:block;height:16px;overflow:hidden;perspective:200px}
+.nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#86868b}
+.nav-links a:hover .nav-link-flip{transform:translateY(-100%)}
+
+/* --- Правая часть --- */
+.nav-right{display:flex;align-items:center;gap:20px;flex-shrink:0}
+.nav-time{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#86868b;opacity:.8}
+
+/* Кнопка CTA — маленькая с заливкой */
+.nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
+.nav-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
+.nav-cta span{position:relative;z-index:1}
+.nav-cta:hover::before{transform:scaleX(1)}
+.nav-cta:hover{color:#1d1d1f!important}
+
+/* --- Бургер --- */
+.burger-btn{display:none;width:36px;height:36px;background:transparent;border:1px solid rgba(29,29,31,.12);cursor:pointer;position:relative;padding:0;flex-shrink:0;transition:background .3s var(--ease-out),border-color .3s var(--ease-out)}
+.burger-btn:hover{background:#1d1d1f;border-color:#1d1d1f}
+.burger-btn:hover .burger-line{background:#fff}
+.burger-line{display:block;width:14px;height:1px;background:#1d1d1f;position:absolute;left:50%;transform:translateX(-50%);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),background .3s var(--ease-out)}
+.burger-line:nth-child(1){top:14px}
+.burger-line:nth-child(2){top:20px}
+.burger-btn.active{background:#1d1d1f;border-color:#1d1d1f}
+.burger-btn.active .burger-line{background:#fff}
+.burger-btn.active .burger-line:nth-child(1){top:17px;transform:translateX(-50%) rotate(45deg)}
+.burger-btn.active .burger-line:nth-child(2){top:17px;transform:translateX(-50%) rotate(-45deg)}
+
+/* --- Оверлей меню --- */
+.menu-overlay{position:fixed;inset:0;z-index:190;pointer-events:none;visibility:hidden;transition:visibility 0s .5s}
+.menu-overlay.active{pointer-events:all;visibility:visible;transition:visibility 0s}
+.menu-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .4s var(--ease-out)}
+.menu-overlay.active .menu-backdrop{background:rgba(0,0,0,.4)}
+.menu-panel{position:absolute;z-index:2;top:48px;left:0;right:0;background:#ffffff;transform:translateY(-100%);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-overlay.active .menu-panel{transform:translateY(0);opacity:1}
+.menu-panel-inner{padding:8px var(--edge) 40px}
+.menu-links{list-style:none;padding:0!important;margin:0!important}
+.menu-links li{border-bottom:1px solid rgba(29,29,31,.08)}
+.menu-links li:last-child{border-bottom:none}
+.menu-links a{display:block;font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1;color:#1d1d1f!important;text-decoration:none;padding:18px 0;transform:translateY(20px);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-links a .menu-flip{display:block;position:relative;height:1em;overflow:hidden}
+.menu-links a .menu-flip-inner{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.menu-links a .menu-flip-inner::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#86868b}
+.menu-links a:hover .menu-flip-inner{transform:translateY(-100%)}
+.menu-overlay.active .menu-links a{transform:translateY(0);opacity:1}
+.menu-overlay.active .menu-links li:nth-child(1) a{transition-delay:.05s}
+.menu-overlay.active .menu-links li:nth-child(2) a{transition-delay:.10s}
+.menu-overlay.active .menu-links li:nth-child(3) a{transition-delay:.15s}
+.menu-overlay.active .menu-links li:nth-child(4) a{transition-delay:.20s}
+.menu-overlay.active .menu-links li:nth-child(5) a{transition-delay:.25s}
+.menu-overlay.active .menu-links li:nth-child(6) a{transition-delay:.30s}
+
+/* Соцсети */
+.menu-social-label{font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#86868b;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.35s}
+.menu-social-links{display:flex;gap:20px;list-style:none;padding:0!important;margin:0!important}
+.menu-social-links a{font-size:14px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:18px;overflow:hidden}
+.menu-social-links a .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#86868b}
+.menu-social-links a:hover .nav-link-flip{transform:translateY(-100%)}
+.menu-overlay.active .menu-social-links a{opacity:1;transform:translateY(0)}
+.menu-overlay.active .menu-social-links li:nth-child(1) a{transition-delay:.40s}
+.menu-overlay.active .menu-social-links li:nth-child(2) a{transition-delay:.45s}
+.menu-overlay.active .menu-social-links li:nth-child(3) a{transition-delay:.50s}
+
+/* CTA мобильное меню */
+.menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
+.menu-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
+.menu-cta:hover::before{transform:scaleX(1)}
+.menu-cta:hover{color:#1d1d1f!important}
+.menu-cta span{position:relative;z-index:1}
+.menu-overlay.active .menu-cta{opacity:1;transform:translateY(0);transition-delay:.55s,.55s,0s}
+
+/* === Адаптив === */
+@media(max-width:960px){.nav-links{display:none}.burger-btn{display:flex}.nav-cta{display:none}}
+@media(max-width:640px){.logo-sub,.logo-sep{display:none}.nav-time{display:none}.menu-links a{font-size:28px;padding:16px 0}.menu-links a .menu-flip{height:28px}.menu-social-links{flex-wrap:wrap;gap:12px}}
+</style>
+
+<!-- НАВИГАЦИЯ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="logo-wrap" id="logoLink" href="#">
+      <svg class="logo-mark" viewBox="-3 18 81 81" fill="none"><g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g></svg>
+      <span class="logo-text">ТУКАЙФ</span>
+      <span class="logo-sep"></span>
+      <span class="logo-sub">Ивент—дизайнер<br>для&nbsp;профессионалов</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about"><span class="nav-link-flip" data-text="Обо мне">Обо&nbsp;мне</span></a></li>
+      <li><a href="#services"><span class="nav-link-flip" data-text="Услуги">Услуги</span></a></li>
+      <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
+      <li><a href="#cases"><span class="nav-link-flip" data-text="Кейсы">Кейсы</span></a></li>
+      <li><a href="#pricing"><span class="nav-link-flip" data-text="Цены">Цены</span></a></li>
+      <li><a href="#faq"><span class="nav-link-flip" data-text="FAQ">FAQ</span></a></li>
+      <li><a href="#contacts"><span class="nav-link-flip" data-text="Контакты">Контакты</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-time" id="navTime">00:00:00 (МСК)</span>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="nav-cta"><span>Написать</span></a>
+      <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- МЕНЮ -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="menu-panel">
+    <div class="menu-panel-inner">
+      <ul class="menu-links">
+        <li><a href="#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
+        <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги">Услуги</span></span></a></li>
+        <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
+        <li><a href="#cases"><span class="menu-flip"><span class="menu-flip-inner" data-text="Кейсы">Кейсы</span></span></a></li>
+        <li><a href="#pricing"><span class="menu-flip"><span class="menu-flip-inner" data-text="Цены">Цены</span></span></a></li>
+        <li><a href="#faq"><span class="menu-flip"><span class="menu-flip-inner" data-text="FAQ">FAQ</span></span></a></li>
+        <li><a href="#contacts"><span class="menu-flip"><span class="menu-flip-inner" data-text="Контакты">Контакты</span></span></a></li>
+      </ul>
+      <div class="menu-social-label">Социальные сети</div>
+      <ul class="menu-social-links">
+        <li><a href="https://t.me/twokaif" target="_blank" rel="noopener"><span class="nav-link-flip" data-text="Телеграм">Телеграм</span></a></li>
+        <li><a href="https://www.instagram.com/twokaif.design?igsh=NDQxOHVya21rZjIw" target="_blank" rel="noopener"><span class="nav-link-flip" data-text="Instagram*">Instagram*</span></a></li>
+        <li><a href="https://vk.com/twokaif" target="_blank" rel="noopener"><span class="nav-link-flip" data-text="ВКонтакте">ВКонтакте</span></a></li>
+      </ul>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="menu-cta">
+        <span>Написать в&nbsp;Телеграм</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- Часы МСК ---
+function updateTime(){
+  var now=new Date();
+  var msk=new Date(now.toLocaleString('en-US',{timeZone:'Europe/Moscow'}));
+  var h=String(msk.getHours()).padStart(2,'0');
+  var m=String(msk.getMinutes()).padStart(2,'0');
+  var s=String(msk.getSeconds()).padStart(2,'0');
+  var el=document.getElementById('navTime');
+  if(el) el.textContent=h+':'+m+':'+s+' (МСК)';
+}
+updateTime(); setInterval(updateTime,1000);
+
+// --- Навбар прячется при скролле вниз, появляется при скролле вверх (Apple-стиль) ---
+(function(){
+  var nav=document.getElementById('nav');
+  if(!nav) return;
+  var lastY=0;
+  var hidden=false;
+  nav.style.transition='transform .35s cubic-bezier(.19,1,.22,1)';
+
+  window.addEventListener('scroll',function(){
+    var y=window.pageYOffset||document.documentElement.scrollTop;
+    if(y>lastY && y>80 && !hidden){
+      nav.style.transform='translateY(-100%)';
+      hidden=true;
+    } else if(y<lastY && hidden){
+      nav.style.transform='translateY(0)';
+      hidden=false;
+    }
+    lastY=y;
+  },{passive:true});
+})();
+
+// --- Плавный скролл к якорям ---
+function smoothScrollTo(target){
+  if(!target) return;
+  var navH=48;
+  var y=target.getBoundingClientRect().top+window.pageYOffset-navH;
+  window.scrollTo({top:y,behavior:'smooth'});
+}
+
+// --- Клик по логотипу — скролл наверх + перезапуск лоадера ---
+document.getElementById('logoLink').addEventListener('click',function(e){
+  e.preventDefault();
+  window.scrollTo({top:0,behavior:'smooth'});
+  /* Перезапускаем лоадер, если он есть */
+  var loader=document.getElementById('loader');
+  if(loader && typeof window.restartLoader==='function'){
+    window.restartLoader();
+  }
+});
+
+// --- Десктопные ссылки ---
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=document.querySelector(a.getAttribute('href'));
+    smoothScrollTo(target);
+  });
+});
+
+// --- Бургер-меню ---
+var burgerBtn=document.getElementById('burgerBtn');
+var menuOverlay=document.getElementById('menuOverlay');
+
+burgerBtn.addEventListener('click',function(){
+  var isOpen=menuOverlay.classList.toggle('active');
+  burgerBtn.classList.toggle('active',isOpen);
+  if(isOpen) document.body.style.overflow='hidden';
+  else document.body.style.overflow='';
+});
+
+document.getElementById('menuBackdrop').addEventListener('click',closeMenu);
+
+// --- Мобильные ссылки — плавный скролл ---
+document.querySelectorAll('.menu-links a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=document.querySelector(a.getAttribute('href'));
+    closeMenu();
+    setTimeout(function(){ smoothScrollTo(target); },400);
+  });
+});
+
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMenu(); });
+
+function closeMenu(){
+  menuOverlay.classList.remove('active');
+  burgerBtn.classList.remove('active');
+  document.body.style.overflow='';
+}
+</script>
+
+<!-- ═══ 16_404 ═══ -->
+<!-- ============================================
+     СТРАНИЦА 404 — НЕ НАЙДЕНО
+     T123 блок — стильная страница ошибки
+
+     Здесь меняй:
+     — Текст: class="e404-title", "e404-desc"
+     — Кнопка: href в class="btn-fill" (ссылка на главную)
+     — Футер подключается отдельным блоком (09_footer.html)
+
+     ВАЖНО: На странице 404 в Тильде нужно:
+     1. Создать новую страницу
+     2. Назначить её как 404 в настройках сайта
+     3. Вставить блок 01_global.html первым
+     4. Затем этот блок
+     5. Затем 09_footer.html
+     ============================================ -->
+<style>
+.e404{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px var(--edge) 80px;position:relative;overflow:hidden}
+
+/* Фоновое число 404 */
+.e404-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(200px,30vw,500px);font-weight:700;letter-spacing:clamp(-10px,-2vw,-30px);line-height:.8;color:var(--text);opacity:.03;pointer-events:none;user-select:none;white-space:nowrap}
+
+/* Снежинка */
+.e404-snowflake{width:clamp(40px,6vw,64px);color:var(--text);opacity:.12;margin-bottom:32px}
+.e404-snowflake .snowflake-inner{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
+
+/* Заголовок */
+.e404-title{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:clamp(-1px,-.3vw,-3px);line-height:.9;color:var(--text);margin-bottom:16px;position:relative;z-index:1}
+
+/* Описание */
+.e404-desc{font-size:clamp(14px,1.2vw,17px);font-weight:400;letter-spacing:-.2px;line-height:1.5;color:var(--muted);max-width:400px;margin-bottom:40px;position:relative;z-index:1}
+
+/* Кнопка — использует .btn-fill из 01_global */
+.e404 .btn-fill{position:relative;z-index:1}
+
+@media(max-width:640px){
+  .e404{min-height:70vh;padding:80px var(--edge) 60px}
+  .e404-snowflake{margin-bottom:24px}
+  .e404-desc{margin-bottom:32px}
+}
+</style>
+
+<section class="e404">
+  <!-- Фоновое число -->
+  <div class="e404-bg">404</div>
+
+  <!-- Снежинка -->
+  <svg class="e404-snowflake" viewBox="-3 18 81 81" fill="currentColor">
+    <g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g>
+  </svg>
+
+  <!-- Заголовок — меняй текст -->
+  <h1 class="e404-title">Страница не&nbsp;найдена</h1>
+
+  <!-- Описание — меняй текст -->
+  <p class="e404-desc">Возможно, страница была удалена или&nbsp;ты&nbsp;перешёл по&nbsp;неправильной ссылке. Вернись на&nbsp;главную&nbsp;— там всё на&nbsp;месте</p>
+
+  <!-- Кнопка — ссылка на главную -->
+  <a href="/" class="btn-fill magnetic">
+    <span>На&nbsp;главную</span>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+
+<!-- ═══ 14_Футер ═══ -->
+<!-- ============================================
+     БЛОК 9: ФУТЕР
+     T123 блок — огромный логотип + CTA + соцсети + реквизиты
+
+     Здесь меняй:
+     — CTA кнопка: href в class="btn-fill" (ссылка на Телеграм)
+     — Текст CTA: «Готов обсудить проект?»
+     — Часы работы: class="footer-hours"
+     — Соцсети: ссылки в class="footer-social-links" (href)
+     — Текст приватности: class="footer-privacy-text"
+     — Копирайт: class="footer-copy"
+     — Реквизиты ИП: class="footer-legal" (ИНН, ОГРНИП)
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Логотип ТУКАЙФ: 18vw (как на hero)
+     — Снежинка: 10%, макс. 120px
+     — CTA кнопка: 18px, padding 18px 40px
+     — Нижняя часть: 3 колонки (копирайт, соцсети, реквизиты)
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Нижняя часть: 1 колонка, центрированная
+     — CTA: font-size 16px, padding 16px 32px
+     — Соцсети: по центру, перенос строк
+
+     НАСТРОЙКИ МИНИ-МОБИЛЕ (до 480px):
+     — Логотип: 22vw
+     — CTA: 15px
+     ============================================ -->
+<style>
+.footer{padding:0 var(--edge) calc(40px + env(safe-area-inset-bottom,0px))}
+
+/* Огромный логотип — вписан в отступы */
+.footer-brand{display:flex;align-items:center;justify-content:center;gap:20px;padding:120px 0 0;overflow:hidden}
+.footer-brand-snowflake{width:10%;max-width:120px;flex-shrink:0;color:var(--text);opacity:.06;overflow:hidden}
+.footer-brand-snowflake .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
+.footer-brand-text{font-size:18vw;font-weight:700;letter-spacing:-1.2vw;line-height:.8;color:var(--text);opacity:.06;user-select:none;white-space:nowrap}
+
+/* CTA + соцсети */
+.footer-row{padding:48px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.footer-cta{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.footer-cta-label{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);margin-bottom:4px}
+.footer-hours{font-size:12px;font-weight:400;letter-spacing:-.18px;color:var(--muted);opacity:.55}
+
+/* Соцсети */
+.footer-social{text-align:right;display:flex;flex-direction:column;gap:16px;padding-top:calc(11px + 4px + 16px)}
+.footer-social-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.footer-social-links{display:flex;gap:24px;justify-content:flex-end}
+.footer-social-links a{font-size:13px;font-weight:400;letter-spacing:-.18px;color:var(--text)!important;text-decoration:none;position:relative;opacity:.55;transition:opacity .3s var(--ease-out);display:block;height:17px;overflow:hidden}
+.footer-social-links a:hover{opacity:1}
+.footer-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.footer-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:var(--muted)}
+.footer-social-links a:hover .footer-flip{transform:translateY(-100%)}
+
+/* Приватность */
+.footer-privacy{padding:24px 0;border-top:1px solid var(--border-row);text-align:center}
+.footer-privacy-text{font-size:12px;font-weight:400;letter-spacing:-.18px;line-height:1.6;color:var(--muted);opacity:.55;max-width:520px;margin:0 auto}
+.footer-meta-note{font-size:10px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:var(--muted);opacity:.35;max-width:520px;margin:8px auto 0;font-style:italic}
+
+/* Низ */
+.footer-bottom{padding:20px 0;border-top:1px solid var(--border-row);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-top-btn{width:40px;height:40px;flex-shrink:0;border:1px solid var(--border-row);background:transparent;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s var(--ease-out),border-color .3s var(--ease-out),color .3s var(--ease-out)}
+.footer-top-btn:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
+.footer-copy{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);opacity:.4}
+.footer-legal{font-size:10px;font-weight:400;letter-spacing:-.12px;color:var(--muted);opacity:.3}
+
+@media(max-width:640px){
+  .footer{padding:0 var(--edge) calc(32px + env(safe-area-inset-bottom,0px))}
+  .footer-brand{padding:32px 0 0;gap:10px}
+  .footer-brand-text{font-size:20vw;letter-spacing:-1vw}
+  .footer-row{padding:32px 0;flex-direction:column;align-items:stretch;gap:28px}
+  .footer-cta{align-items:stretch}
+  .footer-cta-label{text-align:center}
+  .footer-cta .btn-fill{width:100%;justify-content:center}
+  .footer-hours{text-align:center}
+  .footer-social{text-align:center}
+  .footer-social-links{justify-content:center}
+  .footer-privacy-text{font-size:11px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media(max-width:480px){
+  .footer{padding:0 var(--edge) calc(20px + env(safe-area-inset-bottom,0px))}
+  .footer-brand{padding:24px 0 0}
+  .footer-copy{font-size:10px}
+  .footer-legal{font-size:8px}
+}
+</style>
+
+<footer class="footer" id="contacts">
+  <!-- Огромный логотип -->
+  <div class="footer-brand">
+    <svg class="footer-brand-snowflake" viewBox="-3 18 81 81" fill="none">
+      <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
+    </svg>
+    <span class="footer-brand-text">ТУКАЙФ</span>
+  </div>
+
+  <div class="footer-row">
+    <div class="footer-cta">
+      <div class="footer-cta-label">Готов обсудить проект?</div>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="btn-fill magnetic">
+        <span>Написать в&nbsp;Телеграм</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <span class="footer-hours">Работаем в&nbsp;будни с&nbsp;10:00 до&nbsp;19:00 МСК</span>
+    </div>
+    <div class="footer-social">
+      <div class="footer-social-title">Социальные сети</div>
+      <div class="footer-social-links">
+        <a href="https://t.me/twokaif" target="_blank" rel="noopener"><span class="footer-flip" data-text="Телеграм">Телеграм</span></a>
+        <a href="https://www.instagram.com/twokaif.design?igsh=NDQxOHVya21rZjIw" target="_blank" rel="noopener"><span class="footer-flip" data-text="Instagram*">Instagram*</span></a>
+        <a href="https://vk.com/twokaif" target="_blank" rel="noopener"><span class="footer-flip" data-text="ВКонтакте">ВКонтакте</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-privacy">
+    <p class="footer-privacy-text">Сайт использует файлы cookie и&nbsp;сервисы аналитики для улучшения работы. Персональные данные через формы не&nbsp;собираются&nbsp;&mdash; связь напрямую через Телеграм. Продолжая пользоваться сайтом, ты&nbsp;соглашаешься с&nbsp;использованием cookie.</p>
+    <p class="footer-meta-note">*Instagram принадлежит компании Meta, признанной экстремистской организацией на&nbsp;территории РФ</p>
+  </div>
+
+  <div class="footer-bottom">
+    <div>
+      <p class="footer-copy">&copy; 20—26 ТУКАЙФ. Все права защищены</p>
+      <p class="footer-legal">ИП&nbsp;Тукаев Руслан Геннадиевич &middot; ИНН&nbsp;343703190770 &middot; ОГРНИП&nbsp;325344300119216</p>
+    </div>
+    <button class="footer-top-btn" id="footerTopBtn" aria-label="Наверх">↑</button>
+  </div>
+</footer>
+
+<script>
+document.getElementById('footerTopBtn').addEventListener('click',function(){
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+
+<!-- ═══ 15_Куки-баннер ═══ -->
+<!-- ============================================
+     БЛОК 17: КУКИ-БАННЕР
+     T123 блок — уведомление о cookies
+
+     Здесь меняй:
+     — Текст баннера: class="cookie-text"
+     — Кнопка «Принять»: class="cookie-accept"
+     — Время показа: появляется через 1.5 секунды
+     — localStorage ключ: «twokaif_cookies_accepted»
+
+     Баннер показывается один раз. После нажатия «Принять»
+     сохраняется в localStorage и больше не появляется.
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Позиция: фиксированный внизу слева
+     — Ширина: max-width 420px
+     — Отступ от края: var(--edge)
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Ширина: 100% минус отступы
+     — Центрирован внизу
+     ============================================ -->
+<style>
+/* --- Куки-баннер --- */
+.cookie-banner{
+  position:fixed;
+  bottom:var(--edge);
+  left:var(--edge);
+  z-index:99998;
+  max-width:420px;
+  background:var(--text);
+  color:var(--bg);
+  padding:20px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--ease-out),transform .6s var(--ease-out);
+  pointer-events:none;
+  border:1px solid rgba(255,255,255,.08)
+}
+.cookie-banner.visible{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto
+}
+.cookie-banner.hiding{
+  opacity:0;
+  transform:translateY(20px);
+  pointer-events:none
+}
+.cookie-text{
+  font-size:13px;
+  font-weight:400;
+  letter-spacing:-.18px;
+  line-height:1.55;
+  color:rgba(255,255,255,.7)
+}
+.cookie-text a{
+  color:#fff !important;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  transition:opacity .3s var(--ease-out)
+}
+.cookie-text a:hover{opacity:.7}
+.cookie-actions{
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+.cookie-accept{
+  padding:10px 24px;
+  background:#fff;
+  color:#1d1d1f;
+  border:none;
+  font-family:var(--font-body);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:-.2px;
+  cursor:pointer;
+  transition:opacity .3s var(--ease-out);
+  flex-shrink:0
+}
+.cookie-accept:hover{opacity:.85}
+.cookie-accept:active{transform:scale(.97)}
+
+@media(max-width:640px){
+  .cookie-banner{
+    left:var(--edge);
+    right:var(--edge);
+    bottom:var(--edge);
+    max-width:none
+  }
+  .cookie-text{font-size:12px}
+  .cookie-accept{font-size:12px;padding:10px 20px}
+}
+@media(max-width:480px){
+  .cookie-banner{padding:16px 20px}
+}
+</style>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">Сайт использует файлы&nbsp;cookie для аналитики и&nbsp;улучшения работы. Продолжая, ты&nbsp;соглашаешься с&nbsp;их&nbsp;использованием.</p>
+  <div class="cookie-actions">
+    <button class="cookie-accept" id="cookieAccept">Принять</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='twokaif_cookies_accepted';
+  if(localStorage.getItem(KEY))return;
+  var banner=document.getElementById('cookieBanner');
+  var btn=document.getElementById('cookieAccept');
+  /* Показываем через 1.5 секунды */
+  setTimeout(function(){
+    banner.classList.add('visible');
+  },1500);
+  btn.addEventListener('click',function(){
+    banner.classList.remove('visible');
+    banner.classList.add('hiding');
+    localStorage.setItem(KEY,'1');
+    setTimeout(function(){
+      banner.remove();
+    },600);
+  });
+})();
+</script>
+
+</body>
+</html>

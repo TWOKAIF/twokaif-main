@@ -1,0 +1,63 @@
+<!-- ============================================
+     СТРАНИЦА 404 — НЕ НАЙДЕНО
+     T123 блок — стильная страница ошибки
+
+     Здесь меняй:
+     — Текст: class="e404-title", "e404-desc"
+     — Кнопка: href в class="btn-fill" (ссылка на главную)
+     — Футер подключается отдельным блоком (09_footer.html)
+
+     ВАЖНО: На странице 404 в Тильде нужно:
+     1. Создать новую страницу
+     2. Назначить её как 404 в настройках сайта
+     3. Вставить блок 01_global.html первым
+     4. Затем этот блок
+     5. Затем 09_footer.html
+     ============================================ -->
+<style>
+.e404{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px var(--edge) 80px;position:relative;overflow:hidden}
+
+/* Фоновое число 404 */
+.e404-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(200px,30vw,500px);font-weight:700;letter-spacing:clamp(-10px,-2vw,-30px);line-height:.8;color:var(--text);opacity:.03;pointer-events:none;user-select:none;white-space:nowrap}
+
+/* Снежинка */
+.e404-snowflake{width:clamp(40px,6vw,64px);color:var(--text);opacity:.12;margin-bottom:32px}
+.e404-snowflake .snowflake-inner{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
+
+/* Заголовок */
+.e404-title{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:clamp(-1px,-.3vw,-3px);line-height:.9;color:var(--text);margin-bottom:16px;position:relative;z-index:1}
+
+/* Описание */
+.e404-desc{font-size:clamp(14px,1.2vw,17px);font-weight:400;letter-spacing:-.2px;line-height:1.5;color:var(--muted);max-width:400px;margin-bottom:40px;position:relative;z-index:1}
+
+/* Кнопка — использует .btn-fill из 01_global */
+.e404 .btn-fill{position:relative;z-index:1}
+
+@media(max-width:640px){
+  .e404{min-height:70vh;padding:80px var(--edge) 60px}
+  .e404-snowflake{margin-bottom:24px}
+  .e404-desc{margin-bottom:32px}
+}
+</style>
+
+<section class="e404">
+  <!-- Фоновое число -->
+  <div class="e404-bg">404</div>
+
+  <!-- Снежинка -->
+  <svg class="e404-snowflake" viewBox="-3 18 81 81" fill="currentColor">
+    <g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g>
+  </svg>
+
+  <!-- Заголовок — меняй текст -->
+  <h1 class="e404-title">Страница не&nbsp;найдена</h1>
+
+  <!-- Описание — меняй текст -->
+  <p class="e404-desc">Возможно, страница была удалена или&nbsp;ты&nbsp;перешёл по&nbsp;неправильной ссылке. Вернись на&nbsp;главную&nbsp;— там всё на&nbsp;месте</p>
+
+  <!-- Кнопка — ссылка на главную -->
+  <a href="/" class="btn-fill magnetic">
+    <span>На&nbsp;главную</span>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>

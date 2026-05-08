@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Secrets — никогда в публичный репо!
+.env
+.env.local
+*.key
+*.pem
+
+# Большие медиа — не пушим в git
+images/
+images_sorted/
+*.psd
+*.ai
+
+# Билд можно пересобрать через build.sh
+# Оставляем dist/ в репо, чтобы можно было сразу деплоить

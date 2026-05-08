@@ -1,0 +1,129 @@
+<!-- ============================================
+     БЛОК 17: КУКИ-БАННЕР
+     T123 блок — уведомление о cookies
+
+     Здесь меняй:
+     — Текст баннера: class="cookie-text"
+     — Кнопка «Принять»: class="cookie-accept"
+     — Время показа: появляется через 1.5 секунды
+     — localStorage ключ: «twokaif_cookies_accepted»
+
+     Баннер показывается один раз. После нажатия «Принять»
+     сохраняется в localStorage и больше не появляется.
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Позиция: фиксированный внизу слева
+     — Ширина: max-width 420px
+     — Отступ от края: var(--edge)
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Ширина: 100% минус отступы
+     — Центрирован внизу
+     ============================================ -->
+<style>
+/* --- Куки-баннер --- */
+.cookie-banner{
+  position:fixed;
+  bottom:var(--edge);
+  left:var(--edge);
+  z-index:99998;
+  max-width:420px;
+  background:var(--text);
+  color:var(--bg);
+  padding:20px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--ease-out),transform .6s var(--ease-out);
+  pointer-events:none;
+  border:1px solid rgba(255,255,255,.08)
+}
+.cookie-banner.visible{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto
+}
+.cookie-banner.hiding{
+  opacity:0;
+  transform:translateY(20px);
+  pointer-events:none
+}
+.cookie-text{
+  font-size:13px;
+  font-weight:400;
+  letter-spacing:-.18px;
+  line-height:1.55;
+  color:rgba(255,255,255,.7)
+}
+.cookie-text a{
+  color:#fff !important;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  transition:opacity .3s var(--ease-out)
+}
+.cookie-text a:hover{opacity:.7}
+.cookie-actions{
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+.cookie-accept{
+  padding:10px 24px;
+  background:#fff;
+  color:#1d1d1f;
+  border:none;
+  font-family:var(--font-body);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:-.2px;
+  cursor:pointer;
+  transition:opacity .3s var(--ease-out);
+  flex-shrink:0
+}
+.cookie-accept:hover{opacity:.85}
+.cookie-accept:active{transform:scale(.97)}
+
+@media(max-width:640px){
+  .cookie-banner{
+    left:var(--edge);
+    right:var(--edge);
+    bottom:var(--edge);
+    max-width:none
+  }
+  .cookie-text{font-size:12px}
+  .cookie-accept{font-size:12px;padding:10px 20px}
+}
+@media(max-width:480px){
+  .cookie-banner{padding:16px 20px}
+}
+</style>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">Сайт использует файлы&nbsp;cookie для аналитики и&nbsp;улучшения работы. Продолжая, ты&nbsp;соглашаешься с&nbsp;их&nbsp;использованием.</p>
+  <div class="cookie-actions">
+    <button class="cookie-accept" id="cookieAccept">Принять</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='twokaif_cookies_accepted';
+  if(localStorage.getItem(KEY))return;
+  var banner=document.getElementById('cookieBanner');
+  var btn=document.getElementById('cookieAccept');
+  /* Показываем через 1.5 секунды */
+  setTimeout(function(){
+    banner.classList.add('visible');
+  },1500);
+  btn.addEventListener('click',function(){
+    banner.classList.remove('visible');
+    banner.classList.add('hiding');
+    localStorage.setItem(KEY,'1');
+    setTimeout(function(){
+      banner.remove();
+    },600);
+  });
+})();
+</script>

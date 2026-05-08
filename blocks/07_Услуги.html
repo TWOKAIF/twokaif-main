@@ -1,0 +1,454 @@
+<!-- ============================================
+     БЛОК 6: УСЛУГИ
+     T123 блок — список услуг с инверсией фона при наведении
+
+     Здесь меняй:
+     — Названия услуг: текст внутри <a> (ОБЛОЖКИ, АФИШИ и т.д.)
+     — Превью-картинки: src в class="service-preview"
+     — Описания превью: class="service-preview-desc"
+
+     ПРЕВЬЮ-КАРТИНКИ (видны только на ПК, скрыты на планшете и мобиле):
+     — Вертикальное (9:16): 720×1280 px, JPG, до 200 КБ — class="preview-vertical"
+     — Горизонтальное (16:9): 1280×720 px, JPG, до 200 КБ — class="preview-horizontal"
+     — Можно заменить на видео:
+       <video class="ratio-9-16" src="ссылка.mp4" autoplay loop muted playsinline></video>
+       или class="ratio-16-9" для горизонтального
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Шрифт услуги: clamp(42px, 7vw, 88px), жирный 700
+     — Превью справа: 220px (вертикальное) / 340px (горизонтальное)
+     — Снежинки при ховере: 26×26px, по обе стороны от названия
+     — Инверсия фона: чёрный фон + белый текст
+
+     НАСТРОЙКИ ПЛАНШЕТ (до 960px):
+     — Превью скрыто
+     — Шрифт: 48px
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Шрифт: 32px, снежинка: 14×14px
+     — Секция: padding 80px/60px
+
+     НАСТРОЙКИ МИНИ-МОБИЛЕ (до 480px):
+     — Шрифт: 26px, снежинка: 12×12px
+     ============================================ -->
+<style>
+/* --- Секция услуг --- */
+.services {
+  min-height: 100vh;
+  padding: 120px 0 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+/* --- Список услуг --- */
+.services-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Элемент услуги --- */
+.service-item {
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Анимация появления */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.service-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Инверсия фона при ховере */
+.service-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--text);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  z-index: 0;
+}
+.service-item:hover::before {
+  opacity: 1;
+}
+
+/* Название услуги */
+.service-item a, .service-item .service-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 700;
+  letter-spacing: clamp(-2px, -0.5vw, -5px);
+  line-height: 1.05;
+  color: var(--text) !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.4s var(--ease-out);
+  padding: 10px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Инверсия текста при ховере */
+.service-item:hover a, .service-item:hover .service-name {
+  color: var(--bg) !important;
+}
+
+/* Остальные элементы тускнеют при ховере на список */
+.services-list:hover .service-item:not(:hover) a,
+.services-list:hover .service-item:not(:hover) .service-name {
+  opacity: 0.15;
+}
+
+/* --- Снежинка (иконка при ховере) --- */
+.service-snowflake {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+  transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-spring);
+  color: var(--bg);
+}
+.service-snowflake-left {
+  transform: rotate(90deg) scale(0.5);
+}
+.service-snowflake .snowflake-inner {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 8s linear infinite;
+}
+.service-snowflake-left .snowflake-inner {
+  animation-direction: reverse;
+}
+.service-item:hover .service-snowflake {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* --- Превью при ховере (правая часть) --- */
+.service-preview {
+  position: absolute;
+  right: var(--edge);
+  top: 50%;
+  transform: translateY(-50%) translateX(24px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+  z-index: 10;
+}
+.service-item:hover .service-preview {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+.service-preview img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+.service-preview img.ratio-9-16 { aspect-ratio: 9/16; }
+.service-preview.preview-vertical { width: 220px; }
+.service-preview img.ratio-16-9 { aspect-ratio: 16/9; }
+.service-preview.preview-horizontal { width: 340px; }
+
+/* Плейсхолдер «место для фото» */
+.service-ph{width:100%;display:flex;align-items:center;justify-content:center;border:1px dashed rgba(0,0,0,.15);background:var(--surface, #f5f5f5)}
+.service-ph.ratio-9-16{aspect-ratio:9/16}
+.service-ph.ratio-16-9{aspect-ratio:16/9}
+.service-ph span{font-family:var(--font-body);font-size:12px;font-weight:400;color:var(--muted, #999);letter-spacing:-.1px;text-align:center;padding:16px}
+
+/* Подпись под превью */
+.service-preview-desc {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.18px;
+  line-height: 1.45;
+  color: var(--muted);
+  text-align: left;
+}
+
+/* --- Описание секции --- */
+.services-desc {
+  text-align: center;
+  margin-top: 72px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.22px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--edge);
+}
+
+/* --- Лейбл секции --- */
+.services-footer {
+  position: absolute;
+  bottom: 40px;
+  left: var(--edge);
+  z-index: 100;
+}
+.services-footer span {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.18px;
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+/* --- Каскадная задержка появления --- */
+.service-item:nth-child(1) { transition-delay: 0s; }
+.service-item:nth-child(2) { transition-delay: 0.08s; }
+.service-item:nth-child(3) { transition-delay: 0.16s; }
+.service-item:nth-child(4) { transition-delay: 0.24s; }
+.service-item:nth-child(5) { transition-delay: 0.32s; }
+
+/* --- Обёртка слайдов с ограниченной высотой --- */
+.svc-slides-wrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Авто-скролл слайдов презентации в превью --- */
+.svc-slides-track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+.svc-slides-track img {
+  width: 100%;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
+}
+@keyframes svcScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.svc-slides-track.scrolling {
+  animation: svcScroll var(--svc-scroll-duration, 40s) linear infinite;
+}
+
+/* --- Заглушка «Сайты» --- */
+.svc-site-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 40%,#0a0a0a 70%,#16213e 100%);background-size:300% 300%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;position:relative;overflow:hidden}
+.service-item:hover .svc-site-placeholder{animation:svcGradient 6s ease infinite}
+@keyframes svcGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.svc-site-placeholder::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.04) 0%,transparent 70%);opacity:0;transition:opacity 1s ease}
+.service-item:hover .svc-site-placeholder::before{opacity:1;animation:svcGlow 3s ease-in-out infinite}
+@keyframes svcGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.svc-site-ph-text{font-size:13px;font-weight:600;letter-spacing:-.2px;line-height:1.35;color:#fff;text-align:center;position:relative;z-index:1;opacity:0;transform:translateY(8px);transition:opacity .6s ease .15s,transform .6s ease .15s}
+.service-item:hover .svc-site-ph-text{opacity:1;transform:translateY(0)}
+.svc-site-ph-cta{font-size:11px;font-weight:400;color:rgba(255,255,255,.5);text-align:center;margin-top:4px;position:relative;z-index:1;opacity:0;transform:translateY(8px);transition:opacity .6s ease .3s,transform .6s ease .3s}
+.service-item:hover .svc-site-ph-cta{opacity:1;transform:translateY(0);animation:svcPulse 2s ease-in-out 1s infinite}
+@keyframes svcPulse{0%,100%{opacity:.5}50%{opacity:.8}}
+.svc-site-ph-link{font-size:10px;font-weight:400;color:rgba(255,255,255,.3);text-align:center;letter-spacing:.05em;position:relative;z-index:1;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s,transform .6s ease .45s}
+.service-item:hover .svc-site-ph-link{opacity:1;transform:translateY(0)}
+
+/* --- Планшет (до 960px) --- */
+@media (max-width: 960px) {
+  .service-preview { display: none; }
+  .service-item a, .service-item .service-name {
+    font-size: 48px;
+    padding: 10px 32px;
+  }
+}
+
+/* --- Мобиле (до 640px) --- */
+@media (max-width: 640px) {
+  .services {
+    padding: 80px 0 60px;
+    min-height: auto;
+  }
+  .service-item a, .service-item .service-name {
+    font-size: 32px;
+    padding: 8px var(--edge);
+    gap: 6px;
+    letter-spacing: -0.5px;
+  }
+  .service-snowflake {
+    width: 14px;
+    height: 14px;
+  }
+  .services-desc {
+    font-size: 12px;
+    margin-top: 48px;
+  }
+}
+
+/* --- Маленький мобиле (до 480px) --- */
+@media (max-width: 480px) {
+  .service-item a, .service-item .service-name { font-size: 26px; padding: 6px var(--edge); }
+  .service-snowflake { width: 12px; height: 12px; }
+  .services-desc { font-size: 12px; margin-top: 32px; }
+}
+</style>
+
+<!-- УСЛУГИ -->
+<div style="padding:0 var(--edge);margin-bottom:12px"><span style="font-size:12px;font-weight:400;letter-spacing:-.18px;color:var(--muted);opacity:.45">Услуги</span></div>
+<section class="services section-reveal" id="services">
+  <div class="services-list" id="servicesList">
+    <!-- Здесь меняй услуги, превью и описания -->
+
+    <!-- Услуга 1 — Обложки -->
+    <div class="service-item">
+      <span class="service-name">ОБЛОЖКИ
+        <svg class="service-snowflake" viewBox="-3 18 81 81" fill="currentColor"><g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g></svg>
+      </span>
+      <div class="service-preview preview-vertical">
+        <img class="ratio-9-16" src="https://static.tildacdn.com/tild3336-3733-4661-b066-626262373233/__06_01_26.jpg" alt="Обложки">
+        <div class="service-preview-desc">Обложки для&nbsp;видео: заявки,<br>шоурилы, промо и&nbsp;т.&nbsp;д.</div>
+      </div>
+    </div>
+
+    <!-- Услуга 2 — Афиши -->
+    <div class="service-item">
+      <span class="service-name">АФИШИ
+        <svg class="service-snowflake" viewBox="-3 18 81 81" fill="currentColor"><g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g></svg>
+      </span>
+      <div class="service-preview preview-vertical">
+        <img class="ratio-9-16" src="https://static.tildacdn.com/tild3764-3562-4334-b366-353831373263/01.jpg" alt="Афиши">
+        <div class="service-preview-desc">Афиши для&nbsp;различного рода<br>ивентов, концертов и&nbsp;т.&nbsp;д.</div>
+      </div>
+    </div>
+
+    <!-- Услуга 3 — Презентации -->
+    <div class="service-item">
+      <span class="service-name">ПРЕЗЕНТАЦИИ
+        <svg class="service-snowflake" viewBox="-3 18 81 81" fill="currentColor"><g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g></svg>
+      </span>
+      <!-- Превью-презентация Nuage — авто-скролл слайдов при ховере -->
+      <div class="service-preview preview-horizontal">
+        <div class="svc-slides-wrap">
+          <div class="svc-slides-track" id="svcSlidesTrack" style="--svc-scroll-duration:80s">
+            <img src="https://static.tildacdn.com/tild6638-3731-4739-a336-356264346131/nuage-01.jpg" alt="Слайд презентации Nuage 1" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6464-3134-4935-a565-333138383834/nuage-02.jpg" alt="Слайд презентации Nuage 2" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3439-3662-4238-a232-653566663630/nuage-03.jpg" alt="Слайд презентации Nuage 3" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3565-3135-4366-a664-353136313737/nuage-04.jpg" alt="Слайд презентации Nuage 4" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6564-6465-4137-b464-316534353439/nuage-05.jpg" alt="Слайд презентации Nuage 5" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6233-3437-4463-a364-653461303531/nuage-06.jpg" alt="Слайд презентации Nuage 6" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3264-6564-4736-b766-383430363139/nuage-07.jpg" alt="Слайд презентации Nuage 7" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3764-6464-4439-a432-663039336337/nuage-08.jpg" alt="Слайд презентации Nuage 8" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6434-6630-4131-a432-363037343330/nuage-09.jpg" alt="Слайд презентации Nuage 9" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3337-6330-4030-a665-363933646633/nuage-10.jpg" alt="Слайд презентации Nuage 10" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3463-6564-4263-a338-643733363262/nuage-11.jpg" alt="Слайд презентации Nuage 11" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6533-3334-4463-a563-306634346261/nuage-12.jpg" alt="Слайд презентации Nuage 12" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3037-6466-4535-a461-343536636633/nuage-13.jpg" alt="Слайд презентации Nuage 13" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3337-3535-4933-b061-326638646566/nuage-14.jpg" alt="Слайд презентации Nuage 14" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6432-3365-4861-b362-633466373638/nuage-15.jpg" alt="Слайд презентации Nuage 15" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6166-3130-4566-b164-336630643230/nuage-16.jpg" alt="Слайд презентации Nuage 16" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6531-6633-4038-b837-643764313631/nuage-17.jpg" alt="Слайд презентации Nuage 17" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6365-3365-4966-b538-616463303135/nuage-18.jpg" alt="Слайд презентации Nuage 18" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6365-6536-4338-b732-383963373463/nuage-19.jpg" alt="Слайд презентации Nuage 19" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3938-6535-4865-b461-616538333361/nuage-20.jpg" alt="Слайд презентации Nuage 20" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3431-6565-4839-a335-643931386363/nuage-21.jpg" alt="Слайд презентации Nuage 21" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3332-6134-4630-b164-383735326261/nuage-22.jpg" alt="Слайд презентации Nuage 22" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3638-6235-4563-b139-356632393532/nuage-23.jpg" alt="Слайд презентации Nuage 23" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3937-3162-4261-b331-666533383536/nuage-24.jpg" alt="Слайд презентации Nuage 24" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6638-6437-4166-a465-613834363733/nuage-25.jpg" alt="Слайд презентации Nuage 25" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3236-6337-4731-b932-326531363166/nuage-26.jpg" alt="Слайд презентации Nuage 26" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3930-6232-4634-b932-323131626161/nuage-27.jpg" alt="Слайд презентации Nuage 27" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3030-6536-4362-a563-663731383361/nuage-28.jpg" alt="Слайд презентации Nuage 28" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6335-3738-4533-a237-323230396138/nuage-29.jpg" alt="Слайд презентации Nuage 29" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3234-3937-4238-b636-313438613731/nuage-30.jpg" alt="Слайд презентации Nuage 30" loading="lazy">
+          </div>
+        </div>
+        <div class="service-preview-desc">Презентации для&nbsp;премий,<br>выступлений и&nbsp;мероприятий</div>
+      </div>
+    </div>
+
+    <!-- Услуга 4 — Сайты -->
+    <div class="service-item">
+      <span class="service-name">САЙТЫ
+        <svg class="service-snowflake" viewBox="-3 18 81 81" fill="currentColor"><g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g></svg>
+      </span>
+      <div class="service-preview preview-horizontal">
+        <div class="svc-site-placeholder">
+          <span class="svc-site-ph-text">Формирую кейсы<br>новых адаптивных сайтов</span>
+          <span class="svc-site-ph-cta">Успей занять своё место</span>
+        </div>
+        <div class="service-preview-desc">Одностраничные и&nbsp;многостраничные<br>сайты ведущих, агентств, артистов и&nbsp;т.&nbsp;д.</div>
+      </div>
+    </div>
+
+    <!-- Услуга 5 — Интерактивы -->
+    <div class="service-item">
+      <span class="service-name">ИНТЕРАКТИВЫ
+        <svg class="service-snowflake" viewBox="-3 18 81 81" fill="currentColor"><g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g></svg>
+      </span>
+      <div class="service-preview preview-horizontal">
+        <img class="ratio-16-9" src="https://static.tildacdn.com/tild6230-3434-4839-b966-363061613334/01__.jpg" alt="Интерактивы">
+        <div class="service-preview-desc">Визуальный контент для&nbsp;экранов<br>на&nbsp;мероприятиях и&nbsp;ивентах</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="services-desc">Работаем только в&nbsp;этих направлениях&nbsp;— никакой печатной продукции.<br>Полный фокус команды на&nbsp;цифровом дизайне для&nbsp;ивент—индустрии</p>
+
+</section>
+
+<script>
+/* Появление услуг при скролле — IntersectionObserver */
+var sO = new IntersectionObserver(function(e) {
+  e.forEach(function(n) {
+    if (n.isIntersecting) n.target.classList.add('visible');
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.service-item').forEach(function(e) { sO.observe(e); });
+</script>
+
+<script>
+/* Левая снежинка — вставляем через JS */
+document.querySelectorAll('.service-name').forEach(function(el){
+  var s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('class','service-snowflake service-snowflake-left');
+  s.setAttribute('viewBox','-3 18 81 81');
+  s.setAttribute('fill','currentColor');
+  var g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','snowflake-inner');
+  var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d','M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z');
+  g.appendChild(p);s.appendChild(g);
+  el.insertBefore(s,el.firstChild);
+});
+</script>
+
+<script>
+/* Авто-скролл слайдов презентации при наведении */
+(function(){
+  var track = document.getElementById('svcSlidesTrack');
+  if (!track) return;
+  var item = track.closest('.service-item');
+  if (!item) return;
+
+  /* Дублируем слайды для бесшовного цикла */
+  track.innerHTML += track.innerHTML;
+
+  item.addEventListener('mouseenter', function(){
+    track.classList.add('scrolling');
+  });
+  item.addEventListener('mouseleave', function(){
+    track.classList.remove('scrolling');
+    track.style.animation = 'none';
+    void track.offsetWidth;
+    track.style.animation = '';
+  });
+})();
+</script>

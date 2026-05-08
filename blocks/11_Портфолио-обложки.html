@@ -1,0 +1,565 @@
+<!-- ============================================
+     БЛОК 8А: ПОРТФОЛИО — ОБЛОЖКИ И АФИШИ
+     T123 блок — сетка карточек со скролл—анимацией, тёмный фон
+
+     Здесь меняй:
+     — Заголовок: class="portfolio-title"
+     — Теги: class="portfolio-tag"
+     — Карточки: добавляй внутри class="gallery-col"
+
+     ИЗОБРАЖЕНИЯ В КАРТОЧКАХ:
+     — Размер: 1920×1080 px (горизонтальное, 16:9)
+     — Формат: JPG, до 300 КБ
+     — Можно заменить на видео:
+       <video src="ссылка.mp4" autoplay loop muted playsinline
+              style="width:100%;height:100%;object-fit:cover"></video>
+       Видео: 1920×1080 px, MP4, до 8 МБ
+
+     НАСТРОЙКИ ПК (десктоп):
+     — 5 колонок сетки
+     — Карточки с анимацией при скролле (GSAP ScrollTrigger)
+     — Тёмный фон (#000)
+     — Заголовок: var(--text-display) (80px)
+
+     НАСТРОЙКИ ПЛАНШЕТ (до 1440px):
+     — 4 колонки
+
+     НАСТРОЙКИ МОБИЛЕ (до 767px):
+     — 3 колонки
+     — Уменьшенные отступы и скругления
+     ============================================ -->
+
+<!-- Заголовок -->
+<style>
+  .portfolio-header {
+    padding: 80px var(--edge, 48px) 80px;
+    background: #000;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+  .portfolio-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: clamp(16px, 2.5vw, 32px);
+  }
+  .portfolio-title {
+    font-size: var(--text-display, 80px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    color: #fff;
+    width: 100%;
+  }
+  .portfolio-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+  .portfolio-tag {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: -0.18px;
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+  @media (max-width: 960px) {
+    .portfolio-header { padding: 64px var(--edge, 32px) 64px; }
+    .portfolio-title { letter-spacing: -3px; }
+  }
+  /* Подзаголовок — только на мобиле */
+  .portfolio-sub { display: none; }
+
+  @media (max-width: 640px) {
+    .portfolio-header { padding: 48px var(--edge, 20px) 48px; }
+    .portfolio-title { letter-spacing: -1.5px; font-size: var(--text-headline, 30px); }
+    .portfolio-top { gap: 6px; flex-direction: column; align-items: flex-start; }
+    .portfolio-tags { display: none; }
+    .portfolio-sub { display: block; font-size: 14px; font-weight: 400; letter-spacing: -.2px; color: rgba(255,255,255,.45); }
+    .portfolio-sub::before { content: '— '; }
+  }
+</style>
+
+<div class="portfolio-header" id="portfolio">
+  <div class="portfolio-top">
+    <h2 class="portfolio-title">Обложки</h2>
+    <div class="portfolio-tags">
+      <span class="portfolio-tag">Портфолио</span>
+    </div>
+    <div class="portfolio-sub">Обложки</div>
+  </div>
+</div>
+
+<!-- Сетка обложек -->
+<section class="twk-covers" id="twk-covers"></section>
+
+<!-- Кнопка «Все работы» — ссылка на Яндекс.Диск -->
+<div class="portfolio-more" style="background:#000;padding:40px var(--edge) 80px;width:100vw;margin-left:calc(50% - 50vw);text-align:left">
+  <a href="https://disk.yandex.ru/d/BapDS4hK-lTAIQ" target="_blank" rel="noopener" class="portfolio-more-btn">Больше обложек на&nbsp;диске
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+  </a>
+</div>
+<style>
+.portfolio-more-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 36px;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.2px;color:#fff !important;border:1px solid rgba(255,255,255,.6);background:transparent;text-decoration:none !important;position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out),border-color .4s var(--ease-out)}
+.portfolio-more-btn::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleY(0);transform-origin:bottom center;transition:transform .5s var(--ease-out);z-index:-1}
+.portfolio-more-btn svg{position:relative}
+.portfolio-more-btn:hover::before{transform:scaleY(1)}
+.portfolio-more-btn:hover{color:#1d1d1f !important;border-color:#fff}
+.portfolio-more-btn:active{transform:scale(.97)}
+.portfolio-more-btn svg{transition:transform .4s var(--ease-out)}
+.portfolio-more-btn:hover svg{transform:translate(3px,-3px)}
+@media(max-width:640px){.portfolio-more-btn{width:100%;justify-content:center;padding:14px 24px;font-size:13px}
+.portfolio-more-btn+.portfolio-more-btn{margin-top:0}}
+</style>
+
+<style>
+  .twk-covers,
+  .twk-covers * {
+    box-sizing: border-box;
+  }
+
+  .twk-covers {
+    --pad: 8px;
+    --gap: 8px;
+    --cols: 5;
+    --radius: 0px;
+    --card-w: calc((100vw - (var(--pad) * 2) - (var(--gap) * (var(--cols) - 1))) / var(--cols));
+    --card-h: calc(var(--card-w) * 16 / 9);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    min-height: 900vh;
+    background: #000;
+    position: relative;
+    font-family: var(--font-body, Arial, sans-serif);
+  }
+
+  .twk-covers__sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    padding: var(--pad);
+    overflow: hidden;
+  }
+
+  .twk-covers__viewport {
+    position: relative;
+    width: 100%;
+    height: calc(100svh - (var(--pad) * 2));
+    overflow: hidden;
+    transition: filter 0.35s ease, transform 0.35s ease;
+  }
+
+  .twk-covers.is-viewer-open .twk-covers__viewport {
+    filter: brightness(0.4);
+  }
+
+  .twk-covers__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: var(--gap);
+    width: 100%;
+    height: 100%;
+  }
+
+  .twk-covers__lane {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .twk-covers__stack {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    will-change: transform;
+  }
+
+  .twk-cover {
+    position: relative;
+    width: 100%;
+    height: var(--card-h);
+    border: 0;
+    padding: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #101010;
+    cursor: pointer;
+    appearance: none;
+    isolation: isolate;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 12px 30px rgba(0,0,0,0.24);
+  }
+
+  .twk-cover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01) 28%, rgba(0,0,0,0.08) 100%),
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,0.06), transparent 48%);
+    opacity: 0.39;
+    transition: opacity 0.25s ease;
+  }
+
+  .twk-cover__shine {
+    position: absolute;
+    inset: -18%;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 34%, rgba(255,255,255,0.16) 50%, transparent 66%);
+    transform: translateX(-145%) skewX(-12deg);
+    opacity: 0;
+  }
+
+  .twk-cover img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    background: #000;
+    transform: scale(1) translate3d(0,0,0);
+    transition: transform 0.55s cubic-bezier(.22,.8,.2,1), filter 0.28s ease;
+    filter: contrast(1.02) saturate(1.02);
+    will-change: transform;
+  }
+
+  .twk-cover:hover {
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 18px 42px rgba(0,0,0,0.3);
+  }
+
+  .twk-cover:hover .twk-cover__shine {
+    animation: twkShine 0.9s ease forwards;
+    opacity: 1;
+  }
+
+  .twk-cover:hover img {
+    transform: scale(1.035) translate3d(0,-2px,0);
+    filter: contrast(1.05) saturate(1.08);
+  }
+
+  .twk-covers__fade-top,
+  .twk-covers__fade-bottom {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .twk-covers__fade-top {
+    top: 0;
+    height: 118px;
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 14%, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.28) 72%, rgba(0,0,0,0) 100%);
+  }
+
+  .twk-covers__fade-bottom {
+    bottom: 0;
+    height: 118px;
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 14%, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.28) 72%, rgba(0,0,0,0) 100%);
+  }
+
+  .twk-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+
+  .twk-viewer.is-open { opacity: 1; pointer-events: auto; }
+
+  .twk-viewer__bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+  }
+
+  .twk-viewer__content {
+    position: relative;
+    z-index: 2;
+    max-width: 94vw;
+    max-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(16px) scale(0.97);
+    transition: transform 0.28s cubic-bezier(.22,.8,.2,1);
+  }
+
+  .twk-viewer.is-open .twk-viewer__content { transform: translateY(0) scale(1); }
+
+  .twk-viewer__img {
+    width: auto; height: auto;
+    max-width: min(80vw, 600px);
+    max-height: 80vh;
+    display: block;
+    object-fit: contain;
+    border-radius: var(--radius);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06);
+    background: transparent;
+  }
+
+  .twk-viewer__close {
+    position: absolute;
+    top: 12px; right: 12px;
+    z-index: 3;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0;
+    background: rgba(29,29,31,0.7);
+    color: #fff;
+    font-size: 0;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.35s var(--ease-out, ease), border-color 0.35s var(--ease-out, ease), transform 0.35s var(--ease-out, ease);
+  }
+
+  /* Крестик из двух линий */
+  .twk-viewer__close::before,
+  .twk-viewer__close::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 1px;
+    background: #fff;
+    transition: background 0.35s var(--ease-out, ease);
+  }
+  .twk-viewer__close::before { transform: rotate(45deg); }
+  .twk-viewer__close::after { transform: rotate(-45deg); }
+
+  .twk-viewer__close:hover {
+    background: #fff;
+    border-color: #fff;
+    transform: scale(1.05);
+  }
+  .twk-viewer__close:hover::before,
+  .twk-viewer__close:hover::after { background: #1d1d1f; }
+
+  .twk-viewer__close:active { transform: scale(0.95); }
+
+  @keyframes twkShine {
+    0% { transform: translateX(-145%) skewX(-12deg); }
+    100% { transform: translateX(145%) skewX(-12deg); }
+  }
+
+  @media (max-width: 1440px) {
+    .twk-covers { --cols: 4; min-height: 800vh; }
+  }
+
+  @media (max-width: 767px) {
+    .twk-covers {
+      --cols: 3; --pad: 10px; --gap: 10px; --radius: 0px;
+      min-height: 500vh; /* достаточно чтобы все обложки прошли через экран */
+    }
+    .twk-cover { transition: none !important; box-shadow: none !important; } /* без тяжёлых эффектов */
+    .twk-cover::before { display: none !important; } /* без shine-оверлея */
+    .twk-cover, .twk-cover::before, .twk-viewer__img { border-radius: var(--radius); }
+    .twk-viewer { padding: 60px 10px 10px; } /* 60px сверху — не перекрывает навбар */
+    .twk-viewer__img { max-width: 92vw; max-height: 80vh; }
+    .twk-viewer__close { width: 28px; height: 28px; }
+    .twk-viewer__close::before, .twk-viewer__close::after { width: 10px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('twk-covers');
+    if (!root) return;
+
+    /* Избранные обложки (★) в центральных колонках 2-3-4, остальные по краям */
+    var COLUMN_1 = [
+      { label: 'Обложка ивента 1', src: 'https://static.tildacdn.com/tild3961-6537-4462-a363-633230643736/05.jpg' },
+      { label: 'Обложка ивента 2', src: 'https://static.tildacdn.com/tild3938-3361-4539-b833-316531666338/12.jpg' },
+      { label: 'Обложка ивента 3', src: 'https://static.tildacdn.com/tild3566-3435-4362-b031-306165626561/02.jpg' },
+      { label: 'Обложка ивента 4', src: 'https://static.tildacdn.com/tild3962-3838-4433-b233-346137323762/36.jpg' },
+      { label: 'Обложка ивента 5', src: 'https://static.tildacdn.com/tild6463-3432-4835-a463-623736356534/10.jpg' },
+      { label: 'Обложка ивента 6', src: 'https://static.tildacdn.com/tild3665-3165-4239-a637-333335626236/30.jpg' },
+      { label: 'Обложка ивента 7', src: 'https://static.tildacdn.com/tild6363-3438-4631-a330-623033343366/40.jpg' },
+      { label: 'Обложка ивента 8', src: 'https://static.tildacdn.com/tild3539-3938-4239-b134-333536373237/24.JPG' }
+    ];
+    var COLUMN_2 = [
+      { label: 'Обложка ивента 9', src: 'https://static.tildacdn.com/tild3735-6562-4335-b636-343562383061/06.jpg' },    /* ★ 06 */
+      { label: 'Обложка ивента 10', src: 'https://static.tildacdn.com/tild3939-3733-4135-b637-663864383464/04.jpg' },    /* ★ 04 */
+      { label: 'Обложка ивента 11', src: 'https://static.tildacdn.com/tild6265-3935-4236-b563-323466616337/15_.jpg' },   /* ★ 15 */
+      { label: 'Обложка ивента 12', src: 'https://static.tildacdn.com/tild3962-3564-4265-b534-393966306330/29.jpg' },    /* ★ 29 */
+      { label: 'Обложка ивента 13', src: 'https://static.tildacdn.com/tild3163-6637-4365-b462-333330326662/35.jpg' },    /* ★ 35 */
+      { label: 'Обложка ивента 14', src: 'https://static.tildacdn.com/tild3539-3331-4535-a266-623366363666/26.jpg' },
+      { label: 'Обложка ивента 15', src: 'https://static.tildacdn.com/tild3139-3062-4365-b965-313939313338/38.jpg' },
+      { label: 'Обложка ивента 16', src: 'https://static.tildacdn.com/tild3637-3936-4235-b839-303339333538/18_.jpg' }
+    ];
+    var COLUMN_3 = [
+      { label: 'Обложка ивента 17', src: 'https://static.tildacdn.com/tild6262-6132-4765-a636-626134356232/09.jpg' },    /* ★ 09 */
+      { label: 'Обложка ивента 18', src: 'https://static.tildacdn.com/tild3334-3438-4137-b738-353439303063/13.jpg' },    /* ★ 13 */
+      { label: 'Обложка ивента 19', src: 'https://static.tildacdn.com/tild6437-6536-4438-a365-313331343438/19_.jpg' },   /* ★ 19 */
+      { label: 'Обложка ивента 20', src: 'https://static.tildacdn.com/tild6465-3265-4438-a334-386338373165/28.jpg' },    /* ★ 28 */
+      { label: 'Обложка ивента 21', src: 'https://static.tildacdn.com/tild3537-3263-4637-a465-646436356531/11.jpg' },    /* ★ 11 */
+      { label: 'Обложка ивента 22', src: 'https://static.tildacdn.com/tild6264-6166-4336-b938-623364316238/37.jpg' },
+      { label: 'Обложка ивента 23', src: 'https://static.tildacdn.com/tild3935-3733-4335-a363-306131623837/21.png' },
+      { label: 'Обложка ивента 24', src: 'https://static.tildacdn.com/tild3362-6435-4266-a665-353266643034/39.jpg' }
+    ];
+    var COLUMN_4 = [
+      { label: 'Обложка ивента 25', src: 'https://static.tildacdn.com/tild6335-3166-4531-b330-653266383537/08.png' },    /* ★ 08 */
+      { label: 'Обложка ивента 26', src: 'https://static.tildacdn.com/tild3831-3734-4937-a466-313662646136/25_.jpg' },   /* ★ 25 */
+      { label: 'Обложка ивента 27', src: 'https://static.tildacdn.com/tild3039-3066-4434-b931-653534363864/27.jpg' },    /* ★ 27 */
+      { label: 'Обложка ивента 28', src: 'https://static.tildacdn.com/tild3132-3736-4531-a164-326434386330/31.jpg' },    /* ★ 31 */
+      { label: 'Обложка ивента 29', src: 'https://static.tildacdn.com/tild3833-3066-4431-b330-303465366134/22.jpg' },
+      { label: 'Обложка ивента 30', src: 'https://static.tildacdn.com/tild3432-6264-4235-a166-346263373164/14.jpg' },
+      { label: 'Обложка ивента 31', src: 'https://static.tildacdn.com/tild3734-3233-4539-b963-386230656337/29_.jpg' },
+      { label: 'Обложка ивента 32', src: 'https://static.tildacdn.com/tild6162-3766-4738-b936-333562353434/31_.jpg' }
+    ];
+    var COLUMN_5 = [
+      { label: 'Обложка ивента 33', src: 'https://static.tildacdn.com/tild3963-3537-4963-b461-396231323930/01.jpg' },
+      { label: 'Обложка ивента 34', src: 'https://static.tildacdn.com/tild3637-3862-4165-a162-353331376532/25.jpg' },
+      { label: 'Обложка ивента 35', src: 'https://static.tildacdn.com/tild3834-3863-4834-b138-356132626539/23.jpg' },
+      { label: 'Обложка ивента 36', src: 'https://static.tildacdn.com/tild6434-3736-4431-a534-633330653664/32.jpg' },
+      { label: 'Обложка ивента 37', src: 'https://static.tildacdn.com/tild6138-3762-4463-a137-646363386466/03.jpg' },
+      { label: 'Обложка ивента 38', src: 'https://static.tildacdn.com/tild3235-3339-4830-b434-373333326431/33.jpg' },
+      { label: 'Обложка ивента 39', src: 'https://static.tildacdn.com/tild3264-3138-4062-b134-306434386563/07.png' },
+      { label: 'Обложка ивента 40', src: 'https://static.tildacdn.com/tild3731-3432-4864-b066-393661313332/34.jpg' }
+    ];
+
+    function getActiveColumns() {
+      if (window.innerWidth <= 767) return [COLUMN_1, COLUMN_2, COLUMN_3];
+      if (window.innerWidth <= 1440) return [COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4];
+      return [COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5];
+    }
+
+    function getSettings(count) {
+      if (count === 5) return [{speed:.58,start:.0},{speed:.44,start:.12},{speed:.32,start:.06},{speed:.44,start:.12},{speed:.58,start:.0}];
+      if (count === 4) return [{speed:.40,start:.0},{speed:.52,start:.10},{speed:.64,start:.20},{speed:.76,start:.30}];
+      /* 3 колонки (мобиле) */
+      return [{speed:.38,start:.0},{speed:.26,start:.06},{speed:.38,start:.0}];
+    }
+
+    function ensureMinItems(columns, minPerColumn) {
+      return columns.map(function (col) {
+        if (col.length === 0) return [];
+        var out = col.slice(); var i = 0;
+        while (out.length < minPerColumn) { out.push(col[i % col.length]); i++; }
+        return out;
+      });
+    }
+
+    var viewer = document.createElement('div');
+    viewer.className = 'twk-viewer';
+    viewer.innerHTML =
+      '<div class="twk-viewer__bg"></div>' +
+      '<div class="twk-viewer__content">' +
+        '<button class="twk-viewer__close" type="button" aria-label="Закрыть"></button>' +
+        '<img class="twk-viewer__img" src="" alt="Просмотр обложки">' +
+      '</div>';
+
+    function cardHTML(photo) {
+      return '<button class="twk-cover" type="button" data-full="' + photo.src + '"><span class="twk-cover__shine"></span><img src="' + photo.src + '" alt="' + photo.label + '"></button>';
+    }
+
+    function build() {
+      root.innerHTML = '';
+      var activeColumns = getActiveColumns();
+      var settings = getSettings(activeColumns.length);
+      root.style.setProperty('--cols', activeColumns.length);
+      var minItems = 8;
+      var columns = ensureMinItems(activeColumns, minItems);
+
+      var sticky = document.createElement('div'); sticky.className = 'twk-covers__sticky';
+      var viewport = document.createElement('div'); viewport.className = 'twk-covers__viewport';
+      var grid = document.createElement('div'); grid.className = 'twk-covers__grid';
+      /* Затемнения отключены */
+
+      columns.forEach(function (photos, colIndex) {
+        var lane = document.createElement('div'); lane.className = 'twk-covers__lane';
+        lane.setAttribute('data-speed', settings[colIndex].speed);
+        lane.setAttribute('data-start', settings[colIndex].start);
+        var html = photos.map(cardHTML).join('');
+        ['prev','current','next'].forEach(function(n) {
+          var s = document.createElement('div'); s.className = 'twk-covers__stack';
+          s.setAttribute('data-stack', n); s.innerHTML = html; lane.appendChild(s);
+        });
+        grid.appendChild(lane);
+      });
+
+      viewport.appendChild(grid);
+      /* fadeTop и fadeBottom убраны */
+      sticky.appendChild(viewport);
+      root.appendChild(sticky);
+      root.appendChild(viewer);
+      bindCards(); updateColumns();
+    }
+
+    function bindCards() {
+      var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      root.querySelectorAll('.twk-cover').forEach(function (card) {
+        if (card.dataset.bound === '1') return; card.dataset.bound = '1';
+        var img = card.querySelector('img');
+        card.addEventListener('mousemove', function (e) {
+          if (rm || window.innerWidth < 768) return;
+          var rect = card.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width, py = (e.clientY - rect.top) / rect.height;
+          card.style.transform = 'perspective(1000px) rotateX(' + ((0.5-py)*6) + 'deg) rotateY(' + ((px-0.5)*6) + 'deg) translateY(-2px) scale(1.01)';
+          img.style.transform = 'scale(1.03) translate3d(' + ((px-0.5)*6) + 'px,' + ((py-0.5)*6) + 'px,0)';
+        });
+        card.addEventListener('mouseleave', function () { card.style.transform = ''; img.style.transform = ''; });
+        card.addEventListener('click', function () {
+          viewer.querySelector('.twk-viewer__img').src = card.getAttribute('data-full') || img.src;
+          viewer.classList.add('is-open'); root.classList.add('is-viewer-open'); document.body.style.overflow = 'hidden';
+        });
+      });
+    }
+
+    function closeViewer() { viewer.classList.remove('is-open'); root.classList.remove('is-viewer-open'); document.body.style.overflow = ''; }
+
+    var cachedHeight = 0, cachedTop = 0, cachedVh = 0;
+    function cacheRect() { cachedHeight = root.offsetHeight; cachedVh = window.innerHeight; }
+    window.addEventListener('resize', cacheRect);
+    setTimeout(cacheRect, 100);
+
+    function updateColumns() {
+      if (!cachedHeight) cacheRect();
+      cachedTop = root.getBoundingClientRect().top;
+      var total = Math.max(cachedHeight - cachedVh, 1);
+      var progress = Math.min(Math.max(-cachedTop / total, 0), 1);
+      root.querySelectorAll('.twk-covers__lane').forEach(function (lane) {
+        var prev = lane.querySelector('[data-stack="prev"]'), cur = lane.querySelector('[data-stack="current"]'), next = lane.querySelector('[data-stack="next"]');
+        if (!prev || !cur || !next) return;
+        var gap = parseFloat(getComputedStyle(cur).gap || 0), loop = cur.offsetHeight + gap;
+        var speed = parseFloat(lane.getAttribute('data-speed') || '0.5'), start = parseFloat(lane.getAttribute('data-start') || '0');
+        var travel = loop * 1.2, offset = -((start * loop) + (progress * travel * speed));
+        while (offset < -loop) offset += loop; while (offset > 0) offset -= loop;
+        prev.style.transform = 'translate3d(0,' + (offset - loop) + 'px,0)';
+        cur.style.transform = 'translate3d(0,' + offset + 'px,0)';
+        next.style.transform = 'translate3d(0,' + (offset + loop) + 'px,0)';
+      });
+    }
+
+    viewer.addEventListener('click', function (e) { if (e.target.classList.contains('twk-viewer__bg') || e.target.classList.contains('twk-viewer__close')) closeViewer(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && viewer.classList.contains('is-open')) closeViewer(); });
+    window.addEventListener('resize', build);
+    /* Скролл через rAF — не чаще 1 раза за кадр */
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) { ticking = true; requestAnimationFrame(function() { updateColumns(); ticking = false; }); }
+    }, { passive: true });
+    build();
+  })();
+</script>

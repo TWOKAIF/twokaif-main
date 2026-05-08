@@ -1,0 +1,537 @@
+<!-- ============================================
+     БЛОК 7: ЦЕНЫ
+     T123 блок — аккордеон услуг с превью слева
+
+     Здесь меняй:
+     — Заголовок: class="pricing-title"
+     — Название услуги: class="pricing-card-name"
+     — Цена: class="pricing-card-price"
+     — Варианты: class="pricing-variant-name", "pricing-variant-note"
+     — Теги: class="pricing-tag"
+     — Кнопка: class="pricing-card-btn" (href — ссылка)
+     — Превью: class="pricing-preview-item" (img или video)
+
+     ПРЕВЬЮ-КАРТИНКИ (видны только на ПК, скрыты на планшете):
+     — Размер: 720×1080 px (вертикальное, 2:3)
+     — Формат: JPG, до 300 КБ
+     — Можно заменить на видео:
+       <video src="ссылка.mp4" autoplay loop muted playsinline></video>
+       Видео: 720×1080 px, MP4, до 8 МБ
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Сетка: превью (320–480px) + список
+     — Заголовок: clamp(32px, 5vw, 56px)
+     — Превью-панель: sticky, top 100px
+     — Аккордеон раскрывается до 800px
+
+     НАСТРОЙКИ ПЛАНШЕТ (до 1068px):
+     — Одна колонка, превью-панель скрыта
+
+     НАСТРОЙКИ МОБИЛЕ (до 734px):
+     — Заголовок: clamp(28px, 7vw, 40px)
+     — Название услуги: clamp(14px, 3.5vw, 18px)
+     ============================================ -->
+<style>
+/* Секция цен */
+.pricing{padding:clamp(80px,10vw,140px) var(--edge) clamp(60px,8vw,100px);position:relative}
+
+/* Заголовок */
+.pricing-header{margin-bottom:clamp(40px,5vw,72px)}
+.pricing-title{font-size:clamp(32px,5vw,56px);font-weight:600;letter-spacing:clamp(-1px,-.3vw,-2.5px);line-height:.92;color:var(--text)}
+
+/* Двухколоночный макет: превью + список */
+.pricing-body{display:grid;grid-template-columns:clamp(320px,36vw,480px) 1fr;gap:clamp(40px,5vw,80px);align-items:start}
+
+/* Превью-панель слева */
+.pricing-preview-panel{position:sticky;top:100px}
+.pricing-preview-wrap{width:100%;aspect-ratio:2/3;overflow:hidden;position:relative;background:var(--surface)}
+.pricing-preview-item{position:absolute;inset:0;opacity:0;transition:opacity .6s var(--ease-out)}
+.pricing-preview-item.active{opacity:1}
+.pricing-preview-item img,.pricing-preview-item video{width:100%;height:100%;object-fit:cover;display:block}
+
+
+/* Авто-скролл слайдов презентации в превью */
+.pv-slides{overflow:hidden;width:100%;height:100%}
+.pv-slides-track{display:flex;flex-direction:column;will-change:transform}
+.pv-slides-track img{width:100%;height:auto;display:block;flex-shrink:0}
+@keyframes pvScroll{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+.pv-slides-track.scrolling{animation:pvScroll var(--pv-duration,60s) linear infinite}
+.pv-slides-track.paused{animation-play-state:paused}
+
+/* Плейсхолдер «место для фото» */
+.pv-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--surface, #f5f5f5);border:1px dashed rgba(0,0,0,.15)}
+.pv-placeholder span{font-family:var(--font-body);font-size:14px;font-weight:400;color:var(--muted, #999);letter-spacing:-.2px;text-align:center;padding:20px}
+.pricing-preview-item.pv-horizontal{background:var(--surface)}
+.pricing-preview-item.pv-horizontal img{object-fit:contain}
+.pricing-preview-item.pv-phone{background:var(--surface);display:flex;align-items:center;justify-content:center}
+
+/* Заглушка «Сайты» */
+.pv-site-placeholder{background:none !important}
+.pv-site-ph-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;z-index:1;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 40%,#0a0a0a 70%,#16213e 100%);background-size:300% 300%;overflow:hidden}
+.pv-site-placeholder.active .pv-site-ph-inner{animation:pvGradient 6s ease infinite}
+@keyframes pvGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.pv-site-ph-inner::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.04) 0%,transparent 70%);opacity:0;transition:opacity 1s ease;z-index:0}
+.pv-site-placeholder.active .pv-site-ph-inner::before{opacity:1;animation:pvGlow 3s ease-in-out infinite}
+@keyframes pvGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.pv-site-ph-text{font-family:var(--font-body);font-size:18px;font-weight:600;letter-spacing:-.3px;line-height:1.35;color:#fff;text-align:center;opacity:0;transform:translateY(16px);transition:opacity .7s ease .15s,transform .7s ease .15s}
+.pv-site-placeholder.active .pv-site-ph-text{opacity:1;transform:translateY(0)}
+.pv-site-ph-cta{font-family:var(--font-body);font-size:14px;font-weight:400;color:rgba(255,255,255,.5);text-align:center;opacity:0;transform:translateY(16px);transition:opacity .7s ease .3s,transform .7s ease .3s}
+.pv-site-placeholder.active .pv-site-ph-cta{opacity:1;transform:translateY(0);animation:pvPulse 2s ease-in-out 1s infinite}
+@keyframes pvPulse{0%,100%{opacity:.5}50%{opacity:.8}}
+.pv-site-ph-link{font-family:var(--font-body);font-size:12px;font-weight:400;color:rgba(255,255,255,.25);text-align:center;letter-spacing:.05em;opacity:0;transform:translateY(16px);transition:opacity .7s ease .45s,transform .7s ease .45s}
+.pv-site-placeholder.active .pv-site-ph-link{opacity:1;transform:translateY(0)}
+
+/* Мокап айфона */
+.iphone-mockup{width:200px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.08));animation:phoneFloat 6s ease-in-out infinite;position:relative}
+@keyframes phoneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.iphone-body{background:#1d1d1f;border-radius:42px;padding:14px 10px;position:relative;box-shadow:0 0 0 2px #3a3a3e}
+.iphone-body::before{content:"";position:absolute;right:-3px;top:100px;width:2px;height:36px;background:#3a3a3e;border-radius:0 2px 2px 0}
+.iphone-body::after{content:"";position:absolute;left:-3px;top:76px;width:2px;height:24px;background:#3a3a3e;border-radius:2px 0 0 2px;box-shadow:0 34px 0 #3a3a3e,0 58px 0 #3a3a3e}
+.iphone-screen{width:100%;aspect-ratio:9/19.5;border-radius:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;position:relative;overflow:hidden;background:#1d1d1f}
+.iphone-island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:90px;height:24px;background:#000;border-radius:20px;z-index:2}
+.iphone-screen-text{font-family:var(--font-body);font-size:22px;font-weight:700;letter-spacing:-1px;line-height:1;text-transform:uppercase;color:#f5f5f7;text-align:center;z-index:1}
+
+/* Превью — календарь */
+.pv-calendar{background:var(--surface);display:flex;align-items:center;justify-content:center}
+.cal-widget{width:80%;max-width:300px;background:var(--bg);padding:24px;font-family:var(--font-body);animation:phoneFloat 6s ease-in-out infinite;filter:drop-shadow(0 8px 24px rgba(0,0,0,.06))}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month{font-size:15px;font-weight:600;letter-spacing:-.3px;color:var(--text)}
+.cal-nav{font-size:16px;color:var(--muted);letter-spacing:8px;cursor:pointer}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px}
+.cal-days span{font-size:9px;font-weight:500;letter-spacing:.3px;text-transform:uppercase;text-align:center;color:var(--muted);padding:4px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-grid span{font-size:12px;font-weight:400;text-align:center;padding:8px 0;color:var(--text);transition:all .3s var(--ease-out)}
+.cal-grid .cal-empty{visibility:hidden}
+.cal-grid .cal-booked{background:var(--text);color:#fff;font-weight:600}
+.cal-legend{display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,0,0,.08)}
+.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)}
+.cal-dot{width:8px;height:8px;display:block}
+.cal-dot-booked{background:var(--text)}
+.cal-dot-free{background:transparent;border:1px solid var(--muted)}
+.cal-export{margin-top:12px;font-size:10px;font-weight:500;letter-spacing:-.1px;color:var(--muted);text-align:center;padding:8px;border:1px solid rgba(0,0,0,.08);cursor:pointer;transition:all .3s var(--ease-out)}
+.cal-export:hover{background:var(--text);color:#fff;border-color:var(--text)}
+
+/* Список услуг справа */
+.pricing-list{list-style:none;padding-left:0 !important}
+
+/* Карточка услуги */
+.pricing-card{cursor:pointer;overflow:visible;position:relative;opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+.pricing-card.visible{opacity:1;transform:translateY(0)}
+.pricing-card:nth-child(1){transition-delay:0s}
+.pricing-card:nth-child(2){transition-delay:.06s}
+.pricing-card:nth-child(3){transition-delay:.12s}
+.pricing-card:nth-child(4){transition-delay:.18s}
+.pricing-card:nth-child(5){transition-delay:.24s}
+
+/* Инверсия при наведении/активации — полная ширина */
+.pricing-card::before{content:"";position:absolute;left:calc(-1 * var(--edge));right:calc(-1 * var(--edge));top:0;bottom:0;background:var(--text);opacity:0;transition:opacity .4s var(--ease-out);z-index:0;pointer-events:none}
+.pricing-card:hover::before,.pricing-card.active::before{opacity:1}
+/* На мобиле ограничиваем ::before чтобы не выходил за overflow */
+@media(max-width:734px){.pricing-list{overflow:hidden}}
+
+/* Верхняя разделительная линия */
+.pricing-card::after{content:"";position:absolute;top:0;left:calc(-1 * var(--edge));right:calc(-1 * var(--edge));height:1px;background:rgba(0,0,0,.08);z-index:3}
+.pricing-list::after{content:"";display:block;height:1px;background:rgba(0,0,0,.08);margin-left:calc(-1 * var(--edge));margin-right:calc(-1 * var(--edge))}
+
+/* Голова карточки */
+.pricing-card-head{display:grid;grid-template-columns:32px 1fr auto;gap:16px;align-items:center;padding:0 0 0 20px;position:relative;z-index:1;min-height:60px}
+
+/* Индекс */
+.pricing-card-index{font-size:14px;font-weight:400;letter-spacing:-.16px;color:var(--muted);transition:color .4s var(--ease-out)}
+.pricing-card:hover .pricing-card-index,.pricing-card.active .pricing-card-index{color:#fff !important;opacity:.5}
+
+/* Название услуги */
+.pricing-card-name{font-size:clamp(16px,1.8vw,21px);font-weight:600;letter-spacing:clamp(-.3px,-.15vw,-.8px);line-height:1.1;transition:color .4s var(--ease-out);color:var(--text)}
+.pricing-card:hover .pricing-card-name,.pricing-card.active .pricing-card-name{color:#fff !important}
+
+/* Подзаголовок услуги */
+.pricing-card-sub{font-size:14px;font-weight:400;letter-spacing:-.16px;color:var(--muted);grid-column:2;margin-top:4px;transition:color .4s var(--ease-out)}
+.pricing-card:hover .pricing-card-sub,.pricing-card.active .pricing-card-sub{color:#fff !important;opacity:.5}
+
+/* Цена */
+.pricing-card-price{font-size:clamp(16px,1.8vw,21px);font-weight:600;letter-spacing:clamp(-.3px,-.15vw,-.8px);line-height:1.1;white-space:nowrap;transition:color .4s var(--ease-out);color:var(--text)}
+.pricing-card:hover .pricing-card-price,.pricing-card.active .pricing-card-price{color:#fff !important}
+
+/* Правая часть с ценой и тогглом */
+.pricing-card-right{display:flex;align-items:center;padding-right:0}
+
+/* Затухание неактивных при наведении на список */
+.pricing-list:hover .pricing-card:not(:hover) .pricing-card-name,
+.pricing-list:hover .pricing-card:not(:hover) .pricing-card-price{opacity:.3}
+
+/* Кнопка раскрытия +/- */
+.pricing-toggle{width:32px;height:32px;flex-shrink:0;position:relative;margin-left:16px;border:1px solid rgba(0,0,0,.12);background:transparent;transition:border-color .35s var(--ease-out),background .35s var(--ease-out)}
+.pricing-card:hover .pricing-toggle,.pricing-card.active .pricing-toggle{background:#fff;border-color:#fff}
+.pricing-toggle::before,.pricing-toggle::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:1px;background:var(--text);transition:transform .45s var(--ease-out),background .35s var(--ease-out)}
+.pricing-toggle::before{transform:translate(-50%,-50%)}
+.pricing-toggle::after{transform:translate(-50%,-50%) rotate(90deg)}
+.pricing-card.active .pricing-toggle::after{transform:translate(-50%,-50%) rotate(0)}
+
+/* Тело карточки (раскрывается) */
+.pricing-card-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease-out);position:relative;z-index:2}
+.pricing-card.active .pricing-card-body{max-height:800px}
+.pricing-card-body-inner{padding:2px 20px 14px 68px;position:relative;z-index:1}
+.pricing-card.active .pricing-card-body-inner{background:var(--text);padding:6px 20px 14px 68px}
+
+/* Описание внутри карточки */
+.pricing-card-desc{font-size:15px;font-weight:400;letter-spacing:-.16px;line-height:1.55;color:var(--muted);max-width:500px;margin-bottom:12px}
+.pricing-card.active .pricing-card-desc{color:#fff !important;opacity:.6}
+
+/* Теги */
+.pricing-card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.pricing-tag{font-size:13px;font-weight:500;letter-spacing:-.1px;padding:5px 12px;border:1px solid rgba(0,0,0,.1);color:var(--muted)}
+.pricing-card.active .pricing-tag{border-color:rgba(255,255,255,.2);opacity:.5;color:#fff !important}
+
+/* Варианты работы */
+.pricing-variant-title{font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid;opacity:.3;transition:color .4s var(--ease-out),border-color .4s var(--ease-out)}
+.pricing-card.active .pricing-variant-title{color:#fff !important;border-color:currentColor}
+.pricing-variant{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(0,0,0,.08);opacity:1;transition:border-color .4s var(--ease-out)}
+.pricing-variant:last-of-type{margin-bottom:10px;border-bottom:none;padding-bottom:0}
+.pricing-card.active .pricing-variant{border-color:rgba(255,255,255,.1)}
+.pricing-variant-label{font-size:13px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;opacity:.35;transition:color .4s var(--ease-out)}
+.pricing-card.active .pricing-variant-label{color:#fff !important}
+.pricing-variant-name{font-size:17px;font-weight:600;letter-spacing:-.3px;line-height:1.2;margin-bottom:4px;transition:color .4s var(--ease-out)}
+.pricing-card.active .pricing-variant-name{color:#fff !important}
+.pricing-variant-price{font-size:15px;font-weight:500;letter-spacing:-.2px;margin-bottom:6px;opacity:.8;transition:color .4s var(--ease-out)}
+.pricing-card.active .pricing-variant-price{color:#fff !important}
+.pricing-variant-note{font-size:14px;font-weight:400;letter-spacing:-.1px;line-height:1.5;color:var(--muted);margin-bottom:8px}
+.pricing-card.active .pricing-variant-note{color:#fff !important;opacity:.4}
+.pricing-variant-tags{display:flex;gap:6px;flex-wrap:wrap}
+
+/* Кнопка «Заказать» — с заливкой ::before при ховере */
+.pricing-card-btn{display:inline-block;padding:12px 28px;background:var(--text);color:var(--bg) !important;font-family:var(--font-body);font-size:15px;font-weight:500;letter-spacing:-.18px;text-decoration:none;border:1px solid var(--text);position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out)}
+.pricing-card-btn::before{content:"";position:absolute;inset:0;background:var(--bg);transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:-1}
+.pricing-card-btn:hover::before{transform:scaleX(1)}
+.pricing-card-btn:hover{color:var(--text) !important}
+.pricing-card.active .pricing-card-btn{background:var(--bg);color:var(--text) !important;border-color:var(--bg)}
+.pricing-card.active .pricing-card-btn::before{background:var(--text);z-index:-1}
+.pricing-card.active .pricing-card-btn:hover{color:var(--bg) !important}
+
+/* Подпись под превью */
+.pricing-note{margin-top:20px;font-size:15px;font-weight:400;letter-spacing:-.18px;line-height:1.35;color:var(--muted)}
+
+/* === Адаптив === */
+@media(max-width:1068px){
+  .pricing-body{grid-template-columns:1fr;gap:0}
+  .pricing-preview-panel{display:none}
+  .pricing-note{max-width:100%}
+}
+@media(max-width:734px){
+  .pricing{padding:clamp(48px,8vw,80px) var(--edge) clamp(32px,6vw,48px)}
+  .pricing-header{margin-bottom:28px}
+  .pricing-title{font-size:clamp(28px,7vw,40px)}
+  .pricing-card-head{grid-template-columns:24px 1fr auto;gap:10px;padding:0 0 0 8px;min-height:54px}
+  .pricing-card-name{font-size:clamp(14px,3.5vw,18px)}
+  .pricing-card-price{font-size:clamp(14px,3.5vw,18px)}
+  .pricing-toggle{width:28px;height:28px;margin-left:10px}
+  .pricing-card-body-inner{padding:4px 16px 20px 40px!important}
+  .pricing-card.active .pricing-card-body-inner{padding:10px 16px 20px 40px!important}
+  .pricing-card-desc{font-size:14px;max-width:100%}
+  .pricing-tag{font-size:12px;padding:4px 10px}
+  .pricing-card-btn{font-size:14px;padding:10px 24px}
+}
+</style>
+
+<!-- ЦЕНЫ -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <!-- Здесь меняй заголовок секции -->
+    <h2 class="pricing-title">Цены</h2>
+  </div>
+
+  <div class="pricing-body">
+    <!-- Превью слева -->
+    <div class="pricing-preview-panel" id="pricingPreview">
+      <div class="pricing-preview-wrap">
+        <!--
+          === ПРЕВЬЮ УСЛУГ ===
+
+          Можно вставлять КАРТИНКУ или ВИДЕО:
+
+          Картинка:
+          <img src="ссылка.jpg" alt="Превью работы в прайсе">
+
+          Видео:
+          <video src="ссылка.mp4" autoplay loop muted playsinline></video>
+
+          РАЗМЕРЫ:
+          — Формат кадра: 2:3 (вертикальное)
+          — Картинка: 720×1080 px, JPG, до 300 КБ
+          — Видео: 720×1080 px, MP4 (H.264), до 5—8 МБ
+          — Атрибуты autoplay loop muted playsinline обязательны для видео
+        -->
+
+        <!-- 01 Обложка — замени src на своё фото или видео -->
+        <div class="pricing-preview-item pv-vertical active" data-price="0">
+          <img src="https://static.tildacdn.com/tild3338-3430-4566-b766-646463383065/02_-.jpg" alt="Обложка">
+          <!-- Или видео: <video src="ссылка.mp4" autoplay loop muted playsinline></video> -->
+        </div>
+
+        <!-- 02 Афиша -->
+        <div class="pricing-preview-item pv-vertical" data-price="1">
+          <img src="https://static.tildacdn.com/tild3536-6363-4833-b931-623332303633/-_-.jpg" alt="Афиша">
+        </div>
+
+        <!-- 03 Презентация — авто-скролл слайдов с паузой при ховере -->
+        <div class="pricing-preview-item pv-vertical pv-slides" data-price="2">
+          <div class="pv-slides-track" id="pvSlidesTrack" style="--pv-duration:60s">
+            <img src="https://static.tildacdn.com/tild3937-6264-4934-b461-383461613261/slide-01.jpg" alt="Слайд презентации в прайсе 1" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6563-3666-4365-b463-643436336131/slide-02.jpg" alt="Слайд презентации в прайсе 2" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6536-6331-4635-a565-616535313366/slide-03.jpg" alt="Слайд презентации в прайсе 3" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6432-3864-4961-b365-313664326330/slide-04.jpg" alt="Слайд презентации в прайсе 4" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3333-6430-4062-b563-373966396636/slide-05.jpg" alt="Слайд презентации в прайсе 5" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3435-3339-4566-b634-663033626331/slide-06.jpg" alt="Слайд презентации в прайсе 6" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6131-6330-4634-a365-396164633136/slide-07.jpg" alt="Слайд презентации в прайсе 7" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3763-3339-4630-b934-396639303835/slide-08.jpg" alt="Слайд презентации в прайсе 8" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3731-6138-4236-b039-646136356466/slide-09.jpg" alt="Слайд презентации в прайсе 9" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3330-6261-4438-a365-666263663534/slide-10.jpg" alt="Слайд презентации в прайсе 10" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3933-3361-4436-a333-363162303264/slide-11.jpg" alt="Слайд презентации в прайсе 11" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6532-6432-4264-b231-613631366534/slide-12.jpg" alt="Слайд презентации в прайсе 12" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6636-6566-4339-a139-313231353363/slide-13.jpg" alt="Слайд презентации в прайсе 13" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3235-3133-4231-b464-343166363265/slide-14.jpg" alt="Слайд презентации в прайсе 14" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3831-3064-4432-b435-326434633338/slide-15.jpg" alt="Слайд презентации в прайсе 15" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6237-3230-4339-b334-353632323765/slide-16.jpg" alt="Слайд презентации в прайсе 16" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3863-6635-4365-a439-633035386433/slide-17.jpg" alt="Слайд презентации в прайсе 17" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6134-3163-4962-b561-323035663531/slide-18.jpg" alt="Слайд презентации в прайсе 18" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6237-3632-4734-b866-633332653464/slide-19.jpg" alt="Слайд презентации в прайсе 19" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3666-6439-4032-a166-663933316131/slide-20.jpg" alt="Слайд презентации в прайсе 20" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6138-6162-4333-b432-343136663666/slide-21.jpg" alt="Слайд презентации в прайсе 21" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3336-3135-4533-b066-306238666335/slide-22.jpg" alt="Слайд презентации в прайсе 22" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6636-3766-4436-b762-616565613932/slide-23.jpg" alt="Слайд презентации в прайсе 23" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3037-3763-4437-b533-383263326435/slide-24.jpg" alt="Слайд презентации в прайсе 24" loading="lazy">
+            <img src="https://static.tildacdn.com/tild6634-3164-4963-b837-363162633831/slide-25.jpg" alt="Слайд презентации в прайсе 25" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3765-6535-4962-a438-636235623935/slide-26.jpg" alt="Слайд презентации в прайсе 26" loading="lazy">
+            <img src="https://static.tildacdn.com/tild3965-3335-4331-a434-373962393030/slide-27.jpg" alt="Слайд презентации в прайсе 27" loading="lazy">
+          </div>
+        </div>
+
+        <!-- 04 Сайт — заглушка -->
+        <div class="pricing-preview-item pv-vertical pv-site-placeholder" data-price="3">
+          <div class="pv-site-ph-inner">
+            <span class="pv-site-ph-text">Формирую кейсы<br>новых адаптивных сайтов</span>
+            <span class="pv-site-ph-cta">Успей занять своё место</span>
+          </div>
+        </div>
+
+        <!-- 05 Интерактивы -->
+        <div class="pricing-preview-item pv-vertical" data-price="4">
+          <img src="https://static.tildacdn.com/tild3062-6130-4334-b164-633337626666/02__.jpg" alt="Интерактивы">
+        </div>
+      </div>
+      <!-- Пакетные предложения -->
+      <p class="pricing-note">Пакетные предложения и&nbsp;персональные условия<br>для&nbsp;постоянных клиентов&nbsp;— напиши, обсудим</p>
+    </div>
+
+    <!-- Список услуг справа -->
+    <ul class="pricing-list" id="pricingList">
+      <!-- Услуга 1: Обложка -->
+      <li class="pricing-card" data-price="0">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">01</span>
+          <span class="pricing-card-name">Обложка</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;3&nbsp;600&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-variant-title">Варианты работы</div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-label">Делает команда Руслана</div>
+            <div class="pricing-variant-name">от&nbsp;3&nbsp;600&nbsp;₽</div>
+            <div class="pricing-variant-note">Стоимость одной обложки.<br>Ресайз <em style="opacity:.7">(адаптация под&nbsp;другой формат)</em>&nbsp;— 1&nbsp;000&nbsp;₽/шт.</div>
+            <div class="pricing-variant-tags">
+              <span class="pricing-tag">Срок изготовления от&nbsp;2—х рабочих дней</span>
+              <span class="pricing-tag">Срочный проект +%</span>
+            </div>
+          </div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-label">Делает персонально Руслан</div>
+            <div class="pricing-variant-name">от&nbsp;7&nbsp;000&nbsp;₽ + ресайз</div>
+            <div class="pricing-variant-note">Авторский дизайн, персональный подход</div>
+            <div class="pricing-variant-tags">
+              <span class="pricing-tag">Изготовление от&nbsp;5—ти рабочих дней</span>
+              <span class="pricing-tag">Срочный проект +%</span>
+            </div>
+          </div>
+
+          <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 2: Афиша -->
+      <li class="pricing-card" data-price="1">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">02</span>
+          <span class="pricing-card-name">Афиша</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;4&nbsp;400&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-variant-title">Варианты работы</div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-label">Делает команда Руслана</div>
+            <div class="pricing-variant-name">от&nbsp;4&nbsp;400&nbsp;₽</div>
+            <div class="pricing-variant-note">Стоимость одной афиши.<br>Ресайз <em style="opacity:.7">(адаптация под&nbsp;другой формат)</em>&nbsp;— 1&nbsp;000&nbsp;₽/шт.</div>
+            <div class="pricing-variant-tags">
+              <span class="pricing-tag">Срок изготовления от&nbsp;2—х рабочих дней</span>
+              <span class="pricing-tag">Срочный проект +%</span>
+            </div>
+          </div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-label">Делает персонально Руслан</div>
+            <div class="pricing-variant-name">от&nbsp;9&nbsp;000&nbsp;₽ + ресайз</div>
+            <div class="pricing-variant-note">Авторский дизайн, персональный подход</div>
+            <div class="pricing-variant-tags">
+              <span class="pricing-tag">Изготовление от&nbsp;5—ти рабочих дней</span>
+              <span class="pricing-tag">Срочный проект +%</span>
+            </div>
+          </div>
+
+          <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 3: Презентация -->
+      <li class="pricing-card" data-price="2">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">03</span>
+          <span class="pricing-card-name">Презентация</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;2&nbsp;600&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-variant-name">от&nbsp;2&nbsp;600&nbsp;₽ за&nbsp;слайд</div>
+          <p class="pricing-card-desc">Презентация&nbsp;— многоуровневая работа. Заявка на&nbsp;Wedding Awards, выступление на&nbsp;TOP100AWARDS, промо для&nbsp;агентства, КП&nbsp;для&nbsp;клиента&nbsp;— у&nbsp;каждой задачи свои условия</p>
+          <p class="pricing-card-desc" style="margin-bottom:16px">Смотрим ТЗ, оцениваем объём и&nbsp;сложность,<br>после чего называем точную стоимость и&nbsp;сроки</p>
+          <div class="pricing-variant-tags" style="margin-bottom:16px">
+            <span class="pricing-tag">WA</span>
+            <span class="pricing-tag">TOP100</span>
+            <span class="pricing-tag">Промо</span>
+            <span class="pricing-tag">КП</span>
+            <span class="pricing-tag">PDF</span>
+            <span class="pricing-tag">Срочный проект +%</span>
+          </div>
+          <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 4: Сайт -->
+      <li class="pricing-card" data-price="3">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">04</span>
+          <span class="pricing-card-name">Сайт</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;85&nbsp;000&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-variant-title">Варианты работы</div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-name">Одностраничный&nbsp;— от&nbsp;85&nbsp;000&nbsp;₽</div>
+            <div class="pricing-variant-note">5–7&nbsp;блоков: главный экран, обо&nbsp;мне, услуги, портфолио, отзывы, контакты</div>
+          </div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-name">Многостраничный&nbsp;— от&nbsp;120&nbsp;000&nbsp;₽</div>
+            <div class="pricing-variant-note">Считаем блоки, стоимость зависит от&nbsp;объёма и&nbsp;сложности</div>
+          </div>
+
+          <div class="pricing-variant">
+            <div class="pricing-variant-name">Комплекс&nbsp;— от&nbsp;200&nbsp;000&nbsp;₽</div>
+            <div class="pricing-variant-note">Сайт + презентация + обложки в&nbsp;едином стиле</div>
+          </div>
+
+          <p class="pricing-card-desc" style="margin-bottom:12px;opacity:.4;font-size:13px">Блок&nbsp;— один смысловой раздел&nbsp;сайта<br><em style="opacity:.7">(главный экран, обо&nbsp;мне, тарифы, галерея)</em></p>
+          <div class="pricing-variant-tags" style="margin-bottom:16px">
+            <span class="pricing-tag">Срок изготовления от&nbsp;3–4&nbsp;недель</span>
+            <span class="pricing-tag">Срочный проект +%</span>
+          </div>
+          <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 5: Интерактивы -->
+      <li class="pricing-card" data-price="4">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">05</span>
+          <span class="pricing-card-name">Интерактивы</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;5&nbsp;000&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <p class="pricing-card-desc">Помогаем ведущим оформлять их&nbsp;идеи и&nbsp;задумки в&nbsp;интерактивы для&nbsp;мероприятий. Сейчас почти на&nbsp;каждом ивенте есть экраны&nbsp;— и&nbsp;мы&nbsp;делаем контент для&nbsp;них: соединяем лица гостей со&nbsp;звёздами, превращаем любой кадр в&nbsp;юмористическое видео, создаём визуальные шоу и&nbsp;эффекты, которые вовлекают зал</p>
+          <p class="pricing-card-desc">Открыты к&nbsp;любым форматам и&nbsp;нестандартным задачам&nbsp;— поможем воплотить твою задумку в&nbsp;жизнь. Понимаем важность дедлайнов и&nbsp;всегда укладываемся в&nbsp;сроки</p>
+          <div class="pricing-variant-tags" style="margin-bottom:12px">
+            <span class="pricing-tag">PDF</span>
+            <span class="pricing-tag">PNG</span>
+            <span class="pricing-tag">JPEG</span>
+            <span class="pricing-tag">PPTX</span>
+            <span class="pricing-tag">MP4</span>
+            <span class="pricing-tag">Срочный проект +%</span>
+          </div>
+          <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="pricing-card-btn">Обсудить проект</a>
+        </div></div>
+      </li>
+    </ul>
+  </div>
+
+</section>
+
+<script>
+/* Анимация появления карточек + превью + аккордеон */
+var pC=document.querySelectorAll(".pricing-card"),pP=document.querySelectorAll(".pricing-preview-item");
+var pO=new IntersectionObserver(function(e){e.forEach(function(n){if(n.isIntersecting)n.target.classList.add("visible")})},{threshold:.1});
+pC.forEach(function(e){pO.observe(e)});
+/* Превью по наведению */
+pC.forEach(function(c){c.addEventListener("mouseenter",function(){var i=c.dataset.price;pP.forEach(function(p){p.classList.remove("active")});var t=document.querySelector('.pricing-preview-item[data-price="'+i+'"]');if(t)t.classList.add("active")})});
+/* Аккордеон по клику */
+document.querySelectorAll(".pricing-card-head").forEach(function(h){h.addEventListener("click",function(){var c=h.closest(".pricing-card"),w=c.classList.contains("active");pC.forEach(function(x){x.classList.remove("active")});if(!w)c.classList.add("active")})});
+
+/* Авто-скролл презентации с паузой при ховере */
+(function(){
+  var track=document.getElementById('pvSlidesTrack');
+  if(!track)return;
+  var card=document.querySelector('.pricing-card[data-price="2"]');
+  if(!card)return;
+  var preview=track.closest('.pricing-preview-item');
+
+  /* Дублируем слайды для бесшовного цикла */
+  track.innerHTML+=track.innerHTML;
+
+  /* Запуск скролла при наведении на карточку «Презентация» */
+  card.addEventListener('mouseenter',function(){
+    track.classList.add('scrolling');
+    track.classList.remove('paused');
+  });
+  card.addEventListener('mouseleave',function(){
+    track.classList.remove('scrolling');
+    track.style.animation='none';
+    void track.offsetWidth;
+    track.style.animation='';
+  });
+
+  /* Пауза при наведении на само превью */
+  if(preview){
+    preview.addEventListener('mouseenter',function(){
+      track.classList.add('paused');
+    });
+    preview.addEventListener('mouseleave',function(){
+      track.classList.remove('paused');
+    });
+  }
+})();
+
+</script>

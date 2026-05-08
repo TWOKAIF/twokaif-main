@@ -1,0 +1,134 @@
+<!-- ============================================
+     БЛОК 9: ФУТЕР
+     T123 блок — огромный логотип + CTA + соцсети + реквизиты
+
+     Здесь меняй:
+     — CTA кнопка: href в class="btn-fill" (ссылка на Телеграм)
+     — Текст CTA: «Готов обсудить проект?»
+     — Часы работы: class="footer-hours"
+     — Соцсети: ссылки в class="footer-social-links" (href)
+     — Текст приватности: class="footer-privacy-text"
+     — Копирайт: class="footer-copy"
+     — Реквизиты ИП: class="footer-legal" (ИНН, ОГРНИП)
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Логотип ТУКАЙФ: 18vw (как на hero)
+     — Снежинка: 10%, макс. 120px
+     — CTA кнопка: 18px, padding 18px 40px
+     — Нижняя часть: 3 колонки (копирайт, соцсети, реквизиты)
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Нижняя часть: 1 колонка, центрированная
+     — CTA: font-size 16px, padding 16px 32px
+     — Соцсети: по центру, перенос строк
+
+     НАСТРОЙКИ МИНИ-МОБИЛЕ (до 480px):
+     — Логотип: 22vw
+     — CTA: 15px
+     ============================================ -->
+<style>
+.footer{padding:0 var(--edge) calc(40px + env(safe-area-inset-bottom,0px))}
+
+/* Огромный логотип — вписан в отступы */
+.footer-brand{display:flex;align-items:center;justify-content:center;gap:20px;padding:120px 0 0;overflow:hidden}
+.footer-brand-snowflake{width:10%;max-width:120px;flex-shrink:0;color:var(--text);opacity:.06;overflow:hidden}
+.footer-brand-snowflake .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
+.footer-brand-text{font-size:18vw;font-weight:700;letter-spacing:-1.2vw;line-height:.8;color:var(--text);opacity:.06;user-select:none;white-space:nowrap}
+
+/* CTA + соцсети */
+.footer-row{padding:48px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.footer-cta{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.footer-cta-label{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);margin-bottom:4px}
+.footer-hours{font-size:12px;font-weight:400;letter-spacing:-.18px;color:var(--muted);opacity:.55}
+
+/* Соцсети */
+.footer-social{text-align:right;display:flex;flex-direction:column;gap:16px;padding-top:calc(11px + 4px + 16px)}
+.footer-social-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.footer-social-links{display:flex;gap:24px;justify-content:flex-end}
+.footer-social-links a{font-size:13px;font-weight:400;letter-spacing:-.18px;color:var(--text)!important;text-decoration:none;position:relative;opacity:.55;transition:opacity .3s var(--ease-out);display:block;height:17px;overflow:hidden}
+.footer-social-links a:hover{opacity:1}
+.footer-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.footer-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:var(--muted)}
+.footer-social-links a:hover .footer-flip{transform:translateY(-100%)}
+
+/* Приватность */
+.footer-privacy{padding:24px 0;border-top:1px solid var(--border-row);text-align:center}
+.footer-privacy-text{font-size:12px;font-weight:400;letter-spacing:-.18px;line-height:1.6;color:var(--muted);opacity:.55;max-width:520px;margin:0 auto}
+.footer-meta-note{font-size:10px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:var(--muted);opacity:.35;max-width:520px;margin:8px auto 0;font-style:italic}
+
+/* Низ */
+.footer-bottom{padding:20px 0;border-top:1px solid var(--border-row);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-top-btn{width:40px;height:40px;flex-shrink:0;border:1px solid var(--border-row);background:transparent;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s var(--ease-out),border-color .3s var(--ease-out),color .3s var(--ease-out)}
+.footer-top-btn:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
+.footer-copy{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);opacity:.4}
+.footer-legal{font-size:10px;font-weight:400;letter-spacing:-.12px;color:var(--muted);opacity:.3}
+
+@media(max-width:640px){
+  .footer{padding:0 var(--edge) calc(32px + env(safe-area-inset-bottom,0px))}
+  .footer-brand{padding:32px 0 0;gap:10px}
+  .footer-brand-text{font-size:20vw;letter-spacing:-1vw}
+  .footer-row{padding:32px 0;flex-direction:column;align-items:stretch;gap:28px}
+  .footer-cta{align-items:stretch}
+  .footer-cta-label{text-align:center}
+  .footer-cta .btn-fill{width:100%;justify-content:center}
+  .footer-hours{text-align:center}
+  .footer-social{text-align:center}
+  .footer-social-links{justify-content:center}
+  .footer-privacy-text{font-size:11px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media(max-width:480px){
+  .footer{padding:0 var(--edge) calc(20px + env(safe-area-inset-bottom,0px))}
+  .footer-brand{padding:24px 0 0}
+  .footer-copy{font-size:10px}
+  .footer-legal{font-size:8px}
+}
+</style>
+
+<footer class="footer" id="contacts">
+  <!-- Огромный логотип -->
+  <div class="footer-brand">
+    <svg class="footer-brand-snowflake" viewBox="-3 18 81 81" fill="none">
+      <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
+    </svg>
+    <span class="footer-brand-text">ТУКАЙФ</span>
+  </div>
+
+  <div class="footer-row">
+    <div class="footer-cta">
+      <div class="footer-cta-label">Готов обсудить проект?</div>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="btn-fill magnetic">
+        <span>Написать в&nbsp;Телеграм</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <span class="footer-hours">Работаем в&nbsp;будни с&nbsp;10:00 до&nbsp;19:00 МСК</span>
+    </div>
+    <div class="footer-social">
+      <div class="footer-social-title">Социальные сети</div>
+      <div class="footer-social-links">
+        <a href="https://t.me/twokaif" target="_blank" rel="noopener"><span class="footer-flip" data-text="Телеграм">Телеграм</span></a>
+        <a href="https://www.instagram.com/twokaif.design?igsh=NDQxOHVya21rZjIw" target="_blank" rel="noopener"><span class="footer-flip" data-text="Instagram*">Instagram*</span></a>
+        <a href="https://vk.com/twokaif" target="_blank" rel="noopener"><span class="footer-flip" data-text="ВКонтакте">ВКонтакте</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-privacy">
+    <p class="footer-privacy-text">Сайт использует файлы cookie и&nbsp;сервисы аналитики для улучшения работы. Персональные данные через формы не&nbsp;собираются&nbsp;&mdash; связь напрямую через Телеграм. Продолжая пользоваться сайтом, ты&nbsp;соглашаешься с&nbsp;использованием cookie.</p>
+    <p class="footer-meta-note">*Instagram принадлежит компании Meta, признанной экстремистской организацией на&nbsp;территории РФ</p>
+  </div>
+
+  <div class="footer-bottom">
+    <div>
+      <p class="footer-copy">&copy; 20—26 ТУКАЙФ. Все права защищены</p>
+      <p class="footer-legal">ИП&nbsp;Тукаев Руслан Геннадиевич &middot; ИНН&nbsp;343703190770 &middot; ОГРНИП&nbsp;325344300119216</p>
+    </div>
+    <button class="footer-top-btn" id="footerTopBtn" aria-label="Наверх">↑</button>
+  </div>
+</footer>
+
+<script>
+document.getElementById('footerTopBtn').addEventListener('click',function(){
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>

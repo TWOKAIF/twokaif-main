@@ -1,0 +1,80 @@
+<!-- ============================================
+     БЛОК 4: HERO — Титульный экран
+     T123 блок — огромный логотип ТУКАЙФ + крутящаяся снежинка
+
+     Здесь меняй:
+     — Текст логотипа: class="hero-brand-text" (сейчас ТУКАЙФ)
+     — Снежинка: SVG внутри class="hero-brand-snowflake"
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Логотип: 18vw (автоматически масштабируется)
+     — Снежинка: 10% ширины, макс. 120px, вращение 10с
+     — Отступ между снежинкой и текстом: 20px
+     — Высота секции: 100vh (весь экран)
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Логотип: 20vw, буквенный интервал: -1vw
+     — Отступ: 10px
+     ============================================ -->
+<style>
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 0 var(--edge);
+  overflow: hidden;
+}
+.hero-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+.hero-brand-snowflake {
+  width: 10%;
+  max-width: 120px;
+  flex-shrink: 0;
+  color: var(--text);
+}
+.hero-brand-snowflake .snowflake {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 10s linear infinite;
+}
+.hero-brand-text {
+  font-size: 18vw;
+  font-weight: 700;
+  letter-spacing: -1.2vw;
+  line-height: .8;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* Скрытый SEO-текст */
+.hero-seo {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* === Адаптив: мобилка (до 640px) === */
+@media (max-width: 640px) {
+  .hero-brand { gap: 10px; }
+  .hero-brand-text { font-size: 20vw; letter-spacing: -1vw; }
+}
+</style>
+
+<section class="hero" id="hero">
+  <div class="hero-brand">
+    <svg class="hero-brand-snowflake" viewBox="-3 18 81 81" fill="none">
+      <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
+    </svg>
+    <h1 class="hero-brand-text">ТУКАЙФ</h1>
+    <span class="hero-seo">Ивент-дизайнер для профессионалов — сайты, обложки, афиши, презентации</span>
+  </div>
+</section>

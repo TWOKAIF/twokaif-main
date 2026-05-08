@@ -1,0 +1,333 @@
+<!-- ============================================
+     БЛОК 8Б: ПОБЕДНЫЕ ПРЕЗЕНТАЦИИ — 3 в ряд
+     T123 блок — авто-скролл + пауза при ховере
+
+     Здесь меняй:
+     — Ссылки на слайды (src в img)
+     — Подписи презентаций
+     — Скорость скролла: --pres-dur (секунды)
+     ============================================ -->
+<style>
+.pres{padding:60px 0;background:#000;color:#fff;position:relative;width:100vw;margin-left:calc(50% - 50vw)}
+
+/* Шапка */
+.pres-header{padding:0 var(--edge);margin-bottom:32px;display:flex;justify-content:space-between;align-items:flex-end}
+.pres-left{display:flex;flex-direction:column;gap:10px}
+.pres-title{font-size:var(--text-headline);font-weight:700;letter-spacing:-1.5px;line-height:.9;color:#fff}
+.pres-tags{display:flex;gap:8px;flex-wrap:wrap}
+.pres-tag{display:inline-block;font-size:13px;font-weight:400;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);padding:5px 12px;white-space:nowrap}
+
+/* Сетка трёх презентаций */
+.pres-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:16px;
+  padding:0 var(--edge);
+}
+
+/* Карточка презентации */
+.pres-card{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:9/12;
+  background:#111;
+}
+
+/* Скролл-трек */
+.pres-card-track{
+  display:flex;
+  flex-direction:column;
+  will-change:transform;
+  animation:presScroll var(--pres-dur, 80s) linear infinite;
+}
+.pres-card:hover .pres-card-track{
+  animation-play-state:paused;
+}
+.pres-card-track img{
+  width:100%;
+  height:auto;
+  display:block;
+  flex-shrink:0;
+}
+
+@keyframes presScroll{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-50%)}
+}
+
+
+/* Бейдж «Победитель» */
+.pres-badge{
+  position:absolute;
+  top:16px;
+  left:16px;
+  z-index:2;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color:#fff;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  padding:6px 14px;
+  pointer-events:none;
+}
+
+/* Подпись под карточкой */
+.pres-card-caption{
+  margin-top:12px;
+  font-size:clamp(12px,1vw,14px);
+  color:rgba(255,255,255,.4);
+  font-weight:400;
+  letter-spacing:-.1px;
+}
+.pres-card-caption strong{
+  color:rgba(255,255,255,.7);
+  font-weight:600;
+}
+
+/* Описание под карточкой */
+.pres-card-desc{
+  margin-top:6px;
+  font-size:clamp(11px,.9vw,13px);
+  line-height:1.5;
+  color:rgba(255,255,255,.3);
+  letter-spacing:-.1px;
+}
+
+/* Кнопки на диск */
+.pres-buttons{
+  display:flex;
+  gap:12px;
+  padding:32px var(--edge) 0;
+  flex-wrap:wrap;
+}
+
+/* Адаптив — планшет */
+@media(max-width:960px){
+  .pres-header{flex-direction:column;align-items:flex-start;gap:20px}
+  .pres-grid{gap:12px}
+}
+
+/* Адаптив — мобиле */
+@media(max-width:640px){
+  .pres{padding:48px 0}
+  .pres-header{margin-bottom:20px}
+  .pres-tag{font-size:11px;padding:4px 10px}
+  .pres-grid{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .pres-card{
+    aspect-ratio:16/10;
+  }
+  .pres-badge{
+    top:10px;left:10px;
+    font-size:10px;
+    padding:4px 10px;
+  }
+  .pres-card-caption{font-size:12px;margin-top:8px}
+  .pres-card-desc{font-size:11px}
+}
+</style>
+
+<section class="pres" id="pres-portfolio">
+  <div class="pres-header">
+    <div class="pres-left">
+      <h2 class="pres-title">Победные презентации</h2>
+      <div class="pres-tags">
+        <span class="pres-tag">Портфолио</span>
+        <span class="pres-tag">Wedding Awards</span>
+        <span class="pres-tag">TOP100AWARDS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pres-grid">
+
+    <!-- Презентация 1 — Свадьба в горах -->
+    <div>
+      <div class="pres-card">
+        <div class="pres-badge">Победитель Wedding Awards Юг</div>
+        <div class="pres-card-track" data-pres-track style="--pres-dur:90s">
+          <img src="https://static.tildacdn.com/tild3538-3734-4262-a430-643033396134/page-01.jpg" alt="Слайд презентации 1" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3732-6532-4434-b366-363632393366/page-02.jpg" alt="Слайд презентации 2" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6339-3438-4865-b464-333364643961/page-03.jpg" alt="Слайд презентации 3" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3830-6231-4837-b136-653061313663/page-04.jpg" alt="Слайд презентации 4" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3632-3962-4765-a163-656432343436/page-05.jpg" alt="Слайд презентации 5" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3839-6362-4730-a237-643239633235/page-06.jpg" alt="Слайд презентации 6" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6338-6162-4236-a565-653863653032/page-07.jpg" alt="Слайд презентации 7" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3930-3065-4438-b234-363865346139/page-08.jpg" alt="Слайд презентации 8" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3963-6161-4863-b463-393665306263/page-09.jpg" alt="Слайд презентации 9" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6135-3262-4161-b365-376266313833/page-10.jpg" alt="Слайд презентации 10" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3232-6637-4437-b062-313132653636/page-11.jpg" alt="Слайд презентации 11" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6332-3665-4462-b735-643531366437/page-12.jpg" alt="Слайд презентации 12" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3333-3064-4263-b661-343530316434/page-13.jpg" alt="Слайд презентации 13" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6463-3538-4235-b930-623862363561/page-14.jpg" alt="Слайд презентации 14" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3561-3861-4162-b261-613038643035/page-15.jpg" alt="Слайд презентации 15" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6565-6364-4335-b266-363765613461/page-16.jpg" alt="Слайд презентации 16" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3736-3639-4533-a530-313364353433/page-17.jpg" alt="Слайд презентации 17" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3366-6336-4464-b432-643532366139/page-18.jpg" alt="Слайд презентации 18" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6164-3239-4861-b230-313966396134/page-19.jpg" alt="Слайд презентации 19" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3838-3433-4433-a334-323062646435/page-20.jpg" alt="Слайд презентации 20" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6366-3039-4434-a166-356133656664/page-21.jpg" alt="Слайд презентации 21" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6363-6430-4430-b037-613464396538/page-22.jpg" alt="Слайд презентации 22" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3939-3138-4661-b864-306530363032/page-23.jpg" alt="Слайд презентации 23" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6633-3731-4431-a331-326433373338/page-24.jpg" alt="Слайд презентации 24" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3139-3637-4462-b135-373030363335/page-25.jpg" alt="Слайд презентации 25" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3432-6136-4461-a139-626631653633/page-26.jpg" alt="Слайд презентации 26" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3536-3932-4263-b366-613337323939/page-27.jpg" alt="Слайд презентации 27" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6233-3962-4539-a361-356161616533/page-28.jpg" alt="Слайд презентации 28" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3533-6161-4065-a266-373130383731/page-29.jpg" alt="Слайд презентации 29" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3837-6130-4031-a264-326265626238/page-30.jpg" alt="Слайд презентации 30" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3833-3938-4464-b433-353962633361/page-31.jpg" alt="Слайд презентации 31" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3831-3465-4561-b437-393938616232/page-32.jpg" alt="Слайд презентации 32" loading="lazy">
+        </div>
+      </div>
+      <div class="pres-card-caption"><strong>Свадьба в&nbsp;горах</strong> · Wedding Awards Юг</div>
+      <div class="pres-card-desc">Номинация «Лучшая выездная свадьба».<br>Победитель 2023&nbsp;года&nbsp;— горжусь работой, которая принесла победу</div>
+    </div>
+
+    <!-- Презентация 2 — Сократ Event Academy -->
+    <div>
+      <div class="pres-card">
+        <div class="pres-badge">Победитель Wedding Awards Россия</div>
+        <div class="pres-card-track" data-pres-track style="--pres-dur:50s">
+          <img src="https://static.tildacdn.com/tild3366-6335-4466-b632-633738613835/page-01.jpg" alt="Слайд презентации 33" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3261-3135-4530-b663-346262393536/page-02.jpg" alt="Слайд презентации 34" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3633-6362-4834-b063-373731336366/page-03.jpg" alt="Слайд презентации 35" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3161-3665-4238-a338-623062316437/page-04.jpg" alt="Слайд презентации 36" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6438-3764-4334-b031-623264666536/page-05.jpg" alt="Слайд презентации 37" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3136-3363-4633-b638-633864613335/page-06.jpg" alt="Слайд презентации 38" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3264-3462-4863-b364-383362646637/page-07.jpg" alt="Слайд презентации 39" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3933-3539-4163-b361-353533313735/page-08.jpg" alt="Слайд презентации 40" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3061-6662-4663-a638-323833623939/page-09.jpg" alt="Слайд презентации 41" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6632-3063-4464-b166-643663616266/page-10.jpg" alt="Слайд презентации 42" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3666-3162-4634-b138-353366656263/page-11.jpg" alt="Слайд презентации 43" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3534-6133-4437-b661-656430636235/page-12.jpg" alt="Слайд презентации 44" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6338-6532-4363-b337-653066663234/page-13.jpg" alt="Слайд презентации 45" loading="lazy">
+        </div>
+      </div>
+      <div class="pres-card-caption"><strong>Сократ Event Academy</strong> · Wedding Awards Россия</div>
+      <div class="pres-card-desc">Номинация «Лучший проект для&nbsp;профессионалов ивент—индустрии».<br>Победитель 2023&nbsp;года&nbsp;— горжусь тем, что&nbsp;мой дизайн помог победить</div>
+    </div>
+
+    <!-- Презентация 3 — Олег Савченко -->
+    <div>
+      <div class="pres-card">
+        <div class="pres-badge">Победитель Wedding Awards Юг</div>
+        <div class="pres-card-track" data-pres-track style="--pres-dur:35s">
+          <img src="https://static.tildacdn.com/tild3962-3165-4330-b433-353065656334/page-01.jpg" alt="Слайд презентации 46" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3963-6662-4639-b061-613333313961/page-02.jpg" alt="Слайд презентации 47" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3936-6166-4230-a366-343564646465/page-03.jpg" alt="Слайд презентации 48" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3234-6232-4565-a466-623130623461/page-04.jpg" alt="Слайд презентации 49" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3662-6661-4165-a238-313230346362/page-05.jpg" alt="Слайд презентации 50" loading="lazy">
+          <img src="https://static.tildacdn.com/tild6230-6235-4231-a636-313839343866/page-06.jpg" alt="Слайд презентации 51" loading="lazy">
+          <img src="https://static.tildacdn.com/tild3439-3738-4930-b230-373334366532/page-07.jpg" alt="Слайд презентации 52" loading="lazy">
+        </div>
+      </div>
+      <div class="pres-card-caption"><strong>Олег Савченко</strong> · Wedding Awards Юг</div>
+      <div class="pres-card-desc">Номинация «Лучший артист на&nbsp;свадьбу».<br>Победитель 2025&nbsp;года&nbsp;— горжусь, что&nbsp;мой труд снова принёс победу</div>
+    </div>
+
+  </div>
+
+  <!-- Кнопки на диск -->
+  <div class="pres-buttons">
+    <a href="https://disk.yandex.ru/d/fgShWzZ1zrGcxA" target="_blank" rel="noopener" class="portfolio-more-btn">Больше презентаций по&nbsp;премиям на&nbsp;диске
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+    <a href="https://disk.yandex.ru/d/8vrvljmfT9wVTw" target="_blank" rel="noopener" class="portfolio-more-btn">Ещё презентации
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+  </div>
+</section>
+
+<script>
+(function(){
+  var isMobile = window.matchMedia('(max-width:640px)').matches;
+  var mobileLimits = [15, 10, 7];
+  var tracks = document.querySelectorAll('[data-pres-track]');
+
+  tracks.forEach(function(track, i){
+    if (isMobile) {
+      /* На мобиле — обрезаем слайды */
+      var imgs = track.querySelectorAll('img');
+      var limit = mobileLimits[i] || 5;
+      for (var j = limit; j < imgs.length; j++) {
+        imgs[j].remove();
+      }
+      /* Убираем lazy чтобы первые слайды грузились сразу */
+      track.querySelectorAll('img').forEach(function(img){
+        img.removeAttribute('loading');
+      });
+      /* Отключаем CSS-анимацию — будем через JS */
+      track.style.animation = 'none';
+    } else {
+      /* На десктопе — дублируем для бесшовного цикла */
+      track.innerHTML += track.innerHTML;
+    }
+  });
+
+  /* Мобильная анимация с перемоткой (оптимизирована: остановка вне экрана) */
+  if (isMobile) {
+    function startMobileAnim() {
+      var section = document.getElementById('pres-portfolio');
+      var visible = false;
+      var observer = new IntersectionObserver(function(entries){
+        visible = entries[0].isIntersecting;
+      }, {threshold:0.05});
+      observer.observe(section);
+
+      tracks.forEach(function(track, idx){
+        var card = track.parentElement;
+        var trackH = track.scrollHeight;
+        var cardH = card.offsetHeight;
+        var dist = trackH - cardH;
+        if (dist <= 0) return;
+
+        var durStr = getComputedStyle(track).getPropertyValue('--pres-dur');
+        var dur = parseFloat(durStr) || 40;
+        /* Медленный скролл вниз 80%, пауза 5%, быстрая перемотка 10%, пауза 5% */
+        var slowTime = dur * 0.80 * 1000;
+        var pauseTime = dur * 0.05 * 1000;
+        var rewindTime = dur * 0.10 * 1000;
+        var endPause = dur * 0.05 * 1000;
+        var totalTime = slowTime + pauseTime + rewindTime + endPause;
+
+        var startTime = performance.now() - (idx * 5000);
+        var lastFrame = 0;
+        function animate(now) {
+          requestAnimationFrame(animate);
+          /* Троттлинг ~30fps + остановка вне экрана */
+          if (!visible || now - lastFrame < 33) return;
+          lastFrame = now;
+
+          var elapsed = (now - startTime) % totalTime;
+          var y = 0;
+          if (elapsed < slowTime) {
+            var p = elapsed / slowTime;
+            var ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+            y = -dist * ease;
+          } else if (elapsed < slowTime + pauseTime) {
+            y = -dist;
+          } else if (elapsed < slowTime + pauseTime + rewindTime) {
+            var rp = (elapsed - slowTime - pauseTime) / rewindTime;
+            var rEase = 1 - Math.pow(1 - rp, 3);
+            y = -dist * (1 - rEase);
+          } else {
+            y = 0;
+          }
+          track.style.transform = 'translateY(' + y + 'px)';
+        }
+        requestAnimationFrame(animate);
+      });
+    }
+    /* Ждём загрузки картинок */
+    window.addEventListener('load', function(){
+      setTimeout(startMobileAnim, 500);
+    });
+  }
+})();
+</script>

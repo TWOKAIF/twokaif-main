@@ -1,0 +1,328 @@
+<!-- ============================================
+     БЛОК 5: ОБО МНЕ
+     T123 блок — две колонки: текст + фото
+
+     Здесь меняй:
+     — Имя: class="about-name"
+     — Описание: class="about-desc"
+     — Счётчики: class="stat" (data-target — число, data-suffix — суффикс)
+     — Фото: class="about-photo" (src — ссылка)
+     — Факты: class="about-facts" (список <li>)
+
+     ФОТО:
+     — Размер: 840×1120 px (пропорция 3:4, вертикальное)
+     — Формат: JPG, до 300 КБ
+     — Можно заменить на видео:
+       <video class="about-photo" src="ссылка.mp4" autoplay loop muted playsinline></video>
+       Видео: 840×1120 px, MP4 (H.264), до 8 МБ
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Сетка: 2 колонки (текст + фото 420px)
+     — Отступы: 120px сверху, 100px снизу
+     — Имя: 64px, описание: 22px, числа: 56px
+
+     НАСТРОЙКИ ПЛАНШЕТ (до 1068px):
+     — Фото: 340px, имя: 48px, числа: 44px
+
+     НАСТРОЙКИ МОБИЛЕ (до 734px):
+     — Одна колонка, фото сверху
+     — Имя: 40px, описание: 17px, числа: 38px
+     ============================================ -->
+<style>
+/* Основная сетка */
+.about {
+  padding: 120px var(--edge) 100px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  align-items: end;
+  position: relative;
+  background: var(--bg, #ffffff);
+  font-family: 'Inter Tight', sans-serif;
+}
+
+/* Левая колонка */
+.about-left {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+/* Имя */
+.about-name {
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: -3px;
+  line-height: 0.88;
+  color: var(--text, #1d1d1f);
+  margin-bottom: 20px;
+}
+
+/* Описание */
+.about-desc {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+  color: var(--muted, #86868b);
+  max-width: 480px;
+}
+
+/* Счётчики */
+.stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat {
+  padding: 28px 0;
+  border-top: 1px solid rgba(29, 29, 31, 0.08);
+}
+.stat:last-child {
+  border-bottom: 1px solid rgba(29, 29, 31, 0.08);
+}
+
+/* Число — анимация fade-up */
+.stat-number {
+  font-size: 56px;
+  font-weight: 600;
+  letter-spacing: -2.5px;
+  line-height: 0.9;
+  margin-bottom: 8px;
+  color: var(--text, #1d1d1f);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.28, 0.11, 0.32, 1),
+              transform 0.8s cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+.stat.visible .stat-number {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Подпись */
+.stat-label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  color: var(--muted, #86868b);
+}
+
+/* Правая колонка */
+.about-right {
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.28, 0.11, 0.32, 1),
+              transform 0.8s cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+.about-right.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Обёртка фото */
+.about-photo-wrap {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Фото — лёгкий grayscale */
+.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  display: block;
+  filter: grayscale(0.25);
+  transition: transform 0.6s cubic-bezier(0.28, 0.11, 0.32, 1),
+              filter 0.6s cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+.about-photo-wrap:hover .about-photo {
+  transform: scale(1.02);
+  filter: grayscale(0);
+}
+
+/* Факты */
+.about-facts {
+  margin: 0 !important;
+  padding: 20px 0 0 !important;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  line-height: 1.7;
+  color: var(--muted, #86868b);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.28, 0.11, 0.32, 1) 0.3s,
+              transform 0.8s cubic-bezier(0.28, 0.11, 0.32, 1) 0.3s;
+}
+.about-right.visible .about-facts {
+  opacity: 1;
+  transform: translateY(0);
+}
+.about-facts li {
+  list-style: none;
+  padding-left: 14px;
+  position: relative;
+}
+.about-facts li::before {
+  content: "\00B7";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.about-facts strong {
+  color: var(--text, #1d1d1f);
+  font-weight: 600;
+}
+
+/* Футер */
+.about-footer {
+  position: absolute;
+  bottom: 40px;
+  left: var(--edge);
+  right: var(--edge);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 10;
+}
+.about-footer span {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  color: var(--muted, #86868b);
+  opacity: 0.5;
+}
+
+/* === Адаптив: планшет (до 1068px) === */
+@media (max-width: 1068px) {
+  .about {
+    grid-template-columns: 1fr 340px;
+    gap: 48px;
+    padding: 100px var(--edge) 80px;
+  }
+  .about-name { font-size: 48px; letter-spacing: -2px; }
+  .about-desc { font-size: 19px; }
+  .stat-number { font-size: 44px; letter-spacing: -2px; }
+  .stat { padding: 22px 0; }
+}
+
+/* === Адаптив: мобилка (до 734px) === */
+@media (max-width: 734px) {
+  .about {
+    grid-template-columns: 1fr;
+    padding: 64px var(--edge) 48px;
+    gap: 32px;
+  }
+  .about-left { gap: 40px; }
+  .about-right { order: -1; }
+  .about-photo { aspect-ratio: 3 / 4; object-position: center 20%; }
+  .about-name { font-size: 40px; letter-spacing: -1.5px; }
+  .about-desc { font-size: 17px; margin-bottom: 0; }
+  .stat { padding: 18px 0; }
+  .stat-number { font-size: 38px; letter-spacing: -1.5px; }
+  .stat-label { font-size: 11px; }
+  .about-footer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: 24px;
+    padding: 0;
+  }
+}
+</style>
+
+<!-- ОБО МНЕ -->
+<div style="padding:0 var(--edge);margin-bottom:12px"><span style="font-size:12px;font-weight:400;letter-spacing:-.18px;color:var(--muted);opacity:.45">Обо&nbsp;мне</span></div>
+<section class="about section-reveal" id="about">
+  <div class="about-left">
+    <div class="about-header">
+      <!-- Здесь меняй имя и описание -->
+      <h2 class="about-name">Руслан Тукаев</h2>
+      <p class="about-desc">Ивент—дизайнер для&nbsp;профессионалов<br>индустрии развлечений</p>
+    </div>
+
+    <!-- Счётчики — здесь меняй цифры и подписи -->
+    <div class="stats">
+      <div class="stat" data-target="500" data-suffix="+">
+        <div class="stat-number">0+</div>
+        <div class="stat-label">Уникальных обложек и&nbsp;афиш</div>
+      </div>
+      <div class="stat" data-target="200" data-suffix="+">
+        <div class="stat-number">0+</div>
+        <div class="stat-label">Уникальных презентаций</div>
+      </div>
+      <div class="stat" data-target="70" data-suffix="+">
+        <div class="stat-number">0+</div>
+        <div class="stat-label">Ведущих, ивент—агентств, артистов</div>
+      </div>
+      <div class="stat" data-target="4" data-suffix="+">
+        <div class="stat-number">0+</div>
+        <div class="stat-label">Лет в&nbsp;ивент—дизайне</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-right" id="aboutRight">
+    <!-- Здесь меняй фото (840×1120 px, JPG, до 300 КБ)
+         Или видео: <video class="about-photo" src="ссылка.mp4" autoplay loop muted playsinline></video>
+         Видео: 840×1120 px, MP4, до 8 МБ -->
+    <div class="about-photo-wrap">
+      <img class="about-photo" src="https://static.tildacdn.com/tild3062-6139-4962-a338-373432633064/__2.jpg" alt="Руслан Тукаев">
+    </div>
+    <!-- Здесь меняй факты -->
+    <ul class="about-facts">
+      <li>Дизайнер для&nbsp;ведущих, ивент—агентств, артистов</li>
+      <li>Персональный дизайнер <strong>Адиса Маммо</strong></li>
+      <li>Победитель Wedding Awards Юг&nbsp;-&nbsp;24</li>
+    </ul>
+  </div>
+
+</section>
+
+<script>
+/* Анимация счётчиков при скролле */
+function animateStat(stat) {
+  var t = parseInt(stat.dataset.target);
+  var s = stat.dataset.suffix || '';
+  var el = stat.querySelector('.stat-number');
+  var d = t <= 10 ? 1200 : 2000;
+  var st = performance.now();
+  function u(now) {
+    var p = Math.min((now - st) / d, 1);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(e * t) + s;
+    if (p < 1) requestAnimationFrame(u);
+  }
+  requestAnimationFrame(u);
+}
+
+var statObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting && !entry.target.dataset.counted) {
+      entry.target.dataset.counted = 'true';
+      entry.target.classList.add('visible');
+      animateStat(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat').forEach(function(el) {
+  statObserver.observe(el);
+  el.addEventListener('mouseenter', function() { animateStat(el); });
+});
+
+/* Появление правой колонки */
+var aboutObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.2 });
+
+var ar = document.getElementById('aboutRight');
+if (ar) aboutObserver.observe(ar);
+</script>

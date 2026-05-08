@@ -1,0 +1,431 @@
+<meta charset="UTF-8">
+<!-- ============================================
+     БЛОК 1: ГЛОБАЛЬНЫЕ СТИЛИ + ШРИФТ + GSAP + SCROLLTRIGGER
+     T123 блок — ставится ПЕРВЫМ на каждой странице
+
+     Здесь меняй:
+     — Цвета: :root
+     — Типографику: брейкпоинты 1200/960/640/480
+     — Отступы: --edge (48/32/20/16px)
+     — Шрифт: --font-body
+     ============================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger (анимации при скролле) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Lenis отключён для отладки — нативный скролл -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script> -->
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* --- Фиксы Тильды: убираем отступы и фоны контейнеров --- */
+#allrecords { background-color: #ffffff !important; }
+.t-rec { padding: 0 !important; margin: 0 !important; background-color: transparent !important; }
+.t-rec .t123 { padding: 0 !important; }
+.t123__col { padding: 0 !important; }
+.t-body { background-color: #ffffff !important; }
+body { background-color: #ffffff !important; }
+#allrecords .t-rec { overflow: visible !important; }
+
+/* Тильда перебивает цвета ссылок — сбрасываем точечно */
+.portfolio-more-btn { color: #fff !important; text-decoration: none !important; }
+.portfolio-more-btn:hover { color: #1d1d1f !important; }
+.nav-cta { color: #fff !important; }
+.nav-cta:hover { color: #1d1d1f !important; }
+.menu-cta { color: #fff !important; }
+.menu-cta:hover { color: #1d1d1f !important; }
+.pricing-card-btn { color: #fff !important; }
+.pricing-card-btn:hover { color: #1d1d1f !important; }
+.pricing-card.active .pricing-card-btn { color: #1d1d1f !important; }
+.pricing-card.active .pricing-card-btn:hover { color: #fff !important; }
+
+/* --- Палитра и токены --- */
+:root {
+  --font-body: 'Inter Tight', sans-serif;
+
+  /* Цвета — светлая тема */
+  --bg: #ffffff;
+  --surface: #f5f5f7;
+  --surface2: #e8e8ed;
+  --border: rgba(29, 29, 31, 0.08);
+  --border-row: rgba(29, 29, 31, 0.16);
+  --text: #1d1d1f;
+  --muted: #86868b;
+
+  /* Отступы — Desktop (>1200px) */
+  --edge: 48px;
+  --gap: 24px;
+
+  /* Анимации */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Типографика — Desktop (крупнее) */
+  --text-hero: 140px;
+  --text-display: 80px;
+  --text-headline: 56px;
+  --text-title: 32px;
+  --text-body-lg: 24px;
+  --text-body: 19px;
+  --text-caption: 16px;
+  --text-micro: 14px;
+}
+
+/* --- Tablet (≤1200px) --- */
+@media (max-width: 1200px) {
+  :root {
+    --edge: 32px;
+    --text-hero: 100px;
+    --text-display: 64px;
+    --text-headline: 48px;
+    --text-title: 28px;
+    --text-body-lg: 22px;
+  }
+}
+
+/* --- Small tablet (≤960px) --- */
+@media (max-width: 960px) {
+  :root {
+    --edge: 24px;
+    --text-hero: 72px;
+    --text-display: 48px;
+    --text-headline: 36px;
+    --text-title: 24px;
+    --text-body-lg: 20px;
+  }
+}
+
+/* --- Mobile (≤640px) --- */
+@media (max-width: 640px) {
+  :root {
+    --edge: 20px;
+    --text-hero: 52px;
+    --text-display: 40px;
+    --text-headline: 30px;
+    --text-title: 22px;
+    --text-body-lg: 18px;
+    --text-body: 17px;
+    --text-caption: 15px;
+  }
+}
+
+/* --- Small mobile (≤480px) --- */
+@media (max-width: 480px) {
+  :root {
+    --edge: 16px;
+    --text-hero: 44px;
+    --text-display: 32px;
+    --text-headline: 26px;
+    --text-title: 20px;
+    --text-body-lg: 17px;
+    --text-body: 16px;
+  }
+}
+
+html {
+  overflow-x: clip;
+  background: var(--bg);
+  background-color: #ffffff;
+  scroll-behavior: smooth;
+}
+/* Lenis отключён */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: rgba(29, 29, 31, 0.15); }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- Появление секций при скролле --- */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Кастомный курсор—снежинка (только десктоп) ---
+   Здесь меняй:
+   — Размер снежинки: width/height (сейчас 10px)
+   — Размер при наведении на кнопки: .cursor-dot.hover width/height (сейчас 30px)
+   — Скорость вращения: animation spin (сейчас 4 секунды)
+   — Цвет: color (сейчас #fff, инвертируется через mix-blend-mode)
+   — Плавность следования за мышью: в скрипте коэффициент 0.25 (больше = быстрее, макс 1)
+*/
+.cursor-dot {
+  width: 10px; height: 10px; /* размер снежинки */
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), opacity 0.3s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference; /* на белом — чёрная, на чёрном — белая */
+  opacity: 0;
+  color: #fff; /* базовый цвет (инвертируется автоматически) */
+}
+.cursor-dot svg {
+  width: 100%; height: 100%;
+  display: block;
+  animation: spin 4s linear infinite; /* скорость вращения */
+}
+.cursor-dot.visible { opacity: 1; }
+.cursor-dot.hover {
+  width: 30px; height: 30px; /* размер при наведении на кнопки/ссылки */
+}
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot { display: none !important; } /* скрываем на тачскринах */
+}
+
+/* --- Магнитные кнопки --- */
+.magnetic { transition: transform 0.3s var(--ease-out); }
+
+/* --- Анимация появления текста по словам --- */
+.text-reveal .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.text-reveal.visible .word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Кнопка с заливкой слева (универсальная) --- */
+.btn-fill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: var(--text) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--text) !important;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  text-decoration: none !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-out);
+}
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-out);
+  z-index: 0;
+}
+.btn-fill span, .btn-fill svg { position: relative; z-index: 1; color: inherit !important; }
+.btn-fill:hover::before { transform: scaleX(1); }
+.btn-fill:hover { color: #1d1d1f !important; }
+.btn-fill:active { transform: scale(0.97); }
+.btn-fill svg {
+  width: 18px; height: 18px;
+  transition: transform 0.4s var(--ease-out);
+}
+.btn-fill:hover svg { transform: translateX(4px); }
+
+/* --- Кнопка-контур (ghost) --- */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-row);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
+}
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.5s var(--ease-out);
+  z-index: 0;
+}
+.btn-ghost span { position: relative; z-index: 1; }
+.btn-ghost:hover::before { transform: scaleY(1); }
+.btn-ghost:hover { color: var(--bg); border-color: var(--text); }
+.btn-ghost:active { transform: scale(0.97); }
+
+/* --- Бейдж Тильды --- */
+.t-tildalаbеl { background: #0a0a0a !important; }
+</style>
+
+<script>
+// --- Убиваем inline-стили Тильды ---
+function applyThemeColors() {
+  document.documentElement.style.backgroundColor = '#ffffff';
+  document.body.style.backgroundColor = '#ffffff';
+  document.body.style.color = '#1d1d1f';
+  var allrec = document.getElementById('allrecords');
+  if (allrec) allrec.style.backgroundColor = '#ffffff';
+  document.querySelectorAll('.t-rec').forEach(function(el) {
+    el.style.backgroundColor = 'transparent';
+  });
+}
+document.addEventListener('DOMContentLoaded', applyThemeColors);
+
+
+// --- Lenis отключён — нативный скролл ---
+var lenis = null;
+
+// --- Анимированный фавикон (плавное вращение, адаптация под тему) ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  var canvas = document.createElement('canvas');
+  canvas.width = 32; canvas.height = 32;
+  var ctx = canvas.getContext('2d');
+  var link = document.querySelector('link[rel="icon"]') || document.createElement('link');
+  link.rel = 'icon'; link.type = 'image/png';
+  if (!link.parentNode) document.head.appendChild(link);
+  var path = new Path2D('M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z');
+  var darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+  var scale = 0.22;
+  var speed = Math.PI * 2 / 30000;
+  var start = Date.now();
+  function draw() {
+    var angle = (Date.now() - start) * speed;
+    ctx.clearRect(0, 0, 32, 32);
+    ctx.save();
+    ctx.translate(16, 16);
+    ctx.rotate(angle);
+    ctx.scale(scale, scale);
+    ctx.translate(-37.27, -58.78);
+    ctx.fillStyle = darkMq.matches ? '#ffffff' : '#1d1d1f';
+    ctx.fill(path);
+    ctx.restore();
+    link.href = canvas.toDataURL('image/png');
+  }
+  draw();
+  setInterval(draw, 200);
+})();
+
+// --- IntersectionObserver для section-reveal ---
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+
+function observeSections() {
+  document.querySelectorAll('.section-reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+}
+window.addEventListener('load', observeSections);
+setTimeout(observeSections, 2000);
+
+// --- Анимация текста по словам (.text-reveal) ---
+(function() {
+  function wrapWords() {
+    document.querySelectorAll('.text-reveal').forEach(function(el) {
+      if (el.dataset.wrapped) return;
+      var text = el.textContent.trim();
+      var words = text.split(/\s+/);
+      el.innerHTML = words.map(function(word, i) {
+        return '<span class="word" style="transition-delay:' + (i * 0.04) + 's">' + word + '</span>';
+      }).join(' ');
+      el.dataset.wrapped = 'true';
+    });
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  function init() {
+    wrapWords();
+    document.querySelectorAll('.text-reveal').forEach(function(el) { obs.observe(el); });
+  }
+  window.addEventListener('load', init);
+  setTimeout(init, 2000);
+})();
+
+// --- Магнитные кнопки ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  document.addEventListener('mousemove', function(e) {
+    document.querySelectorAll('.magnetic').forEach(function(btn) {
+      var rect = btn.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = e.clientX - cx, dy = e.clientY - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var threshold = Math.max(rect.width, rect.height) * 0.8;
+      if (dist < threshold) {
+        var mx = Math.max(-4, Math.min(4, dx * 0.06));
+        var my = Math.max(-4, Math.min(4, dy * 0.06));
+        btn.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+      } else {
+        btn.style.transform = 'translate(0,0)';
+      }
+    });
+  });
+})();
+
+// --- Кастомный курсор—снежинка ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  var dot = document.createElement('div');
+  dot.classList.add('cursor-dot');
+  dot.innerHTML = '<svg viewBox="-3 18 81 81" fill="currentColor"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></svg>';
+  document.body.appendChild(dot);
+  var mx = 0, my = 0, dx = 0, dy = 0;
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    if (!dot.classList.contains('visible')) dot.classList.add('visible');
+  });
+  document.addEventListener('mouseleave', function() { dot.classList.remove('visible'); });
+  function anim() {
+    dx += (mx - dx) * 0.25;
+    dy += (my - dy) * 0.25;
+    dot.style.left = dx + 'px';
+    dot.style.top = dy + 'px';
+    requestAnimationFrame(anim);
+  }
+  anim();
+  document.addEventListener('mouseover', function(e) {
+    if (e.target.closest('a, button, [role="button"], .btn-fill, .btn-ghost, .magnetic')) dot.classList.add('hover');
+  });
+  document.addEventListener('mouseout', function(e) {
+    if (e.target.closest('a, button, [role="button"], .btn-fill, .btn-ghost, .magnetic')) dot.classList.remove('hover');
+  });
+})();
+</script>

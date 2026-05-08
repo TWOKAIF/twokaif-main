@@ -1,0 +1,785 @@
+<!-- ============================================
+     БЛОК 6A: КЕЙСЫ
+     T123 блок — горизонтальный скролл карточек клиентов (Apple—стиль)
+
+     Здесь меняй:
+     — Фото клиента: class="case-photo" (src — ссылка)
+     — Имя: class="case-name"
+     — Роль/тег: class="case-role"
+     — Описание: class="case-desc"
+     — Статистика: class="case-stat-value" + class="case-stat-label"
+     — Работы: class="case-work" (img или video внутри)
+
+     ФОТО КЛИЕНТА (аватарка в карточке):
+     — Размер: 400×400 px (квадратное, круглое)
+     — Формат: JPG или PNG, до 100 КБ
+
+     ФОТО РАБОТ (превью в карточке):
+     — Размер: 600×800 px (вертикальное, 3:4)
+     — Формат: JPG, до 200 КБ
+     — Можно заменить на видео:
+       <video src="ссылка.mp4" autoplay loop muted playsinline></video>
+       Видео: 600×800 px, MP4, до 5 МБ
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Карточка: 540px ширина, горизонтальный скролл
+     — Аватарка: 72×72px
+     — Работы: 160×200px, 3 штуки в ряд
+
+     НАСТРОЙКИ ПЛАНШЕТ (до 960px):
+     — Карточка: 440px
+     — Аватарка: 64×64px
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Карточка: 320px
+     — Работы: 120×160px
+
+     НАСТРОЙКИ МИНИ-МОБИЛЕ (до 480px):
+     — Карточка: 280px, аватарка: 48×48px
+     ============================================ -->
+<style>
+/* --- Секция кейсов --- */
+.cases {
+  padding: 120px 0 80px;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Шапка: заголовок + стрелки --- */
+.cases-header {
+  padding: 0 var(--edge);
+  margin-bottom: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.cases-title {
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 600;
+  letter-spacing: clamp(-2px, -0.4vw, -4px);
+  line-height: 0.85;
+  color: var(--text);
+}
+
+/* Правая часть — подсказка + стрелки */
+.cases-right { display: flex; align-items: center; gap: 20px; }
+
+/* Кнопки навигации */
+.cases-nav { display: flex; gap: 8px; }
+.cases-nav-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-row);
+  background: transparent;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+.cases-nav-btn:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* --- Лента горизонтального скролла --- */
+.cases-track-wrap {
+  overflow: visible;
+  padding: 0 var(--edge);
+}
+.cases-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Страница кейсов (2 карточки на экран) --- */
+.cases-page {
+  flex-shrink: 0;
+  width: calc(100% + var(--edge));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* --- Карточка кейса --- */
+.case-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--surface);
+  overflow: hidden;
+  /* Анимация появления */
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.case-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Фото клиента --- */
+.case-photo-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.case-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(0.3);
+  transition: filter 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.case-card:hover .case-photo {
+  filter: grayscale(0) brightness(1) contrast(1) !important;
+  transform: scale(1.03);
+}
+
+/* Бейдж срока сотрудничества */
+.case-years {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 12px;
+  backdrop-filter: blur(8px);
+}
+
+/* --- Контент карточки --- */
+.case-content {
+  padding: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.case-client { margin-bottom: 20px; }
+.case-name {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: clamp(-1px, -0.3vw, -2px);
+  line-height: 0.9;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.case-role {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: -0.12px;
+  color: var(--muted);
+}
+.case-desc {
+  font-size: clamp(12px, 1.2vw, 13px);
+  font-weight: 400;
+  letter-spacing: -0.16px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* --- Превью работ (3 картинки) --- */
+.case-works-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.case-works {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.case-work {
+  flex: 1;
+  aspect-ratio: 9/16;
+  overflow: hidden;
+  position: relative;
+}
+.case-work img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(0.2);
+  transition: filter 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+.case-work:hover img {
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
+
+/* --- Статистика (count-up) --- */
+.case-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.case-stat {
+  padding: 12px 0;
+  border-top: 1px solid var(--border-row);
+}
+.case-stat-number {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  letter-spacing: clamp(-1px, -0.2vw, -2px);
+  line-height: 0.9;
+  margin-bottom: 4px;
+  color: var(--text);
+  /* Анимация появления числа */
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.case-card.visible .case-stat-number {
+  opacity: 1;
+  transform: translateY(0);
+}
+.case-stat:nth-child(2) .case-stat-number { transition-delay: 0.1s; }
+.case-stat:nth-child(3) .case-stat-number { transition-delay: 0.2s; }
+.case-stat:nth-child(4) .case-stat-number { transition-delay: 0.3s; }
+.case-stat-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  color: var(--muted);
+}
+
+/* --- Футер: лейбл + точки навигации --- */
+.cases-footer {
+  padding: 28px var(--edge) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cases-footer-label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.18px;
+  color: var(--muted);
+  opacity: 0.55;
+}
+.cases-dots { display: flex; gap: 8px; }
+
+/* Подсказка-хинт */
+.cases-hint {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  color: var(--text);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cases-hint.visible { opacity: 0.45; }
+.cases-hint-arrow {
+  display: inline-block;
+  animation: hintBounce 1.5s ease infinite;
+}
+.cases-hint-arrow.left { animation-name: hintBounceLeft; }
+@keyframes hintBounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+@keyframes hintBounceLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+.cases-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--muted);
+  opacity: 0.3;
+  cursor: pointer;
+  transition: opacity 0.3s var(--ease-out);
+}
+.cases-dot.active { opacity: 1; }
+
+/* --- Планшет (до 960px) --- */
+@media (max-width: 960px) {
+  .cases-page {
+    grid-template-columns: 1fr;
+    width: 85%;
+  }
+  .cases { padding: 80px 0 60px; }
+}
+
+/* --- Мобиле (до 640px) --- */
+@media (max-width: 640px) {
+  .cases {
+    padding: 60px 0 48px;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .cases-header { margin-bottom: 28px; }
+  /* На мобиле каждый кейс — отдельный слайд, листаются по одному */
+  .cases-page { display: contents; }
+  .cases-track { gap: 16px; }
+  .case-card { flex-shrink: 0; width: calc(100vw - 40px); grid-template-columns: 1fr; }
+  .case-photo-wrap {
+    aspect-ratio: 4/3;
+  }
+  .case-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .case-content { padding: 16px; }
+  .case-name { font-size: 20px; }
+  .case-desc { font-size: 13px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .case-stat-number { font-size: 18px; }
+  .case-stat-label { font-size: 10px; }
+  .case-stats { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .case-stat { padding: 10px 0; }
+  .case-works { gap: 6px; }
+  .case-works-label { font-size: 9px; margin-bottom: 6px; }
+  .cases-nav-btn { width: 36px; height: 36px; font-size: 18px; }
+}
+
+/* --- Маленький мобиле (до 480px) --- */
+@media (max-width: 480px) {
+  .case-content { padding: 12px; }
+  .case-name { font-size: 18px; }
+  .case-stat-number { font-size: 16px; }
+}
+
+/* Маленькие телефоны — объединены в 734px брейкпоинт выше */
+</style>
+
+<!-- КЕЙСЫ -->
+<div style="padding:0 var(--edge);margin-bottom:12px"><span style="font-size:12px;font-weight:400;letter-spacing:-.18px;color:var(--muted);opacity:.45">Кейсы</span></div>
+<section class="cases section-reveal" id="cases">
+  <div class="cases-header">
+    <h2 class="cases-title">Кейсы</h2>
+    <div class="cases-right">
+      <div class="cases-hint" id="casesHint">
+        <span class="cases-hint-text">Листай вправо</span>
+        <span class="cases-hint-arrow">→</span>
+      </div>
+      <div class="cases-nav">
+        <button class="cases-nav-btn" id="casesPrev">&#8249;</button>
+        <button class="cases-nav-btn" id="casesNext">&#8250;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cases-track-wrap">
+    <div class="cases-track" id="casesTrack">
+
+      <!-- === СТРАНИЦА 1 (2 кейса) === -->
+      <div class="cases-page">
+
+      <!-- Кейс №1 — Адис Маммо -->
+      <div class="case-card" id="case0">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild6534-3738-4330-a132-353134636535/01.jpg" alt="Адис Маммо" style="filter:grayscale(.3) brightness(.85) contrast(1.1)">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Адис Маммо</div>
+            <div class="case-role">Ведущий · Стендап—комик · Креатор</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;Адисом более 3-х лет — ивенты, звёздные проекты и&nbsp;задачи далеко за&nbsp;пределами сцены</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3964-3738-4334-b433-633237336434/05.jpg" alt="Обложка мероприятия для Адиса Маммо"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3535-6465-4463-b964-643438653335/06.jpg" alt="Афиша ивента Адиса Маммо"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3062-3166-4065-b137-336464323330/07.jpg" alt="Оформление мероприятия Адиса Маммо"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="50" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений ивентов</div></div>
+            <div class="case-stat" data-target="10" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Проектов вне&nbsp;ивента</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кейс №2 — Влад Сапунов -->
+      <div class="case-card" id="case1">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild6537-6635-4632-a463-386265363064/02.jpg" alt="Влад Сапунов" style="filter:grayscale(.3) brightness(.85) contrast(1.1)">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Влад Сапунов</div>
+            <div class="case-role">Ведущий · Стендап—комик · Креатор</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;Владом более 3-х лет — не&nbsp;только ивенты, но&nbsp;и&nbsp;визуал для его образовательных продуктов</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6337-3532-4731-b465-636161396632/08.jpg" alt="Обложка для Влада Сапунова"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6431-3266-4264-b439-643861376361/09.jpg" alt="Афиша мероприятия Влада Сапунова"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3737-6132-4362-a239-623337343530/10.jpg" alt="Дизайн для образовательного продукта Влада Сапунова"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="40" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="20" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="20" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений ивентов</div></div>
+            <div class="case-stat" data-target="7" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /страница 1 -->
+
+      <!-- === СТРАНИЦА 2 (2 кейса) === -->
+      <div class="cases-page">
+
+      <!-- Кейс №3 — Митя Горький -->
+      <div class="case-card" id="case2">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild3965-3634-4863-b236-336565396461/12_.jpg" alt="Митя Горький">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Митя Горький</div>
+            <div class="case-role">Ведущий</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;Митей более 2-х лет — визуал для ивентов и&nbsp;помощь с&nbsp;его образовательным продуктом</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6265-3935-4236-b563-323466616337/15_.jpg" alt="Обложка ивента Мити Горького"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3661-3331-4633-a438-323666346336/16_.jpg" alt="Афиша мероприятия Мити Горького"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6634-3237-4238-a464-306332633236/17_.jpg" alt="Оформление ивента Мити Горького"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="20" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="10" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кейс №4 — Вадим Санамян -->
+      <div class="case-card" id="case3">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild3839-3731-4436-b266-343031343636/03.jpg" alt="Вадим Санамян">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Вадим Санамян</div>
+            <div class="case-role">Ведущий</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;Вадимом более 3-х лет — помогаю с&nbsp;визуалом и&nbsp;оформляю почти каждое мероприятие в&nbsp;сезонах</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6535-3337-4865-b166-346165656666/27_.jpg" alt="Обложка мероприятия Вадима Санамяна"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6565-3035-4637-b334-326362386337/28_.jpg" alt="Афиша ивента Вадима Санамяна"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3963-6665-4330-b436-663833373533/03_.jpg" alt="Оформление мероприятия Вадима Санамяна"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="20" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="70" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений мероприятий</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /страница 2 -->
+
+      <!-- === СТРАНИЦА 3 (2 кейса) === -->
+      <div class="cases-page">
+
+      <!-- Кейс №5 — Денис Ленга -->
+      <div class="case-card" id="case4">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild6165-6532-4763-b265-353831383432/04.jpg" alt="Денис Ленга">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Денис Ленга</div>
+            <div class="case-role">Ведущий</div>
+          </div>
+          <p class="case-desc">Денис — один из&nbsp;первых моих клиентов. Более 3-х лет помогаю с&nbsp;визуалом и&nbsp;активно работаю в&nbsp;сезонах</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3637-3936-4235-b839-303339333538/18_.jpg" alt="Обложка для Дениса Ленги"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6437-6536-4438-a365-313331343438/19_.jpg" alt="Афиша мероприятия Дениса Ленги"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6638-3430-4738-a135-386431653337/20_.jpg" alt="Оформление ивента Дениса Ленги"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="50" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="100" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кейс №6 — Логинов и Зайцев -->
+      <div class="case-card" id="case5">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild6131-6139-4539-b064-646565316539/13_--.jpg" alt="Александр Логинов и Антон Зайцев">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Логинов и&nbsp;Зайцев</div>
+            <div class="case-role">Дуэт ведущих</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;дуэтом более 2-х лет — визуал для премий, видеозаявок, шоурилов и&nbsp;всего что помогает выделиться</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3734-3233-4539-b963-386230656337/29_.jpg" alt="Обложка для дуэта Логинов и Зайцев"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3038-3538-4436-b932-386137623237/30_.jpg" alt="Афиша мероприятия Логинова и Зайцева"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6162-3766-4738-b936-333562353434/31_.jpg" alt="Оформление ивента Логинова и Зайцева"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="40" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="10" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="10" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /страница 3 -->
+
+      <!-- === СТРАНИЦА 4 (2 кейса) === -->
+      <div class="cases-page">
+
+      <!-- Кейс №7 — Дмитрий Акатьев -->
+      <div class="case-card" id="case6">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild6130-3236-4439-a633-343034313664/11_.jpg" alt="Дмитрий Акатьев">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Дмитрий Акатьев</div>
+            <div class="case-role">Ведущий</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;Димой более 2-х лет — визуал для премий и&nbsp;начинаем плотно работать над оформлением ивентов</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3564-3534-4261-b138-383963616537/21_.jpg" alt="Обложка мероприятия Дмитрия Акатьева"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild6335-3738-4263-b661-303865666339/22_.jpg" alt="Афиша ивента Дмитрия Акатьева"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3937-3731-4237-a134-343732623636/23_.jpg" alt="Оформление мероприятия Дмитрия Акатьева"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="10" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений ивентов</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кейс №8 — Илья Русаков -->
+      <div class="case-card" id="case7">
+        <div class="case-photo-wrap">
+          <img class="case-photo" src="https://static.tildacdn.com/tild3139-3062-4963-b632-663337303361/14_.jpg" alt="Илья Русаков">
+          <span class="case-years">Постоянное сотрудничество</span>
+        </div>
+        <div class="case-content">
+          <div class="case-client">
+            <div class="case-name">Илья Русаков</div>
+            <div class="case-role">Ведущий</div>
+          </div>
+          <p class="case-desc">Работаю с&nbsp;Ильёй более 2-х лет — визуал для ивентов и&nbsp;помогаю с&nbsp;его проектом «Ламповое Шоу»</p>
+          <div class="case-works-label">Примеры работ</div>
+          <div class="case-works">
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3935-3566-4630-b738-666231333035/24_.jpg" alt="Обложка для Ильи Русакова"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3831-3734-4937-a466-313662646136/25_.jpg" alt="Афиша мероприятия Ильи Русакова"></div>
+            <div class="case-work"><img src="https://static.tildacdn.com/tild3033-6665-4938-b739-396463373935/26_.jpg" alt="Оформление ивента Ильи Русакова"></div>
+          </div>
+          <div class="case-stats">
+            <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
+            <div class="case-stat" data-target="40" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Афиш</div></div>
+            <div class="case-stat" data-target="10" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Оформлений</div></div>
+            <div class="case-stat" data-target="5" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Презентаций</div></div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /страница 4 -->
+
+    </div>
+  </div>
+
+  <div class="cases-footer">
+    <div class="cases-dots" id="casesDots"></div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var track = document.getElementById('casesTrack');
+  var prev = document.getElementById('casesPrev');
+  var next = document.getElementById('casesNext');
+  var dotsWrap = document.getElementById('casesDots');
+  var hint = document.getElementById('casesHint');
+  if (!track) return;
+
+  var pages = track.querySelectorAll('.cases-page');
+  var cards = track.querySelectorAll('.case-card');
+  var current = 0;
+  var pos = 0;
+  var targetPos = 0;
+  var maxScroll = 0;
+  var animating = false;
+
+  function isMobile() { return window.innerWidth <= 640; }
+  function getSlides() { return isMobile() ? cards : pages; }
+  function getTotal() { return getSlides().length; }
+
+  function calcMax() {
+    maxScroll = track.scrollWidth - track.parentElement.offsetWidth;
+    if (maxScroll < 0) maxScroll = 0;
+  }
+  calcMax();
+  window.addEventListener('resize', function() { calcMax(); rebuildDots(); });
+
+  function rebuildDots() {
+    dotsWrap.innerHTML = '';
+    var total = getTotal();
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('span');
+      d.className = 'cases-dot' + (i === current ? ' active' : '');
+      (function(idx) { d.addEventListener('click', function() { goToSlide(idx); }); })(i);
+      dotsWrap.appendChild(d);
+    }
+  }
+  rebuildDots();
+
+  function updateHint() {
+    if (!hint) return;
+    var hintText = hint.querySelector('.cases-hint-text');
+    var hintArrow = hint.querySelector('.cases-hint-arrow');
+    var total = getTotal();
+    hint.classList.add('visible');
+    if (current === 0) {
+      if (isMobile()) { hintText.textContent = '1 / ' + total; }
+      else { hintText.textContent = 'Листай вправо'; }
+      hintArrow.textContent = '→';
+      hintArrow.classList.remove('left');
+    } else if (current >= total - 1) {
+      hintText.textContent = (current + 1) + ' / ' + total;
+      hintArrow.textContent = '←';
+      hintArrow.classList.add('left');
+    } else {
+      hintText.textContent = (current + 1) + ' / ' + total;
+      hintArrow.textContent = '→';
+      hintArrow.classList.remove('left');
+    }
+  }
+
+  function goToSlide(i) {
+    var slides = getSlides();
+    if (i < 0) i = 0;
+    if (i >= slides.length) i = slides.length - 1;
+    current = i;
+    targetPos = Math.min(slides[i].offsetLeft, maxScroll);
+    if (!animating) animate();
+    var dots = dotsWrap.querySelectorAll('.cases-dot');
+    dots.forEach(function(d, j) { d.classList.toggle('active', j === current); });
+    updateHint();
+  }
+
+  function animate() {
+    animating = true;
+    function step() {
+      var diff = targetPos - pos;
+      pos += diff * 0.1;
+      if (Math.abs(diff) < 0.5) { pos = targetPos; animating = false; }
+      track.style.transform = 'translate3d(' + -pos + 'px,0,0)';
+      if (animating) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  if (prev) prev.addEventListener('click', function() { goToSlide(current - 1); });
+  if (next) next.addEventListener('click', function() { goToSlide(current + 1); });
+
+  var touchStartX = 0, touchStartY = 0, touchDelta = 0, isSwiping = false, swipeThreshold = 50;
+
+  track.parentElement.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchDelta = 0;
+    isSwiping = false;
+  }, { passive: true });
+
+  track.parentElement.addEventListener('touchmove', function(e) {
+    var dx = e.touches[0].clientX - touchStartX;
+    var dy = e.touches[0].clientY - touchStartY;
+    if (!isSwiping && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) { isSwiping = true; }
+    if (isSwiping) { e.preventDefault(); touchDelta = dx; }
+  }, { passive: false });
+
+  track.parentElement.addEventListener('touchend', function() {
+    if (Math.abs(touchDelta) > swipeThreshold) {
+      if (touchDelta < 0) goToSlide(current + 1);
+      else goToSlide(current - 1);
+    }
+    touchDelta = 0;
+    isSwiping = false;
+  }, { passive: true });
+
+  var wheelTimer = null, wheelLocked = false;
+  track.parentElement.addEventListener('wheel', function(e) {
+    var dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+    if (Math.abs(dx) < 5) return;
+    e.preventDefault();
+    if (wheelLocked) return;
+    wheelLocked = true;
+    if (dx > 0) goToSlide(current + 1);
+    else goToSlide(current - 1);
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(function() { wheelLocked = false; }, 600);
+  }, { passive: false });
+
+  updateHint();
+
+  function animateStat(stat) {
+    var t = parseInt(stat.dataset.target), s = stat.dataset.suffix || '', el = stat.querySelector('.case-stat-number');
+    var d = t <= 10 ? 800 : 1500, st = performance.now();
+    function u(now) {
+      var p = Math.min((now - st) / d, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(e * t) + s;
+      if (p < 1) requestAnimationFrame(u);
+    }
+    requestAnimationFrame(u);
+  }
+
+  var caseObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !entry.target.dataset.counted) {
+        entry.target.dataset.counted = 'true';
+        entry.target.classList.add('visible');
+        entry.target.querySelectorAll('.case-stat').forEach(function(s) { animateStat(s); });
+      }
+    });
+  }, { threshold: 0.3 });
+  cards.forEach(function(c) { caseObs.observe(c); });
+
+  cards.forEach(function(card) {
+    card.addEventListener('mouseenter', function() {
+      card.querySelectorAll('.case-stat').forEach(function(s) { animateStat(s); });
+    });
+  });
+})();
+</script>
