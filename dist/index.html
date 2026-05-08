@@ -4288,28 +4288,49 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
     function closeViewer() { viewer.classList.remove('is-open'); root.classList.remove('is-viewer-open'); document.body.style.overflow = ''; }
 
     var cachedHeight = 0, cachedTop = 0, cachedVh = 0;
-    function cacheRect() { cachedHeight = root.offsetHeight; cachedVh = window.innerHeight; }
+    var lanesCache = []; // ⚡ кэш всех lane + stack-ов + параметров — собираем 1 раз
+    function cacheRect() {
+      cachedHeight = root.offsetHeight;
+      cachedVh = window.innerHeight;
+      // Пересчитываем кэш lanes
+      lanesCache = [];
+      root.querySelectorAll('.twk-covers__lane').forEach(function(lane){
+        var prev = lane.querySelector('[data-stack="prev"]');
+        var cur = lane.querySelector('[data-stack="current"]');
+        var next = lane.querySelector('[data-stack="next"]');
+        if (!prev || !cur || !next) return;
+        var gap = parseFloat(getComputedStyle(cur).gap) || 0;
+        var loop = cur.offsetHeight + gap;
+        lanesCache.push({
+          prev: prev, cur: cur, next: next,
+          loop: loop,
+          speed: parseFloat(lane.getAttribute('data-speed')) || 0.5,
+          start: parseFloat(lane.getAttribute('data-start')) || 0
+        });
+      });
+    }
     window.addEventListener('resize', cacheRect);
     setTimeout(cacheRect, 100);
+    setTimeout(cacheRect, 800); // повторно после загрузки картинок
 
     function updateColumns() {
-      // На мобиле параллакс выключен — обычная сетка
       if (window.innerWidth < 768) return;
-      if (!cachedHeight) cacheRect();
+      if (!cachedHeight || !lanesCache.length) cacheRect();
+      // ОДИН getBoundingClientRect на root — force layout 1 раз вместо 5+
       cachedTop = root.getBoundingClientRect().top;
       var total = Math.max(cachedHeight - cachedVh, 1);
       var progress = Math.min(Math.max(-cachedTop / total, 0), 1);
-      root.querySelectorAll('.twk-covers__lane').forEach(function (lane) {
-        var prev = lane.querySelector('[data-stack="prev"]'), cur = lane.querySelector('[data-stack="current"]'), next = lane.querySelector('[data-stack="next"]');
-        if (!prev || !cur || !next) return;
-        var gap = parseFloat(getComputedStyle(cur).gap || 0), loop = cur.offsetHeight + gap;
-        var speed = parseFloat(lane.getAttribute('data-speed') || '0.5'), start = parseFloat(lane.getAttribute('data-start') || '0');
-        var travel = loop * 1.2, offset = -((start * loop) + (progress * travel * speed));
-        while (offset < -loop) offset += loop; while (offset > 0) offset -= loop;
-        prev.style.transform = 'translate3d(0,' + (offset - loop) + 'px,0)';
-        cur.style.transform = 'translate3d(0,' + offset + 'px,0)';
-        next.style.transform = 'translate3d(0,' + (offset + loop) + 'px,0)';
-      });
+      // Чисто запись transform — никакого чтения layout в цикле
+      for (var i = 0; i < lanesCache.length; i++) {
+        var l = lanesCache[i];
+        var travel = l.loop * 1.2;
+        var offset = -((l.start * l.loop) + (progress * travel * l.speed));
+        while (offset < -l.loop) offset += l.loop;
+        while (offset > 0) offset -= l.loop;
+        l.prev.style.transform = 'translate3d(0,' + (offset - l.loop) + 'px,0)';
+        l.cur.style.transform = 'translate3d(0,' + offset + 'px,0)';
+        l.next.style.transform = 'translate3d(0,' + (offset + l.loop) + 'px,0)';
+      }
     }
 
     viewer.addEventListener('click', function (e) { if (e.target.classList.contains('twk-viewer__bg') || e.target.classList.contains('twk-viewer__close')) closeViewer(); });
