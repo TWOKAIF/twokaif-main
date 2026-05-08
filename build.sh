@@ -111,6 +111,12 @@ User-agent: *
 Disallow: /
 EOF
 
+# ─── Копируем assets/ (js, шрифты и т.п.) в dist/ ───
+if [ -d assets ]; then
+  cp -R assets/* "$DIST/" 2>/dev/null || true
+fi
+
 echo "✓ dist/index.html: $(wc -l < $DIST/index.html) строк, $(du -h $DIST/index.html | cut -f1)"
 echo "✓ dist/404.html:   $(wc -l < $DIST/404.html) строк"
 echo "✓ dist/robots.txt: noindex"
+[ -d "$DIST/js" ] && echo "✓ dist/js:         $(ls $DIST/js | wc -l | tr -d ' ') файлов"

@@ -129,6 +129,14 @@
 
 <script>
 document.getElementById('footerTopBtn').addEventListener('click',function(){
-  window.scrollTo({top:0,behavior:'smooth'});
+  // Плавный полёт наверх с длинным замедлением (через Lenis если есть)
+  if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+    window.lenis.scrollTo(0, {
+      duration: 1.8,
+      easing: function(t){ return 1 - Math.pow(1 - t, 4); }
+    });
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
 });
 </script>
