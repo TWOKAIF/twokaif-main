@@ -1,38 +1,60 @@
 # twokaif-main — статус
 
-Главный сайт ТУКАЙФ. Перевозим с Tilda на собственный сервер Aeza.
+Главный сайт ТУКАЙФ. Перевозим с Tilda на Aeza.
 
-## Где сейчас живёт
+## Где живёт
 
 | Где | URL | Назначение |
 |---|---|---|
-| Прод (старый) | `twokaif.ru` (Tilda) | пока работает, отключим после переезда |
-| Staging (новый) | `new.twokaif.ru` (Aeza) | боевой staging для отладки |
+| Прод (старый) | `twokaif.ru` (Tilda) | пока работает |
+| Staging (новый) | `new.twokaif.ru` (Aeza) | боевой staging — почти прод |
 
-## Структура
+## Что готово
 
-```
-blocks/              — 17 HTML-блоков, склеиваются в index.html
-build.sh             — сборщик из блоков в dist/
-dist/                — собранный сайт (index.html, 404.html, robots.txt)
-README.md            — детальное описание блоков и плана переноса
-.gitignore           — исключения для git
-```
+### Перенос
+- Все 17 блоков из Tilda извлечены в `blocks/`
+- 200 картинок локализованы: `tildacdn.com` → `/var/www/twokaif-new/images/<hash>.webp`
+- 128 МБ JPG → 51 МБ WebP (Q75, max 1600px)
+- Скрипт `build.sh` собирает `dist/` из блоков с авто-заменой URL
 
-## Картинки
+### Производительность (полный аудит 2026-05-08)
+- Sticky-параллакс на обложках СНЯТ — был корнем всех тормозов
+- Обложки = статичный CSS Grid (4×8 ПК, 3×N iPad, 2×N мобила)
+- Lenis убран (конфликтовал с ScrollTrigger pin)
+- Lazy/eager картинок: верхние блоки eager+fetchpriority=high, портфолио lazy
+- nginx: http2, cache 30d immutable, gzip off для медиа
+- 60 FPS при скролле, CLS = 0.0000, FCP 884ms
 
-Картинки сейчас тащатся с Tilda CDN (`static.tildacdn.com`). Локальные копии лежат на Mac в исходной папке `01_Главный мозг/01_Мой сайт/02_САЙТ/04_Сайт-без-Тильды/images_sorted/` (не в git — слишком тяжёлые).
+### SEO + a11y + security
+- canonical link → `https://twokaif.ru/`
+- og:image, twitter:image, schema.org image — абсолютные URL на свой домен
+- 32 кнопки обложек получили aria-label
+- Schema.org ProfessionalService с founder, sameAs
+- Security headers: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
+- Yandex Metrika 108388166 + Google Search Console verification
 
-План: сконвертить в WebP, положить в `/var/www/twokaif-new/images/` на Aeza, заменить URL в HTML.
+## Что осталось перед переездом twokaif.ru
+
+1. **Юридика 152-ФЗ** — `/privacy` страница + кук-баннер с 3 кнопками (Принять / Отклонить / Настройки) + ссылка на политику в футере
+2. **Self-host шрифтов** — Inter Tight локально вместо Google Fonts
+3. **Self-host GSAP + ScrollTrigger** — локально вместо cdnjs
+4. **sitemap.xml + JSON-LD расширенный** — для индексации
+5. **На проде убрать noindex** — снять `X-Robots-Tag: noindex` в nginx
+6. **Перенести /generator_dogovor** с Tilda на `/dogovor` в Aeza
+7. **DNS-переключение** twokaif.ru с Tilda на 213.165.41.1 + 301-редиректы для /text → png.twokaif.ru
 
 ## Деплой
 
 ```bash
+cd ~/Documents/ТУКАЙФ/twokaif-main
 bash build.sh
 rsync -avz --delete -e "ssh -i ~/.ssh/twokaif_hetzner" \
   dist/ root@213.165.41.1:/var/www/twokaif-new/
+ssh -i ~/.ssh/twokaif_hetzner root@213.165.41.1 \
+  "find /var/www/twokaif-new -type f -exec chmod 644 {} \;"
 ```
 
-## Что осталось
+## Шеф ведёт всю инфру
 
-См. `~/.claude/chef/PENDING.md` или спроси Шефа.
+См. `~/.claude/chef/MAP.md`, `~/.claude/chef/PENDING.md`, `~/.claude/chef/LOG.md`.
+В новой сессии: «шеф ты тут?» → продолжаем с юридики.
