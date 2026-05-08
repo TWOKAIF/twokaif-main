@@ -575,8 +575,8 @@
       var isMobile = window.innerWidth < 768;
       var loading = (isMobile || idx < 6) ? 'eager' : 'lazy';
       var decoding = isMobile ? 'sync' : 'async';
-      return '<button class="twk-cover" type="button" data-full="' + photo.src + '">' +
-        '<span class="twk-cover__shine"></span>' +
+      return '<button class="twk-cover" type="button" data-full="' + photo.src + '" aria-label="Открыть обложку: ' + photo.label + '">' +
+        '<span class="twk-cover__shine" aria-hidden="true"></span>' +
         '<img src="' + photo.src + '" alt="' + photo.label + '" loading="' + loading + '" decoding="' + decoding + '">' +
       '</button>';
     }
