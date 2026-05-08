@@ -230,7 +230,7 @@
     transform: scale(1) translate3d(0,0,0);
     transition: transform 0.55s cubic-bezier(.22,.8,.2,1), filter 0.28s ease;
     filter: contrast(1.02) saturate(1.02);
-    will-change: transform;
+    /* will-change снят — 96 GPU-слоёв убивали VRAM */
   }
 
   .twk-cover:hover {
@@ -512,12 +512,14 @@
       var grid = document.createElement('div'); grid.className = 'twk-covers__grid';
       /* Затемнения отключены */
 
+      // На мобиле создаём только current stack (-80 <img> = быстрее DOM)
+      var stacks = (window.innerWidth < 768) ? ['current'] : ['prev','current','next'];
       columns.forEach(function (photos, colIndex) {
         var lane = document.createElement('div'); lane.className = 'twk-covers__lane';
         lane.setAttribute('data-speed', settings[colIndex].speed);
         lane.setAttribute('data-start', settings[colIndex].start);
         var html = photos.map(cardHTML).join('');
-        ['prev','current','next'].forEach(function(n) {
+        stacks.forEach(function(n) {
           var s = document.createElement('div'); s.className = 'twk-covers__stack';
           s.setAttribute('data-stack', n); s.innerHTML = html; lane.appendChild(s);
         });
@@ -534,22 +536,42 @@
 
     function bindCards() {
       var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      root.querySelectorAll('.twk-cover').forEach(function (card) {
-        if (card.dataset.bound === '1') return; card.dataset.bound = '1';
-        var img = card.querySelector('img');
-        card.addEventListener('mousemove', function (e) {
+      // Делегирование: один listener на root вместо 96 — снимает нагрузку
+      var hovered = null;
+      if (!root.dataset.delegated) {
+        root.dataset.delegated = '1';
+        root.addEventListener('mousemove', function(e){
           if (rm || window.innerWidth < 768) return;
+          var card = e.target.closest('.twk-cover');
+          if (!card) return;
+          if (hovered && hovered !== card) {
+            hovered.style.transform = '';
+            var oldImg = hovered.querySelector('img');
+            if (oldImg) oldImg.style.transform = '';
+          }
+          hovered = card;
+          var img = card.querySelector('img');
           var rect = card.getBoundingClientRect();
           var px = (e.clientX - rect.left) / rect.width, py = (e.clientY - rect.top) / rect.height;
           card.style.transform = 'perspective(1000px) rotateX(' + ((0.5-py)*6) + 'deg) rotateY(' + ((px-0.5)*6) + 'deg) translateY(-2px) scale(1.01)';
-          img.style.transform = 'scale(1.03) translate3d(' + ((px-0.5)*6) + 'px,' + ((py-0.5)*6) + 'px,0)';
+          if (img) img.style.transform = 'scale(1.03) translate3d(' + ((px-0.5)*6) + 'px,' + ((py-0.5)*6) + 'px,0)';
+        }, { passive: true });
+        root.addEventListener('mouseleave', function(){
+          if (hovered) {
+            hovered.style.transform = '';
+            var img = hovered.querySelector('img');
+            if (img) img.style.transform = '';
+            hovered = null;
+          }
         });
-        card.addEventListener('mouseleave', function () { card.style.transform = ''; img.style.transform = ''; });
-        card.addEventListener('click', function () {
-          viewer.querySelector('.twk-viewer__img').src = card.getAttribute('data-full') || img.src;
+        root.addEventListener('click', function(e){
+          var card = e.target.closest('.twk-cover');
+          if (!card) return;
+          var img = card.querySelector('img');
+          viewer.querySelector('.twk-viewer__img').src = card.getAttribute('data-full') || (img && img.src) || '';
           viewer.classList.add('is-open'); root.classList.add('is-viewer-open'); document.body.style.overflow = 'hidden';
         });
-      });
+      }
     }
 
     function closeViewer() { viewer.classList.remove('is-open'); root.classList.remove('is-viewer-open'); document.body.style.overflow = ''; }

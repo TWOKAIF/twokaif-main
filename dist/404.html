@@ -420,7 +420,7 @@ var lenis = null;
   var isNarrow = window.innerWidth < 1024;
   if (rm || isTouch || isNarrow) return;  // мобила/планшет — нативный iOS скролл
   lenis = new Lenis({
-    duration: 1.0,
+    duration: 0.8,        // быстрее отклик, меньше «провисания»
     easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
     smoothWheel: true,
     syncTouch: false,
