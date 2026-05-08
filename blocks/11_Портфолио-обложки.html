@@ -471,7 +471,7 @@
       '</div>';
 
     function cardHTML(photo) {
-      return '<button class="twk-cover" type="button" data-full="' + photo.src + '"><span class="twk-cover__shine"></span><img src="' + photo.src + '" alt="' + photo.label + '"></button>';
+      return '<button class="twk-cover" type="button" data-full="' + photo.src + '"><span class="twk-cover__shine"></span><img src="' + photo.src + '" alt="' + photo.label + '" loading="lazy" decoding="async"></button>';
     }
 
     function build() {
