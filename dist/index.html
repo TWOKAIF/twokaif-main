@@ -4078,15 +4078,29 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
   }
 
   @media (max-width: 767px) {
-    /* На мобиле полностью отключаем sticky-параллакс — он лагает на iOS.
-       Делаем нативный grid 2 колонки, обычный скролл. */
+    /* На мобиле — статичный grid без какой-либо динамики.
+       Ноль transitions, ноль animations, ноль transform — иначе iOS Safari моргает. */
     .twk-covers {
       --cols: 2; --pad: 12px; --gap: 12px; --radius: 0px;
-      min-height: 0 !important;  /* отключаем огромную высоту */
+      min-height: 0 !important;
       height: auto !important;
     }
-    .twk-covers__sticky { position: static !important; height: auto !important; }
-    .twk-covers__viewport { height: auto !important; padding: 0 var(--pad) !important; }
+    .twk-covers, .twk-covers * {
+      transition: none !important;
+      animation: none !important;
+    }
+    .twk-covers__sticky {
+      position: static !important;
+      height: auto !important;
+      transform: none !important;
+    }
+    .twk-covers__viewport {
+      height: auto !important;
+      overflow: visible !important;
+      padding: 0 var(--pad) !important;
+      filter: none !important;
+      transform: none !important;
+    }
     .twk-covers__grid {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
@@ -4103,12 +4117,12 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
     }
     .twk-covers__fade-top, .twk-covers__fade-bottom { display: none !important; }
     .twk-cover {
-      transition: none !important;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
       transform: none !important;
+      will-change: auto !important;
     }
     .twk-cover::before, .twk-cover__shine { display: none !important; }
-    .twk-cover img { filter: none !important; transform: none !important; }
+    .twk-cover img { filter: none !important; transform: none !important; will-change: auto !important; }
     .twk-cover, .twk-cover::before, .twk-viewer__img { border-radius: var(--radius); }
     .twk-viewer { padding: 60px 10px 10px; }
     .twk-viewer__img { max-width: 92vw; max-height: 80vh; }
