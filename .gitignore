@@ -13,9 +13,10 @@ Thumbs.db
 *.key
 *.pem
 
-# Большие медиа — не пушим в git
+# Большие медиа — не пушим в git (51 МБ webp лежат на сервере)
 images/
 images_sorted/
+images-webp/
 *.psd
 *.ai
 

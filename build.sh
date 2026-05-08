@@ -5,10 +5,23 @@ set -e
 cd "$(dirname "$0")"
 
 DIST="dist"
-BLOCKS="blocks"
+BLOCKS_SRC="blocks"
+TMP_BLOCKS=$(mktemp -d)
+trap "rm -rf $TMP_BLOCKS" EXIT
 
 rm -rf "$DIST"
 mkdir -p "$DIST"
+
+# ─── Локализация Tilda CDN → /images/<hash>.webp ───────
+for f in "$BLOCKS_SRC"/*.html; do
+  name=$(basename "$f")
+  perl -pe '
+    s~https://static\.tildacdn\.[a-z]+/(tild[A-Za-z0-9-]+)/[^"'"'"' )]+\.(jpg|jpeg|JPG|png|PNG)~/images/$1.webp~g;
+    s~<link[^>]+preconnect[^>]+tildacdn[^>]*>\s*~~g;
+    s~<link[^>]+dns-prefetch[^>]+tildacdn[^>]*>\s*~~g;
+  ' "$f" > "$TMP_BLOCKS/$name"
+done
+BLOCKS="$TMP_BLOCKS"
 
 # ─── INDEX.HTML ────────────────────────────────────────────
 {
