@@ -4090,14 +4090,39 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
   }
 
   @media (max-width: 767px) {
+    /* На мобиле полностью отключаем sticky-параллакс — он лагает на iOS.
+       Делаем нативный grid 2 колонки, обычный скролл. */
     .twk-covers {
-      --cols: 3; --pad: 10px; --gap: 10px; --radius: 0px;
-      min-height: 500vh; /* достаточно чтобы все обложки прошли через экран */
+      --cols: 2; --pad: 12px; --gap: 12px; --radius: 0px;
+      min-height: 0 !important;  /* отключаем огромную высоту */
+      height: auto !important;
     }
-    .twk-cover { transition: none !important; box-shadow: none !important; } /* без тяжёлых эффектов */
-    .twk-cover::before { display: none !important; } /* без shine-оверлея */
+    .twk-covers__sticky { position: static !important; height: auto !important; }
+    .twk-covers__viewport { height: auto !important; padding: 0 var(--pad) !important; }
+    .twk-covers__grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: var(--gap) !important;
+      height: auto !important;
+    }
+    .twk-covers__lane { display: contents !important; }
+    .twk-covers__stack[data-stack="prev"],
+    .twk-covers__stack[data-stack="next"] { display: none !important; }
+    .twk-covers__stack[data-stack="current"] {
+      display: contents !important;
+      transform: none !important;
+      will-change: auto !important;
+    }
+    .twk-covers__fade-top, .twk-covers__fade-bottom { display: none !important; }
+    .twk-cover {
+      transition: none !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+      transform: none !important;
+    }
+    .twk-cover::before, .twk-cover__shine { display: none !important; }
+    .twk-cover img { filter: none !important; transform: none !important; }
     .twk-cover, .twk-cover::before, .twk-viewer__img { border-radius: var(--radius); }
-    .twk-viewer { padding: 60px 10px 10px; } /* 60px сверху — не перекрывает навбар */
+    .twk-viewer { padding: 60px 10px 10px; }
     .twk-viewer__img { max-width: 92vw; max-height: 80vh; }
     .twk-viewer__close { width: 28px; height: 28px; }
     .twk-viewer__close::before, .twk-viewer__close::after { width: 10px; }
@@ -4257,6 +4282,8 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
     setTimeout(cacheRect, 100);
 
     function updateColumns() {
+      // На мобиле параллакс выключен — обычная сетка
+      if (window.innerWidth < 768) return;
       if (!cachedHeight) cacheRect();
       cachedTop = root.getBoundingClientRect().top;
       var total = Math.max(cachedHeight - cachedVh, 1);
