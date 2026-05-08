@@ -408,31 +408,9 @@ function applyThemeColors() {
 document.addEventListener('DOMContentLoaded', applyThemeColors);
 
 
-// --- Lenis: плавный скролл ТОЛЬКО на десктопе ---
-// На iOS/Android тач-скролл и так плавный нативно, Lenis там
-// конфликтует со sticky-обложками и тормозит. Включаем
-// исключительно когда колесо мыши + достаточно широкий экран.
+// --- Lenis выключен: ломал sync с ScrollTrigger pin-секциями ---
+// Стрелка-наверх в футере работает через нативный smooth-scroll.
 var lenis = null;
-(function initLenis(){
-  if (typeof Lenis === 'undefined') return;
-  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-  var isNarrow = window.innerWidth < 1024;
-  if (rm || isTouch || isNarrow) return;  // мобила/планшет — нативный iOS скролл
-  lenis = new Lenis({
-    duration: 0.8,        // быстрее отклик, меньше «провисания»
-    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-    smoothWheel: true,
-    syncTouch: false,
-    wheelMultiplier: 1.0
-  });
-  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
-  requestAnimationFrame(raf);
-  if (typeof ScrollTrigger !== 'undefined') {
-    lenis.on('scroll', ScrollTrigger.update);
-  }
-  window.lenis = lenis;
-})();
 
 // --- Анимированный фавикон (плавное вращение, адаптация под тему) ---
 (function() {
