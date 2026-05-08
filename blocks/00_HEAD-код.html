@@ -41,35 +41,67 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "ТУКАЙФ",
-  "url": "https://twokaif.ru",
-  "description": "Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы",
-  "image": "https://twokaif.ru/images/tild3137-3034-4336-a233-633532323632.webp",
-  "founder": { "@type": "Person", "name": "Руслан Тукаев" },
-  "serviceType": ["Графический дизайн", "Веб-дизайн", "Дизайн мероприятий"],
-  "areaServed": "RU",
-  "sameAs": [
-    "https://t.me/twokaif",
-    "https://vk.com/twokaif",
-    "https://www.instagram.com/twokaif.design"
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "url": "https://t.me/twokaif_ruslan"
-  }
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://twokaif.ru/#org",
+      "name": "ТУКАЙФ",
+      "alternateName": "TWOKAIF",
+      "url": "https://twokaif.ru",
+      "description": "Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы",
+      "image": "https://twokaif.ru/images/tild3137-3034-4336-a233-633532323632.webp",
+      "logo": "https://twokaif.ru/images/tild3137-3034-4336-a233-633532323632.webp",
+      "founder": {
+        "@type": "Person",
+        "name": "Руслан Тукаев",
+        "url": "https://t.me/twokaif_ruslan",
+        "jobTitle": "Ивент-дизайнер"
+      },
+      "serviceType": ["Графический дизайн", "Веб-дизайн", "Дизайн мероприятий"],
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "priceRange": "₽₽₽",
+      "sameAs": [
+        "https://t.me/twokaif",
+        "https://vk.com/twokaif",
+        "https://www.instagram.com/twokaif.design"
+      ],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": "https://t.me/twokaif_ruslan",
+        "availableLanguage": ["ru"]
+      }],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Услуги ТУКАЙФ",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Дизайн обложек для ивента", "description": "Серия обложек в едином стиле для соцсетей и презентаций"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Афиши и плакаты", "description": "Печатные и цифровые афиши для мероприятий"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Презентации", "description": "Победные презентации для тендеров и питчей"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Сайты ивент-агентств", "description": "Лендинги и сайты-портфолио на собственном движке"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Интерактивы", "description": "Цифровые интерактивы для ведущих и свадебных церемоний"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Анкеты молодожёнам", "description": "Персональные анкеты-приложения с PDF-выгрузкой"}}
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://twokaif.ru/#website",
+      "url": "https://twokaif.ru/",
+      "name": "ТУКАЙФ",
+      "publisher": {"@id": "https://twokaif.ru/#org"},
+      "inLanguage": "ru-RU"
+    }
+  ]
 }
 </script>
 
 <!-- Подтверждение для Google Search Console -->
 <meta name="google-site-verification" content="H8iItXU7tnn8s2mpSYgTzqBXxVJ97Vxjr0iV6PlP-f0" />
 
-<!-- Ускорение загрузки -->
-<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<!-- Self-hosted шрифты Inter Tight (без Google Fonts) -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/NGSwv5HMAFg6IuGlBNMjxLsD8ah8QA.woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/inter-tight.css">
 
 <!-- Theme color -->
 <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
@@ -79,9 +111,9 @@
 <!-- Viewport -->
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
 
-<!-- GSAP (анимации) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- GSAP (анимации) — self-hosted -->
+<script src="/js/gsap.min.js"></script>
+<script src="/js/ScrollTrigger.min.js"></script>
 
 <!-- Фавикон SVG — снежинка ТУКАЙФ -->
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>path{fill:%230a0a0a}@media(prefers-color-scheme:dark){path{fill:%23EAEAF2}}</style><g transform="translate(5,-1.35) scale(0.2951)"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></g></svg>'>

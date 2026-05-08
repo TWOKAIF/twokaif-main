@@ -42,14 +42,23 @@
 - nginx: `try_files $uri $uri.html` — /privacy без расширения работает
 - build.sh: копирует images-webp/ → dist/images/ (фикс rsync --delete снёс картинки)
 
+### Self-host всего ✓
+- Inter Tight локально: 14 woff2 (cyrillic + latin + greek + vietnam + ext, 348 КБ), вариативный 300-700
+- preload основного cyrillic 400 woff2 → нет FOUT
+- GSAP 3.12.5 + ScrollTrigger локально в `/js/`
+- Lenis уже был локально
+- Удалены preconnect к fonts.googleapis.com, fonts.gstatic.com, cdnjs.cloudflare.com
+- Сайт работает даже если все CDN мира лягут
+
+### SEO-инфра ✓
+- `/sitemap.xml` — 2 URL (/, /privacy) для поисковиков
+- Расширенный JSON-LD: `@graph` с ProfessionalService + WebSite, founder с jobTitle, OfferCatalog (6 услуг), priceRange, areaServed RU
+
 ## Что осталось перед переездом twokaif.ru
 
-1. **Self-host шрифтов** — Inter Tight локально вместо Google Fonts
-2. **Self-host GSAP + ScrollTrigger** — локально вместо cdnjs
-3. **sitemap.xml + JSON-LD расширенный** — для индексации
-4. **На проде убрать noindex** — снять `X-Robots-Tag: noindex` в nginx
-5. **Перенести /generator_dogovor** с Tilda на `/dogovor` в Aeza
-6. **DNS-переключение** twokaif.ru с Tilda на 213.165.41.1 + 301-редиректы для /text → png.twokaif.ru
+1. **На проде убрать noindex** — снять `X-Robots-Tag: noindex` и `Disallow: /` в robots.txt
+2. **Перенести /generator_dogovor** с Tilda на `/dogovor` в Aeza
+3. **DNS-переключение** twokaif.ru с Tilda на 213.165.41.1 + 301-редиректы для /text → png.twokaif.ru
 
 ## Деплой
 
