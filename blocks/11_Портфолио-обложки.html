@@ -627,10 +627,19 @@
     viewer.addEventListener('click', function (e) { if (e.target.classList.contains('twk-viewer__bg') || e.target.classList.contains('twk-viewer__close')) closeViewer(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && viewer.classList.contains('is-open')) closeViewer(); });
     window.addEventListener('resize', build);
-    /* Скролл через rAF — не чаще 1 раза за кадр */
-    var ticking = false;
+    /* Скролл через rAF, но не чаще 30 FPS — снимает 50% CPU
+       без визуальной разницы для медленного параллакса */
+    var ticking = false, lastUpdate = 0;
     window.addEventListener('scroll', function() {
-      if (!ticking) { ticking = true; requestAnimationFrame(function() { updateColumns(); ticking = false; }); }
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(now) {
+        if (now - lastUpdate >= 32) {  // 32ms ≈ 30 FPS
+          updateColumns();
+          lastUpdate = now;
+        }
+        ticking = false;
+      });
     }, { passive: true });
     build();
   })();

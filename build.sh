@@ -22,14 +22,23 @@ for f in "$BLOCKS_SRC"/*.html; do
   ' "$f" > "$TMP_BLOCKS/$name"
 done
 
-# ─── lazy-loading + async для всех <img> в блоках ниже hero ───
-# (блок 04_Главный-экран — hero с большим логотипом, его не трогаем)
-for n in 05_Обо-мне 06_Бегущая-полоска-клиентов 07_Услуги 08_Кейсы 09_Цены 11_Портфолио-обложки 12_Портфолио-афиши 13_Победные-презентации; do
+# ─── lazy-loading: ТОЛЬКО для глубоких блоков (8+) ───
+# Верхние блоки (05, 06, 07) — eager, грузятся сразу.
+# Иначе при первом скролле картинки догружаются — выглядит как тормоз.
+for n in 08_Кейсы 09_Цены 11_Портфолио-обложки 12_Портфолио-афиши 13_Победные-презентации; do
   f="$TMP_BLOCKS/${n}.html"
   [ -f "$f" ] || continue
   perl -i -pe '
-    # Добавить loading="lazy" decoding="async" к <img> которые их ещё не имеют
     s~<img\b((?:(?!loading=)(?!>).)*)/?>~<img$1 loading="lazy" decoding="async">~gi unless /loading=/;
+  ' "$f"
+done
+
+# ─── Верхние блоки: eager + decoding=sync для НЕМЕДЛЕННОЙ загрузки ───
+for n in 05_Обо-мне 06_Бегущая-полоска-клиентов 07_Услуги; do
+  f="$TMP_BLOCKS/${n}.html"
+  [ -f "$f" ] || continue
+  perl -i -pe '
+    s~<img\b((?:(?!loading=)(?!>).)*)/?>~<img$1 loading="eager" decoding="async" fetchpriority="high">~gi unless /loading=/;
   ' "$f"
 done
 
