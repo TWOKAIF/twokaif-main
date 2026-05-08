@@ -509,8 +509,17 @@
         '<img class="twk-viewer__img" src="" alt="Просмотр обложки">' +
       '</div>';
 
-    function cardHTML(photo) {
-      return '<button class="twk-cover" type="button" data-full="' + photo.src + '"><span class="twk-cover__shine"></span><img src="' + photo.src + '" alt="' + photo.label + '" loading="lazy" decoding="async"></button>';
+    function cardHTML(photo, idx) {
+      // Первые 6 — eager+sync (выше первого экрана), остальные — lazy+async.
+      // На мобиле всё eager — иначе iOS выгружает картинки из памяти и
+      // показывает мигания при скролле назад.
+      var isMobile = window.innerWidth < 768;
+      var loading = (isMobile || idx < 6) ? 'eager' : 'lazy';
+      var decoding = isMobile ? 'sync' : 'async';
+      return '<button class="twk-cover" type="button" data-full="' + photo.src + '">' +
+        '<span class="twk-cover__shine"></span>' +
+        '<img src="' + photo.src + '" alt="' + photo.label + '" loading="' + loading + '" decoding="' + decoding + '">' +
+      '</button>';
     }
 
     function build() {
@@ -532,7 +541,7 @@
         var lane = document.createElement('div'); lane.className = 'twk-covers__lane';
         lane.setAttribute('data-speed', settings[colIndex].speed);
         lane.setAttribute('data-start', settings[colIndex].start);
-        var html = photos.map(cardHTML).join('');
+        var html = photos.map(function(p,i){ return cardHTML(p, i); }).join('');
         stacks.forEach(function(n) {
           var s = document.createElement('div'); s.className = 'twk-covers__stack';
           s.setAttribute('data-stack', n); s.innerHTML = html; lane.appendChild(s);
