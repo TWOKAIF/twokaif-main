@@ -367,6 +367,65 @@
     .twk-covers { --cols: 4; min-height: 800vh; }
   }
 
+  /* ═══════════════════════════════════════════════════════════
+     ОБЛОЖКИ — СТАТИЧНЫЙ GRID ВЕЗДЕ
+     Параллакс/sticky/pin сняты по результатам аудита (правила
+     fixing-motion-performance: scroll-driven motion на больших
+     surfaces = критическое нарушение, всегда лагает).
+     Композитный hover-tilt только на :hover (composite-only).
+  ═══════════════════════════════════════════════════════════ */
+  .twk-covers {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 32px var(--pad) !important;
+  }
+  .twk-covers__sticky {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .twk-covers__viewport {
+    height: auto !important;
+    overflow: visible !important;
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .twk-covers.is-viewer-open .twk-covers__viewport {
+    filter: brightness(0.4) !important;
+    transition: filter 0.3s ease !important;
+  }
+  .twk-covers__grid {
+    display: grid !important;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr)) !important;
+    gap: var(--gap) !important;
+    height: auto !important;
+  }
+  .twk-covers__lane {
+    display: contents !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .twk-covers__stack {
+    display: contents !important;
+    position: static !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+  .twk-covers__stack[data-stack="prev"],
+  .twk-covers__stack[data-stack="next"] { display: none !important; }
+  .twk-cover {
+    aspect-ratio: 9 / 16 !important;
+    height: auto !important;
+  }
+  .twk-covers__fade-top, .twk-covers__fade-bottom { display: none !important; }
+
+  /* Ширина колонок — отзывчиво */
+  @media (max-width: 1280px) { .twk-covers { --cols: 4; } }
+  @media (max-width: 900px)  { .twk-covers { --cols: 3; } }
+  @media (max-width: 600px)  { .twk-covers { --cols: 2; --pad: 12px; --gap: 12px; } }
+
   @media (max-width: 767px) {
     /* На мобиле — статичный grid без какой-либо динамики.
        Ноль transitions, ноль animations, ноль transform — иначе iOS Safari моргает. */
@@ -535,8 +594,8 @@
       var grid = document.createElement('div'); grid.className = 'twk-covers__grid';
       /* Затемнения отключены */
 
-      // На мобиле создаём только current stack (-80 <img> = быстрее DOM)
-      var stacks = (window.innerWidth < 768) ? ['current'] : ['prev','current','next'];
+      // Только current stack — параллакс снят, prev/next больше не нужны нигде
+      var stacks = ['current'];
       columns.forEach(function (photos, colIndex) {
         var lane = document.createElement('div'); lane.className = 'twk-covers__lane';
         lane.setAttribute('data-speed', settings[colIndex].speed);
@@ -599,69 +658,16 @@
 
     function closeViewer() { viewer.classList.remove('is-open'); root.classList.remove('is-viewer-open'); document.body.style.overflow = ''; }
 
-    var cachedHeight = 0, cachedTop = 0, cachedVh = 0;
-    var lanesCache = []; // ⚡ кэш всех lane + stack-ов + параметров — собираем 1 раз
-    function cacheRect() {
-      cachedHeight = root.offsetHeight;
-      cachedVh = window.innerHeight;
-      // Пересчитываем кэш lanes
-      lanesCache = [];
-      root.querySelectorAll('.twk-covers__lane').forEach(function(lane){
-        var prev = lane.querySelector('[data-stack="prev"]');
-        var cur = lane.querySelector('[data-stack="current"]');
-        var next = lane.querySelector('[data-stack="next"]');
-        if (!prev || !cur || !next) return;
-        var gap = parseFloat(getComputedStyle(cur).gap) || 0;
-        var loop = cur.offsetHeight + gap;
-        lanesCache.push({
-          prev: prev, cur: cur, next: next,
-          loop: loop,
-          speed: parseFloat(lane.getAttribute('data-speed')) || 0.5,
-          start: parseFloat(lane.getAttribute('data-start')) || 0
-        });
-      });
-    }
-    window.addEventListener('resize', cacheRect);
-    setTimeout(cacheRect, 100);
-    setTimeout(cacheRect, 800); // повторно после загрузки картинок
-
-    function updateColumns() {
-      if (window.innerWidth < 768) return;
-      if (!cachedHeight || !lanesCache.length) cacheRect();
-      // ОДИН getBoundingClientRect на root — force layout 1 раз вместо 5+
-      cachedTop = root.getBoundingClientRect().top;
-      var total = Math.max(cachedHeight - cachedVh, 1);
-      var progress = Math.min(Math.max(-cachedTop / total, 0), 1);
-      // Чисто запись transform — никакого чтения layout в цикле
-      for (var i = 0; i < lanesCache.length; i++) {
-        var l = lanesCache[i];
-        var travel = l.loop * 1.2;
-        var offset = -((l.start * l.loop) + (progress * travel * l.speed));
-        while (offset < -l.loop) offset += l.loop;
-        while (offset > 0) offset -= l.loop;
-        l.prev.style.transform = 'translate3d(0,' + (offset - l.loop) + 'px,0)';
-        l.cur.style.transform = 'translate3d(0,' + offset + 'px,0)';
-        l.next.style.transform = 'translate3d(0,' + (offset + l.loop) + 'px,0)';
-      }
-    }
+    /* Sticky-параллакс снят — всегда статичный grid.
+       updateColumns остаётся пустой функцией для совместимости. */
+    function cacheRect() { /* no-op */ }
+    function updateColumns() { /* no-op — параллакс отключён */ }
 
     viewer.addEventListener('click', function (e) { if (e.target.classList.contains('twk-viewer__bg') || e.target.classList.contains('twk-viewer__close')) closeViewer(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && viewer.classList.contains('is-open')) closeViewer(); });
     window.addEventListener('resize', build);
-    /* Скролл через rAF, но не чаще 30 FPS — снимает 50% CPU
-       без визуальной разницы для медленного параллакса */
-    var ticking = false, lastUpdate = 0;
-    window.addEventListener('scroll', function() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function(now) {
-        if (now - lastUpdate >= 32) {  // 32ms ≈ 30 FPS
-          updateColumns();
-          lastUpdate = now;
-        }
-        ticking = false;
-      });
-    }, { passive: true });
+    /* Скролл-handler удалён — sticky-параллакс снят полностью.
+       Никакого continuous-motion = никаких лагов на любом устройстве. */
     build();
   })();
 </script>
