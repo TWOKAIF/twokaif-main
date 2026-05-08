@@ -100,28 +100,16 @@ ym(108388166, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true,
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108388166" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <style>
-/* Виртуализация статичных тяжёлых блоков (не-sticky) */
-.affiche-section, #affiches,
-.presentations, #presentations {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
-}
-/* Обложки: облегчаем тени при движении на мобиле */
+/* На мобиле — никаких тяжёлых эффектов на обложках */
 @media (max-width: 768px) {
   .twk-cover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.18) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
     transition: none !important;
   }
   .twk-cover img {
     filter: none !important;
   }
-  .twk-covers__stack {
-    will-change: transform;
-    transform: translateZ(0);
-  }
 }
-/* GPU-композит для всех картинок */
-img { transform: translateZ(0); }
 </style>
 </head>
 <body>
