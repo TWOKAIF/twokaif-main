@@ -6,8 +6,9 @@
 
 | Где | URL | Назначение |
 |---|---|---|
-| Прод (старый) | `twokaif.ru` (Tilda) | пока работает |
-| Staging (новый) | `new.twokaif.ru` (Aeza) | боевой staging — почти прод |
+| **Прод** | `twokaif.ru` (Aeza 213.165.41.1) | **боевой, переехал 2026-05-08** |
+| Staging | `new.twokaif.ru` (Aeza) | для тестов перед прод-деплоем |
+| Tilda (страховка) | оставлена живой ~7 дней | сносим после полной пропагации DNS |
 
 ## Что готово
 
@@ -54,11 +55,19 @@
 - `/sitemap.xml` — 2 URL (/, /privacy) для поисковиков
 - Расширенный JSON-LD: `@graph` с ProfessionalService + WebSite, founder с jobTitle, OfferCatalog (6 услуг), priceRange, areaServed RU
 
-## Что осталось перед переездом twokaif.ru
+### Переезд DNS ✓ (2026-05-08)
+- Reg.ru: A @, A *, A www → 213.165.41.1
+- SSL Let's Encrypt выпущен на twokaif.ru + www.twokaif.ru
+- nginx prod-конфиг: HTTPS, security headers, robots открыт + sitemap
+- 301-редиректы со старых Tilda путей: /text → png.twokaif.ru, /generator_dogovor → t.me/twokaif_ruslan
+- noindex снят на проде
+- Tilda оставлена живой как страховка ~7 дней (пока DNS пропагируется у мобильных операторов)
 
-1. **На проде убрать noindex** — снять `X-Robots-Tag: noindex` и `Disallow: /` в robots.txt
-2. **Перенести /generator_dogovor** с Tilda на `/dogovor` в Aeza
-3. **DNS-переключение** twokaif.ru с Tilda на 213.165.41.1 + 301-редиректы для /text → png.twokaif.ru
+## Что осталось
+
+1. **Через ~7 дней** — снести проект twokaif.ru на Tilda (когда у всех клиентов DNS обновится)
+2. **Бриф** — Руслан решит, нужна ли страница /brif на новом сервере, или просто грохнуть с Tilda
+3. **Генератор договора** — переделать на свой движок (jsPDF + Telegram), архив Tilda-версии в `~/Documents/ТУКАЙФ/_АРХИВ_TILDA/dogovor/index.html`
 
 ## Деплой
 
