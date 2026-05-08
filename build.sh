@@ -83,6 +83,26 @@ BLOCKS="$TMP_BLOCKS"
   echo '</html>'
 } > "$DIST/index.html"
 
+# ─── PRIVACY.HTML (00 + 01 + 03 + 17 + 14 + 15) ───────
+{
+  echo '<!DOCTYPE html>'
+  echo '<html lang="ru">'
+  echo '<head>'
+  echo '<meta charset="UTF-8">'
+  echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
+  cat "$BLOCKS/00_HEAD-код.html" | perl -pe 's~<title>[^<]+</title>~<title>Политика конфиденциальности — ТУКАЙФ</title>~; s~<link rel="canonical"[^>]+>~<link rel="canonical" href="https://twokaif.ru/privacy">~'
+  echo '</head>'
+  echo '<body>'
+  for f in 01_Глобальные-стили 03_Навигация 17_Политика 14_Футер 15_Куки-баннер; do
+    echo
+    echo "<!-- ═══ $f ═══ -->"
+    cat "$BLOCKS/${f}.html"
+  done
+  echo
+  echo '</body>'
+  echo '</html>'
+} > "$DIST/privacy.html"
+
 # ─── 404.HTML (00 + 01 + 03 + 16 + 14 + 15) ──────────────
 {
   echo '<!DOCTYPE html>'
@@ -114,7 +134,15 @@ if [ -d assets ]; then
   cp -R assets/* "$DIST/" 2>/dev/null || true
 fi
 
-echo "✓ dist/index.html: $(wc -l < $DIST/index.html) строк, $(du -h $DIST/index.html | cut -f1)"
-echo "✓ dist/404.html:   $(wc -l < $DIST/404.html) строк"
+# ─── Копируем images-webp/ → dist/images/ ───
+# Это критично, иначе rsync --delete на сервере снесёт всю папку картинок
+if [ -d images-webp ]; then
+  mkdir -p "$DIST/images"
+  cp -R images-webp/* "$DIST/images/" 2>/dev/null || true
+fi
+
+echo "✓ dist/index.html:   $(wc -l < $DIST/index.html) строк, $(du -h $DIST/index.html | cut -f1)"
+echo "✓ dist/privacy.html: $(wc -l < $DIST/privacy.html) строк"
+echo "✓ dist/404.html:     $(wc -l < $DIST/404.html) строк"
 echo "✓ dist/robots.txt: noindex"
 [ -d "$DIST/js" ] && echo "✓ dist/js:         $(ls $DIST/js | wc -l | tr -d ' ') файлов"

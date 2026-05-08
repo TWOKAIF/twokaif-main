@@ -1,129 +1,234 @@
 <!-- ============================================
-     БЛОК 17: КУКИ-БАННЕР
-     T123 блок — уведомление о cookies
+     БЛОК 15: КУКИ-БАННЕР (152-ФЗ)
+     Три кнопки: Принять все / Только необходимые / Настройки.
+     Без согласия Яндекс.Метрика НЕ грузится.
 
-     Здесь меняй:
-     — Текст баннера: class="cookie-text"
-     — Кнопка «Принять»: class="cookie-accept"
-     — Время показа: появляется через 1.5 секунды
-     — localStorage ключ: «twokaif_cookies_accepted»
+     localStorage:
+     — twokaif_consent = "all" | "necessary" | объект с категориями
+     — twokaif_consent_date = ISO дата
+     Срок жизни решения: 12 мес (проверяется в init).
 
-     Баннер показывается один раз. После нажатия «Принять»
-     сохраняется в localStorage и больше не появляется.
-
-     НАСТРОЙКИ ПК (десктоп):
-     — Позиция: фиксированный внизу слева
-     — Ширина: max-width 420px
-     — Отступ от края: var(--edge)
-
-     НАСТРОЙКИ МОБИЛЕ (до 640px):
-     — Ширина: 100% минус отступы
-     — Центрирован внизу
+     Категории:
+     — necessary  — всегда вкл (работа сайта, баннер)
+     — analytics  — Яндекс.Метрика (clickmap, webvisor, trackLinks)
+     — marketing  — резерв на будущее (сейчас не используется)
      ============================================ -->
 <style>
-/* --- Куки-баннер --- */
 .cookie-banner{
   position:fixed;
   bottom:var(--edge);
   left:var(--edge);
   z-index:99998;
-  max-width:420px;
+  max-width:460px;
   background:var(--text);
   color:var(--bg);
-  padding:20px 24px;
+  padding:22px 26px;
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:18px;
   opacity:0;
   transform:translateY(20px);
   transition:opacity .6s var(--ease-out),transform .6s var(--ease-out);
   pointer-events:none;
   border:1px solid rgba(255,255,255,.08)
 }
-.cookie-banner.visible{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto
-}
-.cookie-banner.hiding{
-  opacity:0;
-  transform:translateY(20px);
-  pointer-events:none
-}
+.cookie-banner.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.cookie-banner.hiding{opacity:0;transform:translateY(20px);pointer-events:none}
 .cookie-text{
-  font-size:13px;
-  font-weight:400;
-  letter-spacing:-.18px;
-  line-height:1.55;
-  color:rgba(255,255,255,.7)
+  font-size:13px;font-weight:400;letter-spacing:-.18px;line-height:1.55;
+  color:rgba(255,255,255,.72)
 }
 .cookie-text a{
-  color:#fff !important;
-  text-decoration:underline;
-  text-underline-offset:2px;
+  color:#fff!important;text-decoration:underline;text-underline-offset:2px;
   transition:opacity .3s var(--ease-out)
 }
 .cookie-text a:hover{opacity:.7}
-.cookie-actions{
-  display:flex;
-  gap:12px;
-  align-items:center
+
+.cookie-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cookie-btn{
+  padding:10px 20px;border:none;
+  font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:-.2px;
+  cursor:pointer;transition:opacity .3s var(--ease-out),background .3s var(--ease-out);
+  flex-shrink:0;line-height:1
 }
-.cookie-accept{
-  padding:10px 24px;
-  background:#fff;
-  color:#1d1d1f;
-  border:none;
-  font-family:var(--font-body);
-  font-size:13px;
-  font-weight:500;
-  letter-spacing:-.2px;
-  cursor:pointer;
-  transition:opacity .3s var(--ease-out);
-  flex-shrink:0
+.cookie-btn--primary{background:#fff;color:#1d1d1f}
+.cookie-btn--ghost{background:transparent;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.18)}
+.cookie-btn--text{background:transparent;color:rgba(255,255,255,.55);padding:10px 4px}
+.cookie-btn:hover{opacity:.85}
+.cookie-btn:active{transform:scale(.97)}
+.cookie-btn--text:hover{color:#fff;opacity:1}
+
+/* Настройки — раскрывашка */
+.cookie-settings{
+  display:none;flex-direction:column;gap:14px;
+  padding-top:16px;border-top:1px solid rgba(255,255,255,.08)
 }
-.cookie-accept:hover{opacity:.85}
-.cookie-accept:active{transform:scale(.97)}
+.cookie-banner.settings-open .cookie-settings{display:flex}
+.cookie-row{display:flex;align-items:flex-start;gap:14px;justify-content:space-between}
+.cookie-row-text{flex:1;min-width:0}
+.cookie-row-title{font-size:13px;font-weight:500;letter-spacing:-.18px;color:#fff;margin-bottom:3px}
+.cookie-row-desc{font-size:11px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:rgba(255,255,255,.55)}
+
+/* Toggle */
+.cookie-toggle{position:relative;width:36px;height:20px;flex-shrink:0;display:block;cursor:pointer}
+.cookie-toggle input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.cookie-toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.18);border-radius:20px;transition:background .25s var(--ease-out)}
+.cookie-toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .25s var(--ease-out)}
+.cookie-toggle input:checked + .cookie-toggle-track{background:rgba(255,255,255,.55)}
+.cookie-toggle input:checked + .cookie-toggle-track + .cookie-toggle-thumb{transform:translateX(16px)}
+.cookie-toggle input:disabled + .cookie-toggle-track{background:rgba(255,255,255,.35);cursor:not-allowed}
 
 @media(max-width:640px){
-  .cookie-banner{
-    left:var(--edge);
-    right:var(--edge);
-    bottom:var(--edge);
-    max-width:none
-  }
+  .cookie-banner{left:var(--edge);right:var(--edge);bottom:var(--edge);max-width:none}
   .cookie-text{font-size:12px}
-  .cookie-accept{font-size:12px;padding:10px 20px}
+  .cookie-btn{font-size:12px;padding:10px 16px}
 }
 @media(max-width:480px){
-  .cookie-banner{padding:16px 20px}
+  .cookie-banner{padding:18px 20px}
+  .cookie-actions{gap:8px}
+  .cookie-btn{padding:9px 14px}
 }
 </style>
 
-<div class="cookie-banner" id="cookieBanner">
-  <p class="cookie-text">Сайт использует файлы&nbsp;cookie для аналитики и&nbsp;улучшения работы. Продолжая, ты&nbsp;соглашаешься с&nbsp;их&nbsp;использованием.</p>
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Настройки cookies">
+  <p class="cookie-text">
+    Сайт использует файлы&nbsp;cookie.<br>
+    Необходимые &mdash; для&nbsp;работы сайта,<br class="m-only">
+    аналитические &mdash; для&nbsp;Яндекс.Метрики.<br>
+    Подробнее &mdash; в&nbsp;<a href="/privacy" target="_blank" rel="noopener">политике конфиденциальности</a>.
+  </p>
+
   <div class="cookie-actions">
-    <button class="cookie-accept" id="cookieAccept">Принять</button>
+    <button class="cookie-btn cookie-btn--primary" id="cookieAcceptAll" type="button">Принять все</button>
+    <button class="cookie-btn cookie-btn--ghost"   id="cookieAcceptNecessary" type="button">Только необходимые</button>
+    <button class="cookie-btn cookie-btn--text"    id="cookieToggleSettings"  type="button" aria-expanded="false">Настройки</button>
+  </div>
+
+  <div class="cookie-settings" id="cookieSettings" aria-hidden="true">
+    <div class="cookie-row">
+      <div class="cookie-row-text">
+        <div class="cookie-row-title">Необходимые</div>
+        <div class="cookie-row-desc">Базовая работа сайта и&nbsp;этот баннер. Нельзя отключить.</div>
+      </div>
+      <label class="cookie-toggle" aria-label="Необходимые cookies (всегда включены)">
+        <input type="checkbox" checked disabled>
+        <span class="cookie-toggle-track"></span>
+        <span class="cookie-toggle-thumb"></span>
+      </label>
+    </div>
+    <div class="cookie-row">
+      <div class="cookie-row-text">
+        <div class="cookie-row-title">Аналитика</div>
+        <div class="cookie-row-desc">Яндекс.Метрика: какие страницы смотришь, как долго, чтобы понять что улучшать.</div>
+      </div>
+      <label class="cookie-toggle" aria-label="Аналитические cookies">
+        <input type="checkbox" id="cookieAnalytics" checked>
+        <span class="cookie-toggle-track"></span>
+        <span class="cookie-toggle-thumb"></span>
+      </label>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn--primary" id="cookieSaveSettings" type="button">Сохранить выбор</button>
+    </div>
   </div>
 </div>
 
 <script>
 (function(){
-  var KEY='twokaif_cookies_accepted';
-  if(localStorage.getItem(KEY))return;
+  var KEY='twokaif_consent';
+  var DATE_KEY='twokaif_consent_date';
+  var TTL_DAYS=365;
+  var METRIKA_ID=108388166;
+
+  function readConsent(){
+    try{
+      var raw=localStorage.getItem(KEY);
+      var date=localStorage.getItem(DATE_KEY);
+      if(!raw||!date)return null;
+      var ageDays=(Date.now()-new Date(date).getTime())/86400000;
+      if(ageDays>TTL_DAYS)return null;
+      if(raw==='all')return {analytics:true};
+      if(raw==='necessary')return {analytics:false};
+      return JSON.parse(raw);
+    }catch(e){return null;}
+  }
+
+  function writeConsent(value){
+    try{
+      localStorage.setItem(KEY, typeof value==='string'?value:JSON.stringify(value));
+      localStorage.setItem(DATE_KEY, new Date().toISOString());
+    }catch(e){}
+  }
+
+  function loadMetrika(){
+    if(window.__tkMetrikaLoaded)return;
+    window.__tkMetrikaLoaded=true;
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+    })(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+    window.ym(METRIKA_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+  }
+
+  // Применить решение
+  var existing=readConsent();
+  if(existing){
+    if(existing.analytics)loadMetrika();
+    return; // баннер не показываем
+  }
+
   var banner=document.getElementById('cookieBanner');
-  var btn=document.getElementById('cookieAccept');
-  /* Показываем через 1.5 секунды */
-  setTimeout(function(){
-    banner.classList.add('visible');
-  },1500);
-  btn.addEventListener('click',function(){
+  var btnAll=document.getElementById('cookieAcceptAll');
+  var btnNec=document.getElementById('cookieAcceptNecessary');
+  var btnSet=document.getElementById('cookieToggleSettings');
+  var btnSave=document.getElementById('cookieSaveSettings');
+  var inpA=document.getElementById('cookieAnalytics');
+  var settings=document.getElementById('cookieSettings');
+
+  setTimeout(function(){banner.classList.add('visible');},1500);
+
+  function close(){
     banner.classList.remove('visible');
     banner.classList.add('hiding');
-    localStorage.setItem(KEY,'1');
-    setTimeout(function(){
-      banner.remove();
-    },600);
+    setTimeout(function(){banner.remove();},600);
+  }
+
+  btnAll.addEventListener('click',function(){
+    writeConsent('all');
+    loadMetrika();
+    close();
   });
+  btnNec.addEventListener('click',function(){
+    writeConsent('necessary');
+    close();
+  });
+  btnSet.addEventListener('click',function(){
+    var open=banner.classList.toggle('settings-open');
+    btnSet.setAttribute('aria-expanded',open?'true':'false');
+    settings.setAttribute('aria-hidden',open?'false':'true');
+  });
+  btnSave.addEventListener('click',function(){
+    var ok=!!inpA.checked;
+    writeConsent({analytics:ok});
+    if(ok)loadMetrika();
+    close();
+  });
+
+  // Открыть настройки повторно (для ссылки из футера)
+  window.tkOpenCookieSettings=function(){
+    var b=document.getElementById('cookieBanner');
+    if(b){
+      b.classList.add('visible');
+      b.classList.add('settings-open');
+      btnSet.setAttribute('aria-expanded','true');
+      settings.setAttribute('aria-hidden','false');
+    }else{
+      // баннер уже удалён — пересоздаём страницу как fallback
+      localStorage.removeItem(KEY);
+      localStorage.removeItem(DATE_KEY);
+      location.reload();
+    }
+  };
 })();
 </script>

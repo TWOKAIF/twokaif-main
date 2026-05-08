@@ -17,11 +17,11 @@
      ============================================ -->
 
 <!-- TITLE + DESCRIPTION -->
-<title>ТУКАЙФ — ивент-дизайнер для профессионалов</title>
+<title>Политика конфиденциальности — ТУКАЙФ</title>
 <meta name="description" content="Цифровой дизайн для ивент-индустрии: обложки, афиши, презентации, сайты, интерактивы">
 
 <!-- Canonical (главный URL — после переезда) -->
-<link rel="canonical" href="https://twokaif.ru/">
+<link rel="canonical" href="https://twokaif.ru/privacy">
 
 <!-- Robots — staging закрыт через nginx X-Robots-Tag, на проде индексируется -->
 
@@ -792,70 +792,133 @@ function closeMenu(){
 }
 </script>
 
-<!-- ═══ 16_404 ═══ -->
+<!-- ═══ 17_Политика ═══ -->
 <!-- ============================================
-     СТРАНИЦА 404 — НЕ НАЙДЕНО
-     T123 блок — стильная страница ошибки
+     БЛОК 17: ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ
+     Отдельная страница /privacy.
+     По 152-ФЗ + GDPR-friendly.
 
-     Здесь меняй:
-     — Текст: class="e404-title", "e404-desc"
-     — Кнопка: href в class="btn-fill" (ссылка на главную)
-     — Футер подключается отдельным блоком (09_footer.html)
-
-     ВАЖНО: На странице 404 в Тильде нужно:
-     1. Создать новую страницу
-     2. Назначить её как 404 в настройках сайта
-     3. Вставить блок 01_global.html первым
-     4. Затем этот блок
-     5. Затем 09_footer.html
+     Реквизиты оператора:
+     — ИП Тукаев Руслан Геннадиевич
+     — ИНН 343703190770
+     — ОГРНИП 325344300119216
+     — Email для запросов: rus925@yandex.ru
      ============================================ -->
 <style>
-.e404{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px var(--edge) 80px;position:relative;overflow:hidden}
-
-/* Фоновое число 404 */
-.e404-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(200px,30vw,500px);font-weight:700;letter-spacing:clamp(-10px,-2vw,-30px);line-height:.8;color:var(--text);opacity:.03;pointer-events:none;user-select:none;white-space:nowrap}
-
-/* Снежинка */
-.e404-snowflake{width:clamp(40px,6vw,64px);color:var(--text);opacity:.12;margin-bottom:32px}
-.e404-snowflake .snowflake-inner{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
-
-/* Заголовок */
-.e404-title{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:clamp(-1px,-.3vw,-3px);line-height:.9;color:var(--text);margin-bottom:16px;position:relative;z-index:1}
-
-/* Описание */
-.e404-desc{font-size:clamp(14px,1.2vw,17px);font-weight:400;letter-spacing:-.2px;line-height:1.5;color:var(--muted);max-width:400px;margin-bottom:40px;position:relative;z-index:1}
-
-/* Кнопка — использует .btn-fill из 01_global */
-.e404 .btn-fill{position:relative;z-index:1}
+.privacy{max-width:720px;margin:0 auto;padding:140px var(--edge) 80px;color:var(--text)}
+.privacy h1{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-1.2px;line-height:1.1;margin-bottom:8px}
+.privacy .privacy-meta{font-size:13px;color:var(--muted);opacity:.6;margin-bottom:48px;letter-spacing:-.18px}
+.privacy h2{font-size:clamp(18px,2.4vw,22px);font-weight:600;letter-spacing:-.5px;line-height:1.25;margin:40px 0 14px}
+.privacy h2:first-of-type{margin-top:0}
+.privacy p,.privacy li{font-size:15px;font-weight:400;letter-spacing:-.2px;line-height:1.6;color:var(--text);opacity:.85;margin-bottom:12px}
+.privacy ul{padding-left:20px;margin-bottom:16px}
+.privacy li{margin-bottom:6px}
+.privacy a{color:var(--text)!important;text-decoration:underline;text-underline-offset:2px;transition:opacity .3s var(--ease-out)}
+.privacy a:hover{opacity:.7}
+.privacy strong{font-weight:600}
+.privacy .privacy-card{background:rgba(0,0,0,.03);border:1px solid var(--border-row);padding:20px 24px;margin:24px 0;font-size:14px;line-height:1.6}
+.privacy .privacy-card p{margin:0;font-size:14px}
+.privacy .privacy-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:32px;text-decoration:none}
+.privacy .privacy-back:hover{color:var(--text);opacity:1}
 
 @media(max-width:640px){
-  .e404{min-height:70vh;padding:80px var(--edge) 60px}
-  .e404-snowflake{margin-bottom:24px}
-  .e404-desc{margin-bottom:32px}
+  .privacy{padding:100px var(--edge) 60px}
+  .privacy p,.privacy li{font-size:14px}
 }
 </style>
 
-<section class="e404">
-  <!-- Фоновое число -->
-  <div class="e404-bg">404</div>
+<main class="privacy">
+  <a href="/" class="privacy-back">← На&nbsp;главную</a>
 
-  <!-- Снежинка -->
-  <svg class="e404-snowflake" viewBox="-3 18 81 81" fill="currentColor">
-    <g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g>
-  </svg>
+  <h1>Политика конфиденциальности</h1>
+  <p class="privacy-meta">Действует с&nbsp;8&nbsp;мая 2026&nbsp;года</p>
 
-  <!-- Заголовок — меняй текст -->
-  <h1 class="e404-title">Страница не&nbsp;найдена</h1>
+  <div class="privacy-card">
+    <p><strong>Оператор персональных данных:</strong><br>
+    ИП&nbsp;Тукаев Руслан Геннадиевич<br>
+    ИНН&nbsp;343703190770 &middot; ОГРНИП&nbsp;325344300119216<br>
+    Email для запросов: <a href="mailto:rus925@yandex.ru">rus925@yandex.ru</a><br>
+    Telegram: <a href="https://t.me/twokaif_ruslan" target="_blank" rel="noopener">@twokaif_ruslan</a></p>
+  </div>
 
-  <!-- Описание — меняй текст -->
-  <p class="e404-desc">Возможно, страница была удалена или&nbsp;ты&nbsp;перешёл по&nbsp;неправильной ссылке. Вернись на&nbsp;главную&nbsp;— там всё на&nbsp;месте</p>
+  <h2>1. О&nbsp;чём этот документ</h2>
+  <p>Я&nbsp;&mdash; Руслан, дизайнер и&nbsp;автор сайта <a href="https://twokaif.ru">twokaif.ru</a>. На&nbsp;сайте нет форм для&nbsp;ввода имени, телефона или email&nbsp;&mdash; связь идёт только через Telegram. Но&nbsp;браузер всё равно сохраняет cookie и&nbsp;аналитика собирает обезличенную статистику. Этот документ объясняет, что именно собирается и&nbsp;что ты&nbsp;можешь с&nbsp;этим сделать.</p>
+  <p>Документ составлен по&nbsp;152-ФЗ &laquo;О&nbsp;персональных данных&raquo;.</p>
 
-  <!-- Кнопка — ссылка на главную -->
-  <a href="/" class="btn-fill magnetic">
-    <span>На&nbsp;главную</span>
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-  </a>
-</section>
+  <h2>2. Какие данные собираются</h2>
+  <p>На&nbsp;сайте работают два типа cookie и&nbsp;похожих технологий:</p>
+  <ul>
+    <li><strong>Необходимые</strong>&nbsp;&mdash; чтобы запомнить твой выбор в&nbsp;кук-баннере (LocalStorage). Без них баннер будет показываться при&nbsp;каждом заходе. Эти данные никуда не&nbsp;уходят, лежат только в&nbsp;твоём браузере.</li>
+    <li><strong>Аналитические (Яндекс.Метрика)</strong>&nbsp;&mdash; грузятся только если ты&nbsp;нажмёшь &laquo;Принять все&raquo; или включишь аналитику в&nbsp;настройках. Метрика собирает: IP-адрес (обезличенный), тип устройства, браузер, операционную систему, разрешение экрана, источник перехода, посещённые страницы, время на&nbsp;сайте, клики и&nbsp;скролл (карта кликов и&nbsp;Вебвизор).</li>
+  </ul>
+  <p>Имени, телефона, email я&nbsp;через сайт <strong>не&nbsp;собираю</strong>. Если ты&nbsp;пишешь мне в&nbsp;Telegram&nbsp;&mdash; это уже отдельная история, и&nbsp;там действуют правила Telegram.</p>
+
+  <h2>3. Зачем мне эти данные</h2>
+  <ul>
+    <li>Понять, какие блоки сайта читают, а&nbsp;какие пролистывают&nbsp;&mdash; чтобы улучшить.</li>
+    <li>Видеть, откуда приходят люди&nbsp;&mdash; чтобы понимать, какая реклама окупается.</li>
+    <li>Ловить ошибки и&nbsp;тормоза&nbsp;&mdash; если у&nbsp;кого-то страница ломается, я&nbsp;это вижу.</li>
+  </ul>
+  <p>Никакой рекламы и&nbsp;ремаркетинга на&nbsp;стороне я&nbsp;не&nbsp;запускаю. Данные не&nbsp;продаются.</p>
+
+  <h2>4. Правовое основание</h2>
+  <p>Обработка ведётся <strong>по&nbsp;твоему согласию</strong> (п.&nbsp;1 ч.&nbsp;1 ст.&nbsp;6 152-ФЗ). Согласие даётся через кук-баннер: если нажмёшь &laquo;Принять все&raquo; или включишь категорию в&nbsp;настройках&nbsp;&mdash; даёшь. Если &laquo;Только необходимые&raquo;&nbsp;&mdash; не&nbsp;даёшь, и&nbsp;Метрика не&nbsp;грузится вообще.</p>
+  <p>Решение хранится 12&nbsp;месяцев. После этого баннер появится снова и&nbsp;спросит ещё раз.</p>
+
+  <h2>5. Кому передаются данные</h2>
+  <p>Данные обрабатываются на&nbsp;серверах:</p>
+  <ul>
+    <li><strong>ООО&nbsp;&laquo;ЯНДЕКС&raquo;</strong> (для Яндекс.Метрики). Серверы в&nbsp;РФ. <a href="https://yandex.ru/legal/confidential/" target="_blank" rel="noopener">Политика Яндекса</a>.</li>
+    <li><strong>Aeza International LTD</strong> (хостинг сайта). Серверы&nbsp;в&nbsp;РФ. Логи nginx с&nbsp;IP&nbsp;и&nbsp;запросами хранятся до&nbsp;30&nbsp;дней.</li>
+  </ul>
+  <p>Третьим лицам в&nbsp;маркетинговых целях данные не&nbsp;передаются.</p>
+
+  <h2>6. Сроки хранения</h2>
+  <ul>
+    <li>Cookie твоего согласия в&nbsp;браузере&nbsp;&mdash; 12&nbsp;месяцев.</li>
+    <li>Данные Яндекс.Метрики&nbsp;&mdash; до&nbsp;25&nbsp;месяцев (стандартный срок Метрики).</li>
+    <li>Логи сервера&nbsp;&mdash; до&nbsp;30&nbsp;дней.</li>
+  </ul>
+
+  <h2>7. Твои права</h2>
+  <p>По&nbsp;152-ФЗ ты&nbsp;имеешь право:</p>
+  <ul>
+    <li>Узнать, какие твои данные обрабатываются.</li>
+    <li>Потребовать уточнения, блокировки или&nbsp;удаления.</li>
+    <li>Отозвать согласие в&nbsp;любой момент.</li>
+    <li>Обжаловать действия в&nbsp;Роскомнадзор.</li>
+  </ul>
+  <p>Чтобы реализовать любое право&nbsp;&mdash; напиши на&nbsp;<a href="mailto:rus925@yandex.ru">rus925@yandex.ru</a>. Отвечу в&nbsp;течение 30&nbsp;дней (обычно&nbsp;&mdash; быстрее).</p>
+  <p>Чтобы отозвать согласие на&nbsp;cookie прямо сейчас&nbsp;&mdash; <a href="#" id="privacyOpenSettings">открой настройки cookie</a> и&nbsp;выключи аналитику. Или очисти cookie сайта в&nbsp;браузере.</p>
+
+  <h2>8. Безопасность</h2>
+  <p>Сайт работает по&nbsp;HTTPS, выставлены security-заголовки (HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy). Доступ к&nbsp;серверу&nbsp;&mdash; только по&nbsp;SSH-ключу.</p>
+
+  <h2>9. Изменения в&nbsp;этой политике</h2>
+  <p>Если что-то изменю&nbsp;&mdash; обновлю дату вверху страницы. Принципиальные изменения (новые цели, новые получатели данных) попрошу подтвердить через баннер заново.</p>
+
+  <h2>10. Куда писать</h2>
+  <p>Все вопросы по&nbsp;этой политике, отзыв согласия, запросы на&nbsp;удаление&nbsp;&mdash; на&nbsp;<a href="mailto:rus925@yandex.ru">rus925@yandex.ru</a> или в&nbsp;<a href="https://t.me/twokaif_ruslan" target="_blank" rel="noopener">@twokaif_ruslan</a>.</p>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('privacyOpenSettings');
+  if(!btn)return;
+  btn.addEventListener('click',function(e){
+    e.preventDefault();
+    if(typeof window.tkOpenCookieSettings==='function'){
+      window.tkOpenCookieSettings();
+    }else{
+      try{
+        localStorage.removeItem('twokaif_consent');
+        localStorage.removeItem('twokaif_consent_date');
+      }catch(_){}
+      location.reload();
+    }
+  });
+})();
+</script>
 
 <!-- ═══ 14_Футер ═══ -->
 <!-- ============================================

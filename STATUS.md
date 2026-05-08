@@ -33,15 +33,23 @@
 - Security headers: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
 - Yandex Metrika 108388166 + Google Search Console verification
 
+### Юридика 152-ФЗ ✓
+- `/privacy` страница (блок 17) с реквизитами ИП, 10 разделами, тоном «на ты»
+- Кук-баннер (блок 15): 3 кнопки (Принять все / Только необходимые / Настройки) + раскрывающиеся категории с toggle
+- Метрика грузится ТОЛЬКО по согласию на аналитику (убрана из HEAD)
+- Футер: ссылки на /privacy + «Настройки cookies» (открывает баннер заново)
+- Решение хранится 12 мес, потом спрашиваем повторно
+- nginx: `try_files $uri $uri.html` — /privacy без расширения работает
+- build.sh: копирует images-webp/ → dist/images/ (фикс rsync --delete снёс картинки)
+
 ## Что осталось перед переездом twokaif.ru
 
-1. **Юридика 152-ФЗ** — `/privacy` страница + кук-баннер с 3 кнопками (Принять / Отклонить / Настройки) + ссылка на политику в футере
-2. **Self-host шрифтов** — Inter Tight локально вместо Google Fonts
-3. **Self-host GSAP + ScrollTrigger** — локально вместо cdnjs
-4. **sitemap.xml + JSON-LD расширенный** — для индексации
-5. **На проде убрать noindex** — снять `X-Robots-Tag: noindex` в nginx
-6. **Перенести /generator_dogovor** с Tilda на `/dogovor` в Aeza
-7. **DNS-переключение** twokaif.ru с Tilda на 213.165.41.1 + 301-редиректы для /text → png.twokaif.ru
+1. **Self-host шрифтов** — Inter Tight локально вместо Google Fonts
+2. **Self-host GSAP + ScrollTrigger** — локально вместо cdnjs
+3. **sitemap.xml + JSON-LD расширенный** — для индексации
+4. **На проде убрать noindex** — снять `X-Robots-Tag: noindex` в nginx
+5. **Перенести /generator_dogovor** с Tilda на `/dogovor` в Aeza
+6. **DNS-переключение** twokaif.ru с Tilda на 213.165.41.1 + 301-редиректы для /text → png.twokaif.ru
 
 ## Деплой
 
