@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Варианты ribbon — Майская акция</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{font-family:'Inter Tight',system-ui,sans-serif;background:#f5f5f7;color:#1d1d1f;-webkit-font-smoothing:antialiased}
+body{padding:0 0 80px}
+
+.lab{padding:24px 18px 8px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#86868b}
+.note{padding:0 18px 14px;font-size:13px;line-height:1.45;color:#86868b}
+.frame{background:#fff;margin:0 12px 32px;border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.fake-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #f0f0f2;background:#fff}
+.fake-nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.fake-nav-star{width:14px;height:14px;color:#1d1d1f}
+.fake-nav-burger{width:18px;height:14px;display:flex;flex-direction:column;justify-content:space-between}
+.fake-nav-burger i{display:block;height:1.5px;background:#1d1d1f;border-radius:2px}
+.fake-hero{padding:28px 18px 36px;background:#fff}
+.fake-hero h1{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.05}
+.fake-hero p{margin-top:10px;color:#86868b;font-size:13px;line-height:1.45}
+
+/* === VARIANT A: чёрный ribbon тонкий, sticky-style === */
+.va{background:#1d1d1f;color:#fff;padding:11px 14px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12.5px;font-weight:500;letter-spacing:-.005em}
+.va b{font-weight:600}
+.va .arr{margin-left:4px;transition:transform .25s}
+.va:hover .arr{transform:translateX(3px)}
+
+/* === VARIANT B: белый ribbon с тонкой нижней линией, нейтральный === */
+.vb{background:#fff;color:#1d1d1f;padding:12px 14px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12.5px;font-weight:500;border-bottom:1px solid #f0f0f2}
+.vb-dot{width:6px;height:6px;border-radius:50%;background:#1d1d1f;flex:0 0 6px}
+.vb b{font-weight:600}
+.vb .arr{color:#86868b;margin-left:2px}
+
+/* === VARIANT C: акцентная цветная полоса (мягкая) === */
+.vc{background:linear-gradient(90deg,#fef6e7 0%,#fff4d6 100%);color:#1d1d1f;padding:12px 14px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;font-weight:500}
+.vc-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#1d1d1f;color:#fff;padding:3px 7px;border-radius:4px}
+.vc b{font-weight:600}
+
+/* === VARIANT D: floating pill снизу справа === */
+.vd-stage{position:relative;height:240px;background:#fff;overflow:hidden}
+.vd-pill{position:absolute;right:14px;bottom:14px;background:#1d1d1f;color:#fff;border-radius:100px;padding:11px 16px 11px 12px;display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.18);max-width:calc(100% - 28px)}
+.vd-pill-icon{width:22px;height:22px;background:#fff;color:#1d1d1f;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 22px;font-size:11px}
+.vd-pill-close{width:18px;height:18px;display:flex;align-items:center;justify-content:center;opacity:.5;margin-left:2px}
+
+/* === VARIANT E: бейдж в самой навигации (компакт) === */
+.ve-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #f0f0f2}
+.ve-nav-left{display:flex;align-items:center;gap:10px}
+.ve-badge{display:inline-flex;align-items:center;gap:6px;background:#fff8e1;color:#8a6d00;padding:4px 9px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:-.005em;border:1px solid #f3e3a8}
+.ve-badge::before{content:"";width:5px;height:5px;border-radius:50%;background:#d4a017;animation:vepulse 1.6s ease-in-out infinite}
+@keyframes vepulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* === VARIANT F: full-bleed карточка под hero (крупный CTA) === */
+.vf{margin:24px 14px;background:#1d1d1f;color:#fff;border-radius:18px;padding:22px 22px 20px;position:relative;overflow:hidden}
+.vf-tag{font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#86868b;margin-bottom:10px}
+.vf h3{font-size:22px;font-weight:600;letter-spacing:-.018em;line-height:1.15}
+.vf h3 b{color:#ffd66e;font-weight:600}
+.vf-meta{margin-top:8px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.4}
+.vf-cta{margin-top:18px;display:inline-flex;align-items:center;gap:8px;background:#fff;color:#1d1d1f;padding:11px 18px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none}
+.vf-deco{position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,214,110,.18),transparent 70%)}
+
+/* === VARIANT G: минималистичная inline-строка под hero === */
+.vg{padding:18px 18px 4px;background:#fff;border-top:1px solid #f0f0f2;display:flex;align-items:center;gap:10px;font-size:12.5px;color:#1d1d1f}
+.vg-bar{width:3px;height:14px;background:#1d1d1f;flex:0 0 3px}
+.vg b{font-weight:600}
+.vg-link{margin-left:auto;font-size:12.5px;font-weight:600;color:#1d1d1f;text-decoration:none;border-bottom:1px solid #1d1d1f;padding-bottom:1px}
+.vg-wrap{padding:0 18px 18px;font-size:12px;color:#86868b;background:#fff;line-height:1.4}
+
+/* === VARIANT H: countdown-вариант (со счётчиком) === */
+.vh{background:#1d1d1f;color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:12px;font-weight:500;flex-wrap:wrap}
+.vh-left{display:flex;align-items:center;gap:8px}
+.vh-cd{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.12);padding:4px 9px;border-radius:6px;font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:600}
+.vh b{font-weight:600;color:#ffd66e}
+</style>
+</head>
+<body>
+
+<div class="lab">A — чёрный ribbon, минимал</div>
+<div class="note">Тонкая полоса над навигацией. Самый ненавязчивый вариант. Apple-стиль.</div>
+<div class="frame">
+  <div class="va">
+    <span><b>Майская акция</b> · Анкеты молодожёнам — 5 800 ₽ <span style="opacity:.55">вместо 7 800 ₽</span></span>
+    <span class="arr">→</span>
+  </div>
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+</div>
+
+<div class="lab">B — белый ribbon, нейтрально</div>
+<div class="note">Не «кричит». Просто строка-уведомление сверху. Хорошо если не хочется чёрного.</div>
+<div class="frame">
+  <div class="vb">
+    <span class="vb-dot"></span>
+    <span><b>Майская акция</b> · Анкеты по 5 800 ₽ до 15 мая</span>
+    <span class="arr">→</span>
+  </div>
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+</div>
+
+<div class="lab">C — акцентная полоска (мягкое золото)</div>
+<div class="note">Заметнее. Тег «АКЦИЯ» сразу читается. Менее Apple-минимал, более маркетинг.</div>
+<div class="frame">
+  <div class="vc">
+    <span class="vc-tag">Акция</span>
+    <span>Анкеты молодожёнам — <b>5 800 ₽</b> до 15 мая →</span>
+  </div>
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+</div>
+
+<div class="lab">D — floating pill, плашка снизу</div>
+<div class="note">Не лезет сверху. Появляется через 3 секунды снизу справа, можно закрыть. Как у Intercom/Notion.</div>
+<div class="frame">
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="vd-stage">
+    <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+    <div class="vd-pill">
+      <span class="vd-pill-icon">★</span>
+      <span><b>Анкеты — 5 800 ₽</b> до 15 мая</span>
+      <span class="vd-pill-close">×</span>
+    </div>
+  </div>
+</div>
+
+<div class="lab">E — мини-бейдж прямо в навигации</div>
+<div class="note">Совсем тихий. Плашка рядом с логотипом, кликом ведёт на лендинг анкет.</div>
+<div class="frame">
+  <div class="ve-nav">
+    <div class="ve-nav-left">
+      <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+      <span class="ve-badge">Анкеты −2 000 ₽</span>
+    </div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+</div>
+
+<div class="lab">F — крупная карточка под hero</div>
+<div class="note">Не ribbon, а полноценный CTA-блок. Вписывается как отдельная секция «акция месяца».</div>
+<div class="frame">
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+  <div class="vf">
+    <div class="vf-deco"></div>
+    <div class="vf-tag">Майская акция · до 15 мая</div>
+    <h3>Анкеты молодожёнам<br><b>5 800 ₽</b> вместо 7 800</h3>
+    <div class="vf-meta">Жених и&nbsp;невеста заполняют<br>— ведущий получает PDF.</div>
+    <a href="#" class="vf-cta">Узнать подробнее →</a>
+  </div>
+</div>
+
+<div class="lab">G — inline-строка под hero (минимал)</div>
+<div class="note">Тихий вариант между ribbon и карточкой. Просто строка с ссылкой.</div>
+<div class="frame">
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+  <div class="vg">
+    <span class="vg-bar"></span>
+    <span><b>Майская акция</b> · анкеты по 5 800 ₽</span>
+    <a href="#" class="vg-link">подробнее</a>
+  </div>
+  <div class="vg-wrap">До 15 мая</div>
+</div>
+
+<div class="lab">H — ribbon с живым countdown</div>
+<div class="note">Чёрный ribbon + счётчик «до конца». Создаёт ощущение срочности.</div>
+<div class="frame">
+  <div class="vh">
+    <div class="vh-left"><b>Майская акция</b> · 5 800 ₽</div>
+    <div class="vh-cd">⏱ <span id="cd">5д 14ч 22м</span></div>
+  </div>
+  <div class="fake-nav">
+    <div class="fake-nav-logo"><svg class="fake-nav-star" viewBox="-3 18 81 81" fill="currentColor"><path d="M37.5 18 L43.5 51 76.5 57 43.5 63 37.5 96 31.5 63 -1.5 57 31.5 51z"/></svg>ТУКАЙФ</div>
+    <div class="fake-nav-burger"><i></i><i></i><i></i></div>
+  </div>
+  <div class="fake-hero"><h1>Свадебный<br>ведущий нового<br>поколения</h1><p>Москва · выезд по&nbsp;РФ · с&nbsp;2018 года</p></div>
+</div>
+
+<script>
+function tick(){
+  const end = new Date('2026-05-15T23:59:59+03:00');
+  const diff = end - new Date();
+  if(diff<0){document.getElementById('cd').textContent='скоро';return;}
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor(diff/3600000)%24;
+  const m = Math.floor(diff/60000)%60;
+  document.getElementById('cd').textContent = d+'д '+h+'ч '+m+'м';
+}
+tick();setInterval(tick,30000);
+</script>
+</body>
+</html>

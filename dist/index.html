@@ -1162,7 +1162,6 @@ function closeMenu(){
      ============================================ -->
 <style>
 .hero {
-  position: relative;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -1170,20 +1169,6 @@ function closeMenu(){
   background: var(--bg);
   padding: 0 var(--edge);
   overflow: hidden;
-  isolation: isolate;
-}
-.hero-video-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: .65;
-  pointer-events: none;
-}
-@media (prefers-reduced-motion: reduce){
-  .hero-video-bg{display:none}
 }
 .hero-brand {
   display: flex;
@@ -1229,10 +1214,6 @@ function closeMenu(){
 </style>
 
 <section class="hero" id="hero">
-  <video class="hero-video-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-    <source src="/images/main-hero.webm" type="video/webm">
-    <source src="/images/main-hero.mp4" type="video/mp4">
-  </video>
   <div class="hero-brand">
     <svg class="hero-brand-snowflake" viewBox="-3 18 81 81" fill="none">
       <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
@@ -1241,6 +1222,449 @@ function closeMenu(){
     <span class="hero-seo">Ивент-дизайнер для профессионалов — сайты, обложки, афиши, презентации</span>
   </div>
 </section>
+
+<!-- ═══ 04b_Акция-баннер ═══ -->
+<!-- ============================================
+     БЛОК 4b: АКЦИИ — две карточки
+     Идут после Hero, до «Обо мне».
+     В каждой карточке — живой countdown до конца акции.
+
+     Где править:
+     — Свадебная анкета: массив PROMOS в <script> внизу (даты + цены).
+     — ТУКАЙФ-PNG: data-end="..." и data-price="..." на самой карточке.
+     ============================================ -->
+<style>
+.promos {
+  padding: 80px var(--edge) 100px;
+  background: var(--surface, #f5f5f7);
+  font-family: var(--font-body);
+}
+.promos-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.promos-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.promos-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.promos-label-dot {
+  width: 7px; height: 7px;
+  background: var(--text);
+  border-radius: 50%;
+  animation: promosPulse 1.6s ease-in-out infinite;
+}
+@keyframes promosPulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.promos-h2 {
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 600;
+  letter-spacing: -.022em;
+  line-height: 1.05;
+  margin: 8px 0 0;
+  color: var(--text);
+}
+.promos-meta {
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: -.1px;
+}
+
+.promos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.promo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 360px;
+  padding: 36px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+  overflow: hidden;
+  transition: background .35s var(--ease-out), border-color .35s var(--ease-out), transform .4s var(--ease-out), opacity .6s var(--ease-out);
+  opacity: 0;
+  transform: translateY(20px);
+}
+.promo-card.visible { opacity: 1; transform: translateY(0); }
+.promo-card:nth-child(2) { transition-delay: .08s; }
+
+.promo-card:hover {
+  background: var(--text);
+  border-color: var(--text);
+}
+.promo-card:hover .promo-tag,
+.promo-card:hover .promo-sub,
+.promo-card:hover .promo-old {
+  color: rgba(255,255,255,.5);
+}
+.promo-card:hover .promo-title,
+.promo-card:hover .promo-price,
+.promo-card:hover .promo-cd {
+  color: #fff;
+}
+.promo-card:hover .promo-cd {
+  border-color: rgba(255,255,255,.25);
+}
+.promo-card:hover .promo-cta {
+  background: #fff;
+  color: var(--text);
+  border-color: #fff;
+}
+
+.promo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.promo-tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color .35s var(--ease-out);
+}
+/* Большой таймер на карточке */
+.promo-timer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 24px;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--border);
+  transition: border-color .35s var(--ease-out);
+}
+.promo-card:hover .promo-timer { border-top-color: rgba(255,255,255,.18); }
+.promo-timer-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.promo-timer-num {
+  font-size: clamp(32px, 3.4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  transition: color .35s var(--ease-out);
+}
+.promo-card:hover .promo-timer-num { color: #fff; }
+.promo-timer-lbl {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color .35s var(--ease-out);
+}
+.promo-card:hover .promo-timer-lbl { color: rgba(255,255,255,.5); }
+.promo-timer.is-end .promo-timer-num { font-size: 18px; font-weight: 500; }
+
+.promo-title {
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+  margin: 18px 0 0;
+  color: var(--text);
+  transition: color .35s var(--ease-out);
+}
+.promo-title b { font-weight: 800; }
+.promo-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 18px;
+}
+.promo-price {
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1;
+  color: var(--text);
+  transition: color .35s var(--ease-out);
+}
+.promo-old {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  transition: color .35s var(--ease-out);
+}
+.promo-sub {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+  transition: color .35s var(--ease-out);
+}
+
+.promo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+.promo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -.1px;
+  color: var(--text);
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: color .35s var(--ease-out), border-color .35s var(--ease-out), background .35s var(--ease-out);
+}
+.promo-chip svg {
+  width: 12px; height: 12px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+.promo-card:hover .promo-chip {
+  color: #fff;
+  border-color: rgba(255,255,255,.25);
+  background: transparent;
+}
+
+.promo-cta {
+  align-self: flex-start;
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--text);
+  color: #fff;
+  padding: 12px 28px;
+  border: 1px solid var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -.18px;
+  transition: background .35s var(--ease-out), color .35s var(--ease-out), border-color .35s var(--ease-out);
+}
+.promo-cta-arr { transition: transform .25s var(--ease-out); }
+.promo-card:hover .promo-cta-arr { transform: translateX(4px); }
+
+.promos:not(.is-active) { display: none; }
+
+@media (max-width: 1068px) {
+  .promo-card { padding: 32px; min-height: 320px; }
+}
+
+@media (max-width: 734px) {
+  .promos { padding: 48px var(--edge) 60px; }
+  .promos-head { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 24px; }
+  .promos-meta { font-size: 13px; }
+  .promos-grid { grid-template-columns: 1fr; gap: 16px; }
+  .promo-card { padding: 28px 24px; min-height: auto; }
+  .promo-title { margin-top: 14px; }
+  .promo-prices { margin-top: 14px; }
+  .promo-old { font-size: 16px; }
+  .promo-sub { font-size: 14px; margin-top: 12px; }
+  .promo-cta { margin-top: 24px; padding: 11px 22px; font-size: 14px; }
+  .promo-cd { font-size: 11.5px; padding: 4px 9px; }
+}
+</style>
+
+<section class="promos" id="promos" aria-label="Активные предложения">
+ <div class="promos-inner">
+  <div class="promos-head">
+    <div>
+      <span class="promos-label"><span class="promos-label-dot"></span>Сейчас</span>
+      <h2 class="promos-h2">Активные акции</h2>
+    </div>
+    <span class="promos-meta">Закрываются по&nbsp;таймеру</span>
+  </div>
+  <div class="promos-grid">
+
+    <!-- ╭─ Карточка 1: Свадебная анкета (авто-акция) ─╮ -->
+    <a href="https://wedding.twokaif.ru" class="promo-card" id="promo-card-anketa" data-cd-end="">
+      <div>
+        <div class="promo-head">
+          <span class="promo-tag" id="promo-tag">Майская акция · до 15 мая</span>
+        </div>
+        <h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices">
+          <span class="promo-price" id="promo-price">5 800 ₽</span>
+          <span class="promo-old" id="promo-old">7 800 ₽</span>
+        </div>
+        <p class="promo-sub">
+          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— единый документ падает тебе в&nbsp;чат. Один раз&nbsp;— работает <b>3&nbsp;года</b>.
+        </p>
+        <div class="promo-chips">
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            твоёимя.twokaif.ru
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M3 9h18"/></svg>
+            Свой лендинг
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><path d="M21 12l-9 9-9-9 9-9h6a3 3 0 0 1 3 3z"/><circle cx="16" cy="8" r="1.2"/></svg>
+            Спеццена
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg>
+            Без подписок Tilda
+          </span>
+        </div>
+      </div>
+      <div class="promo-timer" data-cd-timer>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+      </div>
+      <span class="promo-cta">
+        Узнать подробнее
+        <span class="promo-cta-arr">→</span>
+      </span>
+    </a>
+
+    <!-- ╭─ Карточка 2: Приложение ТУКАЙФ—PNG ─╮ -->
+    <a href="https://t.me/twokaif_ruslan" class="promo-card" data-cd-end="2026-06-01T23:59:59+03:00">
+      <div>
+        <div class="promo-head">
+          <span class="promo-tag">Акция · до 1 июня</span>
+        </div>
+        <h3 class="promo-title">Приложение<br><b>ТУКАЙФ&nbsp;— PNG</b></h3>
+        <div class="promo-prices">
+          <span class="promo-price">4 900 ₽</span>
+        </div>
+        <p class="promo-sub">
+          Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте.
+        </p>
+        <div class="promo-chips">
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            Приложение на&nbsp;телефоне
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><path d="M4 19l4-12h2l4 12M5 14h6"/><path d="M16 19c2 0 4-2 4-4s-2-3-4-3"/></svg>
+            Свои шрифты
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+            Свои цвета
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><path d="M21 12l-9 9-9-9 9-9h6a3 3 0 0 1 3 3z"/><circle cx="16" cy="8" r="1.2"/></svg>
+            Спеццена
+          </span>
+        </div>
+      </div>
+      <div class="promo-timer" data-cd-timer>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+      </div>
+      <span class="promo-cta">
+        Узнать подробнее
+        <span class="promo-cta-arr">→</span>
+      </span>
+    </a>
+
+  </div>
+ </div>
+</section>
+
+<script>
+(function(){
+  // === Календарь акций (синхронизирован с wedding.twokaif.ru) ===
+  const REGULAR = 7800;
+  const PROMOS = [
+    { start:'2026-04-28T00:00:00+03:00', end:'2026-05-15T23:59:59+03:00', price:5800, ribbon:'Майская акция · до 15 мая' },
+    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, ribbon:'Летняя акция · до 31 июля' },
+    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, ribbon:'Чёрная пятница · до 1 декабря' },
+    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, ribbon:'Новогодняя акция · до 8 января' }
+  ];
+
+  const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+  const now = Date.now();
+  const active = PROMOS.find(p => now >= new Date(p.start).getTime() && now <= new Date(p.end).getTime());
+  const card = document.getElementById('promo-card-anketa');
+  const section = document.getElementById('promos');
+
+  if (active) {
+    document.getElementById('promo-tag').textContent = active.ribbon;
+    document.getElementById('promo-price').textContent = fmt(active.price);
+    document.getElementById('promo-old').textContent = fmt(REGULAR);
+    card.dataset.cdEnd = active.end;
+  } else {
+    // вне акций — карточка анкет уходит, остаётся только PNG
+    card.style.display = 'none';
+  }
+  section.classList.add('is-active');
+
+  // === Countdown render ===
+  function pad(n){ return n<10?'0'+n:n; }
+  function tick(){
+    document.querySelectorAll('.promo-card').forEach(el => {
+      const end = el.dataset.cdEnd;
+      const timer = el.querySelector('[data-cd-timer]');
+      if (!end || !timer) return;
+      const diff = new Date(end).getTime() - Date.now();
+      const dEl = timer.querySelector('[data-cd-d]');
+      const hEl = timer.querySelector('[data-cd-h]');
+      const mEl = timer.querySelector('[data-cd-m]');
+      if (diff <= 0) {
+        timer.classList.add('is-end');
+        if (dEl) dEl.textContent = 'скоро';
+        if (hEl) hEl.parentElement.style.display = 'none';
+        if (mEl) mEl.parentElement.style.display = 'none';
+        return;
+      }
+      const days = Math.floor(diff/86400000);
+      const hours = Math.floor(diff/3600000) % 24;
+      const mins = Math.floor(diff/60000) % 60;
+      if (dEl) dEl.textContent = pad(days);
+      if (hEl) hEl.textContent = pad(hours);
+      if (mEl) mEl.textContent = pad(mins);
+    });
+  }
+  tick();
+  setInterval(tick, 30000);
+
+  // === Reveal on scroll ===
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.promo-card').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.promo-card').forEach(el => el.classList.add('visible'));
+  }
+})();
+</script>
 
 <!-- ═══ 05_Обо-мне ═══ -->
 <!-- ============================================
