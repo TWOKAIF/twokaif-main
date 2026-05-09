@@ -1162,6 +1162,7 @@ function closeMenu(){
      ============================================ -->
 <style>
 .hero {
+  position: relative;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -1169,6 +1170,20 @@ function closeMenu(){
   background: var(--bg);
   padding: 0 var(--edge);
   overflow: hidden;
+  isolation: isolate;
+}
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: .65;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-video-bg{display:none}
 }
 .hero-brand {
   display: flex;
@@ -1214,6 +1229,10 @@ function closeMenu(){
 </style>
 
 <section class="hero" id="hero">
+  <video class="hero-video-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="/images/main-hero.webm" type="video/webm">
+    <source src="/images/main-hero.mp4" type="video/mp4">
+  </video>
   <div class="hero-brand">
     <svg class="hero-brand-snowflake" viewBox="-3 18 81 81" fill="none">
       <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
