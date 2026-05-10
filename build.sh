@@ -123,10 +123,18 @@ BLOCKS="$TMP_BLOCKS"
   echo '</html>'
 } > "$DIST/404.html"
 
-# ─── robots.txt (staging — закрыто от индексации) ────────
+# ─── robots.txt (прод — открыто, sitemap + crawl-delay) ────────
 cat > "$DIST/robots.txt" <<'EOF'
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /privacy
+
+User-agent: Yandex
+Allow: /
+Disallow: /privacy
+Crawl-delay: 1
+
+Sitemap: https://twokaif.ru/sitemap.xml
 EOF
 
 # ─── Копируем assets/ (js, шрифты и т.п.) в dist/ ───

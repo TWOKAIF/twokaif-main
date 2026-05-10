@@ -18,7 +18,7 @@
 
 <!-- TITLE + DESCRIPTION -->
 <title>Политика конфиденциальности — ТУКАЙФ</title>
-<meta name="description" content="Дизайн и автоматизация для ивент-индустрии: обложки, афиши, презентации, телеграм-боты для ведущих, анкеты молодожёнам, интерактивы. Свой движок, без шаблонов.">
+<meta name="description" content="Дизайн и автоматизация для ивент-индустрии: обложки, афиши, презентации, телеграм-боты для ведущих, анкеты молодожёнам, интерактивы.">
 
 <!-- Canonical (главный URL — после переезда) -->
 <link rel="canonical" href="https://twokaif.ru/privacy">
@@ -148,7 +148,7 @@
       "@type": "Service",
       "@id": "https://twokaif.ru/#service-anketas",
       "name": "Анкеты молодожёнам",
-      "description": "Персональные анкеты для свадебных ведущих. Молодожёны заполняют — ведущий получает готовый PDF/DOCX-отчёт со всеми деталями. Кастомизация под бренд каждого ведущего.",
+      "description": "Персональные анкеты для свадебных ведущих. Молодожёны заполняют — ведущий получает готовый документ со всеми деталями. Кастомизация под бренд каждого ведущего.",
       "provider": {"@id": "https://twokaif.ru/#org"},
       "serviceType": "Разработка программного обеспечения",
       "areaServed": {"@type": "Country", "name": "Россия"},
@@ -265,6 +265,26 @@
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(108388166, "init", {ssr:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});</script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108388166" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
+<!-- Цели Метрики — делегированные клики по селекторам -->
+<script>
+(function(){
+  function goal(name){ if(window.ym) ym(108388166,'reachGoal',name); }
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    // Любой клик в Telegram
+    if (/^https?:\/\/t\.me\//.test(href)) goal('goal_telegram');
+    // Клик на wedding.twokaif.ru (карточка акции / раздел услуг АНКЕТЫ)
+    if (/wedding\.twokaif\.ru/.test(href)) goal('goal_wedding_open');
+    // Карточка PNG в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me/.test(href)) goal('goal_png_open');
+    // Раздел АНКЕТЫ в Услугах
+    if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
+  }, {capture:true, passive:true});
+})();
+</script>
 
 <!-- Сброс -->
 <style>
@@ -821,6 +841,7 @@ setTimeout(observeSections, 2000);
     </a>
     <ul class="nav-links">
       <li><a href="#about"><span class="nav-link-flip" data-text="Обо мне">Обо&nbsp;мне</span></a></li>
+      <li><a href="#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
       <li><a href="#services"><span class="nav-link-flip" data-text="Услуги">Услуги</span></a></li>
       <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
       <li><a href="#cases"><span class="nav-link-flip" data-text="Кейсы">Кейсы</span></a></li>
@@ -846,6 +867,7 @@ setTimeout(observeSections, 2000);
     <div class="menu-panel-inner">
       <ul class="menu-links">
         <li><a href="#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
+        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
         <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги">Услуги</span></span></a></li>
         <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
         <li><a href="#cases"><span class="menu-flip"><span class="menu-flip-inner" data-text="Кейсы">Кейсы</span></span></a></li>

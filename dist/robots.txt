@@ -1,2 +1,10 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /privacy
+
+User-agent: Yandex
+Allow: /
+Disallow: /privacy
+Crawl-delay: 1
+
+Sitemap: https://twokaif.ru/sitemap.xml
