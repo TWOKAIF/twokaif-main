@@ -258,8 +258,8 @@
 <script src="/js/gsap.min.js"></script>
 <script src="/js/ScrollTrigger.min.js"></script>
 
-<!-- Фавикон SVG — снежинка ТУКАЙФ -->
-<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>path{fill:%230a0a0a}@media(prefers-color-scheme:dark){path{fill:%23EAEAF2}}</style><g transform="translate(5,-1.35) scale(0.2951)"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></g></svg>'>
+<!-- Фавикон SVG — эталонная звёздочка ТУКАЙФ (источник: brand.twokaif.ru) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
 <!-- Сброс -->
 <style>
@@ -1598,15 +1598,24 @@ function closeMenu(){
 </section>
 
 <script>
-(function(){
-  // === Календарь акций (синхронизирован с wedding.twokaif.ru) ===
-  const REGULAR = 7800;
-  const PROMOS = [
-    { start:'2026-04-28T00:00:00+03:00', end:'2026-05-15T23:59:59+03:00', price:5800, ribbon:'Майская акция · до 15 мая' },
-    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, ribbon:'Летняя акция · до 31 июля' },
-    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, ribbon:'Чёрная пятница · до 1 декабря' },
-    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, ribbon:'Новогодняя акция · до 8 января' }
+(async function(){
+  // === Источник правды по акциям — /promos.json (синкается из _shared/promos.json) ===
+  // Embedded fallback на случай если JSON не загрузился (offline / 404).
+  let REGULAR = 7800;
+  let PROMOS = [
+    { start:'2026-04-28T00:00:00+03:00', end:'2026-05-15T23:59:59+03:00', price:5800, title_short:'Майская акция · до 15 мая' },
+    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, title_short:'Летняя акция · до 31 июля' },
+    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, title_short:'Чёрная пятница · до 1 декабря' },
+    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, title_short:'Новогодняя акция · до 8 января' }
   ];
+  try {
+    const r = await fetch('/promos.json', {cache:'no-store'});
+    if (r.ok) {
+      const j = await r.json();
+      if (typeof j.regular_price === 'number') REGULAR = j.regular_price;
+      if (Array.isArray(j.promos)) PROMOS = j.promos;
+    }
+  } catch(e){}
 
   const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
   const now = Date.now();
@@ -1615,7 +1624,7 @@ function closeMenu(){
   const section = document.getElementById('promos');
 
   if (active) {
-    document.getElementById('promo-tag').textContent = active.ribbon;
+    document.getElementById('promo-tag').textContent = active.title_short || active.ribbon || 'Акция';
     document.getElementById('promo-price').textContent = fmt(active.price);
     document.getElementById('promo-old').textContent = fmt(REGULAR);
     card.dataset.cdEnd = active.end;
@@ -2728,6 +2737,20 @@ if (ar) aboutObserver.observe(ar);
         <div class="service-preview-desc">Визуальный контент для&nbsp;экранов<br>на&nbsp;мероприятиях и&nbsp;ивентах</div>
       </div>
     </div>
+
+    <!-- Услуга 6 — Свадебная анкета -->
+    <a class="service-item" href="https://wedding.twokaif.ru" style="text-decoration:none;color:inherit">
+      <span class="service-name">АНКЕТЫ
+        <svg class="service-snowflake" viewBox="-3 18 81 81" fill="currentColor"><g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g></svg>
+      </span>
+      <div class="service-preview preview-horizontal">
+        <div class="svc-site-placeholder">
+          <span class="svc-site-ph-text">Свадебная анкета<br>для&nbsp;ведущего</span>
+          <span class="svc-site-ph-cta">wedding.twokaif.ru</span>
+        </div>
+        <div class="service-preview-desc">Молодожёны заполняют&nbsp;— ведущий получает<br>единый документ. Свой поддомен и&nbsp;3&nbsp;года хостинга.</div>
+      </div>
+    </a>
   </div>
 
   <p class="services-desc">Работаем только в&nbsp;этих направлениях&nbsp;— никакой печатной продукции.<br>Полный фокус команды на&nbsp;цифровом дизайне для&nbsp;ивент—индустрии</p>

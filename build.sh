@@ -134,6 +134,10 @@ if [ -d assets ]; then
   cp -R assets/* "$DIST/" 2>/dev/null || true
 fi
 
+# ─── Общий promos.json (источник правды по акциям) ───
+[ -f promos.json ] && cp promos.json "$DIST/" && echo "✓ promos.json скопирован в dist/"
+[ -f favicon.svg ] && cp favicon.svg "$DIST/" && echo "✓ favicon.svg скопирован в dist/"
+
 # ─── Копируем images-webp/ → dist/images/ ───
 # Это критично, иначе rsync --delete на сервере снесёт всю папку картинок
 if [ -d images-webp ]; then
