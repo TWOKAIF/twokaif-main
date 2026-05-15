@@ -261,10 +261,8 @@
 <!-- Фавикон SVG — эталонная звёздочка ТУКАЙФ (источник: brand.twokaif.ru) -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-<!-- Yandex.Metrika counter 108388166 (twokaif.ru). Источник: _shared/yandex-metrika.html -->
-<script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(108388166, "init", {ssr:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});</script>
+<!-- Yandex.Metrika counter 108388166 — загружается из cookie-banner после согласия (см. блок 15_Куки-баннер.html) -->
 <noscript><div><img src="https://mc.yandex.ru/watch/108388166" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 
 <!-- Цели Метрики — делегированные клики по селекторам -->
 <script>
@@ -1541,11 +1539,11 @@ function closeMenu(){
         </div>
         <h3 class="promo-title">Свадебная анкета</h3>
         <div class="promo-prices">
-          <span class="promo-price" id="promo-price">5 800 ₽</span>
-          <span class="promo-old" id="promo-old">7 800 ₽</span>
+          <span class="promo-price" id="promo-price">7 800 ₽</span>
+          <span class="promo-old" id="promo-old"></span>
         </div>
-        <p class="promo-sub">
-          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— единый документ падает тебе в&nbsp;чат. Один раз&nbsp;— работает <b>3&nbsp;года</b>.
+        <p class="promo-sub" id="promo-sub">
+          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— Word&#8209;документ падает тебе в&nbsp;чат. <b>1&nbsp;год</b> техподдержки включён, дальше&nbsp;— подписка <b>2&nbsp;200&nbsp;₽/год</b>.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -1629,17 +1627,19 @@ function closeMenu(){
   // === Источник правды по акциям — /promos.json (синкается из _shared/promos.json) ===
   // Embedded fallback на случай если JSON не загрузился (offline / 404).
   let REGULAR = 7800;
+  let SUBSCRIPTION = 2200;
   let PROMOS = [
-    { start:'2026-04-28T00:00:00+03:00', end:'2026-05-15T23:59:59+03:00', price:5800, title_short:'Майская акция · до 15 мая' },
-    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, title_short:'Летняя акция · до 31 июля' },
-    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, title_short:'Чёрная пятница · до 1 декабря' },
-    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, title_short:'Новогодняя акция · до 8 января' }
+    { start:'2026-05-15T17:50:01+03:00', end:'2026-06-01T23:59:59+03:00', price:7800, title_short:'Акция · до 1 июня', support_text:'1 год', after_promo_text:'+2 200 ₽/год' },
+    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, title_short:'Летняя акция · до 31 июля', support_text:'3 года' },
+    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, title_short:'Чёрная пятница · до 1 декабря', support_text:'3 года' },
+    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, title_short:'Новогодняя акция · до 8 января', support_text:'3 года' }
   ];
   try {
     const r = await fetch('/promos.json', {cache:'no-store'});
     if (r.ok) {
       const j = await r.json();
       if (typeof j.regular_price === 'number') REGULAR = j.regular_price;
+      if (typeof j.subscription_price === 'number') SUBSCRIPTION = j.subscription_price;
       if (Array.isArray(j.promos)) PROMOS = j.promos;
     }
   } catch(e){}
@@ -1651,9 +1651,19 @@ function closeMenu(){
   const section = document.getElementById('promos');
 
   if (active) {
-    document.getElementById('promo-tag').textContent = active.title_short || active.ribbon || 'Акция';
+    document.getElementById('promo-tag').textContent = active.title_short || active.title_ribbon || 'Акция';
     document.getElementById('promo-price').textContent = fmt(active.price);
-    document.getElementById('promo-old').textContent = fmt(REGULAR);
+    const oldEl = document.getElementById('promo-old');
+    if (active.price === REGULAR) {
+      oldEl.style.display = 'none';
+    } else {
+      oldEl.textContent = fmt(REGULAR);
+      oldEl.style.display = '';
+    }
+    const subEl = document.getElementById('promo-sub');
+    if (subEl && active.support_text && active.after_promo_text) {
+      subEl.innerHTML = 'Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— Word&#8209;документ падает тебе в&nbsp;чат. <b>'+active.support_text.replace(/ /g,'&nbsp;')+'</b> техподдержки включён, дальше&nbsp;— подписка <b>'+active.after_promo_text.replace(/ /g,'&nbsp;')+'</b>.';
+    }
     card.dataset.cdEnd = active.end;
   } else {
     // вне акций — карточка анкет уходит, остаётся только PNG
@@ -5742,6 +5752,9 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
 .footer-top-btn:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
 .footer-copy{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);opacity:.4}
 .footer-legal{font-size:10px;font-weight:400;letter-spacing:-.12px;color:var(--muted);opacity:.3}
+.footer-rkn{font-size:10px;font-weight:400;letter-spacing:-.12px;color:var(--muted);opacity:.3;margin-top:2px}
+.footer-rkn a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.footer-rkn a:hover{opacity:.7}
 
 @media(max-width:640px){
   .footer{padding:0 var(--edge) calc(32px + env(safe-area-inset-bottom,0px))}
@@ -5803,6 +5816,7 @@ document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
     <div>
       <p class="footer-copy">&copy; 20—26 ТУКАЙФ. Все права защищены</p>
       <p class="footer-legal">ИП&nbsp;Тукаев Руслан Геннадиевич &middot; ИНН&nbsp;343703190770 &middot; ОГРНИП&nbsp;325344300119216</p>
+      <p class="footer-rkn">Оператор&nbsp;персональных&nbsp;данных &middot; рег.&nbsp;№&nbsp;5691/34 от&nbsp;14.05.2026 &middot; <a href="https://pd.rkn.gov.ru/operators-registry/notification_check" target="_blank" rel="noopener">проверить&nbsp;в&nbsp;реестре&nbsp;РКН</a></p>
     </div>
     <button class="footer-top-btn" id="footerTopBtn" aria-label="Наверх">↑</button>
   </div>
