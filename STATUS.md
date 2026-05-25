@@ -100,13 +100,15 @@
 
 ## Деплой
 
+⚠️ **Реальный путь на проде — `/var/www/twokaif/` (БЕЗ `-new`).** Раньше тут был `-new` для staging-режима, после переезда DNS 08.05 nginx был переключён на основную папку `/var/www/twokaif/`, но скрипт деплоя не обновили. Деплоить надо в `/var/www/twokaif/`.
+
 ```bash
 cd ~/Documents/ТУКАЙФ/twokaif-main
 bash build.sh
 rsync -avz --delete -e "ssh -i ~/.ssh/twokaif_hetzner" \
-  dist/ root@213.165.41.1:/var/www/twokaif-new/
+  dist/ root@213.165.41.1:/var/www/twokaif/
 ssh -i ~/.ssh/twokaif_hetzner root@213.165.41.1 \
-  "find /var/www/twokaif-new -type f -exec chmod 644 {} \;"
+  "find /var/www/twokaif -type f -exec chmod 644 {} \;"
 ```
 
 ## Шеф ведёт всю инфру
