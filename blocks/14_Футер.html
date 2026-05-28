@@ -31,9 +31,12 @@
 
 /* Огромный логотип — вписан в отступы */
 .footer-brand{display:flex;align-items:center;justify-content:center;gap:20px;padding:120px 0 0;overflow:hidden}
-.footer-brand-snowflake{width:10%;max-width:120px;flex-shrink:0;color:var(--text);opacity:.06;overflow:hidden}
+.footer-brand-snowflake{width:10%;max-width:120px;flex-shrink:0;color:var(--text);opacity:.06;overflow:hidden;animation:footerBreathe 7s ease-in-out -1.5s infinite}
 .footer-brand-snowflake .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
-.footer-brand-text{font-size:18vw;font-weight:700;letter-spacing:-1.2vw;line-height:.8;color:var(--text);opacity:.06;user-select:none;white-space:nowrap}
+.footer-brand-text{font-size:18vw;font-weight:700;letter-spacing:-1.2vw;line-height:.8;color:var(--text);opacity:.06;user-select:none;white-space:nowrap;animation:footerBreathe 7s ease-in-out infinite}
+/* Дыхание призрачного лого — медленный пульс прозрачности, composite-only */
+@keyframes footerBreathe{0%,100%{opacity:.045}50%{opacity:.09}}
+@media(prefers-reduced-motion:reduce){.footer-brand-snowflake,.footer-brand-text{animation:none;opacity:.06}}
 
 /* CTA + соцсети */
 .footer-row{padding:48px 0;display:flex;justify-content:space-between;align-items:flex-start}

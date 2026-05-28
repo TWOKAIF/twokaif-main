@@ -55,6 +55,11 @@
   100%{transform:translateY(-50%)}
 }
 
+/* Reduced-motion: ленты презентаций стоят, слайды видны статично */
+@media(prefers-reduced-motion:reduce){
+  .pres-card-track{animation:none;transform:translateY(0)}
+}
+
 
 /* Бейдж «Победитель» */
 .pres-badge{
@@ -135,7 +140,7 @@
 <section class="pres" id="pres-portfolio">
   <div class="pres-header">
     <div class="pres-left">
-      <h2 class="pres-title">Победные презентации</h2>
+      <h2 class="pres-title head-reveal">Победные презентации</h2>
       <div class="pres-tags">
         <span class="pres-tag">Портфолио</span>
         <span class="pres-tag">Wedding Awards</span>
@@ -271,7 +276,8 @@
   });
 
   /* Мобильная анимация с перемоткой (оптимизирована: остановка вне экрана) */
-  if (isMobile) {
+  /* Reduced-motion: слайды обрезаны выше, анимацию не запускаем */
+  if (isMobile && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
     function startMobileAnim() {
       var section = document.getElementById('pres-portfolio');
       var visible = false;

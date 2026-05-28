@@ -62,7 +62,7 @@
 <section class="posters" id="posters-portfolio">
   <div class="posters-header">
     <div class="posters-top">
-      <h2 class="posters-title">Афиши</h2>
+      <h2 class="posters-title head-reveal">Афиши</h2>
       <div class="posters-tags">
         <span class="posters-tag">Портфолио</span>
       </div>
@@ -128,6 +128,10 @@
   var pos = 0;
   var velocity = 0;
   var autoSpeed = -0.5; /* авто-скролл влево */
+  /* Reduced-motion: гасим авто-скролл, ручной drag/wheel остаётся */
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) autoSpeed = 0;
+  var hoveredCard = null; /* карточка под курсором — её подсвечиваем */
+  var hoverEase = 1;      /* 1 = полная скорость, плавно к 0 при наведении */
   var isDragging = false;
   var isUserInteracting = false;
   var dragStartX = 0;
@@ -173,8 +177,10 @@
           returnToAutoTimer = setTimeout(function() { isUserInteracting = false; }, 100);
         }
       } else {
-        /* Авто-скролл */
-        pos += autoSpeed;
+        /* Авто-скролл с плавным тормозом при наведении */
+        var targetEase = hoveredCard ? 0 : 1;
+        hoverEase += (targetEase - hoverEase) * 0.08;
+        pos += autoSpeed * hoverEase;
       }
     }
     loopPos();
@@ -205,11 +211,23 @@
       var opacity = 1 - Math.abs(ratio) * 0.4;
       /* Масштаб: центр 1, края 0.95 */
       var scale = 1 - Math.abs(ratio) * 0.05;
+      /* Наведённая карточка чуть приподнимается */
+      if (card === hoveredCard) scale *= 1.03;
       card.style.transform = 'perspective(1200px) rotateY(' + rotateY + 'deg) scale(' + scale + ')';
-      card.style.opacity = opacity;
+      card.style.opacity = (card === hoveredCard) ? 1 : opacity;
     }
   }
   requestAnimationFrame(tick);
+
+  /* === Наведение: запоминаем карточку, лента тормозит === */
+  track.addEventListener('mouseover', function(e) {
+    var c = e.target.closest('.poster-card');
+    if (c) hoveredCard = c;
+  });
+  track.addEventListener('mouseout', function(e) {
+    var c = e.target.closest('.poster-card');
+    if (c && !c.contains(e.relatedTarget)) hoveredCard = null;
+  });
 
   /* === Тачпад (wheel) — горизонтальный скролл === */
   wrap.addEventListener('wheel', function(e) {

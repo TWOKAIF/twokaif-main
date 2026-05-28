@@ -85,7 +85,7 @@
 
 <div class="portfolio-header" id="portfolio">
   <div class="portfolio-top">
-    <h2 class="portfolio-title">Обложки</h2>
+    <h2 class="portfolio-title head-reveal">Обложки</h2>
     <div class="portfolio-tags">
       <span class="portfolio-tag">Портфолио</span>
     </div>
@@ -620,10 +620,16 @@
       var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       // Делегирование: один listener на root вместо 96 — снимает нагрузку
       var hovered = null;
+      var lastX = null, lastY = null;
       if (!root.dataset.delegated) {
         root.dataset.delegated = '1';
         root.addEventListener('mousemove', function(e){
           if (rm || window.innerWidth < 768) return;
+          /* Скролл генерит mousemove с теми же client-координатами — карта
+             под неподвижным курсором меняется и tilt прыгал на каждый кадр.
+             Реагируем только на реальное движение мыши. */
+          if (e.clientX === lastX && e.clientY === lastY) return;
+          lastX = e.clientX; lastY = e.clientY;
           var card = e.target.closest('.twk-cover');
           if (!card) return;
           if (hovered && hovered !== card) {

@@ -308,6 +308,9 @@
   var paused = false;
   var half = track.scrollWidth / 2;
 
+  /* Reduced-motion: лента стоит, логотипы видны статично */
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   /* Плавное движение без перескоков */
   function move() {
     if (!paused) {

@@ -160,20 +160,44 @@ faqMobileQuery.addEventListener('change', mergeFaqColumns);
 
 /* Все вопросы закрыты по умолчанию */
 
-/* Аккордеон FAQ — работает для обеих колонок */
-document.querySelectorAll('.faq-list .faq-item').forEach(function(item){
-  item.querySelector('.faq-question').addEventListener('click',function(){
-    var wasActive = item.classList.contains('active');
-    /* Закрываем все в обеих колонках */
-    document.querySelectorAll('.faq-list .faq-item').forEach(function(e){
-      e.classList.remove('active');
-      e.querySelector('.faq-answer').style.maxHeight='0';
-    });
-    if(!wasActive){
-      item.classList.add('active');
-      var a=item.querySelector('.faq-answer');
-      a.style.maxHeight=Math.min(a.scrollHeight,300)+'px';
+/* Аккордеон FAQ — работает для обеих колонок (+доступность с клавиатуры) */
+(function(){
+  var items = document.querySelectorAll('.faq-list .faq-item');
+  items.forEach(function(item, idx){
+    var q = item.querySelector('.faq-question');
+    var ans = item.querySelector('.faq-answer');
+    if(!ans.id) ans.id = 'faqAnswer' + idx;
+    q.setAttribute('role','button');
+    q.setAttribute('tabindex','0');
+    q.setAttribute('aria-expanded','false');
+    q.setAttribute('aria-controls', ans.id);
+    ans.setAttribute('role','region');
+    ans.setAttribute('aria-hidden','true');
+
+    function toggle(){
+      var wasActive = item.classList.contains('active');
+      /* Закрываем все в обеих колонках */
+      items.forEach(function(e){
+        e.classList.remove('active');
+        var ea = e.querySelector('.faq-answer');
+        ea.style.maxHeight = '0';
+        ea.setAttribute('aria-hidden','true');
+        e.querySelector('.faq-question').setAttribute('aria-expanded','false');
+      });
+      if(!wasActive){
+        item.classList.add('active');
+        ans.style.maxHeight = Math.min(ans.scrollHeight,300) + 'px';
+        ans.setAttribute('aria-hidden','false');
+        q.setAttribute('aria-expanded','true');
+      }
     }
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
+        e.preventDefault();
+        toggle();
+      }
+    });
   });
-});
+})();
 </script>
