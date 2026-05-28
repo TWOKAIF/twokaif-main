@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/fonts/inter-tight.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#0c0c0e}
+  .card{
+    position:relative;
+    width:1200px;height:630px;
+    background:#0c0c0e;
+    overflow:hidden;
+    font-family:'Inter Tight',-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* гигантская снежинка-водяной знак, уходит за правый край осознанно */
+  .wm{
+    position:absolute;
+    right:-150px;top:50%;
+    transform:translateY(-50%);
+    width:760px;height:760px;
+    opacity:.05;
+    pointer-events:none;
+  }
+  .wm path{fill:#fff}
+  .inner{
+    position:relative;
+    z-index:2;
+    height:100%;
+    padding:64px 72px 60px;
+    display:flex;flex-direction:column;
+  }
+  /* локап */
+  .brand{display:flex;align-items:center;gap:9px}
+  .brand svg{width:25px;height:25px;display:block}
+  .brand svg path{fill:#f5f5f7}
+  .brand .wordmark{
+    font-weight:700;font-size:31px;
+    letter-spacing:-.02em;line-height:1;color:#f5f5f7;
+  }
+  /* заголовок */
+  .headline{
+    margin-top:auto;
+    font-weight:600;
+    font-size:104px;
+    line-height:.94;
+    letter-spacing:-.035em;
+    color:#f5f5f7;
+  }
+  /* подпись услуг */
+  .sub{
+    margin-top:28px;
+    max-width:880px;
+    font-weight:400;
+    font-size:29px;
+    line-height:1.35;
+    letter-spacing:-.01em;
+    color:#86868b;
+  }
+  /* низ */
+  .foot{
+    margin-top:auto;
+    display:flex;align-items:baseline;gap:16px;
+    padding-top:34px;
+  }
+  .foot .domain{
+    font-weight:500;font-size:24px;
+    letter-spacing:.01em;color:#f5f5f7;
+  }
+  .foot .by{
+    font-weight:400;font-size:20px;
+    letter-spacing:.04em;color:#5a5a60;
+    text-transform:uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <svg class="wm" viewBox="-3 18.51 80.55 80.55"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></svg>
+  <div class="inner">
+    <div class="brand">
+      <svg viewBox="-3 18.51 80.55 80.55"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></svg>
+      <span class="wordmark">ТУКАЙФ</span>
+    </div>
+    <h1 class="headline">Ивент-дизайнер<br>для профессионалов</h1>
+    <p class="sub">Обложки, афиши, презентации, телеграм-боты для&nbsp;ведущих, анкеты молодожёнам, интерактивы.</p>
+    <div class="foot">
+      <span class="domain">twokaif.ru</span>
+      <span class="by">Руслан Тукаев</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
