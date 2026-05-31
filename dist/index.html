@@ -1408,24 +1408,27 @@ function closeMenu(){
   color: var(--muted);
   transition: color .35s var(--ease-out);
 }
-/* Большой таймер на карточке */
+/* Таймер на карточке — дни/часы/минуты цифрами, секунды бегущей линией */
 .promo-timer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
   margin-top: 24px;
   padding: 16px 0 0;
   border-top: 1px solid var(--border);
   transition: border-color .35s var(--ease-out);
+}
+.promo-timer-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 .promo-timer-cell {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  flex: 1;
 }
 .promo-timer-num {
-  font-size: clamp(32px, 3.4vw, 40px);
+  font-size: clamp(32px, 3.6vw, 42px);
   font-weight: 600;
   letter-spacing: -.025em;
   line-height: 1;
@@ -1441,7 +1444,38 @@ function closeMenu(){
   color: var(--muted);
   transition: color .35s var(--ease-out);
 }
+.promo-timer-sweep {
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 16px;
+  transition: background .35s var(--ease-out);
+}
+.promo-timer-sweepfill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--text);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.promo-timer-sweepfill.run { transition: transform 1s linear; }
+.promo-timer-scap {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.promo-timer-scap [data-cd-s] { font-variant-numeric: tabular-nums; }
 .promo-timer.is-end .promo-timer-num { font-size: 18px; font-weight: 500; }
+@media (prefers-reduced-motion: reduce) {
+  .promo-timer-sweepfill.run { transition: none; }
+}
 
 .promo-title {
   font-size: clamp(24px, 2.6vw, 32px);
@@ -1593,10 +1627,13 @@ function closeMenu(){
         </div>
       </div>
       <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-s>—</span><span class="promo-timer-lbl">секунд</span></div>
+        <div class="promo-timer-row">
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+        </div>
+        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
+        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://wedding.twokaif.ru" class="promo-cta">
         Узнать подробнее
@@ -1633,10 +1670,13 @@ function closeMenu(){
         </div>
       </div>
       <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-s>—</span><span class="promo-timer-lbl">секунд</span></div>
+        <div class="promo-timer-row">
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+        </div>
+        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
+        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://t.me/twokaif_ruslan" class="promo-cta">
         Узнать подробнее
@@ -1726,6 +1766,9 @@ function closeMenu(){
       const hEl = timer.querySelector('[data-cd-h]');
       const mEl = timer.querySelector('[data-cd-m]');
       const sEl = timer.querySelector('[data-cd-s]');
+      const fEl = timer.querySelector('[data-cd-fill]');
+      const sweepEl = timer.querySelector('.promo-timer-sweep');
+      const scapEl = timer.querySelector('.promo-timer-scap');
       if (diff <= 0) {
         if (monthly) { endTs = endOfMonthMSK(); diff = endTs - Date.now(); }
         else {
@@ -1733,6 +1776,8 @@ function closeMenu(){
           if (dEl) dEl.textContent = 'скоро';
           if (hEl) hEl.parentElement.style.display = 'none';
           if (mEl) mEl.parentElement.style.display = 'none';
+          if (sweepEl) sweepEl.style.display = 'none';
+          if (scapEl) scapEl.style.display = 'none';
           return;
         }
       }
@@ -1747,11 +1792,21 @@ function closeMenu(){
       const dLbl = dEl && dEl.parentElement.querySelector('.promo-timer-lbl');
       const hLbl = hEl && hEl.parentElement.querySelector('.promo-timer-lbl');
       const mLbl = mEl && mEl.parentElement.querySelector('.promo-timer-lbl');
-      const sLbl = sEl && sEl.parentElement.querySelector('.promo-timer-lbl');
       if (dLbl) dLbl.textContent = plural(days,'день','дня','дней');
       if (hLbl) hLbl.textContent = plural(hours,'час','часа','часов');
       if (mLbl) mLbl.textContent = plural(mins,'минута','минуты','минут');
-      if (sLbl) sLbl.textContent = plural(secs,'секунда','секунды','секунд');
+      // секунды — бегущая линия (0→полная за минуту), снап в 0 на стыке
+      if (fEl) {
+        if (secs === 0) {
+          fEl.classList.remove('run');
+          fEl.style.transform = 'scaleX(0)';
+          void fEl.offsetWidth;
+          fEl.classList.add('run');
+        } else {
+          fEl.classList.add('run');
+          fEl.style.transform = 'scaleX(' + (secs/60).toFixed(4) + ')';
+        }
+      }
     });
   }
   tick();

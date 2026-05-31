@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ТУКАЙФ — таймер акций · премиум-варианты</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-body:'Inter Tight',sans-serif;
+  --bg:#ffffff;
+  --surface:#f5f5f7;
+  --border:rgba(29,29,31,.08);
+  --border-2:rgba(29,29,31,.14);
+  --text:#1d1d1f;
+  --muted:#86868b;
+  --edge:48px;
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  --ease-mech:cubic-bezier(0.32,0.72,0,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font-body);background:var(--surface);color:var(--text);
+  -webkit-font-smoothing:antialiased;padding:48px var(--edge) 96px;
+}
+.page-head{max-width:1280px;margin:0 auto}
+.page-kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+.page-kicker i{width:7px;height:7px;border-radius:50%;background:#22a35a;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.page-h1{font-size:clamp(28px,3.4vw,44px);font-weight:600;letter-spacing:-.022em;line-height:1.05;margin:8px 0 6px}
+.page-note{font-size:15px;color:var(--muted);max-width:600px;line-height:1.5}
+.page-note b{color:var(--text);font-weight:600}
+
+.grid{max-width:1280px;margin:40px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+.variant-tag{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.variant-tag .n{font-size:12px;font-weight:600;letter-spacing:.04em;background:var(--text);color:#fff;padding:3px 9px;border-radius:100px}
+.variant-tag .t{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.variant-tag .d{font-size:13px;color:var(--muted)}
+
+/* реплика карточки акции */
+.promo-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:360px;padding:36px;border:1px solid var(--border);background:var(--bg);color:var(--text)}
+.promo-tag{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.promo-title{font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-.02em;line-height:1.12;margin:14px 0 0}
+.promo-prices{display:flex;align-items:baseline;gap:12px;margin-top:18px}
+.promo-price{font-size:clamp(36px,4vw,48px);font-weight:600;letter-spacing:-.025em;line-height:1}
+.promo-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.promo-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:-.1px;color:var(--text);padding:5px 10px;border:1px solid var(--border);background:var(--bg)}
+.promo-chip svg{width:12px;height:12px;flex-shrink:0;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.promo-cta{align-self:flex-start;text-decoration:none;margin-top:32px;display:inline-flex;align-items:center;gap:10px;background:var(--text);color:#fff;padding:12px 28px;border:1px solid var(--text);font-size:15px;font-weight:500;letter-spacing:-.18px;transition:background .35s var(--ease-out),color .35s var(--ease-out),transform .16s var(--ease-out)}
+.promo-cta:hover{background:#fff;color:var(--text)}
+.promo-cta:active{transform:scale(.985)}
+.promo-cta .arr{transition:transform .25s var(--ease-out)}
+.promo-cta:hover .arr{transform:translateX(4px)}
+
+.cd-base{margin-top:24px;padding:18px 0 0;border-top:1px solid var(--border)}
+.cd-lbl{font-size:10.5px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+
+/* ═══ В1 · ОДОМЕТР — цифры катятся вертикально (механический ролл) ═══ */
+.v-odo{display:flex;align-items:flex-start;gap:6px}
+.v-odo .cell{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
+.v-odo .digits{display:flex;font-size:clamp(30px,3.6vw,42px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.odo{height:1em;overflow:hidden;display:inline-block}
+.odo .reel{display:flex;flex-direction:column;transition:transform .62s var(--ease-mech)}
+.odo .reel b{height:1em;display:grid;place-items:center;font-weight:inherit}
+.v-odo .sep{font-size:clamp(26px,3vw,34px);font-weight:300;color:var(--muted);opacity:.4;line-height:1;padding-top:.04em}
+
+/* ═══ В2 · BLUR-ТИК — число сменяется через blur-маску (Emil) ═══ */
+.v-blur{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.v-blur .cell{display:flex;flex-direction:column;align-items:center;gap:5px}
+.bt{font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.028em;line-height:1;font-variant-numeric:tabular-nums;transition:filter .22s ease,opacity .22s ease,transform .22s var(--ease-out)}
+.bt.tick{filter:blur(3px);opacity:.5;transform:scale(.93)}
+
+/* ═══ В3 · ПРОГРЕСС МЕСЯЦА — editorial, тонкая линия ═══ */
+.v-bar .lead{display:flex;align-items:baseline;gap:10px}
+.v-bar .big{font-size:clamp(48px,6vw,66px);font-weight:600;letter-spacing:-.035em;line-height:.9;font-variant-numeric:tabular-nums}
+.v-bar .big-l{font-size:15px;font-weight:500;color:var(--muted)}
+.v-bar .hms{margin-left:auto;align-self:flex-end;font-size:15px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums;color:var(--muted)}
+.v-bar .hms .s{color:var(--text)}
+.bar-track{height:3px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:16px}
+.bar-fill{height:100%;width:100%;background:var(--text);transform-origin:left;transform:scaleX(0);transition:transform 1s linear}
+.v-bar .cap{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--muted)}
+
+/* ═══ В4 · КОЛЬЦО — SVG-арка прогресса, число в центре ═══ */
+.v-ring{display:flex;align-items:center;gap:22px}
+.ring-wrap{position:relative;width:118px;height:118px;flex-shrink:0}
+.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-track{fill:none;stroke:var(--border);stroke-width:5}
+.ring-arc{fill:none;stroke:var(--text);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.ring-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.ring-mid .n{font-size:32px;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.ring-mid .l{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.v-ring .side .hms{font-size:clamp(22px,2.6vw,28px);font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.v-ring .side .hms .sep{color:var(--muted);opacity:.4;font-weight:300}
+.v-ring .side .cap{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* ═══ В5 · СЕКУНДА-СВИП — без цифры секунд, линия бежит за минуту ═══ */
+.v-sweep .row{display:flex;align-items:flex-start;gap:8px}
+.v-sweep .cell{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
+.v-sweep .num{font-size:clamp(32px,3.8vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.sweep-track{height:2px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:16px}
+.sweep-fill{height:100%;width:100%;background:var(--text);transform-origin:left;transform:scaleX(0)}
+.sweep-fill.run{transition:transform 1s linear}
+.v-sweep .scap{display:flex;justify-content:space-between;margin-top:7px;font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* ═══ В6 · ЖЕЛЕЗО — double-bezel, цифры в «машинном» лотке (blur-тик) ═══ */
+.v-hw{padding:7px;background:linear-gradient(180deg,#fafafb,#ececed);border:1px solid var(--border-2);border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(29,29,31,.04)}
+.hw-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.hw-cell{display:flex;flex-direction:column;align-items:center;gap:3px;padding:13px 4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:11px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.hw-cell .bt{font-size:clamp(24px,2.9vw,33px)}
+.hw-cell .l{font-size:9.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+@media(max-width:734px){
+  body{padding:32px 20px 64px}
+  .promo-card{padding:28px 24px;min-height:auto}
+}
+@media (prefers-reduced-motion: reduce){
+  .odo .reel,.bt,.bar-fill,.ring-arc,.sweep-fill.run{transition:none!important}
+  .bt.tick{filter:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <span class="page-kicker"><i></i>Витрина · премиум</span>
+  <h1 class="page-h1">Таймер акций — с движением</h1>
+  <p class="page-note">Те&nbsp;же бренд-правила (Inter&nbsp;Tight, чёрный/белый/muted), но&nbsp;теперь — <b>живая механика</b>: цифры катятся, blur-смена, прогресс месяца, кольцо. Всё на&nbsp;GPU (transform/opacity), уважает reduced-motion. Скажи номер&nbsp;— вшью в&nbsp;обе карточки.</p>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- В1 ОДОМЕТР -->
+  <div>
+    <div class="variant-tag"><span class="n">1</span><span class="t">Одометр</span><span class="d">цифры катятся вертикально · механика</span></div>
+    <div class="promo-card">
+      <div>
+        <span class="promo-tag">Акция</span><h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices"><span class="promo-price">7 500 ₽</span></div>
+        <div class="promo-chips">
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>твоёимя.twokaif.ru</span>
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>Готово за 2-3 дня</span>
+        </div>
+      </div>
+      <div class="cd-base v-odo" data-cd data-variant="odo"></div>
+      <a class="promo-cta">Узнать подробнее <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <!-- В2 BLUR-ТИК -->
+  <div>
+    <div class="variant-tag"><span class="n">2</span><span class="t">Blur-тик</span><span class="d">смена числа через blur-маску (Emil)</span></div>
+    <div class="promo-card">
+      <div>
+        <span class="promo-tag">Акция</span><h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices"><span class="promo-price">7 500 ₽</span></div>
+        <div class="promo-chips">
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>твоёимя.twokaif.ru</span>
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>Готово за 2-3 дня</span>
+        </div>
+      </div>
+      <div class="cd-base v-blur" data-cd data-variant="blur">
+        <div class="cell"><span class="bt" data-d>—</span><span class="cd-lbl" data-dl>дней</span></div>
+        <div class="cell"><span class="bt" data-h>—</span><span class="cd-lbl" data-hl>часов</span></div>
+        <div class="cell"><span class="bt" data-m>—</span><span class="cd-lbl" data-ml>минут</span></div>
+        <div class="cell"><span class="bt" data-s>—</span><span class="cd-lbl" data-sl>секунд</span></div>
+      </div>
+      <a class="promo-cta">Узнать подробнее <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <!-- В3 ПРОГРЕСС МЕСЯЦА -->
+  <div>
+    <div class="variant-tag"><span class="n">3</span><span class="t">Прогресс месяца</span><span class="d">editorial · тонкая линия заполнения</span></div>
+    <div class="promo-card">
+      <div>
+        <span class="promo-tag">Акция</span><h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices"><span class="promo-price">7 500 ₽</span></div>
+        <div class="promo-chips">
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>твоёимя.twokaif.ru</span>
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>Готово за 2-3 дня</span>
+        </div>
+      </div>
+      <div class="cd-base v-bar" data-cd data-variant="bar">
+        <div class="lead"><span class="big" data-d>—</span><span class="big-l" data-dl>дней</span><span class="hms"><span data-h>—</span>:<span data-m>—</span>:<span class="s" data-s>—</span></span></div>
+        <div class="bar-track"><span class="bar-fill" data-fill></span></div>
+        <div class="cap"><span>Старт месяца</span><span>До конца акции</span></div>
+      </div>
+      <a class="promo-cta">Узнать подробнее <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <!-- В4 КОЛЬЦО -->
+  <div>
+    <div class="variant-tag"><span class="n">4</span><span class="t">Кольцо</span><span class="d">SVG-арка прогресса + число в центре</span></div>
+    <div class="promo-card">
+      <div>
+        <span class="promo-tag">Акция</span><h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices"><span class="promo-price">7 500 ₽</span></div>
+        <div class="promo-chips">
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>твоёимя.twokaif.ru</span>
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>Готово за 2-3 дня</span>
+        </div>
+      </div>
+      <div class="cd-base v-ring" data-cd data-variant="ring">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 118 118"><circle class="ring-track" cx="59" cy="59" r="52"/><circle class="ring-arc" cx="59" cy="59" r="52" data-arc/></svg>
+          <div class="ring-mid"><span class="n" data-d>—</span><span class="l" data-dl>дней</span></div>
+        </div>
+        <div class="side">
+          <div class="hms"><span data-h>—</span><span class="sep">:</span><span data-m>—</span><span class="sep">:</span><span data-s>—</span></div>
+          <div class="cap">часы · минуты · секунды</div>
+        </div>
+      </div>
+      <a class="promo-cta">Узнать подробнее <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <!-- В5 СЕКУНДА-СВИП -->
+  <div>
+    <div class="variant-tag"><span class="n">5</span><span class="t">Секунда-свип</span><span class="d">без цифры секунд · линия бежит за минуту</span></div>
+    <div class="promo-card">
+      <div>
+        <span class="promo-tag">Акция</span><h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices"><span class="promo-price">7 500 ₽</span></div>
+        <div class="promo-chips">
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>твоёимя.twokaif.ru</span>
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>Готово за 2-3 дня</span>
+        </div>
+      </div>
+      <div class="cd-base v-sweep" data-cd data-variant="sweep">
+        <div class="row">
+          <div class="cell"><span class="num" data-d>—</span><span class="cd-lbl" data-dl>дней</span></div>
+          <div class="cell"><span class="num" data-h>—</span><span class="cd-lbl" data-hl>часов</span></div>
+          <div class="cell"><span class="num" data-m>—</span><span class="cd-lbl" data-ml>минут</span></div>
+        </div>
+        <div class="sweep-track"><span class="sweep-fill" data-fill></span></div>
+        <div class="scap"><span>Секунды</span><span data-s>—</span></div>
+      </div>
+      <a class="promo-cta">Узнать подробнее <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <!-- В6 ЖЕЛЕЗО -->
+  <div>
+    <div class="variant-tag"><span class="n">6</span><span class="t">Железо</span><span class="d">double-bezel · цифры в машинном лотке</span></div>
+    <div class="promo-card">
+      <div>
+        <span class="promo-tag">Акция</span><h3 class="promo-title">Свадебная анкета</h3>
+        <div class="promo-prices"><span class="promo-price">7 500 ₽</span></div>
+        <div class="promo-chips">
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>твоёимя.twokaif.ru</span>
+          <span class="promo-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>Готово за 2-3 дня</span>
+        </div>
+      </div>
+      <div class="cd-base" data-cd data-variant="hw">
+        <div class="v-hw"><div class="hw-inner">
+          <div class="hw-cell"><span class="bt" data-d>—</span><span class="l" data-dl>дней</span></div>
+          <div class="hw-cell"><span class="bt" data-h>—</span><span class="l" data-hl>часов</span></div>
+          <div class="hw-cell"><span class="bt" data-m>—</span><span class="l" data-ml>минут</span></div>
+          <div class="hw-cell"><span class="bt" data-s>—</span><span class="l" data-sl>секунд</span></div>
+        </div></div>
+      </div>
+      <a class="promo-cta">Узнать подробнее <span class="arr">→</span></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── границы текущего месяца по МСК (как прод, evergreen) ──
+function monthBoundsMSK(){
+  const MSK=3*3600000, d=new Date(Date.now()+MSK);
+  const y=d.getUTCFullYear(), mo=d.getUTCMonth();
+  return { start:Date.UTC(y,mo,1,0,0,0)-MSK, end:Date.UTC(y,mo+1,1,0,0,0)-1000-MSK };
+}
+const pad=n=>n<10?'0'+n:''+n;
+function plural(n,one,few,many){const a=n%10,b=n%100;if(a===1&&b!==11)return one;if(a>=2&&a<=4&&(b<12||b>14))return few;return many}
+
+// ── одометр: цифры катятся вертикально ──
+function setOdo(reels,val){
+  const t=Math.floor(val/10), o=val%10;
+  reels[0].style.transform='translateY(-'+t*10+'%)';
+  reels[1].style.transform='translateY(-'+o*10+'%)';
+}
+const odoMap=[];
+document.querySelectorAll('[data-variant="odo"]').forEach(t=>{
+  const units=[['дней','d'],['часов','h'],['минут','m'],['секунд','s']];
+  const cells=[];
+  units.forEach((u,i)=>{
+    const cell=document.createElement('div'); cell.className='cell';
+    const dig=document.createElement('span'); dig.className='digits';
+    const reels=[];
+    for(let p=0;p<2;p++){
+      const odo=document.createElement('span'); odo.className='odo';
+      const reel=document.createElement('span'); reel.className='reel';
+      for(let k=0;k<10;k++){const b=document.createElement('b');b.textContent=k;reel.appendChild(b);}
+      odo.appendChild(reel); dig.appendChild(odo); reels.push(reel);
+    }
+    cell.appendChild(dig);
+    const lbl=document.createElement('span'); lbl.className='cd-lbl'; lbl.textContent=u[0];
+    cell.appendChild(lbl);
+    t.appendChild(cell);
+    cells.push({reels,lbl,key:u[1]});
+    if(i<3){const s=document.createElement('span'); s.className='sep'; s.textContent=':'; t.appendChild(s);}
+  });
+  odoMap.push({t,cells});
+});
+
+// ── blur-тик ──
+function blurSwap(el,val){
+  if(el.dataset.v===val)return;
+  el.dataset.v=val;
+  el.classList.add('tick');
+  setTimeout(()=>{el.textContent=val;el.classList.remove('tick')},120);
+}
+
+// ── главный тик ──
+function tick(){
+  const {start,end}=monthBoundsMSK();
+  const now=Date.now();
+  let diff=end-now; if(diff<0)diff=0;
+  const days=Math.floor(diff/86400000);
+  const hours=Math.floor(diff/3600000)%24;
+  const mins=Math.floor(diff/60000)%60;
+  const secs=Math.floor(diff/1000)%60;
+  const elapsed=Math.min(1,Math.max(0,(now-start)/(end-start)));
+
+  // В1 одометр
+  odoMap.forEach(o=>{
+    const v={d:days,h:hours,m:mins,s:secs};
+    const lbls={d:plural(days,'день','дня','дней'),h:plural(hours,'час','часа','часов'),m:plural(mins,'минута','минуты','минут'),s:plural(secs,'секунда','секунды','секунд')};
+    o.cells.forEach(c=>{setOdo(c.reels,v[c.key]);c.lbl.textContent=lbls[c.key];});
+  });
+
+  // В2 blur + В6 железо (общий blur-тик по [data-variant=blur|hw])
+  document.querySelectorAll('[data-variant="blur"],[data-variant="hw"]').forEach(t=>{
+    const set=(k,val)=>{const e=t.querySelector('[data-'+k+']');if(e)blurSwap(e,val)};
+    set('d',pad(days));set('h',pad(hours));set('m',pad(mins));set('s',pad(secs));
+    const L=(k,val)=>{const e=t.querySelector('[data-'+k+'l]');if(e)e.textContent=val};
+    L('d',plural(days,'день','дня','дней'));L('h',plural(hours,'час','часа','часов'));L('m',plural(mins,'минута','минуты','минут'));L('s',plural(secs,'секунда','секунды','секунд'));
+  });
+
+  // В3 прогресс месяца
+  document.querySelectorAll('[data-variant="bar"]').forEach(t=>{
+    t.querySelector('[data-d]').textContent=days;
+    t.querySelector('[data-dl]').textContent=plural(days,'день','дня','дней');
+    t.querySelector('[data-h]').textContent=pad(hours);
+    t.querySelector('[data-m]').textContent=pad(mins);
+    t.querySelector('[data-s]').textContent=pad(secs);
+    t.querySelector('[data-fill]').style.transform='scaleX('+elapsed.toFixed(5)+')';
+  });
+
+  // В4 кольцо
+  document.querySelectorAll('[data-variant="ring"]').forEach(t=>{
+    const arc=t.querySelector('[data-arc]');
+    const r=52, C=2*Math.PI*r;
+    arc.style.strokeDasharray=C;
+    arc.style.strokeDashoffset=C*(1-elapsed);
+    t.querySelector('[data-d]').textContent=days;
+    t.querySelector('[data-dl]').textContent=plural(days,'день','дня','дней');
+    t.querySelector('[data-h]').textContent=pad(hours);
+    t.querySelector('[data-m]').textContent=pad(mins);
+    t.querySelector('[data-s]').textContent=pad(secs);
+  });
+
+  // В5 секунда-свип
+  document.querySelectorAll('[data-variant="sweep"]').forEach(t=>{
+    t.querySelector('[data-d]').textContent=days;
+    t.querySelector('[data-dl]').textContent=plural(days,'день','дня','дней');
+    t.querySelector('[data-h]').textContent=pad(hours);
+    t.querySelector('[data-hl]').textContent=plural(hours,'час','часа','часов');
+    t.querySelector('[data-m]').textContent=pad(mins);
+    t.querySelector('[data-ml]').textContent=plural(mins,'минута','минуты','минут');
+    t.querySelector('[data-s]').textContent=pad(secs);
+    const fill=t.querySelector('[data-fill]');
+    const frac=secs/60;
+    if(secs===0){ fill.classList.remove('run'); fill.style.transform='scaleX(0)'; void fill.offsetWidth; fill.classList.add('run'); }
+    else { fill.classList.add('run'); fill.style.transform='scaleX('+frac.toFixed(4)+')'; }
+  });
+}
+tick();
+setInterval(tick,1000);
+</script>
+</body>
+</html>
