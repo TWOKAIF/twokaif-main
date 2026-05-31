@@ -1590,7 +1590,7 @@ function closeMenu(){
     <a href="https://wedding.twokaif.ru" class="promo-card" id="promo-card-anketa" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag" id="promo-tag">Майская акция · до 15 мая</span>
+          <span class="promo-tag" id="promo-tag">Акция</span>
         </div>
         <h3 class="promo-title">Свадебная анкета</h3>
         <div class="promo-prices">
@@ -1598,7 +1598,7 @@ function closeMenu(){
           <span class="promo-old" id="promo-old"></span>
         </div>
         <p class="promo-sub" id="promo-sub">
-          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— Word&#8209;документ падает тебе в&nbsp;чат. <b>1&nbsp;год</b> техподдержки включён, дальше&nbsp;— подписка <b>2&nbsp;200&nbsp;₽/год</b>.
+          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>1&nbsp;год работы бесплатно</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -1615,7 +1615,7 @@ function closeMenu(){
           </span>
           <span class="promo-chip">
             <svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg>
-            Без подписок Tilda
+            Дешевле Tilda
           </span>
         </div>
       </div>
@@ -1631,17 +1631,17 @@ function closeMenu(){
     </a>
 
     <!-- ╭─ Карточка 2: Приложение ТУКАЙФ—PNG ─╮ -->
-    <a href="https://t.me/twokaif_ruslan" class="promo-card" data-cd-end="2026-06-01T23:59:59+03:00">
+    <a href="https://t.me/twokaif_ruslan" class="promo-card" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Акция · до 1 июня</span>
+          <span class="promo-tag">Акция</span>
         </div>
         <h3 class="promo-title">Приложение<br><b>ТУКАЙФ&nbsp;— PNG</b></h3>
         <div class="promo-prices">
           <span class="promo-price">4 900 ₽</span>
         </div>
         <p class="promo-sub">
-          Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте.
+          Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте, дальше&nbsp;— <b>500&nbsp;₽/год</b>.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -1681,13 +1681,10 @@ function closeMenu(){
 (async function(){
   // === Источник правды по акциям — /promos.json (синкается из _shared/promos.json) ===
   // Embedded fallback на случай если JSON не загрузился (offline / 404).
-  let REGULAR = 7800;
-  let SUBSCRIPTION = 2200;
+  let REGULAR = 7500;
+  let SUBSCRIPTION = 1000;
   let PROMOS = [
-    { start:'2026-05-15T17:50:01+03:00', end:'2026-06-01T23:59:59+03:00', price:7800, title_short:'Акция · до 1 июня', support_text:'1 год', after_promo_text:'+2 200 ₽/год' },
-    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, title_short:'Летняя акция · до 31 июля', support_text:'3 года' },
-    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, title_short:'Чёрная пятница · до 1 декабря', support_text:'3 года' },
-    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, title_short:'Новогодняя акция · до 8 января', support_text:'3 года' }
+    { id:'evergreen-2026', monthly:true, start:'2026-01-01T00:00:00+03:00', end:'2099-12-31T23:59:59+03:00', price:7500, title_short:'Акция', support_text:'1 год', after_promo_text:'1 000 ₽/год' }
   ];
   try {
     const r = await fetch('/promos.json', {cache:'no-store'});
@@ -1700,6 +1697,13 @@ function closeMenu(){
   } catch(e){}
 
   const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+  // конец ТЕКУЩЕГО месяца 23:59:59 по МСК → реальный UTC-ms (evergreen-таймер)
+  function endOfMonthMSK(){
+    const MSK = 3*3600000;
+    const d = new Date(Date.now() + MSK);
+    const y = d.getUTCFullYear(), mo = d.getUTCMonth();
+    return Date.UTC(y, mo+1, 1, 0,0,0) - 1000 - MSK;
+  }
   const now = Date.now();
   const active = PROMOS.find(p => now >= new Date(p.start).getTime() && now <= new Date(p.end).getTime());
   const card = document.getElementById('promo-card-anketa');
@@ -1717,43 +1721,65 @@ function closeMenu(){
     }
     const subEl = document.getElementById('promo-sub');
     if (subEl && active.support_text && active.after_promo_text) {
-      subEl.innerHTML = 'Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— Word&#8209;документ падает тебе в&nbsp;чат. <b>'+active.support_text.replace(/ /g,'&nbsp;')+'</b> техподдержки включён, дальше&nbsp;— подписка <b>'+active.after_promo_text.replace(/ /g,'&nbsp;')+'</b>.';
+      subEl.innerHTML = 'Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>'+active.support_text.replace(/ /g,'&nbsp;')+' работы бесплатно</b>, дальше&nbsp;— <b>'+active.after_promo_text.replace(/ /g,'&nbsp;')+'</b>.';
     }
-    card.dataset.cdEnd = active.end;
+    card.dataset.cdEnd = active.monthly ? '' : active.end;
+    card.dataset.cdMonthly = active.monthly ? '1' : '';
   } else {
     // вне акций — карточка анкет уходит, остаётся только PNG
     card.style.display = 'none';
   }
   section.classList.add('is-active');
 
-  // === Countdown render ===
+  // PNG-карточка — тоже evergreen (таймер до конца месяца)
+  const pngCard = document.querySelector('.promo-card[href^="https://t.me"]');
+  if (pngCard){ pngCard.dataset.cdEnd = ''; pngCard.dataset.cdMonthly = '1'; }
+
+  // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
+  function plural(n, one, few, many){
+    const m10 = n%10, m100 = n%100;
+    if (m10===1 && m100!==11) return one;
+    if (m10>=2 && m10<=4 && (m100<12||m100>14)) return few;
+    return many;
+  }
   function tick(){
     document.querySelectorAll('.promo-card').forEach(el => {
-      const end = el.dataset.cdEnd;
       const timer = el.querySelector('[data-cd-timer]');
-      if (!end || !timer) return;
-      const diff = new Date(end).getTime() - Date.now();
+      if (!timer) return;
+      const monthly = el.dataset.cdMonthly === '1';
+      let endTs = monthly ? endOfMonthMSK() : (el.dataset.cdEnd ? new Date(el.dataset.cdEnd).getTime() : 0);
+      if (!endTs) return;
+      let diff = endTs - Date.now();
       const dEl = timer.querySelector('[data-cd-d]');
       const hEl = timer.querySelector('[data-cd-h]');
       const mEl = timer.querySelector('[data-cd-m]');
       if (diff <= 0) {
-        timer.classList.add('is-end');
-        if (dEl) dEl.textContent = 'скоро';
-        if (hEl) hEl.parentElement.style.display = 'none';
-        if (mEl) mEl.parentElement.style.display = 'none';
-        return;
+        if (monthly) { endTs = endOfMonthMSK(); diff = endTs - Date.now(); }
+        else {
+          timer.classList.add('is-end');
+          if (dEl) dEl.textContent = 'скоро';
+          if (hEl) hEl.parentElement.style.display = 'none';
+          if (mEl) mEl.parentElement.style.display = 'none';
+          return;
+        }
       }
       const days = Math.floor(diff/86400000);
       const hours = Math.floor(diff/3600000) % 24;
       const mins = Math.floor(diff/60000) % 60;
-      if (dEl) dEl.textContent = pad(days);
+      if (dEl){ dEl.textContent = pad(days); dEl.parentElement.style.display = days>0 ? '' : 'none'; }
       if (hEl) hEl.textContent = pad(hours);
       if (mEl) mEl.textContent = pad(mins);
+      const dLbl = dEl && dEl.parentElement.querySelector('.promo-timer-lbl');
+      const hLbl = hEl && hEl.parentElement.querySelector('.promo-timer-lbl');
+      const mLbl = mEl && mEl.parentElement.querySelector('.promo-timer-lbl');
+      if (dLbl) dLbl.textContent = plural(days,'день','дня','дней');
+      if (hLbl) hLbl.textContent = plural(hours,'час','часа','часов');
+      if (mLbl) mLbl.textContent = plural(mins,'минута','минуты','минут');
     });
   }
   tick();
-  setInterval(tick, 30000);
+  setInterval(tick, 1000);
 
   // === Reveal on scroll ===
   if ('IntersectionObserver' in window) {
@@ -3296,7 +3322,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №1 — Адис Маммо -->
       <div class="case-card" id="case0">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6534-3738-4330-a132-353134636535.webp" alt="Адис Маммо" style="filter:grayscale(.3) brightness(.85) contrast(1.1)" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6534-3738-4330-a132-353134636535.webp" alt="Адис Маммо" style="filter:grayscale(.3) brightness(.85) contrast(1.1)">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3307,9 +3333,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;Адисом более 3-х лет — ивенты, звёздные проекты и&nbsp;задачи далеко за&nbsp;пределами сцены</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3964-3738-4334-b433-633237336434.webp" alt="Обложка мероприятия для Адиса Маммо" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3535-6465-4463-b964-643438653335.webp" alt="Афиша ивента Адиса Маммо" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3062-3166-4065-b137-336464323330.webp" alt="Оформление мероприятия Адиса Маммо" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3964-3738-4334-b433-633237336434.webp" alt="Обложка мероприятия для Адиса Маммо"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3535-6465-4463-b964-643438653335.webp" alt="Афиша ивента Адиса Маммо"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3062-3166-4065-b137-336464323330.webp" alt="Оформление мероприятия Адиса Маммо"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="50" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3323,7 +3349,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №2 — Влад Сапунов -->
       <div class="case-card" id="case1">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6537-6635-4632-a463-386265363064.webp" alt="Влад Сапунов" style="filter:grayscale(.3) brightness(.85) contrast(1.1)" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6537-6635-4632-a463-386265363064.webp" alt="Влад Сапунов" style="filter:grayscale(.3) brightness(.85) contrast(1.1)">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3334,9 +3360,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;Владом более 3-х лет — не&nbsp;только ивенты, но&nbsp;и&nbsp;визуал для его образовательных продуктов</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6337-3532-4731-b465-636161396632.webp" alt="Обложка для Влада Сапунова" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6431-3266-4264-b439-643861376361.webp" alt="Афиша мероприятия Влада Сапунова" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3737-6132-4362-a239-623337343530.webp" alt="Дизайн для образовательного продукта Влада Сапунова" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6337-3532-4731-b465-636161396632.webp" alt="Обложка для Влада Сапунова"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6431-3266-4264-b439-643861376361.webp" alt="Афиша мероприятия Влада Сапунова"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3737-6132-4362-a239-623337343530.webp" alt="Дизайн для образовательного продукта Влада Сапунова"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="40" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3355,7 +3381,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №3 — Митя Горький -->
       <div class="case-card" id="case2">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild3965-3634-4863-b236-336565396461.webp" alt="Митя Горький" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild3965-3634-4863-b236-336565396461.webp" alt="Митя Горький">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3366,9 +3392,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;Митей более 2-х лет — визуал для ивентов и&nbsp;помощь с&nbsp;его образовательным продуктом</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6265-3935-4236-b563-323466616337.webp" alt="Обложка ивента Мити Горького" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3661-3331-4633-a438-323666346336.webp" alt="Афиша мероприятия Мити Горького" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6634-3237-4238-a464-306332633236.webp" alt="Оформление ивента Мити Горького" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6265-3935-4236-b563-323466616337.webp" alt="Обложка ивента Мити Горького"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3661-3331-4633-a438-323666346336.webp" alt="Афиша мероприятия Мити Горького"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6634-3237-4238-a464-306332633236.webp" alt="Оформление ивента Мити Горького"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="20" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3382,7 +3408,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №4 — Вадим Санамян -->
       <div class="case-card" id="case3">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild3839-3731-4436-b266-343031343636.webp" alt="Вадим Санамян" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild3839-3731-4436-b266-343031343636.webp" alt="Вадим Санамян">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3393,9 +3419,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;Вадимом более 3-х лет — помогаю с&nbsp;визуалом и&nbsp;оформляю почти каждое мероприятие в&nbsp;сезонах</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6535-3337-4865-b166-346165656666.webp" alt="Обложка мероприятия Вадима Санамяна" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6565-3035-4637-b334-326362386337.webp" alt="Афиша ивента Вадима Санамяна" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3963-6665-4330-b436-663833373533.webp" alt="Оформление мероприятия Вадима Санамяна" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6535-3337-4865-b166-346165656666.webp" alt="Обложка мероприятия Вадима Санамяна"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6565-3035-4637-b334-326362386337.webp" alt="Афиша ивента Вадима Санамяна"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3963-6665-4330-b436-663833373533.webp" alt="Оформление мероприятия Вадима Санамяна"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3414,7 +3440,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №5 — Денис Ленга -->
       <div class="case-card" id="case4">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6165-6532-4763-b265-353831383432.webp" alt="Денис Ленга" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6165-6532-4763-b265-353831383432.webp" alt="Денис Ленга">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3425,9 +3451,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Денис — один из&nbsp;первых моих клиентов. Более 3-х лет помогаю с&nbsp;визуалом и&nbsp;активно работаю в&nbsp;сезонах</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3637-3936-4235-b839-303339333538.webp" alt="Обложка для Дениса Ленги" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6437-6536-4438-a365-313331343438.webp" alt="Афиша мероприятия Дениса Ленги" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6638-3430-4738-a135-386431653337.webp" alt="Оформление ивента Дениса Ленги" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3637-3936-4235-b839-303339333538.webp" alt="Обложка для Дениса Ленги"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6437-6536-4438-a365-313331343438.webp" alt="Афиша мероприятия Дениса Ленги"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6638-3430-4738-a135-386431653337.webp" alt="Оформление ивента Дениса Ленги"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="50" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3441,7 +3467,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №6 — Логинов и Зайцев -->
       <div class="case-card" id="case5">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6131-6139-4539-b064-646565316539.webp" alt="Александр Логинов и Антон Зайцев" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6131-6139-4539-b064-646565316539.webp" alt="Александр Логинов и Антон Зайцев">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3452,9 +3478,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;дуэтом более 2-х лет — визуал для премий, видеозаявок, шоурилов и&nbsp;всего что помогает выделиться</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3734-3233-4539-b963-386230656337.webp" alt="Обложка для дуэта Логинов и Зайцев" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3038-3538-4436-b932-386137623237.webp" alt="Афиша мероприятия Логинова и Зайцева" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6162-3766-4738-b936-333562353434.webp" alt="Оформление ивента Логинова и Зайцева" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3734-3233-4539-b963-386230656337.webp" alt="Обложка для дуэта Логинов и Зайцев"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3038-3538-4436-b932-386137623237.webp" alt="Афиша мероприятия Логинова и Зайцева"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6162-3766-4738-b936-333562353434.webp" alt="Оформление ивента Логинова и Зайцева"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="40" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3473,7 +3499,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №7 — Дмитрий Акатьев -->
       <div class="case-card" id="case6">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6130-3236-4439-a633-343034313664.webp" alt="Дмитрий Акатьев" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild6130-3236-4439-a633-343034313664.webp" alt="Дмитрий Акатьев">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3484,9 +3510,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;Димой более 2-х лет — визуал для премий и&nbsp;начинаем плотно работать над оформлением ивентов</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3564-3534-4261-b138-383963616537.webp" alt="Обложка мероприятия Дмитрия Акатьева" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6335-3738-4263-b661-303865666339.webp" alt="Афиша ивента Дмитрия Акатьева" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3937-3731-4237-a134-343732623636.webp" alt="Оформление мероприятия Дмитрия Акатьева" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3564-3534-4261-b138-383963616537.webp" alt="Обложка мероприятия Дмитрия Акатьева"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild6335-3738-4263-b661-303865666339.webp" alt="Афиша ивента Дмитрия Акатьева"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3937-3731-4237-a134-343732623636.webp" alt="Оформление мероприятия Дмитрия Акатьева"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>
@@ -3500,7 +3526,7 @@ document.querySelectorAll('.service-name').forEach(function(el){
       <!-- Кейс №8 — Илья Русаков -->
       <div class="case-card" id="case7">
         <div class="case-photo-wrap">
-          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild3139-3062-4963-b632-663337303361.webp" alt="Илья Русаков" loading="lazy" decoding="async">
+          <img class="case-photo" loading="lazy" decoding="async" src="/images/tild3139-3062-4963-b632-663337303361.webp" alt="Илья Русаков">
           <span class="case-years">Постоянное сотрудничество</span>
         </div>
         <div class="case-content">
@@ -3511,9 +3537,9 @@ document.querySelectorAll('.service-name').forEach(function(el){
           <p class="case-desc">Работаю с&nbsp;Ильёй более 2-х лет — визуал для ивентов и&nbsp;помогаю с&nbsp;его проектом «Ламповое Шоу»</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3935-3566-4630-b738-666231333035.webp" alt="Обложка для Ильи Русакова" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3831-3734-4937-a466-313662646136.webp" alt="Афиша мероприятия Ильи Русакова" loading="lazy" decoding="async"></div>
-            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3033-6665-4938-b739-396463373935.webp" alt="Оформление ивента Ильи Русакова" loading="lazy" decoding="async"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3935-3566-4630-b738-666231333035.webp" alt="Обложка для Ильи Русакова"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3831-3734-4937-a466-313662646136.webp" alt="Афиша мероприятия Ильи Русакова"></div>
+            <div class="case-work"><img loading="lazy" decoding="async" src="/images/tild3033-6665-4938-b739-396463373935.webp" alt="Оформление ивента Ильи Русакова"></div>
           </div>
           <div class="case-stats">
             <div class="case-stat" data-target="30" data-suffix="+"><div class="case-stat-number">0+</div><div class="case-stat-label">Обложек</div></div>

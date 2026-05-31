@@ -284,7 +284,7 @@
     <a href="https://wedding.twokaif.ru" class="promo-card" id="promo-card-anketa" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag" id="promo-tag">Майская акция · до 15 мая</span>
+          <span class="promo-tag" id="promo-tag">Акция</span>
         </div>
         <h3 class="promo-title">Свадебная анкета</h3>
         <div class="promo-prices">
@@ -292,7 +292,7 @@
           <span class="promo-old" id="promo-old"></span>
         </div>
         <p class="promo-sub" id="promo-sub">
-          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— Word&#8209;документ падает тебе в&nbsp;чат. <b>1&nbsp;год</b> техподдержки включён, дальше&nbsp;— подписка <b>2&nbsp;200&nbsp;₽/год</b>.
+          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>1&nbsp;год работы бесплатно</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -309,7 +309,7 @@
           </span>
           <span class="promo-chip">
             <svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg>
-            Без подписок Tilda
+            Дешевле Tilda
           </span>
         </div>
       </div>
@@ -325,17 +325,17 @@
     </a>
 
     <!-- ╭─ Карточка 2: Приложение ТУКАЙФ—PNG ─╮ -->
-    <a href="https://t.me/twokaif_ruslan" class="promo-card" data-cd-end="2026-06-01T23:59:59+03:00">
+    <a href="https://t.me/twokaif_ruslan" class="promo-card" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Акция · до 1 июня</span>
+          <span class="promo-tag">Акция</span>
         </div>
         <h3 class="promo-title">Приложение<br><b>ТУКАЙФ&nbsp;— PNG</b></h3>
         <div class="promo-prices">
           <span class="promo-price">4 900 ₽</span>
         </div>
         <p class="promo-sub">
-          Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте.
+          Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте, дальше&nbsp;— <b>500&nbsp;₽/год</b>.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -375,13 +375,10 @@
 (async function(){
   // === Источник правды по акциям — /promos.json (синкается из _shared/promos.json) ===
   // Embedded fallback на случай если JSON не загрузился (offline / 404).
-  let REGULAR = 7800;
-  let SUBSCRIPTION = 2200;
+  let REGULAR = 7500;
+  let SUBSCRIPTION = 1000;
   let PROMOS = [
-    { start:'2026-05-15T17:50:01+03:00', end:'2026-06-01T23:59:59+03:00', price:7800, title_short:'Акция · до 1 июня', support_text:'1 год', after_promo_text:'+2 200 ₽/год' },
-    { start:'2026-06-01T00:00:00+03:00', end:'2026-07-31T23:59:59+03:00', price:6500, title_short:'Летняя акция · до 31 июля', support_text:'3 года' },
-    { start:'2026-11-25T00:00:00+03:00', end:'2026-12-01T23:59:59+03:00', price:5500, title_short:'Чёрная пятница · до 1 декабря', support_text:'3 года' },
-    { start:'2026-12-25T00:00:00+03:00', end:'2027-01-08T23:59:59+03:00', price:5900, title_short:'Новогодняя акция · до 8 января', support_text:'3 года' }
+    { id:'evergreen-2026', monthly:true, start:'2026-01-01T00:00:00+03:00', end:'2099-12-31T23:59:59+03:00', price:7500, title_short:'Акция', support_text:'1 год', after_promo_text:'1 000 ₽/год' }
   ];
   try {
     const r = await fetch('/promos.json', {cache:'no-store'});
@@ -394,6 +391,13 @@
   } catch(e){}
 
   const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+  // конец ТЕКУЩЕГО месяца 23:59:59 по МСК → реальный UTC-ms (evergreen-таймер)
+  function endOfMonthMSK(){
+    const MSK = 3*3600000;
+    const d = new Date(Date.now() + MSK);
+    const y = d.getUTCFullYear(), mo = d.getUTCMonth();
+    return Date.UTC(y, mo+1, 1, 0,0,0) - 1000 - MSK;
+  }
   const now = Date.now();
   const active = PROMOS.find(p => now >= new Date(p.start).getTime() && now <= new Date(p.end).getTime());
   const card = document.getElementById('promo-card-anketa');
@@ -411,43 +415,65 @@
     }
     const subEl = document.getElementById('promo-sub');
     if (subEl && active.support_text && active.after_promo_text) {
-      subEl.innerHTML = 'Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— Word&#8209;документ падает тебе в&nbsp;чат. <b>'+active.support_text.replace(/ /g,'&nbsp;')+'</b> техподдержки включён, дальше&nbsp;— подписка <b>'+active.after_promo_text.replace(/ /g,'&nbsp;')+'</b>.';
+      subEl.innerHTML = 'Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>'+active.support_text.replace(/ /g,'&nbsp;')+' работы бесплатно</b>, дальше&nbsp;— <b>'+active.after_promo_text.replace(/ /g,'&nbsp;')+'</b>.';
     }
-    card.dataset.cdEnd = active.end;
+    card.dataset.cdEnd = active.monthly ? '' : active.end;
+    card.dataset.cdMonthly = active.monthly ? '1' : '';
   } else {
     // вне акций — карточка анкет уходит, остаётся только PNG
     card.style.display = 'none';
   }
   section.classList.add('is-active');
 
-  // === Countdown render ===
+  // PNG-карточка — тоже evergreen (таймер до конца месяца)
+  const pngCard = document.querySelector('.promo-card[href^="https://t.me"]');
+  if (pngCard){ pngCard.dataset.cdEnd = ''; pngCard.dataset.cdMonthly = '1'; }
+
+  // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
+  function plural(n, one, few, many){
+    const m10 = n%10, m100 = n%100;
+    if (m10===1 && m100!==11) return one;
+    if (m10>=2 && m10<=4 && (m100<12||m100>14)) return few;
+    return many;
+  }
   function tick(){
     document.querySelectorAll('.promo-card').forEach(el => {
-      const end = el.dataset.cdEnd;
       const timer = el.querySelector('[data-cd-timer]');
-      if (!end || !timer) return;
-      const diff = new Date(end).getTime() - Date.now();
+      if (!timer) return;
+      const monthly = el.dataset.cdMonthly === '1';
+      let endTs = monthly ? endOfMonthMSK() : (el.dataset.cdEnd ? new Date(el.dataset.cdEnd).getTime() : 0);
+      if (!endTs) return;
+      let diff = endTs - Date.now();
       const dEl = timer.querySelector('[data-cd-d]');
       const hEl = timer.querySelector('[data-cd-h]');
       const mEl = timer.querySelector('[data-cd-m]');
       if (diff <= 0) {
-        timer.classList.add('is-end');
-        if (dEl) dEl.textContent = 'скоро';
-        if (hEl) hEl.parentElement.style.display = 'none';
-        if (mEl) mEl.parentElement.style.display = 'none';
-        return;
+        if (monthly) { endTs = endOfMonthMSK(); diff = endTs - Date.now(); }
+        else {
+          timer.classList.add('is-end');
+          if (dEl) dEl.textContent = 'скоро';
+          if (hEl) hEl.parentElement.style.display = 'none';
+          if (mEl) mEl.parentElement.style.display = 'none';
+          return;
+        }
       }
       const days = Math.floor(diff/86400000);
       const hours = Math.floor(diff/3600000) % 24;
       const mins = Math.floor(diff/60000) % 60;
-      if (dEl) dEl.textContent = pad(days);
+      if (dEl){ dEl.textContent = pad(days); dEl.parentElement.style.display = days>0 ? '' : 'none'; }
       if (hEl) hEl.textContent = pad(hours);
       if (mEl) mEl.textContent = pad(mins);
+      const dLbl = dEl && dEl.parentElement.querySelector('.promo-timer-lbl');
+      const hLbl = hEl && hEl.parentElement.querySelector('.promo-timer-lbl');
+      const mLbl = mEl && mEl.parentElement.querySelector('.promo-timer-lbl');
+      if (dLbl) dLbl.textContent = plural(days,'день','дня','дней');
+      if (hLbl) hLbl.textContent = plural(hours,'час','часа','часов');
+      if (mLbl) mLbl.textContent = plural(mins,'минута','минуты','минут');
     });
   }
   tick();
-  setInterval(tick, 30000);
+  setInterval(tick, 1000);
 
   // === Reveal on scroll ===
   if ('IntersectionObserver' in window) {
