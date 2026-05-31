@@ -36,7 +36,7 @@
 }
 .promos-label-dot {
   width: 7px; height: 7px;
-  background: var(--text);
+  background: #22a35a;
   border-radius: 50%;
   animation: promosPulse 1.6s ease-in-out infinite;
 }
@@ -80,27 +80,11 @@
 .promo-card.visible { opacity: 1; transform: translateY(0); }
 .promo-card:nth-child(2) { transition-delay: .08s; }
 
-.promo-card:hover {
-  background: var(--text);
-  border-color: var(--text);
-}
-.promo-card:hover .promo-tag,
-.promo-card:hover .promo-sub,
-.promo-card:hover .promo-old {
-  color: rgba(255,255,255,.5);
-}
-.promo-card:hover .promo-title,
-.promo-card:hover .promo-price,
-.promo-card:hover .promo-cd {
-  color: #fff;
-}
-.promo-card:hover .promo-cd {
-  border-color: rgba(255,255,255,.25);
-}
-.promo-card:hover .promo-cta {
+/* реагирует только кнопка, не вся карточка */
+.promo-cta:hover {
   background: #fff;
   color: var(--text);
-  border-color: #fff;
+  border-color: var(--text);
 }
 
 .promo-head {
@@ -128,7 +112,6 @@
   border-top: 1px solid var(--border);
   transition: border-color .35s var(--ease-out);
 }
-.promo-card:hover .promo-timer { border-top-color: rgba(255,255,255,.18); }
 .promo-timer-cell {
   display: flex;
   flex-direction: column;
@@ -144,7 +127,6 @@
   font-variant-numeric: tabular-nums;
   transition: color .35s var(--ease-out);
 }
-.promo-card:hover .promo-timer-num { color: #fff; }
 .promo-timer-lbl {
   font-size: 11px;
   font-weight: 500;
@@ -153,7 +135,6 @@
   color: var(--muted);
   transition: color .35s var(--ease-out);
 }
-.promo-card:hover .promo-timer-lbl { color: rgba(255,255,255,.5); }
 .promo-timer.is-end .promo-timer-num { font-size: 18px; font-weight: 500; }
 
 .promo-title {
@@ -224,14 +205,10 @@
   stroke-linejoin: round;
   fill: none;
 }
-.promo-card:hover .promo-chip {
-  color: #fff;
-  border-color: rgba(255,255,255,.25);
-  background: transparent;
-}
 
 .promo-cta {
   align-self: flex-start;
+  text-decoration: none;
   margin-top: 32px;
   display: inline-flex;
   align-items: center;
@@ -246,7 +223,7 @@
   transition: background .35s var(--ease-out), color .35s var(--ease-out), border-color .35s var(--ease-out);
 }
 .promo-cta-arr { transition: transform .25s var(--ease-out); }
-.promo-card:hover .promo-cta-arr { transform: translateX(4px); }
+.promo-cta:hover .promo-cta-arr { transform: translateX(4px); }
 
 .promos:not(.is-active) { display: none; }
 
@@ -281,7 +258,7 @@
   <div class="promos-grid">
 
     <!-- ╭─ Карточка 1: Свадебная анкета (авто-акция) ─╮ -->
-    <a href="https://wedding.twokaif.ru" class="promo-card" id="promo-card-anketa" data-cd-end="">
+    <div class="promo-card" id="promo-card-anketa" data-cd-end="">
       <div>
         <div class="promo-head">
           <span class="promo-tag" id="promo-tag">Акция</span>
@@ -300,16 +277,12 @@
             твоёимя.twokaif.ru
           </span>
           <span class="promo-chip">
-            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M3 9h18"/></svg>
-            Свой лендинг
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>
+            Готово за&nbsp;2-3 дня
           </span>
           <span class="promo-chip">
-            <svg viewBox="0 0 24 24"><path d="M21 12l-9 9-9-9 9-9h6a3 3 0 0 1 3 3z"/><circle cx="16" cy="8" r="1.2"/></svg>
-            Спеццена
-          </span>
-          <span class="promo-chip">
-            <svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg>
-            Дешевле Tilda
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+            Файл в&nbsp;Word
           </span>
         </div>
       </div>
@@ -317,20 +290,21 @@
         <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
         <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
         <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-s>—</span><span class="promo-timer-lbl">секунд</span></div>
       </div>
-      <span class="promo-cta">
+      <a href="https://wedding.twokaif.ru" class="promo-cta">
         Узнать подробнее
         <span class="promo-cta-arr">→</span>
-      </span>
-    </a>
+      </a>
+    </div>
 
     <!-- ╭─ Карточка 2: Приложение ТУКАЙФ—PNG ─╮ -->
-    <a href="https://t.me/twokaif_ruslan" class="promo-card" data-cd-end="">
+    <div class="promo-card" id="promo-card-png" data-cd-end="">
       <div>
         <div class="promo-head">
           <span class="promo-tag">Акция</span>
         </div>
-        <h3 class="promo-title">Приложение<br><b>ТУКАЙФ&nbsp;— PNG</b></h3>
+        <h3 class="promo-title">PNG для&nbsp;сторис</h3>
         <div class="promo-prices">
           <span class="promo-price">4 900 ₽</span>
         </div>
@@ -340,7 +314,7 @@
         <div class="promo-chips">
           <span class="promo-chip">
             <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
-            Приложение на&nbsp;телефоне
+            На&nbsp;телефоне
           </span>
           <span class="promo-chip">
             <svg viewBox="0 0 24 24"><path d="M4 19l4-12h2l4 12M5 14h6"/><path d="M16 19c2 0 4-2 4-4s-2-3-4-3"/></svg>
@@ -350,22 +324,19 @@
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
             Свои цвета
           </span>
-          <span class="promo-chip">
-            <svg viewBox="0 0 24 24"><path d="M21 12l-9 9-9-9 9-9h6a3 3 0 0 1 3 3z"/><circle cx="16" cy="8" r="1.2"/></svg>
-            Спеццена
-          </span>
         </div>
       </div>
       <div class="promo-timer" data-cd-timer>
         <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
         <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
         <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+        <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-s>—</span><span class="promo-timer-lbl">секунд</span></div>
       </div>
-      <span class="promo-cta">
+      <a href="https://t.me/twokaif_ruslan" class="promo-cta">
         Узнать подробнее
         <span class="promo-cta-arr">→</span>
-      </span>
-    </a>
+      </a>
+    </div>
 
   </div>
  </div>
@@ -426,7 +397,7 @@
   section.classList.add('is-active');
 
   // PNG-карточка — тоже evergreen (таймер до конца месяца)
-  const pngCard = document.querySelector('.promo-card[href^="https://t.me"]');
+  const pngCard = document.getElementById('promo-card-png');
   if (pngCard){ pngCard.dataset.cdEnd = ''; pngCard.dataset.cdMonthly = '1'; }
 
   // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
@@ -448,6 +419,7 @@
       const dEl = timer.querySelector('[data-cd-d]');
       const hEl = timer.querySelector('[data-cd-h]');
       const mEl = timer.querySelector('[data-cd-m]');
+      const sEl = timer.querySelector('[data-cd-s]');
       if (diff <= 0) {
         if (monthly) { endTs = endOfMonthMSK(); diff = endTs - Date.now(); }
         else {
@@ -461,15 +433,19 @@
       const days = Math.floor(diff/86400000);
       const hours = Math.floor(diff/3600000) % 24;
       const mins = Math.floor(diff/60000) % 60;
+      const secs = Math.floor(diff/1000) % 60;
       if (dEl){ dEl.textContent = pad(days); dEl.parentElement.style.display = days>0 ? '' : 'none'; }
       if (hEl) hEl.textContent = pad(hours);
       if (mEl) mEl.textContent = pad(mins);
+      if (sEl) sEl.textContent = pad(secs);
       const dLbl = dEl && dEl.parentElement.querySelector('.promo-timer-lbl');
       const hLbl = hEl && hEl.parentElement.querySelector('.promo-timer-lbl');
       const mLbl = mEl && mEl.parentElement.querySelector('.promo-timer-lbl');
+      const sLbl = sEl && sEl.parentElement.querySelector('.promo-timer-lbl');
       if (dLbl) dLbl.textContent = plural(days,'день','дня','дней');
       if (hLbl) hLbl.textContent = plural(hours,'час','часа','часов');
       if (mLbl) mLbl.textContent = plural(mins,'минута','минуты','минут');
+      if (sLbl) sLbl.textContent = plural(secs,'секунда','секунды','секунд');
     });
   }
   tick();
