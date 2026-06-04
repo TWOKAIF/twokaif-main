@@ -277,7 +277,9 @@
     // Клик на wedding.twokaif.ru (карточка акции / раздел услуг АНКЕТЫ)
     if (/wedding\.twokaif\.ru/.test(href)) goal('goal_wedding_open');
     // Карточка PNG в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me/.test(href)) goal('goal_png_open');
+    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
+    // Карточка АГЕНТ в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
     // Раздел АНКЕТЫ в Услугах
     if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
   }, {capture:true, passive:true});

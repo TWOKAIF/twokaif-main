@@ -277,7 +277,9 @@
     // Клик на wedding.twokaif.ru (карточка акции / раздел услуг АНКЕТЫ)
     if (/wedding\.twokaif\.ru/.test(href)) goal('goal_wedding_open');
     // Карточка PNG в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me/.test(href)) goal('goal_png_open');
+    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
+    // Карточка АГЕНТ в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
     // Раздел АНКЕТЫ в Услугах
     if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
   }, {capture:true, passive:true});
@@ -1363,8 +1365,13 @@ function closeMenu(){
 
 .promos-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+/* строки карточек сходятся по линиям — только когда карточки в ряд (десктоп/планшет) */
+@media (min-width: 735px) {
+  .promo-title { min-height: 2.3em; }
+  .promo-sub { min-height: 7.2em; }
 }
 
 .promo-card {
@@ -1385,6 +1392,7 @@ function closeMenu(){
 }
 .promo-card.visible { opacity: 1; transform: translateY(0); }
 .promo-card:nth-child(2) { transition-delay: .08s; }
+.promo-card:nth-child(3) { transition-delay: .16s; }
 
 /* реагирует только кнопка, не вся карточка */
 .promo-cta:hover {
@@ -1684,6 +1692,49 @@ function closeMenu(){
       </a>
     </div>
 
+    <!-- ╭─ Карточка 3: АГЕНТ — AI-дизайнер ─╮ -->
+    <div class="promo-card" id="promo-card-agent" data-cd-end="">
+      <div>
+        <div class="promo-head">
+          <span class="promo-tag">Акция</span>
+        </div>
+        <h3 class="promo-title">АГЕНТ&nbsp;— AI&#8209;дизайнер</h3>
+        <div class="promo-prices">
+          <span class="promo-price">1 990 ₽</span>
+        </div>
+        <p class="promo-sub">
+          AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.
+        </p>
+        <div class="promo-chips">
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="1"/><path d="M19 8v8"/></svg>
+            Карусели и&nbsp;посты
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>
+            Афиши и&nbsp;Reels
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8.5 14.5c1 1.2 6 1.2 7 0"/></svg>
+            Под твой стиль
+          </span>
+        </div>
+      </div>
+      <div class="promo-timer" data-cd-timer>
+        <div class="promo-timer-row">
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+        </div>
+        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
+        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
+      </div>
+      <a href="https://t.me/tukaif_agent_bot" class="promo-cta">
+        Узнать подробнее
+        <span class="promo-cta-arr">→</span>
+      </a>
+    </div>
+
   </div>
  </div>
 </section>
@@ -1745,6 +1796,10 @@ function closeMenu(){
   // PNG-карточка — тоже evergreen (таймер до конца месяца)
   const pngCard = document.getElementById('promo-card-png');
   if (pngCard){ pngCard.dataset.cdEnd = ''; pngCard.dataset.cdMonthly = '1'; }
+
+  // АГЕНТ-карточка — тоже evergreen (таймер до конца месяца)
+  const agentCard = document.getElementById('promo-card-agent');
+  if (agentCard){ agentCard.dataset.cdEnd = ''; agentCard.dataset.cdMonthly = '1'; }
 
   // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
