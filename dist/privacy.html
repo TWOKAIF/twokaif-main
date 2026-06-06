@@ -280,6 +280,8 @@
     if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
     // Карточка АГЕНТ в блоке акций
     if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
+    // Карточка МЖ (МУЖЧИНЫ vs ЖЕНЩИНЫ) в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_mzh_bot/.test(href)) goal('goal_mzh_open');
     // Раздел АНКЕТЫ в Услугах
     if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
   }, {capture:true, passive:true});

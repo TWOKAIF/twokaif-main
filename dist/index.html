@@ -280,6 +280,8 @@
     if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
     // Карточка АГЕНТ в блоке акций
     if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
+    // Карточка МЖ (МУЖЧИНЫ vs ЖЕНЩИНЫ) в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_mzh_bot/.test(href)) goal('goal_mzh_open');
     // Раздел АНКЕТЫ в Услугах
     if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
   }, {capture:true, passive:true});
@@ -1365,7 +1367,7 @@ function closeMenu(){
 
 .promos-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
 /* строки карточек сходятся по линиям — только когда карточки в ряд (десктоп/планшет) */
@@ -1735,6 +1737,49 @@ function closeMenu(){
       </a>
     </div>
 
+    <!-- ╭─ Карточка 4: МУЖЧИНЫ vs ЖЕНЩИНЫ ─╮ -->
+    <div class="promo-card" id="promo-card-mzh" data-cd-end="">
+      <div>
+        <div class="promo-head">
+          <span class="promo-tag">Новинка</span>
+        </div>
+        <h3 class="promo-title">МУЖЧИНЫ vs&nbsp;ЖЕНЩИНЫ</h3>
+        <div class="promo-prices">
+          <span class="promo-price">от&nbsp;350&nbsp;₽</span>
+        </div>
+        <p class="promo-sub">
+          Игра про&nbsp;твоих гостей на&nbsp;любой праздник. Лица гостей на&nbsp;экране, зал угадывает факты&nbsp;— и&nbsp;все&nbsp;ржут. Собираем под&nbsp;твой ивент, играешь в&nbsp;обычном PowerPoint.
+        </p>
+        <div class="promo-chips">
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            Под твой ивент
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2"/></svg>
+            Свадьба · юбилей · корпоратив
+          </span>
+          <span class="promo-chip">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>
+            В&nbsp;PowerPoint
+          </span>
+        </div>
+      </div>
+      <div class="promo-timer" data-cd-timer>
+        <div class="promo-timer-row">
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
+          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
+        </div>
+        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
+        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
+      </div>
+      <a href="https://t.me/twokaif_mzh_bot" class="promo-cta">
+        Узнать подробнее
+        <span class="promo-cta-arr">→</span>
+      </a>
+    </div>
+
   </div>
  </div>
 </section>
@@ -1800,6 +1845,10 @@ function closeMenu(){
   // АГЕНТ-карточка — тоже evergreen (таймер до конца месяца)
   const agentCard = document.getElementById('promo-card-agent');
   if (agentCard){ agentCard.dataset.cdEnd = ''; agentCard.dataset.cdMonthly = '1'; }
+
+  // МЖ-карточка — тоже evergreen (таймер до конца месяца)
+  const mzhCard = document.getElementById('promo-card-mzh');
+  if (mzhCard){ mzhCard.dataset.cdEnd = ''; mzhCard.dataset.cdMonthly = '1'; }
 
   // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
