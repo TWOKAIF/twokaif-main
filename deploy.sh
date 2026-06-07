@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 
 KEY=~/.ssh/twokaif_hetzner
 SRV=root@213.165.41.1
-ROOT=/var/www/twokaif-new
+ROOT=/var/www/twokaif   # боевой докрут twokaif.ru (nginx twokaif-prod). НЕ /var/www/twokaif-new!
 TS=$(date +%Y%m%d-%H%M%S)
 
 echo "1/4 Бэкап текущего сайта на сервере (index/404)..."

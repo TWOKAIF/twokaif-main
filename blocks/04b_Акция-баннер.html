@@ -57,7 +57,9 @@
 
 .promos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  /* 3 в ряд: 4 карточки = 3 сверху + 1 слева внизу. Новые продукты заполняют ряд слева-направо. */
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr; /* все ряды равной высоты — карточки одного размера даже когда в ряду одна */
   gap: 24px;
 }
 /* строки карточек сходятся по линиям — только когда карточки в ряд (десктоп/планшет) */
@@ -267,15 +269,43 @@
 
 .promos:not(.is-active) { display: none; }
 
+/* === Тизер-карточки «Уже в июне» (новые продукты в разработке) === */
+.promo-card.is-soon { background: #f7f7f8; border-color: #ececee; }
+.promo-card.is-soon .promo-tag { color: var(--text); }
+.promo-soon-art { flex: 1; display: flex; align-items: center; justify-content: center; padding: 18px 0; color: #c4c4c9; }
+.promo-soon-art svg { width: 54px; height: 54px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.promo-soon-foot {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 24px; padding: 12px 18px;
+  border: 1px dashed #d4d4d8; border-radius: 999px;
+  color: var(--muted); font-size: 14.5px; font-weight: 500; letter-spacing: -.1px;
+}
+.promo-soon-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--text); flex: none; }
+.promo-soon-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--text); opacity: .3; animation: soonpulse 2.2s var(--ease-out) infinite; }
+@keyframes soonpulse { 0% { transform: scale(.5); opacity: .5; } 100% { transform: scale(1.5); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .promo-soon-dot::after { animation: none; } }
+/* пометка под ценой (напр. «с 1 июля 450 ₽») */
+.promo-pricenote { display: block; margin-top: 8px; font-size: 13px; color: var(--muted); letter-spacing: -.1px; }
+/* reveal-стаггер для 4–6 карточек */
+.promo-card:nth-child(4) { transition-delay: .24s; }
+.promo-card:nth-child(5) { transition-delay: .32s; }
+.promo-card:nth-child(6) { transition-delay: .40s; }
+
 @media (max-width: 1068px) {
   .promo-card { padding: 32px; min-height: 320px; }
+}
+
+/* планшет — 2 в ряд */
+@media (max-width: 919px) {
+  .promos-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 734px) {
   .promos { padding: 48px var(--edge) 60px; }
   .promos-head { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 24px; }
   .promos-meta { font-size: 13px; }
-  .promos-grid { grid-template-columns: 1fr; gap: 16px; }
+  .promos-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 16px; }
   .promo-card { padding: 28px 24px; min-height: auto; }
   .promo-title { margin-top: 14px; }
   .promo-prices { margin-top: 14px; }
@@ -428,7 +458,7 @@
     </div>
 
     <!-- ╭─ Карточка 4: МУЖЧИНЫ vs ЖЕНЩИНЫ ─╮ -->
-    <div class="promo-card" id="promo-card-mzh" data-cd-end="">
+    <div class="promo-card" id="promo-card-mzh" data-cd-end="2026-06-30T23:59:59+03:00">
       <div>
         <div class="promo-head">
           <span class="promo-tag">Новинка</span>
@@ -437,6 +467,7 @@
         <div class="promo-prices">
           <span class="promo-price">от&nbsp;350&nbsp;₽</span>
         </div>
+        <span class="promo-pricenote">за&nbsp;пару лиц · с&nbsp;1 июля&nbsp;— 450&nbsp;₽</span>
         <p class="promo-sub">
           Игра про&nbsp;твоих гостей на&nbsp;любой праздник. Лица гостей на&nbsp;экране, зал угадывает факты&nbsp;— и&nbsp;все&nbsp;ржут. Собираем под&nbsp;твой ивент, играешь в&nbsp;обычном PowerPoint.
         </p>
@@ -468,6 +499,40 @@
         Узнать подробнее
         <span class="promo-cta-arr">→</span>
       </a>
+    </div>
+
+    <!-- ╭─ Карточка 5: Новый интерактив (тизер) ─╮ -->
+    <div class="promo-card is-soon" id="promo-card-soon1">
+      <div>
+        <div class="promo-head">
+          <span class="promo-tag">Уже в&nbsp;июне</span>
+        </div>
+        <h3 class="promo-title">Новый интерактив про&nbsp;гостей</h3>
+        <p class="promo-sub">
+          Ещё одна игра под&nbsp;твои ивенты&nbsp;— другой формат, тот&nbsp;же кайф. Готовлю запуск, скоро покажу.
+        </p>
+      </div>
+      <div class="promo-soon-art" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="promo-soon-foot"><span class="promo-soon-dot"></span>Анонс в&nbsp;июне</div>
+    </div>
+
+    <!-- ╭─ Карточка 6: Новый инструмент (тизер) ─╮ -->
+    <div class="promo-card is-soon" id="promo-card-soon2">
+      <div>
+        <div class="promo-head">
+          <span class="promo-tag">Уже в&nbsp;июне</span>
+        </div>
+        <h3 class="promo-title">Новый инструмент для&nbsp;ивент&#8209;профи</h3>
+        <p class="promo-sub">
+          Сервис, который облегчит работу ведущим и&nbsp;организаторам. Анонс и&nbsp;доступ&nbsp;— уже в&nbsp;этом месяце.
+        </p>
+      </div>
+      <div class="promo-soon-art" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+      </div>
+      <div class="promo-soon-foot"><span class="promo-soon-dot"></span>Анонс в&nbsp;июне</div>
     </div>
 
   </div>
@@ -536,9 +601,9 @@
   const agentCard = document.getElementById('promo-card-agent');
   if (agentCard){ agentCard.dataset.cdEnd = ''; agentCard.dataset.cdMonthly = '1'; }
 
-  // МЖ-карточка — тоже evergreen (таймер до конца месяца)
+  // МЖ-карточка — таймер до 30 июня (потом пара 450 ₽), фикс-дата НЕ evergreen
   const mzhCard = document.getElementById('promo-card-mzh');
-  if (mzhCard){ mzhCard.dataset.cdEnd = ''; mzhCard.dataset.cdMonthly = '1'; }
+  if (mzhCard){ mzhCard.dataset.cdEnd = '2026-06-30T23:59:59+03:00'; mzhCard.dataset.cdMonthly = ''; }
 
   // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
