@@ -330,7 +330,7 @@
   /* На мобиле каждый кейс — отдельный слайд, листаются по одному */
   .cases-page { display: contents; }
   .cases-track { gap: 16px; }
-  .case-card { flex-shrink: 0; width: calc(100vw - 40px); grid-template-columns: 1fr; }
+  .case-card { flex-shrink: 0; width: calc(100vw - var(--edge) * 2); grid-template-columns: 1fr; }
   .case-photo-wrap {
     aspect-ratio: 4/3;
   }
@@ -348,7 +348,7 @@
   .case-stat { padding: 10px 0; }
   .case-works { gap: 6px; }
   .case-works-label { font-size: 9px; margin-bottom: 6px; }
-  .cases-nav-btn { width: 36px; height: 36px; font-size: 18px; }
+  .cases-nav-btn { width: 44px; height: 44px; font-size: 18px; }
 }
 
 /* --- Маленький мобиле (до 480px) --- */
@@ -362,7 +362,6 @@
 </style>
 
 <!-- КЕЙСЫ -->
-<div style="padding:0 var(--edge);margin-bottom:12px"><span style="font-size:12px;font-weight:400;letter-spacing:-.18px;color:var(--muted);opacity:.45">Кейсы</span></div>
 <section class="cases section-reveal" id="cases">
   <div class="cases-header">
     <h2 class="cases-title head-reveal">Кейсы</h2>
@@ -540,7 +539,7 @@
             <div class="case-name">Логинов и&nbsp;Зайцев</div>
             <div class="case-role">Дуэт ведущих</div>
           </div>
-          <p class="case-desc">Работаю с&nbsp;дуэтом более 2-х лет — визуал для премий, видеозаявок, шоурилов и&nbsp;всего что помогает выделиться</p>
+          <p class="case-desc">Работаю с&nbsp;дуэтом более 2-х лет — визуал для премий, видеозаявок, шоурилов и&nbsp;всего, что помогает выделиться</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
             <div class="case-work"><img loading="lazy" decoding="async" src="https://static.tildacdn.com/tild3734-3233-4539-b963-386230656337/29_.jpg" alt="Обложка для дуэта Логинов и Зайцев"></div>

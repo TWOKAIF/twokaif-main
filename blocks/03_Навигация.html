@@ -22,18 +22,18 @@
 .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite;will-change:transform}
 .logo-text{font-size:16px;font-weight:700;letter-spacing:-.32px;line-height:1;color:#1d1d1f}
 .logo-sep{width:1px;height:26px;background:rgba(29,29,31,.08);flex-shrink:0;margin:0 12px}
-.logo-sub{font-size:11px;font-weight:400;letter-spacing:-.16px;line-height:.9;color:#86868b}
+.logo-sub{font-size:11px;font-weight:400;letter-spacing:-.16px;line-height:.9;color:#6e6e73}
 
 /* --- Центральные ссылки (десктоп) --- */
 .nav-links{display:flex;align-items:center;gap:28px;list-style:none;padding:0!important;margin:0!important;position:absolute;left:50%;transform:translateX(-50%)}
 .nav-links a{font-size:12px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f;text-decoration:none;position:relative;display:block;height:16px;overflow:hidden;perspective:200px}
 .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
-.nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#86868b}
+.nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .nav-links a:hover .nav-link-flip{transform:translateY(-100%)}
 
 /* --- Правая часть --- */
 .nav-right{display:flex;align-items:center;gap:20px;flex-shrink:0}
-.nav-time{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#86868b;opacity:.8}
+.nav-time{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#6e6e73;opacity:.8}
 
 /* Кнопка CTA — маленькая с заливкой */
 .nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
@@ -43,7 +43,7 @@
 .nav-cta:hover{color:#1d1d1f!important}
 
 /* --- Бургер --- */
-.burger-btn{display:none;width:36px;height:36px;background:transparent;border:1px solid rgba(29,29,31,.12);cursor:pointer;position:relative;padding:0;flex-shrink:0;transition:background .3s var(--ease-out),border-color .3s var(--ease-out)}
+.burger-btn{display:none;width:44px;height:44px;background:transparent;border:1px solid rgba(29,29,31,.12);cursor:pointer;position:relative;padding:0;flex-shrink:0;transition:background .3s var(--ease-out),border-color .3s var(--ease-out)}
 .burger-btn:hover{background:#1d1d1f;border-color:#1d1d1f}
 .burger-btn:hover .burger-line{background:#fff}
 .burger-line{display:block;width:14px;height:1px;background:#1d1d1f;position:absolute;left:50%;transform:translateX(-50%);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),background .3s var(--ease-out)}
@@ -68,7 +68,7 @@
 .menu-links a{display:block;font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1;color:#1d1d1f!important;text-decoration:none;padding:18px 0;transform:translateY(20px);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
 .menu-links a .menu-flip{display:block;position:relative;height:1em;overflow:hidden}
 .menu-links a .menu-flip-inner{display:block;position:relative;transition:transform .4s var(--ease-out)}
-.menu-links a .menu-flip-inner::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#86868b}
+.menu-links a .menu-flip-inner::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .menu-links a:hover .menu-flip-inner{transform:translateY(-100%)}
 .menu-overlay.active .menu-links a{transform:translateY(0);opacity:1}
 .menu-overlay.active .menu-links li:nth-child(1) a{transition-delay:.05s}
@@ -79,12 +79,12 @@
 .menu-overlay.active .menu-links li:nth-child(6) a{transition-delay:.30s}
 
 /* Соцсети */
-.menu-social-label{font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#86868b;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-social-label{font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
 .menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.35s}
 .menu-social-links{display:flex;gap:20px;list-style:none;padding:0!important;margin:0!important}
 .menu-social-links a{font-size:14px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:18px;overflow:hidden}
 .menu-social-links a .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
-.menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#86868b}
+.menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .menu-social-links a:hover .nav-link-flip{transform:translateY(-100%)}
 .menu-overlay.active .menu-social-links a{opacity:1;transform:translateY(0)}
 .menu-overlay.active .menu-social-links li:nth-child(1) a{transition-delay:.40s}

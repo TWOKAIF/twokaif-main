@@ -163,7 +163,10 @@
   }
 
   /* Главный цикл анимации */
+  var rafId = null;
+  var carouselVisible = true;
   function tick() {
+    if (!carouselVisible) { rafId = null; return; } /* вне экрана — стоп, не жжём кадры */
     if (!isDragging) {
       if (isUserInteracting) {
         /* Инерция после отпускания */
@@ -186,7 +189,7 @@
     loopPos();
     applyTransform();
     updateCardEffects();
-    requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
   }
 
   /* Эффект перспективы — карточки ближе к краям наклоняются и затемняются */
@@ -198,10 +201,13 @@
     var center = wrapRect.left + wrapRect.width / 2;
     var halfW = wrapRect.width / 2;
     var cards = track.querySelectorAll('.poster-card');
-    for (var i = 0; i < cards.length; i++) {
-      var card = cards[i];
-      var cardRect = card.getBoundingClientRect();
-      var cardCenter = cardRect.left + cardRect.width / 2;
+    /* ФАЗА 1 — только читаем размеры (один пересчёт layout на все карточки) */
+    var rects = [];
+    for (var i = 0; i < cards.length; i++) rects.push(cards[i].getBoundingClientRect());
+    /* ФАЗА 2 — только пишем стили (без чтения между записями = без forced reflow) */
+    for (var j = 0; j < cards.length; j++) {
+      var card = cards[j];
+      var cardCenter = rects[j].left + rects[j].width / 2;
       /* -1 (лево) ... 0 (центр) ... 1 (право) */
       var ratio = (cardCenter - center) / halfW;
       ratio = Math.max(-1, Math.min(1, ratio));
@@ -217,7 +223,14 @@
       card.style.opacity = (card === hoveredCard) ? 1 : opacity;
     }
   }
-  requestAnimationFrame(tick);
+  rafId = requestAnimationFrame(tick);
+  /* Пауза карусели когда она не на экране — не тратим кадры впустую */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries) {
+      carouselVisible = entries[0].isIntersecting;
+      if (carouselVisible && !rafId) rafId = requestAnimationFrame(tick);
+    }, { threshold: 0 }).observe(wrap);
+  }
 
   /* === Наведение: запоминаем карточку, лента тормозит === */
   track.addEventListener('mouseover', function(e) {

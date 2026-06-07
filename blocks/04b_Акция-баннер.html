@@ -365,9 +365,9 @@
         <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
-      <a href="https://wedding.twokaif.ru" class="promo-cta">
+      <a href="https://wedding.twokaif.ru" class="promo-cta" target="_blank" rel="noopener">
         Узнать подробнее
-        <span class="promo-cta-arr">→</span>
+        <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
 
@@ -408,9 +408,9 @@
         <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
-      <a href="https://t.me/twokaif_ruslan" class="promo-cta">
+      <a href="https://t.me/twokaif_ruslan" class="promo-cta" target="_blank" rel="noopener">
         Узнать подробнее
-        <span class="promo-cta-arr">→</span>
+        <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
 
@@ -451,9 +451,9 @@
         <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
-      <a href="https://t.me/tukaif_agent_bot" class="promo-cta">
+      <a href="https://t.me/tukaif_agent_bot" class="promo-cta" target="_blank" rel="noopener">
         Узнать подробнее
-        <span class="promo-cta-arr">→</span>
+        <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
 
@@ -495,9 +495,9 @@
         <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
-      <a href="https://t.me/twokaif_mzh_bot" class="promo-cta">
+      <a href="https://t.me/twokaif_mzh_bot" class="promo-cta" target="_blank" rel="noopener">
         Узнать подробнее
-        <span class="promo-cta-arr">→</span>
+        <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
 
@@ -613,7 +613,9 @@
     if (m10>=2 && m10<=4 && (m100<12||m100>14)) return few;
     return many;
   }
+  let promosVisible = true;
   function tick(){
+    if (!promosVisible) return; // блок акций не на экране — не дёргаем DOM
     document.querySelectorAll('.promo-card').forEach(el => {
       const timer = el.querySelector('[data-cd-timer]');
       if (!timer) return;
@@ -670,6 +672,10 @@
   }
   tick();
   setInterval(tick, 1000);
+  const promosSection = document.getElementById('promos');
+  if (promosSection && 'IntersectionObserver' in window) {
+    new IntersectionObserver(es => { promosVisible = es[0].isIntersecting; if (promosVisible) tick(); }, { threshold: 0 }).observe(promosSection);
+  }
 
   // === Reveal on scroll ===
   if ('IntersectionObserver' in window) {

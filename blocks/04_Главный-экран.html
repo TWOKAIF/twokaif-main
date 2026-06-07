@@ -19,6 +19,7 @@
 <style>
 .hero {
   height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +82,7 @@
 
 <script>
 /* Hero parallax: логотип чуть отстаёт от скролла + растворяется — ощущение глубины */
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
   if(!window.gsap||!window.ScrollTrigger)return;
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   gsap.registerPlugin(ScrollTrigger);
@@ -92,5 +93,5 @@
     yPercent:38, opacity:0, ease:'none',
     scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:0.5}
   });
-})();
+});
 </script>
