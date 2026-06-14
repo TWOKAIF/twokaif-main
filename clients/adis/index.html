@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0E0E10">
+<title>Адис Маммо — Ведущий мероприятий</title>
+<meta name="description" content="Адис Маммо — ведущий свадеб, корпоративов и юбилеев. Более 80 событий в год. Свяжитесь для брифа.">
+<meta property="og:title" content="Адис Маммо — Ведущий мероприятий">
+<meta property="og:description" content="Свадьбы. Корпоративы. Юбилеи. Камерные форматы.">
+<meta property="og:image" content="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-3 18 81 81'><path d='M37.5 18 L42 53 L74 58 L42 63 L37.5 99 L33 63 L1 58 L33 53 Z' fill='%23FF4500'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0E0E10;
+  --surface:#1A1A1D;
+  --surface-2:#242428;
+  --text:#FAFAF7;
+  --muted:#71717A;
+  --border:rgba(250,250,247,0.08);
+  --border-strong:rgba(250,250,247,0.16);
+  --accent:#FF4500;
+  --ease:cubic-bezier(0.25,1,0.5,1);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background:var(--bg);color:var(--text);overflow-x:hidden}
+body{font-family:'Inter',sans-serif;font-size:18px;line-height:1.5;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--accent);color:#0E0E10}
+
+.display{font-family:'Fraunces',serif;font-weight:800;letter-spacing:-0.04em;line-height:0.88}
+.italic{font-style:italic;font-variation-settings:"opsz" 144}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500}
+.muted{color:var(--muted)}
+
+/* Container */
+.wrap{padding:0 32px;max-width:1640px;margin:0 auto}
+@media(max-width:768px){.wrap{padding:0 20px}}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(14,14,16,0.6);border-bottom:1px solid transparent;transition:border-color .3s var(--ease)}
+.nav.scrolled{border-bottom-color:var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:-0.01em}
+.nav-logo svg{width:18px;height:18px}
+.nav-menu{display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px}
+.nav-menu a{padding:8px 16px;border-radius:999px;font-size:13px;color:var(--muted);transition:all .3s var(--ease);font-weight:500}
+.nav-menu a:hover{color:var(--text);background:var(--surface-2)}
+.nav-cta{padding:10px 18px;border-radius:999px;background:var(--text);color:var(--bg);font-size:13px;font-weight:600;letter-spacing:-0.01em;transition:transform .3s var(--ease),background .3s var(--ease);display:inline-flex;align-items:center;gap:8px}
+.nav-cta:hover{transform:translateY(-1px);background:var(--accent);color:var(--text)}
+.nav-cta svg{width:14px;height:14px}
+@media(max-width:880px){.nav-menu{display:none}.nav{padding:16px 20px}}
+
+/* HERO */
+.hero{padding:140px 0 80px;position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:end;width:100%}
+.hero-meta{display:flex;align-items:center;gap:14px;color:var(--muted);margin-bottom:48px}
+.hero-meta-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.hero-name{font-size:clamp(64px,15vw,260px);line-height:0.85;margin:0 0 32px;letter-spacing:-0.05em}
+.hero-name .word{display:inline-block;overflow:hidden;padding-bottom:0.05em}
+.hero-name .word span{display:inline-block;will-change:transform}
+.hero-name .accent{color:var(--accent);font-style:italic;font-variation-settings:"opsz" 144}
+.hero-sub{display:flex;flex-direction:column;gap:32px;max-width:520px}
+.hero-desc{font-size:20px;line-height:1.4;color:rgba(250,250,247,0.85);font-weight:400}
+.hero-desc strong{font-weight:600;color:var(--text)}
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:18px 26px;border-radius:999px;font-size:14px;font-weight:600;letter-spacing:-0.01em;transition:all .4s var(--ease);white-space:nowrap}
+.btn-primary{background:var(--accent);color:var(--text)}
+.btn-primary:hover{background:var(--text);color:var(--bg);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border-strong)}
+.btn-ghost:hover{background:var(--surface);border-color:rgba(250,250,247,0.3)}
+.btn svg{width:14px;height:14px;transition:transform .4s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+
+.hero-photo{position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:var(--surface);align-self:start;margin-top:120px}
+.hero-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.hero-photo:hover img{transform:scale(1.04)}
+.hero-photo-meta{position:absolute;left:20px;bottom:20px;right:20px;display:flex;justify-content:space-between;color:var(--text);mix-blend-mode:difference}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:80px;padding-top:32px;border-top:1px solid var(--border);grid-column:1/-1;width:100%}
+.hero-stat-num{font-family:'Fraunces',serif;font-weight:800;font-size:48px;letter-spacing:-0.04em;line-height:1}
+.hero-stat-label{margin-top:8px}
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-photo{margin-top:0;max-width:380px}
+  .hero{padding:120px 0 60px;min-height:auto}
+  .hero-meta{margin-bottom:32px}
+  .hero-stats{grid-template-columns:repeat(3,1fr);gap:12px;margin-top:48px}
+  .hero-stat-num{font-size:32px}
+  .hero-stat-label{font-size:10px}
+}
+
+/* SECTION HEAD */
+.section{padding:140px 0;position:relative}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:80px}
+.section-title{font-size:clamp(48px,9vw,180px);letter-spacing:-0.05em}
+.section-title .tm{font-size:0.3em;vertical-align:top;color:var(--accent);margin-left:0.05em}
+.section-meta-col{display:flex;flex-direction:column;gap:8px;text-align:right;max-width:260px;color:var(--muted);font-size:14px;line-height:1.5}
+.section-num{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:24px}
+.section-num-line{flex:1;height:1px;background:var(--border);max-width:60px}
+@media(max-width:780px){.section{padding:80px 0}.section-head{flex-direction:column;align-items:flex-start;gap:24px;margin-bottom:48px}.section-meta-col{text-align:left}}
+
+/* WORKS */
+.works{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:140px;gap:16px}
+.work{position:relative;overflow:hidden;border-radius:6px;background:var(--surface);cursor:pointer;border:1px solid var(--border)}
+.work img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),filter 1s var(--ease);filter:saturate(0.85) brightness(0.85)}
+.work:hover img{transform:scale(1.05);filter:saturate(1) brightness(0.9)}
+.work-meta{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;color:var(--text);z-index:2;text-shadow:0 1px 8px rgba(0,0,0,0.5)}
+.work-foot{position:absolute;bottom:0;left:0;right:0;padding:20px;z-index:2;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);transform:translateY(20px);opacity:0;transition:transform .5s var(--ease),opacity .5s var(--ease)}
+.work:hover .work-foot{transform:translateY(0);opacity:1}
+.work-title{font-family:'Fraunces',serif;font-weight:600;font-size:24px;letter-spacing:-0.02em;line-height:1.05;margin-bottom:6px}
+.work-desc{font-size:13px;color:rgba(250,250,247,0.7);line-height:1.4}
+.work-arrow{position:absolute;right:16px;bottom:16px;width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;z-index:3;transform:translate(40px,40px) rotate(-45deg);transition:transform .6s var(--ease)}
+.work:hover .work-arrow{transform:translate(0,0) rotate(0deg)}
+.work-arrow svg{width:16px;height:16px;color:var(--text)}
+.work-placeholder{background:linear-gradient(135deg,var(--surface),var(--surface-2));display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.work-placeholder .ph-num{font-family:'Fraunces',serif;font-size:120px;font-weight:300;color:rgba(250,250,247,0.04);letter-spacing:-0.05em}
+
+/* spans */
+.work-a{grid-column:span 4;grid-row:span 4}
+.work-b{grid-column:span 2;grid-row:span 2}
+.work-c{grid-column:span 2;grid-row:span 2}
+.work-d{grid-column:span 3;grid-row:span 3}
+.work-e{grid-column:span 3;grid-row:span 2}
+.work-f{grid-column:span 3;grid-row:span 2}
+.work-g{grid-column:span 2;grid-row:span 2}
+.work-h{grid-column:span 4;grid-row:span 2}
+@media(max-width:980px){.works{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}.work-a,.work-b,.work-c,.work-d,.work-e,.work-f,.work-g,.work-h{grid-column:span 2;grid-row:span 2}.work-a{grid-row:span 3}}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:0.85fr 1fr;gap:80px;align-items:start}
+.about-photo{aspect-ratio:4/5;border-radius:6px;overflow:hidden;position:sticky;top:100px;border:1px solid var(--border)}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.about-quote{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(32px,4.4vw,64px);line-height:1.05;letter-spacing:-0.03em;margin-bottom:48px}
+.about-quote em{font-style:italic;color:var(--accent)}
+.about-bio{font-size:18px;line-height:1.65;color:rgba(250,250,247,0.8);margin-bottom:48px;max-width:560px}
+.about-bio + .about-bio{margin-top:-32px}
+.about-list{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+.about-item{padding:24px 0;border-bottom:1px solid var(--border);padding-right:20px}
+.about-item-num{color:var(--accent);margin-bottom:6px}
+.about-item-text{font-size:16px;line-height:1.4}
+@media(max-width:980px){.about-grid{grid-template-columns:1fr;gap:40px}.about-photo{position:relative;top:0;max-width:420px}.about-list{grid-template-columns:1fr}}
+
+/* SERVICES */
+.services{border-top:1px solid var(--border)}
+.svc{display:grid;grid-template-columns:80px 1fr 1.4fr 60px;gap:32px;align-items:center;padding:40px 0;border-bottom:1px solid var(--border);position:relative;cursor:pointer;transition:padding .5s var(--ease)}
+.svc::before{content:"";position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left center;transition:transform .6s var(--ease);z-index:-1}
+.svc:hover{padding-left:32px;padding-right:32px}
+.svc-num{color:var(--muted);transition:color .3s var(--ease)}
+.svc-name{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(32px,4.5vw,64px);letter-spacing:-0.03em;line-height:1;transition:transform .5s var(--ease),font-style .3s var(--ease)}
+.svc:hover .svc-name{font-style:italic;font-variation-settings:"opsz" 144}
+.svc-desc{color:var(--muted);font-size:15px;line-height:1.5;max-width:420px}
+.svc-arrow{display:flex;align-items:center;justify-content:flex-end;color:var(--muted);transition:color .4s var(--ease),transform .4s var(--ease)}
+.svc:hover .svc-arrow{color:var(--accent);transform:translateX(8px) rotate(-45deg)}
+.svc-arrow svg{width:24px;height:24px}
+@media(max-width:780px){.svc{grid-template-columns:1fr;gap:8px;padding:28px 0}.svc-arrow{display:none}.svc-desc{max-width:none}}
+
+/* MARQUEE */
+.marquee-section{padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
+.marquee-label{margin-bottom:32px;text-align:center;color:var(--muted)}
+.marquee{display:flex;gap:80px;width:max-content;animation:marquee 40s linear infinite;will-change:transform}
+.marquee:hover{animation-play-state:paused}
+.marquee-item{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(40px,7vw,96px);letter-spacing:-0.04em;color:rgba(250,250,247,0.4);white-space:nowrap;display:flex;align-items:center;gap:80px}
+.marquee-item::after{content:"✦";color:var(--accent);font-size:0.4em;display:inline-block}
+.marquee-item:hover{color:var(--text)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* CONTACT */
+.contact{padding:140px 0 100px;position:relative}
+.contact-head{text-align:left;margin-bottom:80px}
+.contact-title{font-size:clamp(48px,10vw,200px);letter-spacing:-0.05em}
+.contact-title em{font-style:italic;color:var(--accent);font-variation-settings:"opsz" 144}
+.contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start;margin-bottom:80px}
+.contact-text{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(24px,2.6vw,36px);line-height:1.2;letter-spacing:-0.02em;max-width:620px}
+.contact-text em{color:var(--accent);font-style:italic}
+.contact-info{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+.contact-row{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--border);font-size:16px;transition:padding .4s var(--ease),color .4s var(--ease)}
+.contact-row:hover{padding-left:8px;color:var(--accent)}
+.contact-row svg{width:14px;height:14px;opacity:0.5;transition:transform .4s var(--ease),opacity .4s var(--ease)}
+.contact-row:hover svg{transform:translate(3px,-3px);opacity:1}
+
+.dates-title{margin-bottom:32px;color:var(--muted)}
+.dates-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.date{padding:24px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;text-align:left;transition:all .4s var(--ease);cursor:pointer}
+.date:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-4px)}
+.date-month{margin-bottom:6px;color:var(--muted);transition:color .4s var(--ease)}
+.date:hover .date-month{color:var(--text)}
+.date-day{font-family:'Fraunces',serif;font-weight:600;font-size:32px;letter-spacing:-0.03em;line-height:1}
+@media(max-width:980px){.contact-grid{grid-template-columns:1fr;gap:40px}.dates-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* FOOTER */
+.footer{position:relative;padding:80px 0 32px;border-top:1px solid var(--border);overflow:hidden}
+.footer-giant{font-size:clamp(80px,22vw,300px);letter-spacing:-0.05em;line-height:0.85;margin-bottom:60px;color:var(--text);overflow:hidden}
+.footer-giant em{font-style:italic;color:var(--accent);font-variation-settings:"opsz" 144}
+.footer-meta{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:32px;padding-top:32px;border-top:1px solid var(--border)}
+.footer-col{display:flex;flex-direction:column;gap:8px}
+.footer-col-title{color:var(--muted);margin-bottom:6px}
+.footer-link{font-size:15px;transition:color .3s var(--ease)}
+.footer-link:hover{color:var(--accent)}
+.footer-built{font-size:11px;color:rgba(113,113,122,0.5);letter-spacing:0.04em}
+.footer-built a{color:var(--muted);transition:color .3s var(--ease)}
+.footer-built a:hover{color:var(--accent)}
+
+/* reveal */
+.reveal{will-change:transform,opacity}
+.no-js .reveal{opacity:1}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+  .marquee{animation:none}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo" aria-label="Адис Маммо">
+    <svg viewBox="-3 18 81 81" fill="none"><path d="M37.5 18 L42 53 L74 58 L42 63 L37.5 99 L33 63 L1 58 L33 53 Z" fill="#FF4500"/></svg>
+    <span>Адис Маммо</span>
+  </a>
+  <div class="nav-menu" role="navigation">
+    <a href="#works">Работы</a>
+    <a href="#about">Об Адисе</a>
+    <a href="#services">Форматы</a>
+    <a href="#contact">Контакты</a>
+  </div>
+  <a href="https://t.me/adismammo" class="nav-cta">
+    Связаться
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+  </a>
+</nav>
+
+<!-- HERO -->
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-meta mono">
+        <span class="hero-meta-dot"></span>
+        <span>Доступен · 2026</span>
+        <span class="muted">/</span>
+        <span class="muted">Москва · по миру</span>
+      </div>
+      <h1 class="hero-name display" data-split>
+        Адис<br>Мам<span class="accent">мо</span>
+      </h1>
+      <div class="hero-sub">
+        <p class="hero-desc">
+          Ведущий мероприятий полного цикла.<br>
+          <strong>Свадьбы, корпоративы, юбилеи.</strong> Веду<br>
+          события так, чтобы гости говорили о&nbsp;них<br>
+          ещё долго после.
+        </p>
+        <div class="hero-cta-row">
+          <a href="https://t.me/adismammo" class="btn btn-primary">
+            Связаться · Telegram
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#works" class="btn btn-ghost">
+            Смотреть работы
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo reveal">
+      <img src="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp" alt="Адис Маммо" loading="eager">
+      <div class="hero-photo-meta mono">
+        <span>МАММО / 2026</span>
+        <span>№ 001</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">80+</div>
+      <div class="hero-stat-label mono muted">Событий в год</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">12</div>
+      <div class="hero-stat-label mono muted">Лет на сцене</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">5.0</div>
+      <div class="hero-stat-label mono muted">Средний рейтинг</div>
+    </div>
+  </div>
+</header>
+
+<!-- WORKS -->
+<section class="section wrap" id="works">
+  <div class="section-num mono">
+    <span class="section-num-line"></span>
+    <span>(01) — Избранные работы</span>
+  </div>
+  <div class="section-head">
+    <h2 class="section-title display reveal">Featured<br>Works<span class="tm">™</span></h2>
+    <div class="section-meta-col mono">
+      <span>Подборка ивентов 2024–2025.</span>
+      <span class="muted">Каждое событие&nbsp;— своя интонация, своя сцена, своя публика.</span>
+    </div>
+  </div>
+
+  <div class="works">
+    <a class="work work-a reveal" href="#">
+      <img src="https://twokaif.ru/images/tild3964-3738-4334-b433-633237336434.webp" alt="Корпоративное мероприятие" loading="lazy">
+      <div class="work-meta mono"><span>№ 01 / 2025</span><span>CORPORATE</span></div>
+      <div class="work-foot">
+        <div class="work-title">Закрытый корпоратив для&nbsp;топ-100</div>
+        <div class="work-desc">Ведение, тайминг, стенд-ап-вставки. 200 гостей, гранд-холл.</div>
+      </div>
+      <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+
+    <a class="work work-b reveal" href="#">
+      <img src="https://twokaif.ru/images/tild3535-6465-4463-b964-643438653335.webp" alt="Афиша ивента" loading="lazy">
+      <div class="work-meta mono"><span>№ 02 / 2025</span><span>WEDDING</span></div>
+      <div class="work-foot">
+        <div class="work-title">Свадьба на&nbsp;вилле</div>
+        <div class="work-desc">Камерный формат. 60 гостей.</div>
+      </div>
+      <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+
+    <a class="work work-c reveal" href="#">
+      <img src="https://twokaif.ru/images/tild3062-3166-4065-b137-336464323330.webp" alt="Оформление мероприятия" loading="lazy">
+      <div class="work-meta mono"><span>№ 03 / 2024</span><span>ANNIVERSARY</span></div>
+      <div class="work-foot">
+        <div class="work-title">Юбилей 50&nbsp;— ресторан «Турандот»</div>
+        <div class="work-desc">Ведение + вечер живого общения.</div>
+      </div>
+      <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+
+    <div class="work work-d work-placeholder reveal">
+      <span class="ph-num">04</span>
+      <div class="work-meta mono"><span>№ 04 / 2025</span><span>FESTIVAL</span></div>
+      <div class="work-foot">
+        <div class="work-title">Ведущий городского фестиваля</div>
+        <div class="work-desc">Open-air. 3 дня. 4&nbsp;000+ гостей.</div>
+      </div>
+    </div>
+
+    <div class="work work-e work-placeholder reveal">
+      <span class="ph-num">05</span>
+      <div class="work-meta mono"><span>№ 05 / 2024</span><span>PRIVATE</span></div>
+      <div class="work-foot">
+        <div class="work-title">Закрытый ужин на&nbsp;30 человек</div>
+        <div class="work-desc">Интонация — приглушённая, тёплая.</div>
+      </div>
+    </div>
+
+    <div class="work work-f work-placeholder reveal">
+      <span class="ph-num">06</span>
+      <div class="work-meta mono"><span>№ 06 / 2025</span><span>BRAND EVENT</span></div>
+      <div class="work-foot">
+        <div class="work-title">Презентация коллекции</div>
+        <div class="work-desc">Lifestyle-бренд. Press &amp; VIP.</div>
+      </div>
+    </div>
+
+    <div class="work work-g work-placeholder reveal">
+      <span class="ph-num">07</span>
+      <div class="work-meta mono"><span>№ 07 / 2024</span><span>WEDDING</span></div>
+      <div class="work-foot">
+        <div class="work-title">Свадьба на&nbsp;Алтае</div>
+        <div class="work-desc">Выездная регистрация на&nbsp;берегу Катуни.</div>
+      </div>
+    </div>
+
+    <div class="work work-h work-placeholder reveal">
+      <span class="ph-num">08</span>
+      <div class="work-meta mono"><span>№ 08 / 2025</span><span>CORPORATE</span></div>
+      <div class="work-foot">
+        <div class="work-title">Новогодний корпоратив&nbsp;— 600 гостей</div>
+        <div class="work-desc">Ведение основной сцены + интерактив с&nbsp;залом.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section wrap" id="about">
+  <div class="section-num mono">
+    <span class="section-num-line"></span>
+    <span>(02) — Об&nbsp;Адисе</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-photo reveal">
+      <img src="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp" alt="Адис Маммо портрет" loading="lazy">
+    </div>
+    <div>
+      <p class="about-quote reveal">
+        Любое событие <em>— это человек,</em> который<br>
+        выходит к&nbsp;залу. Я&nbsp;беру тему вечера и&nbsp;превращаю её&nbsp;<em>в&nbsp;разговор,</em><br>
+        который запомнится.
+      </p>
+      <p class="about-bio reveal">
+        Адис ведёт более 80&nbsp;событий в&nbsp;год&nbsp;— от&nbsp;камерных свадеб
+        на&nbsp;30 человек до&nbsp;корпоративов на&nbsp;600. Работает на&nbsp;русском
+        и&nbsp;английском, без шаблонных конкурсов и&nbsp;«а&nbsp;теперь все&nbsp;дружно».
+      </p>
+      <p class="about-bio reveal">
+        Подход прост: разобрать вашу историю до&nbsp;деталей, написать сценарий,
+        в&nbsp;котором каждый блок работает на&nbsp;вас, и&nbsp;провести вечер так,
+        чтобы вам не&nbsp;пришлось контролировать ничего, кроме улыбки.
+      </p>
+      <ul class="about-list reveal">
+        <li class="about-item"><div class="about-item-num mono">01</div><div class="about-item-text">12 лет на&nbsp;сцене</div></li>
+        <li class="about-item"><div class="about-item-num mono">02</div><div class="about-item-text">Русский / English</div></li>
+        <li class="about-item"><div class="about-item-num mono">03</div><div class="about-item-text">Свой сценарист в&nbsp;команде</div></li>
+        <li class="about-item"><div class="about-item-num mono">04</div><div class="about-item-text">Партнёрство с&nbsp;DJ-командой</div></li>
+        <li class="about-item"><div class="about-item-num mono">05</div><div class="about-item-text">Выезд по&nbsp;РФ и&nbsp;за&nbsp;рубеж</div></li>
+        <li class="about-item"><div class="about-item-num mono">06</div><div class="about-item-text">Запись свадьбы в&nbsp;подарок</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section wrap" id="services">
+  <div class="section-num mono">
+    <span class="section-num-line"></span>
+    <span>(03) — Форматы</span>
+  </div>
+  <div class="section-head">
+    <h2 class="section-title display reveal">Что<br>я&nbsp;<em class="italic" style="color:var(--accent)">веду</em></h2>
+    <div class="section-meta-col mono">
+      <span>Шесть форматов&nbsp;— от&nbsp;ужина на&nbsp;30 до&nbsp;корпоратива на&nbsp;600.</span>
+    </div>
+  </div>
+  <div class="services">
+    <a class="svc" href="#contact">
+      <span class="svc-num mono">01</span>
+      <span class="svc-name">Свадьба</span>
+      <span class="svc-desc">От&nbsp;утра до&nbsp;танцев. Сценарий под&nbsp;вашу историю, без&nbsp;шаблонных конкурсов.</span>
+      <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+    <a class="svc" href="#contact">
+      <span class="svc-num mono">02</span>
+      <span class="svc-name">Корпоратив</span>
+      <span class="svc-desc">Команды от&nbsp;30 до&nbsp;600 человек. Тайминг, награждения, стендап-вставки.</span>
+      <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+    <a class="svc" href="#contact">
+      <span class="svc-num mono">03</span>
+      <span class="svc-name">Юбилей</span>
+      <span class="svc-desc">Личная история героя вечера&nbsp;— через интервью, видео, гостевые слова.</span>
+      <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+    <a class="svc" href="#contact">
+      <span class="svc-num mono">04</span>
+      <span class="svc-name">Камерный формат</span>
+      <span class="svc-desc">Ужин или&nbsp;девичник на&nbsp;15–40 человек. Тише, личнее, без&nbsp;микрофона в&nbsp;зале.</span>
+      <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+    <a class="svc" href="#contact">
+      <span class="svc-num mono">05</span>
+      <span class="svc-name">Бренд-ивент</span>
+      <span class="svc-desc">Презентации, открытия, премии. Английский язык, пресса, VIP-секция.</span>
+      <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+    <a class="svc" href="#contact">
+      <span class="svc-num mono">06</span>
+      <span class="svc-name">Фестиваль</span>
+      <span class="svc-desc">Городские форматы, open-air. Несколько сцен, потоки гостей, прямой эфир.</span>
+      <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<section class="marquee-section">
+  <div class="marquee-label mono wrap">Hosted for · Партнёрства · Площадки</div>
+  <div class="marquee" aria-hidden="true">
+    <span class="marquee-item">Cartier</span>
+    <span class="marquee-item">Lamoda</span>
+    <span class="marquee-item">Yandex</span>
+    <span class="marquee-item">Tinkoff</span>
+    <span class="marquee-item">Aurus</span>
+    <span class="marquee-item">Soho Rooms</span>
+    <span class="marquee-item">Турандот</span>
+    <span class="marquee-item">Cartier</span>
+    <span class="marquee-item">Lamoda</span>
+    <span class="marquee-item">Yandex</span>
+    <span class="marquee-item">Tinkoff</span>
+    <span class="marquee-item">Aurus</span>
+    <span class="marquee-item">Soho Rooms</span>
+    <span class="marquee-item">Турандот</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact wrap" id="contact">
+  <div class="section-num mono">
+    <span class="section-num-line"></span>
+    <span>(04) — Связаться</span>
+  </div>
+  <div class="contact-head">
+    <h2 class="contact-title display reveal">Свободные<br>даты <em>2026</em></h2>
+  </div>
+
+  <div class="contact-grid">
+    <div>
+      <p class="contact-text reveal">
+        Расскажи о&nbsp;вечере в&nbsp;паре строк&nbsp;— дата, формат, ориентир по&nbsp;числу гостей. Я&nbsp;вернусь с&nbsp;вилкой, <em>пакетом и&nbsp;брифом</em> в&nbsp;течение суток.
+      </p>
+    </div>
+    <div class="contact-info">
+      <a class="contact-row" href="https://t.me/adismammo">
+        <span class="mono muted">Telegram</span>
+        <span style="display:flex;align-items:center;gap:10px">@adismammo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+      </a>
+      <a class="contact-row" href="https://instagram.com/adismammo">
+        <span class="mono muted">Instagram</span>
+        <span style="display:flex;align-items:center;gap:10px">@adismammo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+      </a>
+      <a class="contact-row" href="mailto:hi@adismammo.ru">
+        <span class="mono muted">Email</span>
+        <span style="display:flex;align-items:center;gap:10px">hi@adismammo.ru <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+      </a>
+      <a class="contact-row" href="tel:+79991234567">
+        <span class="mono muted">Phone</span>
+        <span style="display:flex;align-items:center;gap:10px">+7 999 123-45-67 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+      </a>
+    </div>
+  </div>
+
+  <div>
+    <div class="dates-title mono">Открытые даты — обновлено сегодня</div>
+    <div class="dates-grid">
+      <div class="date"><div class="date-month mono">МАЙ</div><div class="date-day">23</div></div>
+      <div class="date"><div class="date-month mono">ИЮН</div><div class="date-day">14</div></div>
+      <div class="date"><div class="date-month mono">ИЮЛ</div><div class="date-day">04</div></div>
+      <div class="date"><div class="date-month mono">АВГ</div><div class="date-day">22</div></div>
+      <div class="date"><div class="date-month mono">СЕН</div><div class="date-day">12</div></div>
+      <div class="date"><div class="date-month mono">ОКТ</div><div class="date-day">17</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer wrap">
+  <h3 class="footer-giant display" data-footer-giant>
+    Адис<br>Мам<em>мо</em>©
+  </h3>
+  <div class="footer-meta">
+    <div class="footer-col">
+      <span class="footer-col-title mono">Соцсети</span>
+      <a class="footer-link" href="https://t.me/adismammo">Telegram → @adismammo</a>
+      <a class="footer-link" href="https://instagram.com/adismammo">Instagram → @adismammo</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title mono">Контакты</span>
+      <a class="footer-link" href="mailto:hi@adismammo.ru">hi@adismammo.ru</a>
+      <a class="footer-link" href="tel:+79991234567">+7 999 123-45-67</a>
+    </div>
+    <div class="footer-col" style="text-align:right">
+      <span class="footer-col-title mono">Локация</span>
+      <span class="footer-link">Москва · по&nbsp;миру</span>
+      <span class="footer-built">© 2026 Адис Маммо. Сайт собран в&nbsp;<a href="https://t.me/twokaif_ruslan">TWOKAIF — @twokaif_ruslan</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+
+<script>
+(function(){
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Lenis
+  if(!reduced && window.Lenis){
+    const lenis=new Lenis({duration:1.1,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});
+    function raf(time){lenis.raf(time);requestAnimationFrame(raf)}
+    requestAnimationFrame(raf);
+    if(window.gsap && window.ScrollTrigger){
+      lenis.on('scroll',ScrollTrigger.update);
+      gsap.ticker.add(t=>lenis.raf(t*1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+  }
+
+  // Nav scrolled
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>20);
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  if(reduced || !window.gsap){
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero name reveal — manual char/word reveal (SplitType optional)
+  const heroName=document.querySelector('.hero-name');
+  if(heroName && window.SplitType){
+    try{
+      const split=new SplitType(heroName,{types:'words,chars'});
+      gsap.set(split.chars,{yPercent:110});
+      gsap.to(split.chars,{yPercent:0,duration:1.1,ease:'expo.out',stagger:0.025,delay:0.1});
+    }catch(e){
+      gsap.from(heroName,{y:40,opacity:0,duration:1,ease:'expo.out'});
+    }
+  }
+
+  // Hero photo
+  gsap.from('.hero-photo',{opacity:0,y:40,duration:1.4,ease:'expo.out',delay:0.3});
+  gsap.from('.hero-meta',{opacity:0,y:10,duration:0.8,ease:'expo.out',delay:0.05});
+  gsap.from('.hero-desc, .hero-cta-row',{opacity:0,y:20,duration:1,ease:'expo.out',stagger:0.1,delay:0.5});
+  gsap.from('.hero-stats > div',{opacity:0,y:30,duration:1,ease:'expo.out',stagger:0.08,scrollTrigger:{trigger:'.hero-stats',start:'top 85%'}});
+
+  // .reveal generic
+  document.querySelectorAll('.reveal').forEach(el=>{
+    gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%',once:true},onStart(){el.classList.add('in')}});
+  });
+
+  // Works scale-in
+  gsap.utils.toArray('.work').forEach((card,i)=>{
+    gsap.fromTo(card,{scale:0.94,opacity:0},{scale:1,opacity:1,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:card,start:'top 90%',once:true}});
+  });
+
+  // Section titles parallax-ish
+  gsap.utils.toArray('.section-title, .contact-title').forEach(t=>{
+    gsap.fromTo(t,{y:80,opacity:0},{y:0,opacity:1,duration:1.4,ease:'expo.out',scrollTrigger:{trigger:t,start:'top 95%',once:true}});
+  });
+
+  // Footer giant — clip-path reveal
+  const fg=document.querySelector('.footer-giant');
+  if(fg){
+    gsap.fromTo(fg,
+      {clipPath:'inset(50% 50% 50% 50%)'},
+      {clipPath:'inset(0% 0% 0% 0%)',duration:1.6,ease:'expo.out',scrollTrigger:{trigger:fg,start:'top 90%',once:true}}
+    );
+  }
+
+  // services hover already in CSS
+
+  // anchor smooth via Lenis when present, fallback default
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const id=a.getAttribute('href');
+      if(id.length>1){
+        const el=document.querySelector(id);
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'})}
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "adis",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "9092", "--directory", "clients/adis"],
+      "port": 9092
+    },
+    {
+      "name": "twokaif-main-sess9412",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "9412", "--directory", "dist"],
+      "port": 9412
+    },
+    {
+      "name": "twokaif-main-sess9347",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "9347", "--directory", "dist"],
+      "port": 9347
+    }
+  ]
+}
