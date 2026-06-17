@@ -1706,7 +1706,7 @@ document.addEventListener('DOMContentLoaded',function(){
         <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
-      <a href="https://t.me/twokaif_ruslan" class="promo-cta" target="_blank" rel="noopener">
+      <a href="https://png-info.twokaif.ru" class="promo-cta" target="_blank" rel="noopener">
         Узнать подробнее
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -6274,6 +6274,17 @@ document.getElementById('footerTopBtn').addEventListener('click',function(){
     window.scrollTo({top:0, behavior:'smooth'});
   }
 });
+
+// Внешние ссылки — в новую вкладку (не уводим с сайта). Внутренние якоря/страницы не трогаем.
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;
+  if(!a)return;
+  var u;try{u=new URL(a.getAttribute('href'),location.href);}catch(_){return;}
+  if(/^https?:$/.test(u.protocol)&&u.origin!==location.origin){
+    e.preventDefault();e.stopPropagation();
+    window.open(u.href,'_blank','noopener');
+  }
+},true);
 </script>
 
 <!-- ═══ 15_Куки-баннер ═══ -->
