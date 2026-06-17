@@ -154,4 +154,15 @@ document.getElementById('footerTopBtn').addEventListener('click',function(){
     window.scrollTo({top:0, behavior:'smooth'});
   }
 });
+
+// Внешние ссылки — в новую вкладку (не уводим с сайта). Внутренние якоря/страницы не трогаем.
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;
+  if(!a)return;
+  var u;try{u=new URL(a.getAttribute('href'),location.href);}catch(_){return;}
+  if(/^https?:$/.test(u.protocol)&&u.origin!==location.origin){
+    e.preventDefault();e.stopPropagation();
+    window.open(u.href,'_blank','noopener');
+  }
+},true);
 </script>
