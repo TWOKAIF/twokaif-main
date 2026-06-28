@@ -139,6 +139,23 @@ build_landing() {
     [ -f "$schema" ] && { echo '<script type="application/ld+json">'; cat "$schema"; echo '</script>'; }
     # сброс дефолтного синего у ссылок (стилизованные ссылки задают свой цвет сами)
     echo '<style>a{color:inherit}</style>'
+    # twk-viewer (просмотрщик) — самодостаточно: на афишах/презентациях блок обложек не подключён,
+    # без этих стилей пустой просмотрщик торчит как битая картинка
+    echo '<style>'
+    echo '.twk-viewer{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .28s ease}'
+    echo '.twk-viewer.is-open{opacity:1;pointer-events:auto}'
+    echo '.twk-viewer__bg{position:absolute;inset:0;background:rgba(0,0,0,.5)}'
+    echo '.twk-viewer__content{position:relative;z-index:2;max-width:94vw;max-height:92vh;display:flex;align-items:center;justify-content:center;transform:translateY(16px) scale(.97);transition:transform .28s cubic-bezier(.22,.8,.2,1)}'
+    echo '.twk-viewer.is-open .twk-viewer__content{transform:translateY(0) scale(1)}'
+    echo '.twk-viewer__img{width:auto;height:auto;max-width:min(80vw,600px);max-height:80vh;display:block;object-fit:contain;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06);background:transparent}'
+    echo '.twk-viewer__close{position:absolute;top:12px;right:12px;z-index:3;width:32px;height:32px;border:1px solid rgba(255,255,255,.15);background:rgba(29,29,31,.7);color:#fff;font-size:0;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;transition:background .35s,border-color .35s,transform .35s}'
+    echo ".twk-viewer__close::before,.twk-viewer__close::after{content:'';position:absolute;width:11px;height:1px;background:#fff}"
+    echo '.twk-viewer__close::before{transform:rotate(45deg)}'
+    echo '.twk-viewer__close::after{transform:rotate(-45deg)}'
+    echo '.twk-viewer__close:hover{background:#fff;border-color:#fff;transform:scale(1.05)}'
+    echo '.twk-viewer__close:hover::before,.twk-viewer__close:hover::after{background:#1d1d1f}'
+    echo '@media(max-width:768px){.twk-viewer{padding:60px 10px 10px}.twk-viewer__img{max-width:92vw;max-height:80vh}.twk-viewer__close{width:44px;height:44px}}'
+    echo '</style>'
     echo '</head>'
     echo '<body>'
     echo "<!-- ═══ 01_Глобальные-стили ═══ -->"
