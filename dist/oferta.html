@@ -16,11 +16,11 @@
      ============================================ -->
 
 <!-- TITLE + DESCRIPTION -->
-<title>ТУКАЙФ — ивент-дизайнер для профессионалов</title>
+<title>Публичная оферта — ТУКАЙФ</title>
 <meta name="description" content="Дизайн и автоматизация для ивент-индустрии: обложки, афиши, презентации, телеграм-боты для ведущих, анкеты молодожёнам, интерактивы.">
 
 <!-- Canonical (главный URL — после переезда) -->
-<link rel="canonical" href="https://twokaif.ru/">
+<link rel="canonical" href="https://twokaif.ru/oferta">
 
 <!-- Robots — staging закрыт через nginx X-Robots-Tag, на проде индексируется -->
 
@@ -295,6 +295,7 @@
 body{background-color:#fff;}
 @media(hover:hover) and (pointer:fine){*{cursor:none !important;}}
 </style>
+<meta name="robots" content="noindex,follow">
 </head>
 <body>
 
@@ -1008,70 +1009,101 @@ function closeMenu(){
 }
 </script>
 
-<!-- ═══ 16_404 ═══ -->
+<!-- ═══ 18_Оферта ═══ -->
 <!-- ============================================
-     СТРАНИЦА 404 — НЕ НАЙДЕНО
-     T123 блок — стильная страница ошибки
-
-     Здесь меняй:
-     — Текст: class="e404-title", "e404-desc"
-     — Кнопка: href в class="btn-fill" (ссылка на главную)
-     — Футер подключается отдельным блоком (09_footer.html)
-
-     ВАЖНО: На странице 404 в Тильде нужно:
-     1. Создать новую страницу
-     2. Назначить её как 404 в настройках сайта
-     3. Вставить блок 01_global.html первым
-     4. Затем этот блок
-     5. Затем 09_footer.html
+     БЛОК 18: ПУБЛИЧНАЯ ОФЕРТА
+     Отдельная страница /oferta. Единая мастер-оферта ТУКАЙФ.
+     Источник текста: _shared/legal/oferta-master.md (утв. 2026-06-28).
+     Реквизиты оператора: ИП Тукаев Руслан Геннадиевич, ИНН 343703190770.
      ============================================ -->
 <style>
-.e404{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px var(--edge) 80px;position:relative;overflow:hidden}
-
-/* Фоновое число 404 */
-.e404-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(200px,30vw,500px);font-weight:700;letter-spacing:clamp(-10px,-2vw,-30px);line-height:.8;color:var(--text);opacity:.03;pointer-events:none;user-select:none;white-space:nowrap}
-
-/* Снежинка */
-.e404-snowflake{width:clamp(40px,6vw,64px);color:var(--text);opacity:.12;margin-bottom:32px}
-.e404-snowflake .snowflake-inner{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
-
-/* Заголовок */
-.e404-title{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:clamp(-1px,-.3vw,-3px);line-height:.9;color:var(--text);margin-bottom:16px;position:relative;z-index:1}
-
-/* Описание */
-.e404-desc{font-size:clamp(14px,1.2vw,17px);font-weight:400;letter-spacing:-.2px;line-height:1.5;color:var(--muted);max-width:400px;margin-bottom:40px;position:relative;z-index:1}
-
-/* Кнопка — использует .btn-fill из 01_global */
-.e404 .btn-fill{position:relative;z-index:1}
+.privacy{max-width:720px;margin:0 auto;padding:140px var(--edge) 80px;color:var(--text)}
+.privacy h1{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-1.2px;line-height:1.1;margin-bottom:8px}
+.privacy .privacy-meta{font-size:13px;color:var(--muted);opacity:.6;margin-bottom:48px;letter-spacing:-.18px}
+.privacy h2{font-size:clamp(18px,2.4vw,22px);font-weight:600;letter-spacing:-.5px;line-height:1.25;margin:40px 0 14px}
+.privacy h2:first-of-type{margin-top:0}
+.privacy p,.privacy li{font-size:15px;font-weight:400;letter-spacing:-.2px;line-height:1.6;color:var(--text);opacity:.85;margin-bottom:12px}
+.privacy ul{padding-left:20px;margin-bottom:16px}
+.privacy li{margin-bottom:6px}
+.privacy a{color:var(--text)!important;text-decoration:underline;text-underline-offset:2px;transition:opacity .3s var(--ease-out)}
+.privacy a:hover{opacity:.7}
+.privacy strong{font-weight:600}
+.privacy .privacy-card{background:rgba(0,0,0,.03);border:1px solid var(--border-row);padding:20px 24px;margin:24px 0;font-size:14px;line-height:1.6}
+.privacy .privacy-card p{margin:0;font-size:14px}
+.privacy .privacy-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:32px;text-decoration:none}
+.privacy .privacy-back:hover{color:var(--text);opacity:1}
 
 @media(max-width:640px){
-  .e404{min-height:70vh;padding:80px var(--edge) 60px}
-  .e404-snowflake{margin-bottom:24px}
-  .e404-desc{margin-bottom:32px}
+  .privacy{padding:100px var(--edge) 60px}
+  .privacy p,.privacy li{font-size:14px}
 }
 </style>
 
-<section class="e404">
-  <!-- Фоновое число -->
-  <div class="e404-bg">404</div>
+<main class="privacy">
+  <a href="/" class="privacy-back">← На&nbsp;главную</a>
 
-  <!-- Снежинка -->
-  <svg class="e404-snowflake" viewBox="-3 18 81 81" fill="currentColor">
-    <g class="snowflake-inner"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z"/></g>
-  </svg>
+  <h1>Публичная оферта</h1>
+  <p class="privacy-meta">Редакция от&nbsp;28&nbsp;июня 2026&nbsp;года</p>
 
-  <!-- Заголовок — меняй текст -->
-  <h1 class="e404-title">Страница не&nbsp;найдена</h1>
+  <p><strong>Индивидуальный предприниматель Тукаев Руслан Геннадиевич</strong> (далее&nbsp;&mdash; &laquo;Исполнитель&raquo;), ИНН&nbsp;343703190770, ОГРНИП&nbsp;325344300119216, публикует настоящую публичную оферту (далее&nbsp;&mdash; &laquo;Договор&raquo;) в&nbsp;адрес любого физического лица, индивидуального предпринимателя или&nbsp;юридического лица (далее&nbsp;&mdash; &laquo;Заказчик&raquo;).</p>
+  <p><strong>Акцепт оферты</strong> (полное и&nbsp;безоговорочное принятие условий)&nbsp;&mdash; оплата Заказчиком услуг/продуктов Исполнителя. С&nbsp;момента оплаты Договор считается заключённым.</p>
 
-  <!-- Описание — меняй текст -->
-  <p class="e404-desc">Возможно, страница была удалена или&nbsp;ты&nbsp;перешёл по&nbsp;неправильной ссылке. Вернись на&nbsp;главную&nbsp;— там всё на&nbsp;месте</p>
+  <h2>1. Предмет договора</h2>
+  <p>1.1. Исполнитель разрабатывает и/или&nbsp;предоставляет Заказчику доступ к&nbsp;цифровым продуктам и&nbsp;услугам ТУКАЙФ, в&nbsp;том числе:</p>
+  <ul>
+    <li><strong>(а)</strong> свадебные анкеты и&nbsp;иные веб-инструменты сбора данных;</li>
+    <li><strong>(б)</strong> сайты и&nbsp;лендинги с&nbsp;размещением на&nbsp;сервере Исполнителя (хостинг);</li>
+    <li><strong>(в)</strong> Telegram-боты и&nbsp;мини-приложения;</li>
+    <li><strong>(г)</strong> интерактивы для&nbsp;мероприятий;</li>
+    <li><strong>(д)</strong> графический дизайн (обложки, афиши, презентации и&nbsp;иные материалы).</li>
+  </ul>
+  <p>1.2. Конкретный состав, технические характеристики, сроки и&nbsp;стоимость определяются в&nbsp;Заказе&nbsp;/&nbsp;Техническом задании, согласованном сторонами до&nbsp;начала работ, либо в&nbsp;описании продукта на&nbsp;соответствующей странице сайта Исполнителя. Заказ/ТЗ является неотъемлемой частью Договора.</p>
+  <p>1.3. Состав работ по&nbsp;конкретному продукту фиксируется до&nbsp;начала работ. Всё, что не&nbsp;входит в&nbsp;согласованный состав, относится к&nbsp;дополнительным работам (§2.3).</p>
 
-  <!-- Кнопка — ссылка на главную -->
-  <a href="/" class="btn-fill magnetic">
-    <span>На&nbsp;главную</span>
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-  </a>
-</section>
+  <h2>2. Стоимость и&nbsp;порядок оплаты</h2>
+  <p>2.1. <strong>Стоимость</strong> определяется в&nbsp;Заказе/ТЗ или&nbsp;в&nbsp;описании продукта. Оплата&nbsp;&mdash; 100% предоплата либо по&nbsp;этапам, по&nbsp;согласованию.</p>
+  <p>2.2. <strong>Хостинг&nbsp;/&nbsp;годовое обслуживание</strong> (для продуктов, размещаемых на&nbsp;сервере Исполнителя: сайты, анкеты)&nbsp;&mdash; по&nbsp;тарифу, указанному в&nbsp;Заказе или&nbsp;описании продукта. <strong>Первый год</strong> размещения, если не&nbsp;указано иное, входит в&nbsp;стоимость разработки. Последующие периоды оплачиваются авансом до&nbsp;начала очередного периода.</p>
+  <p>2.3. <strong>Дополнительные работы</strong> (правки после сдачи, новые блоки/функции, подключение аналитики и&nbsp;т.п.) оплачиваются отдельно по&nbsp;согласованной стоимости.</p>
+  <p>2.4. Оплата&nbsp;&mdash; в&nbsp;безналичном порядке на&nbsp;расчётный счёт Исполнителя (СБП&nbsp;/&nbsp;реквизиты в&nbsp;§8). Исполнитель применяет УСН; при&nbsp;оплате формируется кассовый чек согласно 54-ФЗ.</p>
+  <p>2.5. Моментом оплаты считается поступление средств на&nbsp;счёт Исполнителя.</p>
+
+  <h2>3. Права на&nbsp;результат</h2>
+  <p>3.1. После полной оплаты исключительное право на&nbsp;дизайн и&nbsp;вёрстку готового продукта (в&nbsp;части, созданной Исполнителем по&nbsp;Заказу) переходит к&nbsp;Заказчику. Исходные/редактируемые файлы дизайна не&nbsp;передаются, если иное не&nbsp;согласовано отдельно.</p>
+  <p>3.2. <strong>Контент</strong> (тексты, фотографии, видео, логотипы, отзывы и&nbsp;иные материалы) предоставляется Заказчиком. Заказчик <strong>гарантирует</strong>, что обладает всеми правами на&nbsp;этот контент и&nbsp;его размещение не&nbsp;нарушает прав третьих лиц. Ответственность за&nbsp;контент несёт Заказчик.</p>
+  <p>3.3. Доменное имя, если требуется, регистрируется и&nbsp;оплачивается Заказчиком самостоятельно и&nbsp;является его собственностью. Исполнитель помогает в&nbsp;технической настройке. Для&nbsp;продуктов на&nbsp;поддомене Исполнителя (вида <em>имя.twokaif.ru</em>) поддомен предоставляется Исполнителем на&nbsp;срок действия обслуживания.</p>
+  <p>3.4. Заказчик предоставляет Исполнителю право использовать готовый результат (изображения, ссылку) в&nbsp;портфолио и&nbsp;рекламных материалах Исполнителя как&nbsp;пример выполненной работы. По&nbsp;письменной просьбе Заказчика конкретный проект из&nbsp;портфолио исключается.</p>
+
+  <h2>4. Персональные данные</h2>
+  <p>4.1. <strong>Сайты-визитки и&nbsp;лендинги без&nbsp;форм</strong> (только кнопки-переходы в&nbsp;мессенджеры): персональные данные посетителей не&nbsp;собираются. Если по&nbsp;отдельному соглашению на&nbsp;таком сайте размещаются формы/аналитика&nbsp;&mdash; оператором персональных данных является <strong>Заказчик</strong> и&nbsp;самостоятельно несёт обязанности оператора по&nbsp;152-ФЗ; Исполнитель осуществляет только техническое размещение.</p>
+  <p>4.2. <strong>Продукты Исполнителя со&nbsp;сбором данных на&nbsp;стороне Исполнителя</strong> (свадебные анкеты, боты и&nbsp;иные инструменты, где данные обрабатываются на&nbsp;инфраструктуре Исполнителя): оператором персональных данных выступает <strong>Исполнитель</strong>. Исполнитель зарегистрирован в&nbsp;реестре операторов ПД Роскомнадзора (рег.&nbsp;№&nbsp;34-26-044834 от&nbsp;14.05.2026) и&nbsp;обрабатывает данные согласно <a href="/privacy">Политике конфиденциальности</a>. Данные хранятся ограниченный срок (для анкет&nbsp;&mdash; резервная копия не&nbsp;дольше 90&nbsp;дней) и&nbsp;передаются только конечному получателю (например, ведущему), указанному при&nbsp;заполнении.</p>
+  <p>4.3. Стороны обрабатывают данные друг друга (контакты, реквизиты) только для&nbsp;исполнения Договора.</p>
+
+  <h2>5. Хостинг, сроки и&nbsp;приостановка</h2>
+  <p>5.1. Исполнитель обеспечивает доступность размещаемых продуктов и&nbsp;их&nbsp;резервное копирование по&nbsp;мере технической возможности. Исполнитель не&nbsp;отвечает за&nbsp;перерывы по&nbsp;вине третьих лиц (хостинг-провайдер, регистратор домена, сбои сети, блокировки).</p>
+  <p>5.2. <strong>Неоплата обслуживания/хостинга</strong> за&nbsp;очередной период: Исполнитель уведомляет Заказчика заблаговременно. При&nbsp;отсутствии оплаты в&nbsp;течение <strong>7&nbsp;(семи) дней</strong> после окончания оплаченного периода продукт приостанавливается (становится недоступен) с&nbsp;сохранением файлов и&nbsp;собранных данных. После оплаты доступность восстанавливается.</p>
+  <p>5.3. Файлы и&nbsp;данные приостановленного продукта <strong>сохраняются</strong>. Автоматического удаления по&nbsp;сроку не&nbsp;предусмотрено; удаление&nbsp;&mdash; только по&nbsp;отдельному решению Исполнителя с&nbsp;предварительным уведомлением Заказчика.</p>
+
+  <h2>6. Ответственность</h2>
+  <p>6.1. Исполнитель не&nbsp;несёт ответственности за&nbsp;содержание контента Заказчика и&nbsp;последствия его размещения.</p>
+  <p>6.2. Ответственность Исполнителя по&nbsp;Договору ограничивается стоимостью соответствующей услуги/продукта.</p>
+  <p>6.3. Стороны освобождаются от&nbsp;ответственности при&nbsp;обстоятельствах непреодолимой силы.</p>
+
+  <h2>7. Срок действия и&nbsp;расторжение</h2>
+  <p>7.1. Договор действует с&nbsp;момента акцепта и&nbsp;до&nbsp;исполнения сторонами обязательств. По&nbsp;услугам обслуживания/хостинга&nbsp;&mdash; на&nbsp;срок оплаченного периода с&nbsp;продлением при&nbsp;оплате следующего.</p>
+  <p>7.2. Заказчик вправе отказаться от&nbsp;обслуживания/хостинга в&nbsp;любой момент; внесённая за&nbsp;оплаченный период плата не&nbsp;возвращается за&nbsp;неиспользованную часть, если иное не&nbsp;согласовано.</p>
+  <p>7.3. Возврат за&nbsp;разработку&nbsp;&mdash; по&nbsp;условиям конкретного продукта (например, для&nbsp;свадебных анкет действует возврат в&nbsp;первый день после сдачи, если результат не&nbsp;устроил).</p>
+
+  <h2>8. Реквизиты Исполнителя</h2>
+  <div class="privacy-card">
+    <p>ИП&nbsp;Тукаев Руслан Геннадиевич<br>
+    ИНН&nbsp;343703190770 &middot; ОГРНИП&nbsp;325344300119216<br>
+    Р/с&nbsp;40802810120000776744<br>
+    Банк: АО&nbsp;&laquo;ТБанк&raquo; (Точка) &middot; БИК&nbsp;044525104<br>
+    Телефон: <a href="tel:+79047511751">+7&nbsp;904&nbsp;751-17-51</a><br>
+    Email: <a href="mailto:rus925@yandex.ru">rus925@yandex.ru</a><br>
+    Telegram: <a href="https://t.me/twokaif_ruslan" target="_blank" rel="noopener">@twokaif_ruslan</a></p>
+  </div>
+</main>
 
 <!-- ═══ 14_Футер ═══ -->
 <!-- ============================================

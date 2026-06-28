@@ -102,6 +102,26 @@ BLOCKS="$TMP_BLOCKS"
   echo '</html>'
 } > "$DIST/privacy.html"
 
+# ─── OFERTA.HTML (00 + 01 + 03 + 18 + 14 + 15) ───────
+{
+  echo '<!DOCTYPE html>'
+  echo '<html lang="ru">'
+  echo '<head>'
+  echo '<meta charset="UTF-8">'
+  cat "$BLOCKS/00_HEAD-код.html" | perl -pe 's~<title>[^<]+</title>~<title>Публичная оферта — ТУКАЙФ</title>~; s~<link rel="canonical"[^>]+>~<link rel="canonical" href="https://twokaif.ru/oferta">~'
+  echo '<meta name="robots" content="noindex,follow">'
+  echo '</head>'
+  echo '<body>'
+  for f in 01_Глобальные-стили 03_Навигация 18_Оферта 14_Футер 15_Куки-баннер; do
+    echo
+    echo "<!-- ═══ $f ═══ -->"
+    cat "$BLOCKS/${f}.html"
+  done
+  echo
+  echo '</body>'
+  echo '</html>'
+} > "$DIST/oferta.html"
+
 # ─── 404.HTML (00 + 01 + 03 + 16 + 14 + 15) ──────────────
 {
   echo '<!DOCTYPE html>'
