@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<!-- ============================================
+     БЛОК 0: HEAD-КОД
+     Всё, что идёт в <head> — title, description, мета,
+     микроразметка, шрифты, аналитика.
+
+     ДАННЫЕ САЙТА:
+     — Название: ТУКАЙФ — ивент-дизайнер для профессионалов
+     — Описание: Цифровой дизайн для ивент-индустрии: обложки,
+       афиши, презентации, сайты, интерактивы
+     — Домен: https://twokaif.ru
+     — Яндекс.Метрика: 108388166
+     ============================================ -->
+
+<!-- TITLE + DESCRIPTION -->
+<title>Сайты ведущим, артистам и агентствам — ТУКАЙФ</title>
+<meta name="description" content="Сайты для ведущих, артистов и ивент-агентств: свой движок, адаптив, анимации. Без конструкторов и шаблонов.">
+
+<!-- Canonical (главный URL — после переезда) -->
+<link rel="canonical" href="https://twokaif.ru/sajty-vedushim">
+
+<!-- Robots — staging закрыт через nginx X-Robots-Tag, на проде индексируется -->
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="ТУКАЙФ — ивент-дизайнер для профессионалов">
+<meta property="og:description" content="Дизайн и автоматизация для ивент-индустрии: обложки, афиши, презентации, телеграм-боты для ведущих, анкеты молодожёнам, интерактивы. Свой движок, без шаблонов.">
+<meta property="og:url" content="https://twokaif.ru/sajty-vedushim">
+<meta property="og:image" content="https://twokaif.ru/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="ТУКАЙФ">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ТУКАЙФ — ивент-дизайнер для профессионалов">
+<meta name="twitter:description" content="Дизайн и автоматизация для ивент-индустрии: обложки, афиши, презентации, телеграм-боты для ведущих, анкеты молодожёнам, интерактивы. Свой движок, без шаблонов.">
+<meta name="twitter:image" content="https://twokaif.ru/images/og-image.jpg">
+
+<!-- Микроразметка Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://twokaif.ru/#org",
+      "name": "ТУКАЙФ",
+      "alternateName": "TWOKAIF",
+      "url": "https://twokaif.ru",
+      "description": "Дизайн и автоматизация для ивент-индустрии: обложки, афиши, презентации, телеграм-боты для ведущих, анкеты молодожёнам, интерактивы. Свой движок, без шаблонов.",
+      "image": "https://twokaif.ru/images/og-image.jpg",
+      "logo": "https://twokaif.ru/images/logo.png",
+      "founder": {
+        "@type": "Person",
+        "name": "Руслан Тукаев",
+        "url": "https://t.me/twokaif_ruslan",
+        "jobTitle": "Ивент-дизайнер"
+      },
+      "serviceType": ["Графический дизайн", "Веб-дизайн", "Дизайн мероприятий"],
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "priceRange": "₽₽₽",
+      "sameAs": [
+        "https://t.me/twokaif",
+        "https://vk.com/twokaif",
+        "https://www.instagram.com/twokaif.design"
+      ],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": "https://t.me/twokaif_ruslan",
+        "availableLanguage": ["ru"]
+      }],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Услуги ТУКАЙФ",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-covers"}, "priceCurrency": "RUB", "price": "5000", "priceSpecification": {"@type": "UnitPriceSpecification", "price": "5000", "priceCurrency": "RUB", "valueAddedTaxIncluded": true, "referenceQuantity": {"@type": "QuantitativeValue", "value": "1", "unitCode": "C62"}}},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-posters"}, "priceCurrency": "RUB", "price": "7000"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-presentations"}, "priceCurrency": "RUB", "price": "15000"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-websites"}, "priceCurrency": "RUB", "price": "30000"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-bots"}, "priceCurrency": "RUB", "price": "4900"},
+          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-anketas"}, "priceCurrency": "RUB", "price": "7000"}
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-covers",
+      "name": "Дизайн обложек для ивента",
+      "description": "Серия обложек в едином стиле для соцсетей и презентаций ведущих, ивент-агентств и артистов. Каждый комплект — под конкретное событие, без шаблонов.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Графический дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "5000", "priceSpecification": {"@type": "UnitPriceSpecification", "price": "5000", "priceCurrency": "RUB"}},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-posters",
+      "name": "Афиши и плакаты",
+      "description": "Печатные и цифровые афиши для мероприятий, концертов, свадеб и корпоративов. Дизайн под событие, без шаблонов.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Графический дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "7000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-presentations",
+      "name": "Победные презентации",
+      "description": "Презентации для тендеров, питчей и сложных продаж. Помогаем выигрывать. Структура, дизайн, тексты — всё под конкретную задачу.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Графический дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "15000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-websites",
+      "name": "Сайты для ивент-индустрии",
+      "description": "Лендинги и сайты-портфолио для ведущих, ивент-агентств и артистов. Свой движок, без шаблонов и Tilda. Резиновая вёрстка, анимации, индексация в Яндексе.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Веб-дизайн",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "30000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-bots",
+      "name": "Telegram-боты для ведущих",
+      "description": "Telegram-боты для ведущих: автоматическая генерация обложек концертов, напоминания клиентам, мини-приложения. Свой движок без шаблонов и подписок.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Разработка программного обеспечения",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "4900"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://twokaif.ru/#service-anketas",
+      "name": "Анкеты молодожёнам",
+      "description": "Персональные анкеты для свадебных ведущих. Молодожёны заполняют — ведущий получает готовый документ со всеми деталями. Кастомизация под бренд каждого ведущего.",
+      "provider": {"@id": "https://twokaif.ru/#org"},
+      "serviceType": "Разработка программного обеспечения",
+      "areaServed": {"@type": "Country", "name": "Россия"},
+      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "7000"},
+      "image": "https://twokaif.ru/images/og-image.jpg"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://twokaif.ru/#website",
+      "url": "https://twokaif.ru/",
+      "name": "ТУКАЙФ",
+      "publisher": {"@id": "https://twokaif.ru/#org"},
+      "inLanguage": "ru-RU"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://twokaif.ru/#faq",
+      "inLanguage": "ru-RU",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Как начинается работа?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1) Отправляешь запрос в Телеграм с описанием задачи и желаемым дедлайном. 2) Оцениваем пожелания, смотрим в календарь занятости и даём развёрнутый ответ: свободный слот, сроки и стоимость. 3) Если всё устраивает — отправляешь сумму брони слота и фиксируешь рабочее время. 4) Оговариваем срок предоставления ТЗ. 5) Получаем ТЗ, оцениваем, задаём уточняющие вопросы — и приступаем к работе."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Что нужно подготовить для старта?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Главное — техническое задание: тексты, фотоматериалы в максимальном качестве, ссылки и референсы. Видео загружай на Кинескоп. Чем полнее ТЗ — тем быстрее сделаем."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ты пишешь тексты для дизайна?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Нет, мы не копирайтеры. Но проверяем всё, что присылаешь — если находим ошибку или хотим сократить, согласовываем с тобой. Уважаем авторство."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как устроена предоплата?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Предоплаты нет. Ты бронируешь слот — фиксируешь наше время под твою задачу. Если ТЗ и материалы не предоставлены вовремя — бронь обнуляется, слот уходит следующему."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько правок входит в проект?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Две итерации правок включены. Перед стартом подробно обсуждаем задачу — обычно всё попадает с первого раза."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "В каком формате получу файлы?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Обложки и афиши — PNG, JPG. Презентации и интерактивы — PDF, PPTX. Если нужна редактируемая версия в PowerPoint — сделаем, стоимость зависит от объёма и сложности файла. Сайты — готовый проект на Тильде с полным доступом. Исходные файлы дизайна не передаём — дорожим авторским правом. Ты получаешь готовый результат в финальном формате."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Работаете только с ивент-индустрией?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Основной фокус — ведущие, ивент-агентства и артисты. Но открыты к смежным сферам: музыка, шоу-бизнес, спорт, премиальные бренды."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Есть ли рабочий график?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Будни с 10:00 до 19:00 МСК. По выходным отдыхаем — команда тоже должна заряжаться."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Подтверждение для Google Search Console -->
+<meta name="google-site-verification" content="H8iItXU7tnn8s2mpSYgTzqBXxVJ97Vxjr0iV6PlP-f0" />
+
+<!-- Self-hosted шрифты Inter Tight (без Google Fonts) -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/NGSwv5HMAFg6IuGlBNMjxLsD8ah8QA.woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/inter-tight.css">
+
+<!-- Theme color -->
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
+
+<!-- GSAP (анимации) — self-hosted -->
+<script defer src="/js/gsap.min.js"></script>
+<script defer src="/js/ScrollTrigger.min.js"></script>
+
+<!-- Фавикон SVG — эталонная звёздочка ТУКАЙФ (источник: brand.twokaif.ru) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Yandex.Metrika counter 108388166 — загружается из cookie-banner после согласия (см. блок 15_Куки-баннер.html) -->
+<noscript><div><img src="https://mc.yandex.ru/watch/108388166" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+<!-- Цели Метрики — делегированные клики по селекторам -->
+<script>
+(function(){
+  function goal(name){ if(window.ym) ym(108388166,'reachGoal',name); }
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    // Любой клик в Telegram
+    if (/^https?:\/\/t\.me\//.test(href)) goal('goal_telegram');
+    // Клик на wedding.twokaif.ru (карточка акции / раздел услуг АНКЕТЫ)
+    if (/wedding\.twokaif\.ru/.test(href)) goal('goal_wedding_open');
+    // Карточка PNG в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
+    // Карточка АГЕНТ в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
+    // Карточка МЖ (МУЖЧИНЫ vs ЖЕНЩИНЫ) в блоке акций
+    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_mzh_bot/.test(href)) goal('goal_mzh_open');
+    // Раздел АНКЕТЫ в Услугах
+    if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
+  }, {capture:true, passive:true});
+})();
+</script>
+
+<!-- Сброс -->
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background-color:#fff;}
+@media(hover:hover) and (pointer:fine){*{cursor:none !important;}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Service","name":"Сайты ведущим и артистам","serviceType":"Веб-дизайн","provider":{"@type":"ProfessionalService","name":"ТУКАЙФ","url":"https://twokaif.ru"},"areaServed":"RU","description":"Одностраничные и многостраничные сайты для ведущих, артистов и агентств — свой движок, адаптив, анимации.","url":"https://twokaif.ru/sajty-vedushim"},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Главная","item":"https://twokaif.ru/"},
+{"@type":"ListItem","position":2,"name":"Сайты ведущим","item":"https://twokaif.ru/sajty-vedushim"}]}
+]}
+</script>
+<style>a{color:inherit}</style>
+</head>
+<body>
+<!-- ═══ 01_Глобальные-стили ═══ -->
+<!-- ============================================
+     БЛОК 1: ГЛОБАЛЬНЫЕ СТИЛИ + ШРИФТ + GSAP + SCROLLTRIGGER
+     T123 блок — ставится ПЕРВЫМ на каждой странице
+
+     Здесь меняй:
+     — Цвета: :root
+     — Типографику: брейкпоинты 1200/960/640/480
+     — Отступы: --edge (48/32/20/16px)
+     — Шрифт: --font-body
+     ============================================ -->
+
+<!-- Шрифты Inter Tight + GSAP + ScrollTrigger подключаются в HEAD (блок 00) self-hosted -->
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { background-color: #ffffff !important; }
+
+/* --- Палитра и токены --- */
+:root {
+  --font-body: 'Inter Tight', sans-serif;
+
+  /* Цвета — светлая тема */
+  --bg: #ffffff;
+  --surface: #f5f5f7;
+  --surface2: #e8e8ed;
+  --border: rgba(29, 29, 31, 0.08);
+  --border-row: rgba(29, 29, 31, 0.16);
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+
+  /* Отступы — Desktop (>1200px) */
+  --edge: 48px;
+  --gap: 24px;
+
+  /* Анимации */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Типографика — Desktop (крупнее) */
+  --text-hero: 140px;
+  --text-display: 80px;
+  --text-headline: 56px;
+  --text-title: 32px;
+  --text-body-lg: 24px;
+  --text-body: 19px;
+  --text-caption: 16px;
+  --text-micro: 14px;
+}
+
+/* --- Tablet (≤1200px) --- */
+@media (max-width: 1200px) {
+  :root {
+    --edge: 32px;
+    --text-hero: 100px;
+    --text-display: 64px;
+    --text-headline: 48px;
+    --text-title: 28px;
+    --text-body-lg: 22px;
+  }
+}
+
+/* --- Small tablet (≤960px) --- */
+@media (max-width: 960px) {
+  :root {
+    --edge: 24px;
+    --text-hero: 72px;
+    --text-display: 48px;
+    --text-headline: 36px;
+    --text-title: 24px;
+    --text-body-lg: 20px;
+  }
+}
+
+/* --- Mobile (≤640px) --- */
+@media (max-width: 640px) {
+  :root {
+    --edge: 20px;
+    --text-hero: 52px;
+    --text-display: 40px;
+    --text-headline: 30px;
+    --text-title: 22px;
+    --text-body-lg: 18px;
+    --text-body: 17px;
+    --text-caption: 15px;
+  }
+}
+
+/* --- Small mobile (≤480px) --- */
+@media (max-width: 480px) {
+  :root {
+    --edge: 16px;
+    --text-hero: 44px;
+    --text-display: 32px;
+    --text-headline: 26px;
+    --text-title: 20px;
+    --text-body-lg: 17px;
+    --text-body: 16px;
+  }
+}
+
+html {
+  overflow-x: clip;
+  background: var(--bg);
+  background-color: #ffffff;
+  scroll-behavior: smooth;
+}
+/* Lenis отключён */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: rgba(29, 29, 31, 0.15); }
+
+/* --- Видимый фокус с клавиатуры (доступность) --- */
+/* Только для Tab-навигации; клик мышью кольцо не рисует */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- Появление секций при скролле --- */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Кастомный курсор—снежинка (только десктоп) ---
+   Здесь меняй:
+   — Размер снежинки: width/height (сейчас 10px)
+   — Размер при наведении на кнопки: .cursor-dot.hover width/height (сейчас 30px)
+   — Скорость вращения: animation spin (сейчас 4 секунды)
+   — Цвет: color (сейчас #fff, инвертируется через mix-blend-mode)
+   — Плавность следования за мышью: в скрипте коэффициент 0.25 (больше = быстрее, макс 1)
+*/
+.cursor-dot {
+  width: 10px; height: 10px; /* размер снежинки */
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), opacity 0.3s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference; /* на белом — чёрная, на чёрном — белая */
+  opacity: 0;
+  color: #fff; /* базовый цвет (инвертируется автоматически) */
+}
+.cursor-dot svg {
+  width: 100%; height: 100%;
+  display: block;
+  animation: spin 4s linear infinite; /* скорость вращения */
+}
+.cursor-dot.visible { opacity: 1; }
+.cursor-dot.hover {
+  width: 30px; height: 30px; /* размер при наведении на кнопки/ссылки */
+}
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot { display: none !important; } /* скрываем на тачскринах */
+}
+
+/* --- Магнитные кнопки --- */
+.magnetic { transition: transform 0.3s var(--ease-out); }
+
+/* --- Анимация появления текста по словам --- */
+.text-reveal .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.text-reveal.visible .word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Выезд заголовков секций (.head-reveal) --- */
+/* Скрытый стейт вешает JS (.head-reveal--armed) — без JS/при reduced-motion заголовок виден */
+.head-reveal--armed {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity 0.7s var(--ease-out), transform 0.8s cubic-bezier(.16,1,.3,1);
+  will-change: opacity, transform;
+}
+.head-reveal--armed.head-reveal--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Кнопка с заливкой слева (универсальная) --- */
+.btn-fill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: var(--text) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--text) !important;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  text-decoration: none !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-out);
+}
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-out);
+  z-index: 0;
+}
+.btn-fill span, .btn-fill svg { position: relative; z-index: 1; color: inherit !important; }
+.btn-fill:hover::before { transform: scaleX(1); }
+.btn-fill:hover { color: #1d1d1f !important; }
+.btn-fill:active { transform: scale(0.97); }
+.btn-fill svg {
+  width: 18px; height: 18px;
+  transition: transform 0.4s var(--ease-out);
+}
+.btn-fill:hover svg { transform: translateX(4px); }
+
+/* --- Кнопка-контур (ghost) --- */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-row);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
+}
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.5s var(--ease-out);
+  z-index: 0;
+}
+.btn-ghost span { position: relative; z-index: 1; }
+.btn-ghost:hover::before { transform: scaleY(1); }
+.btn-ghost:hover { color: var(--bg); border-color: var(--text); }
+.btn-ghost:active { transform: scale(0.97); }
+</style>
+
+<script>
+// --- Гарантируем светлый фон / тёмный текст ---
+document.addEventListener('DOMContentLoaded', function() {
+  document.documentElement.style.backgroundColor = '#ffffff';
+  document.body.style.backgroundColor = '#ffffff';
+  document.body.style.color = '#1d1d1f';
+});
+
+
+// --- Lenis выключен: ломал sync с ScrollTrigger pin-секциями ---
+// Стрелка-наверх в футере работает через нативный smooth-scroll.
+var lenis = null;
+
+// --- Анимированный фавикон (плавное вращение, адаптация под тему) ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  var canvas = document.createElement('canvas');
+  canvas.width = 32; canvas.height = 32;
+  var ctx = canvas.getContext('2d');
+  var link = document.querySelector('link[rel="icon"]') || document.createElement('link');
+  link.rel = 'icon'; link.type = 'image/png';
+  if (!link.parentNode) document.head.appendChild(link);
+  var path = new Path2D('M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z');
+  var darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+  var reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var scale = 0.22;
+  var speed = Math.PI * 2 / 30000;
+  var start = Date.now();
+  function draw(angle) {
+    ctx.clearRect(0, 0, 32, 32);
+    ctx.save();
+    ctx.translate(16, 16);
+    ctx.rotate(angle);
+    ctx.scale(scale, scale);
+    ctx.translate(-37.27, -58.78);
+    ctx.fillStyle = darkMq.matches ? '#ffffff' : '#1d1d1f';
+    ctx.fill(path);
+    ctx.restore();
+    link.href = canvas.toDataURL('image/png');
+  }
+  if (reduceMq.matches) {
+    draw(0); // «уменьшить движение» — статичная иконка, без перерисовок
+  } else {
+    var raf = null, last = 0;
+    function loop() {
+      if (document.hidden) { raf = null; return; } // вкладка в фоне — стоп
+      var now = Date.now();
+      if (now - last >= 100) { draw((now - start) * speed); last = now; } // ~10 кадров/сек
+      raf = requestAnimationFrame(loop);
+    }
+    raf = requestAnimationFrame(loop);
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && !raf) { raf = requestAnimationFrame(loop); }
+    });
+  }
+})();
+
+// --- IntersectionObserver для section-reveal ---
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+
+function observeSections() {
+  document.querySelectorAll('.section-reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+}
+window.addEventListener('load', observeSections);
+setTimeout(observeSections, 2000);
+
+// --- Анимация текста по словам (.text-reveal) ---
+(function() {
+  function wrapWords() {
+    document.querySelectorAll('.text-reveal').forEach(function(el) {
+      if (el.dataset.wrapped) return;
+      var text = el.textContent.trim();
+      var words = text.split(/\s+/);
+      el.innerHTML = words.map(function(word, i) {
+        return '<span class="word" style="transition-delay:' + (i * 0.04) + 's">' + word + '</span>';
+      }).join(' ');
+      el.dataset.wrapped = 'true';
+    });
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  function init() {
+    wrapWords();
+    document.querySelectorAll('.text-reveal').forEach(function(el) { obs.observe(el); });
+  }
+  window.addEventListener('load', init);
+  setTimeout(init, 2000);
+})();
+
+// --- Выезд заголовков секций (.head-reveal) ---
+(function() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('head-reveal--in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.2 });
+  function init() {
+    document.querySelectorAll('.head-reveal:not([data-hr])').forEach(function(el) {
+      el.setAttribute('data-hr', '1');
+      el.classList.add('head-reveal--armed');
+      io.observe(el);
+    });
+  }
+  window.addEventListener('load', init);
+  setTimeout(init, 2000);
+})();
+
+// --- Магнитные кнопки ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  document.addEventListener('mousemove', function(e) {
+    document.querySelectorAll('.magnetic').forEach(function(btn) {
+      var rect = btn.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = e.clientX - cx, dy = e.clientY - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var threshold = Math.max(rect.width, rect.height) * 0.8;
+      if (dist < threshold) {
+        var mx = Math.max(-4, Math.min(4, dx * 0.06));
+        var my = Math.max(-4, Math.min(4, dy * 0.06));
+        btn.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+      } else {
+        btn.style.transform = 'translate(0,0)';
+      }
+    });
+  });
+})();
+
+// --- Кастомный курсор—снежинка ---
+(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  var dot = document.createElement('div');
+  dot.classList.add('cursor-dot');
+  dot.innerHTML = '<svg viewBox="-3 18 81 81" fill="currentColor"><path d="M47.38 41.27L64.44 31.43L74.55 48.93L57.49 58.78L74.55 68.63L64.44 86.14L47.38 76.29V95.99H27.17V76.29L10.11 86.14L0 68.63L17.06 58.78L0 48.93L10.11 31.43L27.17 41.28V21.58H47.38V41.27Z"/></svg>';
+  document.body.appendChild(dot);
+  var mx = 0, my = 0, dx = 0, dy = 0;
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    if (!dot.classList.contains('visible')) dot.classList.add('visible');
+  });
+  document.addEventListener('mouseleave', function() { dot.classList.remove('visible'); });
+  function anim() {
+    dx += (mx - dx) * 0.25;
+    dy += (my - dy) * 0.25;
+    dot.style.left = dx + 'px';
+    dot.style.top = dy + 'px';
+    requestAnimationFrame(anim);
+  }
+  anim();
+  document.addEventListener('mouseover', function(e) {
+    if (e.target.closest('a, button, [role="button"], .btn-fill, .btn-ghost, .magnetic')) dot.classList.add('hover');
+  });
+  document.addEventListener('mouseout', function(e) {
+    if (e.target.closest('a, button, [role="button"], .btn-fill, .btn-ghost, .magnetic')) dot.classList.remove('hover');
+  });
+})();
+</script>
+
+<!-- ═══ 03_Навигация ═══ -->
+<!-- ============================================
+     БЛОК 3: НАВИГАЦИЯ
+     T123 блок — фиксированная шапка + бургер-меню
+
+     Здесь меняй:
+     — Логотип: текст «ТУКАЙФ» в class="logo-text"
+     — Подпись логотипа: class="logo-sub"
+     — Десктопные ссылки: class="nav-links" (href + текст)
+     — Мобильные ссылки: class="menu-links" (href + текст)
+     — Кнопка «Написать»: class="nav-cta" (href — ссылка на Телеграм)
+     — Соцсети: class="menu-social-links" (href — ссылки)
+     — Часы: автоматические, часовой пояс МСК
+     ============================================ -->
+<style>
+/* --- Навбар --- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:48px;padding-top:env(safe-area-inset-top,0px);background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(29,29,31,.08)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 var(--edge);max-width:100%;position:relative}
+
+/* --- Логотип --- */
+.logo-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0;text-decoration:none;cursor:pointer}
+.logo-mark{width:13px;height:13px;flex-shrink:0;overflow:hidden;display:block;color:#1d1d1f}
+.snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite;will-change:transform}
+.logo-text{font-size:16px;font-weight:700;letter-spacing:-.32px;line-height:1;color:#1d1d1f}
+.logo-sep{width:1px;height:26px;background:rgba(29,29,31,.08);flex-shrink:0;margin:0 12px}
+.logo-sub{font-size:11px;font-weight:400;letter-spacing:-.16px;line-height:.9;color:#6e6e73}
+
+/* --- Центральные ссылки (десктоп) --- */
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;padding:0!important;margin:0!important;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-links a{font-size:12px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f;text-decoration:none;position:relative;display:block;height:16px;overflow:hidden;perspective:200px}
+.nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
+.nav-links a:hover .nav-link-flip{transform:translateY(-100%)}
+
+/* --- Правая часть --- */
+.nav-right{display:flex;align-items:center;gap:20px;flex-shrink:0}
+.nav-time{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#6e6e73;opacity:.8}
+
+/* Кнопка CTA — маленькая с заливкой */
+.nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
+.nav-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
+.nav-cta span{position:relative;z-index:1}
+.nav-cta:hover::before{transform:scaleX(1)}
+.nav-cta:hover{color:#1d1d1f!important}
+
+/* --- Бургер --- */
+.burger-btn{display:none;width:44px;height:44px;background:transparent;border:1px solid rgba(29,29,31,.12);cursor:pointer;position:relative;padding:0;flex-shrink:0;transition:background .3s var(--ease-out),border-color .3s var(--ease-out)}
+.burger-btn:hover{background:#1d1d1f;border-color:#1d1d1f}
+.burger-btn:hover .burger-line{background:#fff}
+.burger-line{display:block;width:14px;height:1px;background:#1d1d1f;position:absolute;left:50%;transform:translateX(-50%);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),background .3s var(--ease-out)}
+.burger-line:nth-child(1){top:14px}
+.burger-line:nth-child(2){top:20px}
+.burger-btn.active{background:#1d1d1f;border-color:#1d1d1f}
+.burger-btn.active .burger-line{background:#fff}
+.burger-btn.active .burger-line:nth-child(1){top:17px;transform:translateX(-50%) rotate(45deg)}
+.burger-btn.active .burger-line:nth-child(2){top:17px;transform:translateX(-50%) rotate(-45deg)}
+
+/* --- Оверлей меню --- */
+.menu-overlay{position:fixed;inset:0;z-index:190;pointer-events:none;visibility:hidden;transition:visibility 0s .5s}
+.menu-overlay.active{pointer-events:all;visibility:visible;transition:visibility 0s}
+.menu-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .4s var(--ease-out)}
+.menu-overlay.active .menu-backdrop{background:rgba(0,0,0,.4)}
+.menu-panel{position:absolute;z-index:2;top:48px;left:0;right:0;background:#ffffff;transform:translateY(-100%);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-overlay.active .menu-panel{transform:translateY(0);opacity:1}
+.menu-panel-inner{padding:8px var(--edge) 40px}
+.menu-links{list-style:none;padding:0!important;margin:0!important}
+.menu-links li{border-bottom:1px solid rgba(29,29,31,.08)}
+.menu-links li:last-child{border-bottom:none}
+.menu-links a{display:block;font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1;color:#1d1d1f!important;text-decoration:none;padding:18px 0;transform:translateY(20px);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-links a .menu-flip{display:block;position:relative;height:1em;overflow:hidden}
+.menu-links a .menu-flip-inner{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.menu-links a .menu-flip-inner::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
+.menu-links a:hover .menu-flip-inner{transform:translateY(-100%)}
+.menu-overlay.active .menu-links a{transform:translateY(0);opacity:1}
+.menu-overlay.active .menu-links li:nth-child(1) a{transition-delay:.05s}
+.menu-overlay.active .menu-links li:nth-child(2) a{transition-delay:.10s}
+.menu-overlay.active .menu-links li:nth-child(3) a{transition-delay:.15s}
+.menu-overlay.active .menu-links li:nth-child(4) a{transition-delay:.20s}
+.menu-overlay.active .menu-links li:nth-child(5) a{transition-delay:.25s}
+.menu-overlay.active .menu-links li:nth-child(6) a{transition-delay:.30s}
+
+/* Соцсети */
+.menu-social-label{font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.35s}
+.menu-social-links{display:flex;gap:20px;list-style:none;padding:0!important;margin:0!important}
+.menu-social-links a{font-size:14px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:18px;overflow:hidden}
+.menu-social-links a .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
+.menu-social-links a:hover .nav-link-flip{transform:translateY(-100%)}
+.menu-overlay.active .menu-social-links a{opacity:1;transform:translateY(0)}
+.menu-overlay.active .menu-social-links li:nth-child(1) a{transition-delay:.40s}
+.menu-overlay.active .menu-social-links li:nth-child(2) a{transition-delay:.45s}
+.menu-overlay.active .menu-social-links li:nth-child(3) a{transition-delay:.50s}
+
+/* CTA мобильное меню */
+.menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
+.menu-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
+.menu-cta:hover::before{transform:scaleX(1)}
+.menu-cta:hover{color:#1d1d1f!important}
+.menu-cta span{position:relative;z-index:1}
+.menu-overlay.active .menu-cta{opacity:1;transform:translateY(0);transition-delay:.55s,.55s,0s}
+
+/* === Адаптив === */
+@media(max-width:960px){.nav-links{display:none}.burger-btn{display:flex}.nav-cta{display:none}}
+@media(max-width:640px){.logo-sub,.logo-sep{display:none}.nav-time{display:none}.menu-links a{font-size:28px;padding:16px 0}.menu-links a .menu-flip{height:28px}.menu-social-links{flex-wrap:wrap;gap:12px}}
+</style>
+
+<!-- НАВИГАЦИЯ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="logo-wrap" id="logoLink" href="/">
+      <svg class="logo-mark" viewBox="-3 18 81 81" fill="none"><g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g></svg>
+      <span class="logo-text">ТУКАЙФ</span>
+      <span class="logo-sep"></span>
+      <span class="logo-sub">Ивент—дизайнер<br>для&nbsp;профессионалов</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#about"><span class="nav-link-flip" data-text="Обо мне">Обо&nbsp;мне</span></a></li>
+      <li><a href="/#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
+      <li><a href="/#services"><span class="nav-link-flip" data-text="Услуги">Услуги</span></a></li>
+      <li><a href="/#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
+      <li><a href="/#cases"><span class="nav-link-flip" data-text="Кейсы">Кейсы</span></a></li>
+      <li><a href="/#pricing"><span class="nav-link-flip" data-text="Цены">Цены</span></a></li>
+      <li><a href="/#faq"><span class="nav-link-flip" data-text="Вопросы">Вопросы</span></a></li>
+      <li><a href="/#contacts"><span class="nav-link-flip" data-text="Контакты">Контакты</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-time" id="navTime">00:00:00 (МСК)</span>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="nav-cta"><span>Написать</span></a>
+      <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- МЕНЮ -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="menu-panel">
+    <div class="menu-panel-inner">
+      <ul class="menu-links">
+        <li><a href="/#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
+        <li><a href="/#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
+        <li><a href="/#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги">Услуги</span></span></a></li>
+        <li><a href="/#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
+        <li><a href="/#cases"><span class="menu-flip"><span class="menu-flip-inner" data-text="Кейсы">Кейсы</span></span></a></li>
+        <li><a href="/#pricing"><span class="menu-flip"><span class="menu-flip-inner" data-text="Цены">Цены</span></span></a></li>
+        <li><a href="/#faq"><span class="menu-flip"><span class="menu-flip-inner" data-text="Вопросы">Вопросы</span></span></a></li>
+        <li><a href="/#contacts"><span class="menu-flip"><span class="menu-flip-inner" data-text="Контакты">Контакты</span></span></a></li>
+      </ul>
+      <div class="menu-social-label">Социальные сети</div>
+      <ul class="menu-social-links">
+        <li><a href="https://t.me/twokaif" target="_blank" rel="noopener"><span class="nav-link-flip" data-text="Телеграм">Телеграм</span></a></li>
+        <li><a href="https://www.instagram.com/twokaif.design?igsh=NDQxOHVya21rZjIw" target="_blank" rel="noopener"><span class="nav-link-flip" data-text="Instagram*">Instagram*</span></a></li>
+        <li><a href="https://vk.com/twokaif" target="_blank" rel="noopener"><span class="nav-link-flip" data-text="ВКонтакте">ВКонтакте</span></a></li>
+      </ul>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="menu-cta">
+        <span>Написать в&nbsp;Телеграм</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- Часы МСК ---
+function updateTime(){
+  var now=new Date();
+  var msk=new Date(now.toLocaleString('en-US',{timeZone:'Europe/Moscow'}));
+  var h=String(msk.getHours()).padStart(2,'0');
+  var m=String(msk.getMinutes()).padStart(2,'0');
+  var s=String(msk.getSeconds()).padStart(2,'0');
+  var el=document.getElementById('navTime');
+  if(el) el.textContent=h+':'+m+':'+s+' (МСК)';
+}
+updateTime(); setInterval(updateTime,1000);
+
+// --- Навбар прячется при скролле вниз, появляется при скролле вверх (Apple-стиль) ---
+(function(){
+  var nav=document.getElementById('nav');
+  if(!nav) return;
+  var lastY=0;
+  var hidden=false;
+  nav.style.transition='transform .35s cubic-bezier(.19,1,.22,1)';
+
+  window.addEventListener('scroll',function(){
+    var y=window.pageYOffset||document.documentElement.scrollTop;
+    if(y>lastY && y>80 && !hidden){
+      nav.style.transform='translateY(-100%)';
+      hidden=true;
+    } else if(y<lastY && hidden){
+      nav.style.transform='translateY(0)';
+      hidden=false;
+    }
+    lastY=y;
+  },{passive:true});
+})();
+
+// --- Плавный скролл к якорям ---
+function smoothScrollTo(target){
+  if(!target) return;
+  var navH=48;
+  var y=target.getBoundingClientRect().top+window.pageYOffset-navH;
+  window.scrollTo({top:y,behavior:'smooth'});
+}
+
+// --- Клик по логотипу — скролл наверх + перезапуск лоадера ---
+document.getElementById('logoLink').addEventListener('click',function(e){
+  e.preventDefault();
+  window.scrollTo({top:0,behavior:'smooth'});
+  /* Перезапускаем лоадер, если он есть */
+  var loader=document.getElementById('loader');
+  if(loader && typeof window.restartLoader==='function'){
+    window.restartLoader();
+  }
+});
+
+// --- Десктопные ссылки ---
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=document.querySelector(a.getAttribute('href'));
+    smoothScrollTo(target);
+  });
+});
+
+// --- Бургер-меню ---
+var burgerBtn=document.getElementById('burgerBtn');
+var menuOverlay=document.getElementById('menuOverlay');
+
+burgerBtn.addEventListener('click',function(){
+  var isOpen=menuOverlay.classList.toggle('active');
+  burgerBtn.classList.toggle('active',isOpen);
+  if(isOpen) document.body.style.overflow='hidden';
+  else document.body.style.overflow='';
+});
+
+document.getElementById('menuBackdrop').addEventListener('click',closeMenu);
+
+// --- Мобильные ссылки — плавный скролл ---
+document.querySelectorAll('.menu-links a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=document.querySelector(a.getAttribute('href'));
+    closeMenu();
+    setTimeout(function(){ smoothScrollTo(target); },400);
+  });
+});
+
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMenu(); });
+
+function closeMenu(){
+  menuOverlay.classList.remove('active');
+  burgerBtn.classList.remove('active');
+  document.body.style.overflow='';
+}
+</script>
+
+<!-- ═══ lp-sajty ═══ -->
+<!-- ПОСАДОЧНАЯ: САЙТЫ ВЕДУЩИМ И АРТИСТАМ (/sajty-vedushim) -->
+<style>
+.lp-hero{padding:calc(96px + env(safe-area-inset-top,0px)) var(--edge) 0;max-width:var(--container,1200px);margin:0 auto}
+.lp-crumbs{font-size:12px;letter-spacing:-.18px;color:var(--muted);margin-bottom:24px}
+.lp-crumbs a{color:var(--muted);text-decoration:none;transition:opacity .3s}
+.lp-crumbs a:hover{opacity:.6}
+.lp-crumbs span{color:var(--text)}
+.lp-h1{font-size:var(--text-headline,56px);font-weight:700;letter-spacing:-2px;line-height:1.02;margin:0 0 20px;text-wrap:balance}
+.lp-lead{font-size:clamp(16px,2vw,21px);font-weight:400;letter-spacing:-.3px;line-height:1.5;color:var(--text);max-width:680px;margin:0 0 16px;text-wrap:pretty}
+.lp-body{font-size:clamp(15px,1.6vw,17px);font-weight:400;line-height:1.6;color:var(--muted);max-width:680px;margin:0 0 32px;text-wrap:pretty}
+.lp-cta{display:inline-flex;align-items:center;gap:10px;background:var(--text);color:var(--bg);font-size:15px;font-weight:500;letter-spacing:-.2px;padding:15px 28px;border-radius:100px;transition:opacity .3s;text-decoration:none}
+.lp-cta:hover{opacity:.85}
+.lp-cta svg{width:16px;height:16px}
+
+/* Примеры сайтов */
+.lp-cases{max-width:var(--container,1200px);margin:0 auto;padding:80px var(--edge) 40px}
+.lp-cases-label{font-size:12px;letter-spacing:-.18px;color:var(--muted);opacity:.6;margin-bottom:24px}
+.lp-cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.lp-case{display:flex;flex-direction:column;justify-content:space-between;min-height:200px;padding:28px;border:1px solid var(--border-row,#e5e5e7);border-radius:var(--r-lg,24px);transition:border-color .3s,transform .3s;background:var(--bg);text-decoration:none;color:var(--text)}
+.lp-case:hover{border-color:var(--text);transform:translateY(-3px)}
+.lp-case-role{font-size:12px;letter-spacing:-.16px;color:var(--muted);margin-bottom:10px}
+.lp-case-name{font-size:clamp(22px,3vw,28px);font-weight:700;letter-spacing:-.6px;line-height:1.1;color:var(--text)}
+.lp-case-foot{display:flex;align-items:center;justify-content:space-between;margin-top:32px}
+.lp-case-url{font-size:13px;letter-spacing:-.2px;color:var(--muted)}
+.lp-case-arrow{width:34px;height:34px;border-radius:50%;border:1px solid var(--border-row,#e5e5e7);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,border-color .3s,color .3s;color:var(--text)}
+.lp-case:hover .lp-case-arrow{background:var(--text);border-color:var(--text);color:var(--bg)}
+.lp-case-arrow svg{width:15px;height:15px}
+
+@media(max-width:768px){.lp-hero{padding-top:88px}.lp-h1{letter-spacing:-1px}.lp-cases{padding-top:56px}}
+</style>
+
+<section class="lp-hero">
+  <nav class="lp-crumbs" aria-label="Навигация">
+    <a href="/">Главная</a> &nbsp;/&nbsp; <span>Сайты&nbsp;ведущим</span>
+  </nav>
+  <h1 class="lp-h1">Сайты ведущим<br>и&nbsp;артистам</h1>
+  <p class="lp-lead">Одностраничные и&nbsp;многостраничные сайты для&nbsp;ведущих, артистов и&nbsp;агентств&nbsp;&mdash;<br>свой движок, без&nbsp;конструкторов.</p>
+  <p class="lp-body">Делаю сайты, которые продают тебя: живые анимации, адаптив под&nbsp;телефон, скорость и&nbsp;характер. Не&nbsp;шаблон с&nbsp;конструктора&nbsp;&mdash; код под&nbsp;твою задачу. Ниже&nbsp;&mdash; примеры.</p>
+  <a class="lp-cta" href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener">
+    <span>Обсудить сайт</span>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+
+<section class="lp-cases">
+  <div class="lp-cases-label">Примеры сайтов</div>
+  <div class="lp-cases-grid">
+
+    <a class="lp-case" href="https://andreyburikov.ru/" target="_blank" rel="noopener">
+      <div>
+        <div class="lp-case-role">Ведущий &middot; сценарист &middot; креатор</div>
+        <div class="lp-case-name">Андрей<br>Буриков</div>
+      </div>
+      <div class="lp-case-foot">
+        <span class="lp-case-url">andreyburikov.ru</span>
+        <span class="lp-case-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11L11 5M6 5h5v5"/></svg></span>
+      </div>
+    </a>
+
+    <a class="lp-case" href="https://akatevdima.ru/" target="_blank" rel="noopener">
+      <div>
+        <div class="lp-case-role">Ведущий &middot; креатор</div>
+        <div class="lp-case-name">Дима<br>Акатьев</div>
+      </div>
+      <div class="lp-case-foot">
+        <span class="lp-case-url">akatevdima.ru</span>
+        <span class="lp-case-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11L11 5M6 5h5v5"/></svg></span>
+      </div>
+    </a>
+
+    <a class="lp-case" href="https://denislenga.ru/" target="_blank" rel="noopener">
+      <div>
+        <div class="lp-case-role">Ведущий</div>
+        <div class="lp-case-name">Денис<br>Ленга</div>
+      </div>
+      <div class="lp-case-foot">
+        <span class="lp-case-url">denislenga.ru</span>
+        <span class="lp-case-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11L11 5M6 5h5v5"/></svg></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ 14_Футер ═══ -->
+<!-- ============================================
+     БЛОК 9: ФУТЕР
+     T123 блок — огромный логотип + CTA + соцсети + реквизиты
+
+     Здесь меняй:
+     — CTA кнопка: href в class="btn-fill" (ссылка на Телеграм)
+     — Текст CTA: «Готов обсудить проект?»
+     — Часы работы: class="footer-hours"
+     — Соцсети: ссылки в class="footer-social-links" (href)
+     — Текст приватности: class="footer-privacy-text"
+     — Копирайт: class="footer-copy"
+     — Реквизиты ИП: class="footer-legal" (ИНН, ОГРНИП)
+
+     НАСТРОЙКИ ПК (десктоп):
+     — Логотип ТУКАЙФ: 18vw (как на hero)
+     — Снежинка: 10%, макс. 120px
+     — CTA кнопка: 18px, padding 18px 40px
+     — Нижняя часть: 3 колонки (копирайт, соцсети, реквизиты)
+
+     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     — Нижняя часть: 1 колонка, центрированная
+     — CTA: font-size 16px, padding 16px 32px
+     — Соцсети: по центру, перенос строк
+
+     НАСТРОЙКИ МИНИ-МОБИЛЕ (до 480px):
+     — Логотип: 22vw
+     — CTA: 15px
+     ============================================ -->
+<style>
+.footer{padding:0 var(--edge) calc(40px + env(safe-area-inset-bottom,0px))}
+
+/* Огромный логотип — вписан в отступы */
+.footer-brand{display:flex;align-items:center;justify-content:center;gap:20px;padding:120px 0 0;overflow:hidden}
+.footer-brand-snowflake{width:10%;max-width:120px;flex-shrink:0;color:var(--text);opacity:.06;overflow:hidden;animation:footerBreathe 7s ease-in-out -1.5s infinite}
+.footer-brand-snowflake .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
+.footer-brand-text{font-size:18vw;font-weight:700;letter-spacing:-1.2vw;line-height:.8;color:var(--text);opacity:.06;user-select:none;white-space:nowrap;animation:footerBreathe 7s ease-in-out infinite}
+/* Дыхание призрачного лого — медленный пульс прозрачности, composite-only */
+@keyframes footerBreathe{0%,100%{opacity:.045}50%{opacity:.09}}
+@media(prefers-reduced-motion:reduce){.footer-brand-snowflake,.footer-brand-text{animation:none;opacity:.06}}
+
+/* CTA + соцсети */
+.footer-row{padding:48px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.footer-cta{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.footer-cta-label{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);margin-bottom:4px}
+.footer-hours{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#515154}
+
+/* Соцсети */
+.footer-social{text-align:right;display:flex;flex-direction:column;gap:16px;padding-top:calc(11px + 4px + 16px)}
+.footer-social-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.footer-social-links{display:flex;gap:24px;justify-content:flex-end}
+.footer-social-links a{font-size:13px;font-weight:400;letter-spacing:-.18px;color:var(--text)!important;text-decoration:none;position:relative;opacity:.55;transition:opacity .3s var(--ease-out);display:block;height:17px;overflow:hidden}
+.footer-social-links a:hover{opacity:1}
+.footer-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
+.footer-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:var(--muted)}
+.footer-social-links a:hover .footer-flip{transform:translateY(-100%)}
+
+/* Приватность */
+.footer-privacy{padding:24px 0;border-top:1px solid var(--border-row);text-align:center}
+.footer-privacy-text{font-size:12px;font-weight:400;letter-spacing:-.18px;line-height:1.6;color:#515154;max-width:560px;margin:0 auto}
+.footer-privacy-text a{color:var(--text)!important;text-decoration:underline;text-underline-offset:2px;transition:opacity .3s var(--ease-out)}
+.footer-privacy-text a:hover{opacity:.7}
+.footer-meta-note{font-size:10px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:#515154;max-width:520px;margin:8px auto 0;font-style:italic}
+
+/* Низ */
+.footer-bottom{padding:20px 0;border-top:1px solid var(--border-row);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-top-btn{width:40px;height:40px;flex-shrink:0;border:1px solid var(--border-row);background:transparent;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s var(--ease-out),border-color .3s var(--ease-out),color .3s var(--ease-out)}
+.footer-top-btn:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
+.footer-copy{font-size:11px;font-weight:400;letter-spacing:-.16px;color:#515154}
+.footer-legal{font-size:10px;font-weight:400;letter-spacing:-.12px;color:#515154}
+.footer-rkn{font-size:10px;font-weight:400;letter-spacing:-.12px;color:var(--muted);opacity:.3;margin-top:2px}
+.footer-rkn a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.footer-rkn a:hover{opacity:.7}
+
+@media(max-width:640px){
+  .footer{padding:0 var(--edge) calc(32px + env(safe-area-inset-bottom,0px))}
+  .footer-brand{padding:32px 0 0;gap:10px}
+  .footer-brand-text{font-size:20vw;letter-spacing:-1vw}
+  .footer-row{padding:32px 0;flex-direction:column;align-items:stretch;gap:28px}
+  .footer-cta{align-items:stretch}
+  .footer-cta-label{text-align:center}
+  .footer-cta .btn-fill{width:100%;justify-content:center}
+  .footer-hours{text-align:center}
+  .footer-social{text-align:center}
+  .footer-social-links{justify-content:center}
+  .footer-privacy-text{font-size:11px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media(max-width:480px){
+  .footer{padding:0 var(--edge) calc(20px + env(safe-area-inset-bottom,0px))}
+  .footer-brand{padding:24px 0 0}
+  .footer-copy{font-size:10px}
+  .footer-legal{font-size:8px}
+}
+</style>
+
+<footer class="footer" id="contacts">
+  <!-- Огромный логотип -->
+  <div class="footer-brand">
+    <svg class="footer-brand-snowflake" viewBox="-3 18 81 81" fill="none">
+      <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
+    </svg>
+    <span class="footer-brand-text">ТУКАЙФ</span>
+  </div>
+
+  <div class="footer-row">
+    <div class="footer-cta">
+      <div class="footer-cta-label">Готов обсудить проект?</div>
+      <a href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener" class="btn-fill magnetic">
+        <span>Написать в&nbsp;Телеграм</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <span class="footer-hours">Работаем в&nbsp;будни с&nbsp;10:00 до&nbsp;19:00 МСК</span>
+    </div>
+    <div class="footer-social">
+      <div class="footer-social-title">Социальные сети</div>
+      <div class="footer-social-links">
+        <a href="https://brand.twokaif.ru" target="_blank" rel="noopener"><span class="footer-flip" data-text="Брендбук">Брендбук</span></a>
+        <a href="https://t.me/twokaif" target="_blank" rel="noopener"><span class="footer-flip" data-text="Телеграм">Телеграм</span></a>
+        <a href="https://www.instagram.com/twokaif.design?igsh=NDQxOHVya21rZjIw" target="_blank" rel="noopener"><span class="footer-flip" data-text="Instagram*">Instagram*</span></a>
+        <a href="https://vk.com/twokaif" target="_blank" rel="noopener"><span class="footer-flip" data-text="ВКонтакте">ВКонтакте</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-privacy">
+    <p class="footer-privacy-text">Сайт использует файлы cookie и&nbsp;сервисы аналитики для улучшения работы. Персональные данные через формы не&nbsp;собираются&nbsp;&mdash; связь напрямую через Телеграм. Подробности в&nbsp;<a href="/privacy">политике конфиденциальности</a> и&nbsp;<a href="/oferta">оферте</a>. <a href="/" id="footerCookieSettings">Настройки cookies</a>.</p>
+    <p class="footer-meta-note">*Instagram принадлежит компании Meta, признанной экстремистской организацией на&nbsp;территории РФ</p>
+  </div>
+
+  <div class="footer-bottom">
+    <div>
+      <p class="footer-copy">&copy; 20—26 ТУКАЙФ. Все права защищены</p>
+      <p class="footer-legal">ИП&nbsp;Тукаев Руслан Геннадиевич &middot; ИНН&nbsp;343703190770 &middot; ОГРНИП&nbsp;325344300119216</p>
+      <p class="footer-rkn">Оператор&nbsp;персональных&nbsp;данных &middot; рег.&nbsp;№&nbsp;34-26-044834 от&nbsp;14.05.2026 &middot; <a href="https://pd.rkn.gov.ru/operators-registry/notification_check" target="_blank" rel="noopener">проверить&nbsp;в&nbsp;реестре&nbsp;РКН</a></p>
+    </div>
+    <button class="footer-top-btn" id="footerTopBtn" aria-label="Наверх"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  </div>
+</footer>
+
+<script>
+var fcs=document.getElementById('footerCookieSettings');
+if(fcs)fcs.addEventListener('click',function(e){
+  e.preventDefault();
+  if(typeof window.tkOpenCookieSettings==='function')window.tkOpenCookieSettings();
+});
+document.getElementById('footerTopBtn').addEventListener('click',function(){
+  // Плавный полёт наверх с длинным замедлением (через Lenis если есть)
+  if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+    window.lenis.scrollTo(0, {
+      duration: 1.8,
+      easing: function(t){ return 1 - Math.pow(1 - t, 4); }
+    });
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+});
+
+// Внешние ссылки — в новую вкладку (не уводим с сайта). Внутренние якоря/страницы не трогаем.
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;
+  if(!a)return;
+  var u;try{u=new URL(a.getAttribute('href'),location.href);}catch(_){return;}
+  if(/^https?:$/.test(u.protocol)&&u.origin!==location.origin){
+    e.preventDefault();e.stopPropagation();
+    window.open(u.href,'_blank','noopener');
+  }
+},true);
+</script>
+
+<!-- ═══ 15_Куки-баннер ═══ -->
+<!-- ============================================
+     БЛОК 15: КУКИ-БАННЕР (152-ФЗ)
+     Три кнопки: Принять все / Только необходимые / Настройки.
+     Без согласия Яндекс.Метрика НЕ грузится.
+
+     localStorage:
+     — twokaif_consent = "all" | "necessary" | объект с категориями
+     — twokaif_consent_date = ISO дата
+     Срок жизни решения: 12 мес (проверяется в init).
+
+     Категории:
+     — necessary  — всегда вкл (работа сайта, баннер)
+     — analytics  — Яндекс.Метрика (clickmap, webvisor, trackLinks)
+     — marketing  — резерв на будущее (сейчас не используется)
+     ============================================ -->
+<style>
+.cookie-banner{
+  position:fixed;
+  bottom:var(--edge);
+  left:var(--edge);
+  z-index:99998;
+  max-width:460px;
+  background:var(--text);
+  color:var(--bg);
+  padding:22px 26px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--ease-out),transform .6s var(--ease-out);
+  pointer-events:none;
+  border:1px solid rgba(255,255,255,.08)
+}
+.cookie-banner.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.cookie-banner.hiding{opacity:0;transform:translateY(20px);pointer-events:none}
+.cookie-text{
+  font-size:13px;font-weight:400;letter-spacing:-.18px;line-height:1.55;
+  color:rgba(255,255,255,.72)
+}
+.cookie-text a{
+  color:#fff!important;text-decoration:underline;text-underline-offset:2px;
+  transition:opacity .3s var(--ease-out)
+}
+.cookie-text a:hover{opacity:.7}
+
+.cookie-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cookie-btn{
+  padding:10px 20px;border:none;
+  font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:-.2px;
+  cursor:pointer;transition:opacity .3s var(--ease-out),background .3s var(--ease-out);
+  flex-shrink:0;line-height:1
+}
+.cookie-btn--primary{background:#fff;color:#1d1d1f}
+.cookie-btn--ghost{background:transparent;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.18)}
+.cookie-btn--text{background:transparent;color:rgba(255,255,255,.55);padding:10px 4px}
+.cookie-btn:hover{opacity:.85}
+.cookie-btn:active{transform:scale(.97)}
+.cookie-btn--text:hover{color:#fff;opacity:1}
+
+/* Настройки — раскрывашка */
+.cookie-settings{
+  display:none;flex-direction:column;gap:14px;
+  padding-top:16px;border-top:1px solid rgba(255,255,255,.08)
+}
+.cookie-banner.settings-open .cookie-settings{display:flex}
+.cookie-row{display:flex;align-items:flex-start;gap:14px;justify-content:space-between}
+.cookie-row-text{flex:1;min-width:0}
+.cookie-row-title{font-size:13px;font-weight:500;letter-spacing:-.18px;color:#fff;margin-bottom:3px}
+.cookie-row-desc{font-size:11px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:rgba(255,255,255,.55)}
+
+/* Toggle */
+.cookie-toggle{position:relative;width:36px;height:20px;flex-shrink:0;display:block;cursor:pointer}
+.cookie-toggle input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.cookie-toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.18);border-radius:20px;transition:background .25s var(--ease-out)}
+.cookie-toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .25s var(--ease-out)}
+.cookie-toggle input:checked + .cookie-toggle-track{background:rgba(255,255,255,.55)}
+.cookie-toggle input:checked + .cookie-toggle-track + .cookie-toggle-thumb{transform:translateX(16px)}
+.cookie-toggle input:disabled + .cookie-toggle-track{background:rgba(255,255,255,.35);cursor:not-allowed}
+
+@media(max-width:640px){
+  .cookie-banner{left:var(--edge);right:var(--edge);bottom:var(--edge);max-width:none}
+  .cookie-text{font-size:12px}
+  .cookie-btn{font-size:12px;padding:10px 16px}
+}
+@media(max-width:480px){
+  .cookie-banner{padding:18px 20px}
+  .cookie-actions{gap:8px}
+  .cookie-btn{padding:9px 14px}
+}
+</style>
+
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Настройки cookies">
+  <p class="cookie-text">
+    Сайт использует файлы&nbsp;cookie.<br>
+    Необходимые &mdash; для&nbsp;работы сайта,<br class="m-only">
+    аналитические &mdash; для&nbsp;Яндекс.Метрики.<br>
+    Подробнее &mdash; в&nbsp;<a href="/privacy" target="_blank" rel="noopener">политике конфиденциальности</a>.
+  </p>
+
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-btn--primary" id="cookieAcceptAll" type="button">Принять все</button>
+    <button class="cookie-btn cookie-btn--ghost"   id="cookieAcceptNecessary" type="button">Только необходимые</button>
+    <button class="cookie-btn cookie-btn--text"    id="cookieToggleSettings"  type="button" aria-expanded="false">Настройки</button>
+  </div>
+
+  <div class="cookie-settings" id="cookieSettings" aria-hidden="true">
+    <div class="cookie-row">
+      <div class="cookie-row-text">
+        <div class="cookie-row-title">Необходимые</div>
+        <div class="cookie-row-desc">Базовая работа сайта и&nbsp;этот баннер. Нельзя отключить.</div>
+      </div>
+      <label class="cookie-toggle" aria-label="Необходимые cookies (всегда включены)">
+        <input type="checkbox" checked disabled>
+        <span class="cookie-toggle-track"></span>
+        <span class="cookie-toggle-thumb"></span>
+      </label>
+    </div>
+    <div class="cookie-row">
+      <div class="cookie-row-text">
+        <div class="cookie-row-title">Аналитика</div>
+        <div class="cookie-row-desc">Яндекс.Метрика: какие страницы смотришь, как долго, чтобы понять что улучшать.</div>
+      </div>
+      <label class="cookie-toggle" aria-label="Аналитические cookies">
+        <input type="checkbox" id="cookieAnalytics" checked>
+        <span class="cookie-toggle-track"></span>
+        <span class="cookie-toggle-thumb"></span>
+      </label>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn--primary" id="cookieSaveSettings" type="button">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='twokaif_consent';
+  var DATE_KEY='twokaif_consent_date';
+  var TTL_DAYS=365;
+  var METRIKA_ID=108388166;
+
+  function readConsent(){
+    try{
+      var raw=localStorage.getItem(KEY);
+      var date=localStorage.getItem(DATE_KEY);
+      if(!raw||!date)return null;
+      var ageDays=(Date.now()-new Date(date).getTime())/86400000;
+      if(ageDays>TTL_DAYS)return null;
+      if(raw==='all')return {analytics:true};
+      if(raw==='necessary')return {analytics:false};
+      return JSON.parse(raw);
+    }catch(e){return null;}
+  }
+
+  function writeConsent(value){
+    try{
+      localStorage.setItem(KEY, typeof value==='string'?value:JSON.stringify(value));
+      localStorage.setItem(DATE_KEY, new Date().toISOString());
+    }catch(e){}
+  }
+
+  function loadMetrika(){
+    if(window.__tkMetrikaLoaded)return;
+    window.__tkMetrikaLoaded=true;
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+    })(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+    window.ym(METRIKA_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+  }
+
+  // Применить решение
+  var existing=readConsent();
+  if(existing){
+    if(existing.analytics)loadMetrika();
+    return; // баннер не показываем
+  }
+
+  var banner=document.getElementById('cookieBanner');
+  var btnAll=document.getElementById('cookieAcceptAll');
+  var btnNec=document.getElementById('cookieAcceptNecessary');
+  var btnSet=document.getElementById('cookieToggleSettings');
+  var btnSave=document.getElementById('cookieSaveSettings');
+  var inpA=document.getElementById('cookieAnalytics');
+  var settings=document.getElementById('cookieSettings');
+
+  setTimeout(function(){banner.classList.add('visible');},1500);
+
+  function close(){
+    banner.classList.remove('visible');
+    banner.classList.add('hiding');
+    setTimeout(function(){banner.remove();},600);
+  }
+
+  btnAll.addEventListener('click',function(){
+    writeConsent('all');
+    loadMetrika();
+    close();
+  });
+  btnNec.addEventListener('click',function(){
+    writeConsent('necessary');
+    close();
+  });
+  btnSet.addEventListener('click',function(){
+    var open=banner.classList.toggle('settings-open');
+    btnSet.setAttribute('aria-expanded',open?'true':'false');
+    settings.setAttribute('aria-hidden',open?'false':'true');
+  });
+  btnSave.addEventListener('click',function(){
+    var ok=!!inpA.checked;
+    writeConsent({analytics:ok});
+    if(ok)loadMetrika();
+    close();
+  });
+
+  // Открыть настройки повторно (для ссылки из футера)
+  window.tkOpenCookieSettings=function(){
+    var b=document.getElementById('cookieBanner');
+    if(b){
+      b.classList.add('visible');
+      b.classList.add('settings-open');
+      btnSet.setAttribute('aria-expanded','true');
+      settings.setAttribute('aria-hidden','false');
+    }else{
+      // баннер уже удалён — пересоздаём страницу как fallback
+      localStorage.removeItem(KEY);
+      localStorage.removeItem(DATE_KEY);
+      location.reload();
+    }
+  };
+})();
+</script>
+
+</body>
+</html>

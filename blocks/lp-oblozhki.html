@@ -1,0 +1,35 @@
+<!-- ============================================
+     ПОСАДОЧНАЯ: ОБЛОЖКИ НА МЕРОПРИЯТИЯ  (/oblozhki)
+     SEO-вход под запрос «обложка на мероприятие».
+     Общий стиль .lp-* — переиспользуется на всех посадочных.
+     ============================================ -->
+<style>
+.lp-hero{padding:calc(96px + env(safe-area-inset-top,0px)) var(--edge) 0;max-width:var(--container,1200px);margin:0 auto}
+.lp-crumbs{font-size:12px;letter-spacing:-.18px;color:var(--muted);margin-bottom:24px}
+.lp-crumbs a{color:var(--muted);text-decoration:none;transition:opacity .3s}
+.lp-crumbs a:hover{opacity:.6}
+.lp-crumbs span{color:var(--text)}
+.lp-h1{font-size:var(--text-headline,56px);font-weight:700;letter-spacing:-2px;line-height:1.02;margin:0 0 20px;text-wrap:balance}
+.lp-lead{font-size:clamp(16px,2vw,21px);font-weight:400;letter-spacing:-.3px;line-height:1.5;color:var(--text);max-width:680px;margin:0 0 16px;text-wrap:pretty}
+.lp-body{font-size:clamp(15px,1.6vw,17px);font-weight:400;line-height:1.6;color:var(--muted);max-width:680px;margin:0 0 32px;text-wrap:pretty}
+.lp-cta{display:inline-flex;align-items:center;gap:10px;background:var(--text);color:var(--bg);font-size:15px;font-weight:500;letter-spacing:-.2px;padding:15px 28px;border-radius:100px;transition:opacity .3s;text-decoration:none}
+.lp-cta:hover{opacity:.85}
+.lp-cta svg{width:16px;height:16px}
+.lp-divider{max-width:var(--container,1200px);margin:64px auto 0;padding:0 var(--edge)}
+.lp-divider::after{content:"";display:block;height:1px;background:var(--border-row,#e5e5e7)}
+@media(max-width:768px){.lp-hero{padding-top:88px}.lp-h1{letter-spacing:-1px}}
+</style>
+
+<section class="lp-hero">
+  <nav class="lp-crumbs" aria-label="Навигация">
+    <a href="/">Главная</a> &nbsp;/&nbsp; <span>Обложки</span>
+  </nav>
+  <h1 class="lp-h1">Обложки на&nbsp;мероприятия</h1>
+  <p class="lp-lead">Цепляющие обложки для&nbsp;заявок, шоурилов и&nbsp;промо&nbsp;&mdash;<br>под твой ивент, без&nbsp;шаблонов.</p>
+  <p class="lp-body">Делаю обложки для&nbsp;ведущих, артистов и&nbsp;агентств: то, что цепляет взгляд в&nbsp;ленте и&nbsp;продаёт твоё мероприятие за&nbsp;секунду. Свой движок, ручная типографика, посадка под формат любой площадки. Ниже&nbsp;&mdash; примеры работ.</p>
+  <a class="lp-cta" href="https://t.me/ksenia_twokaif" target="_blank" rel="noopener">
+    <span>Обсудить обложку</span>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</section>
+<div class="lp-divider"></div>
