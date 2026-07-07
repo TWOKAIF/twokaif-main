@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="noindex,nofollow">
+<title>Адис Маммо — draft v2</title>
+<meta name="description" content="Адис Маммо — ведущий, стендап-комик и креатор. Частные события, корпоративы, стендап.">
+<meta property="og:title" content="Адис Маммо">
+<meta property="og:description" content="Интеллигентно, ненавязчиво и смешно.">
+<meta property="og:image" content="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+:root{
+  --bg:#000;
+  --ink:#f7f7f3;
+  --muted:rgba(247,247,243,.58);
+  --dim:rgba(247,247,243,.34);
+  --line:#161616;
+  --line-soft:rgba(247,247,243,.11);
+  --panel:#080808;
+  --panel-2:#0d0d0d;
+  --orange:#ff462e;
+  --green:#14c700;
+  --blue:#009dff;
+  --ease:cubic-bezier(.32,.72,0,1);
+}
+html{background:var(--bg);color:var(--ink);scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+body{min-height:100vh;background:#000;font-family:"Manrope",system-ui,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit}
+::selection{background:var(--orange);color:var(--ink)}
+.page{position:relative;min-height:100vh;isolation:isolate}
+.page::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(25% - 1px),var(--line) calc(25% - 1px),var(--line) 25%)}
+.wrap{width:min(100% - 60px,1480px);margin:0 auto}
+.display{font-family:"Clash Display","Syne",system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.088em;line-height:.78}
+.topbar{position:fixed;z-index:12;left:50%;top:20px;transform:translateX(-50%);width:min(calc(100% - 60px),1480px);height:54px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;color:var(--ink);mix-blend-mode:difference}
+.brand-mark{font-family:"Syne",system-ui,sans-serif;font-weight:800;font-size:15px;letter-spacing:-.08em;text-transform:uppercase}
+.menu{justify-self:center;display:flex;align-items:center;gap:9px;padding:8px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.05);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.menu a{height:31px;display:inline-flex;align-items:center;padding:0 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:-.02em;color:rgba(255,255,255,.72);transition:background .55s var(--ease),color .55s var(--ease),transform .55s var(--ease)}
+.menu a:hover{background:rgba(255,255,255,.13);color:#fff;transform:translateY(-1px)}
+.contact-pill{justify-self:end;height:40px;display:inline-flex;align-items:center;gap:10px;padding:0 15px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+.contact-pill svg{width:14px;height:14px}
+.hero{padding:104px 0 36px;min-height:100dvh}
+.hero-title{padding-top:30px;text-align:center;font-size:clamp(112px,19.9vw,286px);white-space:nowrap}
+.hero-title span{display:block}
+.hero-rule{height:1px;background:var(--line);margin:28px 0 0}
+.hero-details{display:grid;grid-template-columns:1fr .7fr 1fr;gap:20px;align-items:end;padding:25px 108px 28px;border-bottom:1px solid var(--line)}
+.detail{min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:12px;text-align:center}
+.detail:nth-child(1){align-items:start;text-align:left}
+.detail:nth-child(3){align-items:end;text-align:right}
+.detail-label{display:flex;align-items:center;gap:9px;font-size:11px;line-height:1.1;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:var(--ink)}
+.detail-label i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 22px currentColor}
+.detail:nth-child(2) .detail-label i{background:var(--ink)}
+.detail:nth-child(3) .detail-label i{background:var(--blue)}
+.detail-text{max-width:210px;color:var(--muted);font-size:12px;line-height:1.25;text-transform:uppercase;font-weight:700;letter-spacing:.02em}
+.hero-photo{position:relative;margin-top:60px;padding:0 30px}
+.photo-frame{position:relative;height:690px;overflow:hidden;border-radius:10px;background:#101010}
+.photo-frame::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.55) 100%),radial-gradient(circle at 78% 12%,rgba(255,70,46,.45),transparent 32%)}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center 34%;filter:saturate(.78) contrast(1.12) brightness(.73)}
+.photo-meta{position:absolute;z-index:3;left:30px;right:30px;bottom:24px;display:flex;justify-content:space-between;align-items:end;padding:0 28px;color:var(--ink)}
+.photo-meta b{font-size:13px;text-transform:uppercase;letter-spacing:.14em}
+.photo-meta span{max-width:360px;text-align:right;color:rgba(247,247,243,.68);font-size:12px;line-height:1.35;font-weight:700;text-transform:uppercase}
+.section{padding:108px 0}
+.section-head{display:grid;grid-template-columns:.92fr 1fr;gap:90px;align-items:end;margin-bottom:72px}
+.section-tag{font-size:12px;text-transform:uppercase;color:var(--muted);font-weight:800;letter-spacing:.06em}
+.section-title{font-size:clamp(64px,9vw,130px)}
+.section-copy{max-width:520px;color:var(--muted);font-size:18px;line-height:1.3;letter-spacing:-.02em}
+.formats{display:grid;grid-template-columns:1.04fr .78fr 1.18fr;gap:20px;align-items:stretch}
+.format{position:relative;min-height:470px;padding:22px;border:1px solid var(--line);background:rgba(255,255,255,.015);overflow:hidden;border-radius:8px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .7s var(--ease),border-color .7s var(--ease),background .7s var(--ease)}
+.format:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.035)}
+.format:nth-child(2){margin-top:78px}
+.format-media{position:absolute;inset:0;opacity:.28;z-index:0}
+.format-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.22) contrast(1.1) brightness(.55)}
+.format::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.32),rgba(0,0,0,.82))}
+.format > *:not(.format-media){position:relative;z-index:2}
+.format-top{display:flex;justify-content:space-between;gap:18px;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase}
+.format h3{font-size:72px;max-width:330px}
+.format p{max-width:350px;color:rgba(247,247,243,.7);font-size:14px;line-height:1.45;font-weight:600}
+.promo-strip{border-block:1px solid var(--line);overflow:hidden}
+.strip-track{display:flex;width:max-content;gap:42px;padding:20px 0;animation:strip 31s linear infinite}
+.strip-track span{font-family:"Clash Display","Syne",system-ui,sans-serif;font-weight:800;font-size:clamp(44px,6vw,86px);line-height:.8;letter-spacing:-.08em;text-transform:uppercase;color:rgba(255,255,255,.16);white-space:nowrap}
+@keyframes strip{to{transform:translateX(-50%)}}
+.materials{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.material{min-height:420px;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:28px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.material.dark{background:#050505}
+.material h2{font-size:clamp(62px,8vw,118px)}
+.material p{max-width:560px;color:var(--muted);font-size:17px;line-height:1.35}
+.links{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.links a{display:flex;justify-content:space-between;align-items:center;padding:21px 0;border-bottom:1px solid var(--line);font-size:20px;font-weight:800;letter-spacing:-.04em;transition:padding .55s var(--ease),color .55s var(--ease)}
+.links a:hover{padding-left:10px;color:var(--orange)}
+.links small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.legal{padding:48px 0;color:var(--muted);border-top:1px solid var(--line)}
+.legal-inner{display:flex;justify-content:space-between;gap:30px;align-items:flex-end}
+.legal nav{display:flex;gap:18px;flex-wrap:wrap;font-size:12px}
+.legal a{color:rgba(247,247,243,.72)}
+.reveal{opacity:0;transform:translateY(36px);filter:blur(8px);transition:opacity .85s var(--ease),transform .85s var(--ease),filter .85s var(--ease)}
+.reveal.in{opacity:1;transform:none;filter:none}
+@media(max-width:980px){
+  .wrap{width:min(100% - 32px,1480px)}
+  .page::before{background:linear-gradient(90deg,transparent,transparent)}
+  .topbar{width:calc(100% - 24px);top:12px;grid-template-columns:1fr auto}.menu{display:none}.contact-pill{height:36px}
+  .hero{padding-top:78px}.hero-title{font-size:23vw;text-align:left;white-space:normal}
+  .hero-details{grid-template-columns:1fr;padding:22px 0}.detail,.detail:nth-child(1),.detail:nth-child(3){align-items:start;text-align:left}.photo-frame{height:560px}.photo-meta{display:block}.photo-meta span{display:block;text-align:left;margin-top:12px}
+  .section-head,.formats,.materials{grid-template-columns:1fr}.format:nth-child(2){margin-top:0}.format{min-height:380px}.section{padding:78px 0}.legal-inner{display:block}.legal nav{margin-bottom:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar" id="nav">
+    <a class="brand-mark" href="#top">AM</a>
+    <nav class="menu" aria-label="Навигация">
+      <a href="#private">Частные</a>
+      <a href="#corporate">Корпоративы</a>
+      <a href="#standup">Стендап</a>
+      <a href="#promo">Промо</a>
+    </nav>
+    <a class="contact-pill" href="#contact">Contact <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <h1 class="hero-title display reveal"><span>Adis</span><span>Mammo</span></h1>
+      <div class="hero-rule"></div>
+      <div class="hero-details reveal">
+        <div class="detail">
+          <div class="detail-label"><i></i>Based in Moscow</div>
+          <div class="detail-text">Работает по России и за рубежом</div>
+        </div>
+        <div class="detail">
+          <div class="detail-label"><i></i>Available for events</div>
+          <div class="detail-text">Частные · корпоративы · стендап</div>
+        </div>
+        <div class="detail">
+          <div class="detail-label"><i></i>Host + comedian + creator</div>
+          <div class="detail-text">Интеллигентно, ненавязчиво и смешно</div>
+        </div>
+      </div>
+      <div class="hero-photo reveal">
+        <div class="photo-frame">
+          <img src="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp" alt="Адис Маммо">
+          <div class="photo-meta">
+            <b>Wedding Magazine choice</b>
+            <span>Черновик по ДНК Framer-референса 1: огромный гротеск, чёрный фон, тонкие линии, сильный титульник.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="private">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-tag">// 01 — private</div>
+          <h2 class="section-title display">Private<br>events</h2>
+        </div>
+        <p class="section-copy">Для свадеб и частных событий, где нужен не ведущий с набором конкурсов, а человек, который держит тон вечера, гостей и паузы.</p>
+      </div>
+      <div class="formats">
+        <article class="format reveal">
+          <div class="format-media"><img src="https://twokaif.ru/images/tild3964-3738-4334-b433-633237336434.webp" alt="Свадьба"></div>
+          <div class="format-top"><span>01</span><span>Wedding</span></div>
+          <div>
+            <h3 class="display">Private</h3>
+            <p>Камерная или большая свадьба, где юмор не забирает внимание, а собирает людей вокруг пары.</p>
+          </div>
+        </article>
+        <article class="format reveal" id="corporate">
+          <div class="format-media"><img src="https://twokaif.ru/images/tild3062-3166-4065-b137-336464323330.webp" alt="Корпоратив"></div>
+          <div class="format-top"><span>02</span><span>Corporate</span></div>
+          <div>
+            <h3 class="display">Business</h3>
+            <p>Премии, корпоративы, деловые вечера. Темп, структура и живая реакция на зал без ощущения шаблона.</p>
+          </div>
+        </article>
+        <article class="format reveal" id="standup">
+          <div class="format-media"><img src="https://twokaif.ru/images/tild3535-6465-4463-b964-643438653335.webp" alt="Стендап"></div>
+          <div class="format-top"><span>03</span><span>Stand-up</span></div>
+          <div>
+            <h3 class="display">Standup</h3>
+            <p>Стендап как отдельный формат или как часть вечера. Не номер ради номера, а авторский тон события.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="promo-strip" aria-hidden="true">
+      <div class="strip-track">
+        <span>Private events</span><span>Corporate</span><span>Stand-up</span><span>Creator</span><span>Adis Mammo</span>
+        <span>Private events</span><span>Corporate</span><span>Stand-up</span><span>Creator</span><span>Adis Mammo</span>
+      </div>
+    </section>
+
+    <section class="section wrap" id="promo">
+      <div class="materials">
+        <article class="material dark reveal">
+          <div>
+            <div class="section-tag">// promo</div>
+            <h2 class="display">Promo<br>materials</h2>
+          </div>
+          <p>Сюда ставим ссылку на промо, райдер, видео и материалы, которые удобно отправлять клиентам или агентствам.</p>
+        </article>
+        <article class="material reveal" id="contact">
+          <div>
+            <div class="section-tag">// contact</div>
+            <div class="links">
+              <a href="https://t.me/adismammo"><small>Telegram</small><span>@adismammo</span></a>
+              <a href="https://instagram.com/adismammo"><small>Instagram</small><span>@adismammo</span></a>
+              <a href="mailto:adismammo@gmail.com"><small>Email</small><span>adismammo@gmail.com</span></a>
+              <a href="#"><small>WhatsApp</small><span>уточнить номер</span></a>
+            </div>
+          </div>
+          <p>Контакты черновые. Перед показом Адису сверяем Telegram, Instagram, WhatsApp, email и ссылку на промо.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="legal">
+    <div class="wrap legal-inner">
+      <nav>
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Согласие на обработку данных</a>
+        <a href="#">Cookie</a>
+      </nav>
+      <div>© 2026 Адис Маммо. Сайт собран в ТУКАЙФ.</div>
+    </div>
+  </footer>
+</div>
+<script>
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=`${Math.min(i*45,300)}ms`;
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
