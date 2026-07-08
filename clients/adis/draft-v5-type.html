@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<meta name="robots" content="noindex,nofollow">
+<title>Адис Маммо — типографический черновик</title>
+<meta name="description" content="Адис Маммо — ведущий, стендап-комик и креатор. Интеллигентно, ненавязчиво и смешно.">
+<meta property="og:title" content="Адис Маммо">
+<meta property="og:description" content="Интеллигентно, ненавязчиво и смешно.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+:root{
+  --black:#080808;
+  --ink:#11100e;
+  --paper:#f2eadf;
+  --paper-2:#fff8ec;
+  --muted:rgba(244,238,228,.62);
+  --muted-dark:rgba(17,16,14,.58);
+  --line:rgba(244,238,228,.18);
+  --line-dark:rgba(17,16,14,.14);
+  --red:#e63b20;
+  --red-dark:#b92715;
+  --ease:cubic-bezier(.22,.78,.18,1);
+}
+html{
+  min-height:100%;
+  background:var(--black);
+  color:var(--paper);
+  scroll-behavior:smooth;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:var(--black);
+  font-family:"Manrope",system-ui,sans-serif;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:100;
+  pointer-events:none;
+  opacity:.032;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--red);color:var(--paper)}
+.display{
+  font-family:"Unbounded","Manrope",system-ui,sans-serif;
+  font-weight:800;
+  letter-spacing:-.065em;
+  line-height:.82;
+}
+.wrap{
+  width:min(100% - 48px,1540px);
+  margin:0 auto;
+}
+.nav{
+  position:fixed;
+  z-index:50;
+  left:50%;
+  top:16px;
+  transform:translateX(-50%);
+  width:min(1280px,calc(100% - 36px));
+  min-height:54px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:14px;
+  padding:0 18px;
+  border:1px solid rgba(244,238,228,.16);
+  border-radius:0;
+  background:rgba(8,8,8,.46);
+  color:var(--paper);
+  box-shadow:0 26px 80px rgba(0,0,0,.22);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.nav-group{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.nav-group:last-child{justify-content:flex-end}
+.nav a{
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 9px;
+  color:rgba(244,238,228,.66);
+  font-size:13px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-.015em;
+  transition:background .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
+}
+.nav a:hover{
+  color:var(--paper);
+  transform:translateY(-1px);
+}
+.nav-logo{
+  color:var(--paper)!important;
+  font-family:"Unbounded","Manrope",system-ui,sans-serif;
+  font-size:14px!important;
+  letter-spacing:-.06em!important;
+  font-weight:800!important;
+}
+.hero{
+  position:relative;
+  min-height:100svh;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(230,59,32,.18),transparent 22%),
+    linear-gradient(180deg,#0f0f0e 0%,#080808 82%);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:
+    linear-gradient(90deg,rgba(244,238,228,.055) 1px,transparent 1px) 0 0/20vw 100%,
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.38));
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,.08));
+}
+.hero-shell{
+  position:relative;
+  z-index:2;
+  min-height:100svh;
+  display:grid;
+  grid-template-rows:1fr auto;
+  padding:112px 0 42px;
+}
+.hero-top{
+  align-self:center;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  gap:40px;
+  align-items:end;
+}
+.micro{
+  display:grid;
+  gap:18px;
+  max-width:560px;
+  color:var(--muted);
+}
+.micro b{
+  color:var(--paper);
+  font-size:15px;
+  line-height:1.1;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.micro p{
+  font-size:clamp(22px,2.4vw,36px);
+  line-height:1.04;
+  font-weight:800;
+  letter-spacing:-.055em;
+  text-wrap:pretty;
+}
+.hero-word{
+  position:relative;
+  margin-top:auto;
+}
+.hero-word::before{
+  content:"тонко / живо / смешно";
+  position:absolute;
+  left:.4vw;
+  top:-38px;
+  color:var(--red);
+  font-size:14px;
+  line-height:1;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+h1{
+  max-width:1450px;
+  font-size:clamp(84px,16.8vw,276px);
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+h1 span{display:block}
+.hero-info{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:300px minmax(0,620px) 1fr;
+  gap:34px;
+  align-items:center;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+}
+.role{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.25;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.lead{
+  max-width:660px;
+  color:var(--paper);
+  font-size:clamp(30px,3.2vw,56px);
+  line-height:.96;
+  font-weight:800;
+  letter-spacing:-.055em;
+  text-wrap:balance;
+}
+.hero-link{
+  justify-self:end;
+  min-width:260px;
+  display:grid;
+  grid-template-columns:1fr 36px;
+  align-items:center;
+  gap:12px;
+  padding:10px 0 12px;
+  border-bottom:1px solid rgba(244,238,228,.72);
+  color:var(--paper);
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  transition:color .35s var(--ease),gap .35s var(--ease);
+}
+.hero-link:hover{color:var(--red);gap:18px}
+.arrow{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border:1px solid currentColor;
+  border-radius:50%;
+}
+.arrow svg{width:15px;height:15px}
+.ticker{
+  border-block:1px solid var(--line);
+  overflow:hidden;
+  background:#0b0b0b;
+}
+.ticker-track{
+  width:max-content;
+  display:flex;
+  gap:36px;
+  padding:22px 0 26px;
+  animation:ticker 34s linear infinite;
+}
+.ticker span{
+  font-family:"Unbounded","Manrope",system-ui,sans-serif;
+  font-size:clamp(40px,6vw,92px);
+  line-height:.8;
+  font-weight:800;
+  letter-spacing:-.075em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  color:rgba(244,238,228,.13);
+}
+@keyframes ticker{to{transform:translateX(-50%)}}
+.section{
+  position:relative;
+  padding:138px 0;
+  background:var(--paper);
+  color:var(--ink);
+}
+.section.dark{
+  background:var(--black);
+  color:var(--paper);
+}
+.section-head{
+  display:grid;
+  grid-template-columns:1fr minmax(320px,520px);
+  gap:70px;
+  align-items:end;
+  margin-bottom:86px;
+}
+.label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+  color:var(--red);
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+.label::before{
+  content:"";
+  width:9px;
+  height:9px;
+  background:currentColor;
+}
+.section-title{
+  font-size:clamp(50px,10vw,150px);
+  text-transform:uppercase;
+}
+.section-copy{
+  color:var(--muted-dark);
+  font-size:24px;
+  line-height:1.24;
+  font-weight:750;
+  letter-spacing:-.035em;
+  text-wrap:pretty;
+}
+.dark .section-copy{color:var(--muted)}
+.manifest{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(340px,500px);
+  gap:80px;
+  align-items:start;
+}
+.quote{
+  max-width:1080px;
+  font-size:clamp(48px,7.4vw,126px);
+  line-height:.92;
+  font-weight:800;
+  letter-spacing:-.07em;
+  text-wrap:balance;
+}
+.quote em{
+  color:var(--red);
+  font-style:normal;
+}
+.facts{
+  display:grid;
+  gap:0;
+  border-top:1px solid var(--line-dark);
+}
+.fact{
+  display:grid;
+  grid-template-columns:86px 1fr;
+  gap:20px;
+  padding:28px 0;
+  border-bottom:1px solid var(--line-dark);
+}
+.fact b{
+  color:var(--red);
+  font-family:"Unbounded","Manrope",system-ui,sans-serif;
+  font-size:22px;
+  line-height:1;
+  letter-spacing:-.06em;
+}
+.fact span{
+  color:var(--muted-dark);
+  font-size:18px;
+  line-height:1.25;
+  font-weight:750;
+}
+.formats{
+  display:grid;
+  border-top:1px solid var(--line);
+}
+.format{
+  display:grid;
+  grid-template-columns:120px minmax(0,1fr) minmax(320px,520px);
+  gap:40px;
+  align-items:center;
+  min-height:206px;
+  padding:42px 0;
+  border-bottom:1px solid var(--line);
+  transition:padding .4s var(--ease),color .4s var(--ease);
+}
+.format:hover{
+  padding-left:22px;
+  color:var(--red);
+}
+.format-num{
+  color:var(--muted);
+  font-family:"Unbounded","Manrope",system-ui,sans-serif;
+  font-size:26px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-.06em;
+}
+.format h3{
+  font-size:clamp(50px,8.2vw,138px);
+  text-transform:uppercase;
+}
+.format p{
+  max-width:520px;
+  color:var(--muted);
+  font-size:20px;
+  line-height:1.24;
+  font-weight:750;
+  letter-spacing:-.025em;
+}
+.names{
+  display:grid;
+  border-top:1px solid var(--line-dark);
+}
+.name-card{
+  min-height:126px;
+  padding:28px 0;
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:28px;
+  align-items:center;
+  border-bottom:1px solid var(--line-dark);
+  background:transparent;
+}
+.name-card b{
+  max-width:none;
+  font-family:"Unbounded","Manrope",system-ui,sans-serif;
+  font-size:clamp(36px,5.2vw,86px);
+  line-height:.9;
+  font-weight:800;
+  letter-spacing:-.06em;
+}
+.name-card span{
+  color:var(--muted-dark);
+  font-size:12px;
+  line-height:1;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(290px,.9fr);
+  gap:84px;
+  align-items:end;
+}
+.contact-title{
+  font-size:clamp(54px,11vw,170px);
+  text-transform:uppercase;
+}
+.contact-title em{
+  display:block;
+  color:var(--red);
+  font-style:normal;
+}
+.links{
+  display:grid;
+  border-top:1px solid var(--line);
+}
+.links a{
+  display:grid;
+  grid-template-columns:130px 1fr 34px;
+  align-items:center;
+  gap:16px;
+  padding:28px 0;
+  border-bottom:1px solid var(--line);
+  transition:padding .35s var(--ease),color .35s var(--ease);
+}
+.links a:hover{
+  padding-left:12px;
+  color:var(--red);
+}
+.links small{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.links strong{
+  font-size:clamp(24px,3vw,42px);
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-.045em;
+}
+.footer{
+  padding:34px 0;
+  background:var(--black);
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  gap:28px;
+  align-items:center;
+  font-size:12px;
+  line-height:1.4;
+  font-weight:700;
+}
+.footer nav{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+@media(max-width:980px){
+  .wrap{width:calc(100% - 28px)}
+  .nav{
+    top:12px;
+    width:calc(100% - 20px);
+    grid-template-columns:auto 1fr;
+    min-height:50px;
+    padding:0 12px;
+  }
+  .nav-group:first-child a:not(.nav-logo){display:none}
+  .nav-group:last-child a:not(:last-child){display:none}
+  .nav-logo{justify-content:flex-start}
+  .hero-shell{padding:92px 0 26px}
+  .hero-top{
+    grid-template-columns:1fr;
+    gap:24px;
+    align-items:start;
+  }
+  .micro{align-self:start;padding-top:20px}
+  h1{font-size:20vw}
+  .hero-info{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  .hero-link{
+    justify-self:start;
+    min-width:min(100%,260px);
+  }
+  .section{padding:92px 0}
+  .section-head,.manifest,.contact-grid{
+    grid-template-columns:1fr;
+    gap:34px;
+  }
+  .format{
+    grid-template-columns:1fr;
+    gap:18px;
+    min-height:auto;
+  }
+  .name-card{
+    min-height:auto;
+    grid-template-columns:1fr;
+    gap:16px;
+    padding:30px 0;
+  }
+  .links a{
+    grid-template-columns:1fr 28px;
+  }
+  .links small{grid-column:1/-1}
+  .footer-inner{display:grid}
+}
+@media(max-width:560px){
+  .nav a{padding:0 10px}
+  .nav-logo{font-size:12px!important}
+  .hero-shell{min-height:100svh}
+  .micro b{font-size:12px}
+  .micro p{font-size:24px}
+  h1{font-size:22vw;letter-spacing:-.07em}
+  .hero-word::before{top:-30px;font-size:11px}
+  .role{font-size:12px}
+  .lead{font-size:28px}
+  .quote{font-size:44px}
+  .section-title,.contact-title{font-size:17vw}
+  .section-copy{font-size:20px}
+  .format h3{font-size:15vw}
+  .format p,.fact span{font-size:17px}
+  .name-card b{font-size:13vw}
+  .links strong{font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Навигация">
+  <div class="nav-group">
+    <a class="nav-logo" href="#top">АДИС</a>
+    <a href="#about">О нём</a>
+    <a href="#formats">Форматы</a>
+  </div>
+  <a class="nav-logo" href="#top">МАММО</a>
+  <div class="nav-group">
+    <a href="#names">Кейсы</a>
+    <a href="#contact">Контакт</a>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-shell wrap">
+      <div class="hero-top">
+        <div class="micro">
+          <b>ведущий · стендап-комик · креатор</b>
+          <p>Не “тамада”, не конферансье, не человек с конкурсовым набором. Адис держит вечер как автор, который чувствует зал.</p>
+        </div>
+      </div>
+      <div class="hero-word">
+        <h1 class="display"><span>Адис</span><span>Маммо</span></h1>
+        <div class="hero-info">
+          <p class="role">свадьбы · корпоративы · стендап · частные события</p>
+          <p class="lead">Интеллигентно, ненавязчиво и смешно</p>
+          <a class="hero-link" href="#contact">
+            <span>обсудить событие</span>
+            <span class="arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>ведущий</span><span>стендап</span><span>событие</span><span>без неловкости</span><span>адис маммо</span>
+      <span>ведущий</span><span>стендап</span><span>событие</span><span>без неловкости</span><span>адис маммо</span>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="manifest">
+        <div>
+          <div class="label">позиция</div>
+          <p class="quote">Хороший вечер не надо <em>спасать</em>. Его надо тонко вести.</p>
+        </div>
+        <div class="facts">
+          <div class="fact">
+            <b>01</b>
+            <span>Лучший ведущий страны по версии Wedding Magazine.</span>
+          </div>
+          <div class="fact">
+            <b>02</b>
+            <span>Автор и ведущий подкаста “Тёмная сторона”.</span>
+          </div>
+          <div class="fact">
+            <b>03</b>
+            <span>Создатель канала “Сарказмошная”.</span>
+          </div>
+          <div class="fact">
+            <b>04</b>
+            <span>Работал в дуэте с Иваном Ургантом и Николаем Басковым.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="formats">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="label">форматы</div>
+          <h2 class="section-title display">где нужен<br>адис</h2>
+        </div>
+        <p class="section-copy">Три понятных направления, без лендинговой воды. Каждый блок можно потом раскрыть видео, отзывами и промо-материалами.</p>
+      </div>
+      <div class="formats">
+        <article class="format">
+          <span class="format-num">01</span>
+          <h3 class="display">свадьбы</h3>
+          <p>Вечер про пару, гостей и живой ритм. Без чужого сценария, без натянутой торжественности.</p>
+        </article>
+        <article class="format">
+          <span class="format-num">02</span>
+          <h3 class="display">корпоративы</h3>
+          <p>Премии, камерные ужины, большие залы. Структура, юмор и спокойное управление вниманием.</p>
+        </article>
+        <article class="format">
+          <span class="format-num">03</span>
+          <h3 class="display">стендап</h3>
+          <p>Авторский стендап как отдельный формат или точная часть вечера, которая не ломает событие.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="names">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="label">контекст</div>
+          <h2 class="section-title display">люди<br>и события</h2>
+        </div>
+        <p class="section-copy">Этот блок нужен не для хвастовства, а чтобы за 5 секунд было понятно: перед нами человек с уровнем, опытом и доверием.</p>
+      </div>
+      <div class="names">
+        <div class="name-card"><span>свадьба</span><b>Гарик Харламов</b></div>
+        <div class="name-card"><span>свадьба</span><b>Андрей Бебуришвили</b></div>
+        <div class="name-card"><span>событие</span><b>ВК на ПМЭФ 2024</b></div>
+        <div class="name-card"><span>день рождения</span><b>Николай Басков</b></div>
+        <div class="name-card"><span>день рождения</span><b>Ольга Бузова</b></div>
+        <div class="name-card"><span>годовщина</span><b>Собчак и Богомолов</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="label">контакт</div>
+          <h2 class="contact-title display">собрать<br><em>вечер</em></h2>
+        </div>
+        <div class="links">
+          <a href="https://t.me/adismammo">
+            <small>telegram</small>
+            <strong>@adismammo</strong>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+          </a>
+          <a href="https://instagram.com/adismammo">
+            <small>instagram</small>
+            <strong>@adismammo</strong>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+          </a>
+          <a href="mailto:adismammo@gmail.com">
+            <small>email</small>
+            <strong>adismammo@gmail.com</strong>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner wrap">
+    <p>© 2026 Адис Маммо. Сайт собран в ТУКАЙФ.</p>
+    <nav aria-label="Юридические ссылки">
+      <a href="#">Оферта</a>
+      <a href="#">Политика</a>
+      <a href="#">Согласие</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

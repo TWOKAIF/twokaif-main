@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080605">
+<meta name="robots" content="noindex,nofollow">
+<title>Адис Маммо — draft v3 hero</title>
+<meta name="description" content="Черновик первого экрана сайта Адиса Маммо.">
+<meta property="og:title" content="Адис Маммо">
+<meta property="og:description" content="Интеллигентно, ненавязчиво и смешно.">
+<meta property="og:image" content="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+:root{
+  --bg:#080605;
+  --ink:#f8f4ed;
+  --muted:rgba(248,244,237,.62);
+  --soft:rgba(248,244,237,.14);
+  --hair:rgba(248,244,237,.18);
+  --pill:rgba(248,244,237,.88);
+  --pill-text:#11100f;
+  --ember:#ec3d1c;
+  --red:#9b130d;
+  --ease:cubic-bezier(.22,.78,.18,1);
+}
+html{
+  min-height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Instrument Sans",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+body{
+  min-height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 72% 36%,rgba(236,61,28,.34),transparent 30%),
+    radial-gradient(circle at 20% 12%,rgba(155,19,13,.2),transparent 28%),
+    linear-gradient(180deg,#110807 0%,#080605 54%,#030303 100%);
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:20;
+  pointer-events:none;
+  opacity:.035;
+  mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:19;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/25vw 100%;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.12));
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--ember);color:var(--ink)}
+.screen{
+  position:relative;
+  min-height:100dvh;
+  isolation:isolate;
+  overflow:hidden;
+}
+.screen::before{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:38%;
+  z-index:4;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.78));
+}
+.nav{
+  position:fixed;
+  z-index:30;
+  left:50%;
+  top:18px;
+  transform:translateX(-50%);
+  width:min(720px,calc(100% - 32px));
+  min-height:44px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+  padding:5px;
+  border:1px solid rgba(255,255,255,.42);
+  border-radius:999px;
+  background:var(--pill);
+  color:var(--pill-text);
+  box-shadow:0 20px 80px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.8);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+.nav-side{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.nav-side:last-child{justify-content:flex-end}
+.nav a{
+  min-height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 14px;
+  border-radius:999px;
+  font-size:12px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.01em;
+  color:rgba(17,16,15,.72);
+  transition:background .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
+}
+.nav a:hover{
+  background:rgba(255,255,255,.72);
+  color:#000;
+  transform:translateY(-1px);
+}
+.nav-logo{
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 18px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:15px;
+  letter-spacing:-.045em;
+  color:#050505;
+  white-space:nowrap;
+}
+.hero-image{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+}
+.hero-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:50% 28%;
+  filter:grayscale(.88) contrast(1.28) brightness(.6);
+  transform:scale(1.045);
+}
+.hero-image::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:
+    radial-gradient(circle at 64% 36%,rgba(236,61,28,.42),transparent 24%),
+    linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.18) 48%,rgba(0,0,0,.66)),
+    linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.72));
+  mix-blend-mode:multiply;
+}
+.hero-image::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  background:linear-gradient(90deg,rgba(236,61,28,.28),transparent 42%,rgba(125,10,5,.28));
+  opacity:.78;
+  mix-blend-mode:color;
+}
+.ambient-title{
+  position:absolute;
+  z-index:2;
+  left:-4vw;
+  right:-4vw;
+  top:31vh;
+  font-size:clamp(116px,21vw,330px);
+  line-height:.75;
+  font-weight:800;
+  letter-spacing:-.085em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,.46);
+  white-space:nowrap;
+  user-select:none;
+}
+.content{
+  position:relative;
+  z-index:10;
+  min-height:100dvh;
+  width:min(100% - 48px,1520px);
+  margin:0 auto;
+  display:grid;
+  grid-template-rows:1fr auto;
+  padding:92px 0 28px;
+}
+.tags{
+  align-self:center;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+  color:rgba(248,244,237,.68);
+  font-size:12px;
+  line-height:1;
+  font-weight:500;
+  letter-spacing:-.02em;
+}
+.tag{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tag::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border:1px solid currentColor;
+  border-radius:50%;
+  opacity:.72;
+}
+.bottom{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 290px;
+  gap:26px;
+  align-items:end;
+}
+.name{
+  font-size:clamp(72px,16vw,246px);
+  line-height:.76;
+  font-weight:800;
+  letter-spacing:-.085em;
+  text-transform:uppercase;
+  color:var(--ink);
+  text-shadow:0 16px 80px rgba(0,0,0,.68);
+}
+.name span{display:block}
+.summary{
+  display:grid;
+  grid-template-columns:250px minmax(0,390px);
+  gap:24px;
+  align-items:end;
+  margin-top:24px;
+  padding-top:18px;
+  border-top:1px solid var(--hair);
+}
+.kicker{
+  max-width:220px;
+  font-size:12px;
+  line-height:1.35;
+  font-weight:650;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:rgba(248,244,237,.72);
+}
+.lead{
+  font-size:clamp(22px,2vw,32px);
+  line-height:1.05;
+  font-weight:600;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+.promo{
+  position:relative;
+  min-height:184px;
+  border:1px solid rgba(248,244,237,.22);
+  border-radius:8px;
+  overflow:hidden;
+  background:#110b09;
+  box-shadow:0 28px 90px rgba(0,0,0,.45);
+}
+.promo img{
+  width:100%;
+  height:100%;
+  min-height:184px;
+  object-fit:cover;
+  object-position:center;
+  filter:saturate(.72) contrast(1.08) brightness(.72);
+}
+.promo::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.74)),radial-gradient(circle at 78% 18%,rgba(236,61,28,.44),transparent 34%);
+}
+.promo-body{
+  position:absolute;
+  inset:auto 14px 13px;
+  display:grid;
+  gap:10px;
+}
+.promo-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:11px;
+  line-height:1;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.promo-line{
+  height:2px;
+  background:rgba(248,244,237,.24);
+  overflow:hidden;
+}
+.promo-line::before{
+  content:"";
+  display:block;
+  width:42%;
+  height:100%;
+  background:var(--ink);
+}
+.promo-title{
+  font-size:18px;
+  line-height:1.05;
+  font-weight:750;
+  letter-spacing:-.04em;
+}
+.mark{
+  position:absolute;
+  z-index:12;
+  width:16px;
+  height:16px;
+  opacity:.7;
+}
+.mark::before,.mark::after{
+  content:"";
+  position:absolute;
+  background:rgba(248,244,237,.78);
+}
+.mark::before{width:1px;height:16px;left:7px;top:0}
+.mark::after{width:16px;height:1px;left:0;top:7px}
+.m1{left:17%;top:34%}
+.m2{right:20%;top:41%}
+.m3{left:52%;bottom:28%}
+.meta-card{
+  position:absolute;
+  z-index:13;
+  right:28px;
+  top:86px;
+  width:214px;
+  min-height:58px;
+  display:grid;
+  grid-template-columns:54px 1fr;
+  gap:10px;
+  align-items:center;
+  padding:7px;
+  border:1px solid rgba(255,255,255,.42);
+  border-radius:6px;
+  background:rgba(248,244,237,.88);
+  color:#11100f;
+  box-shadow:0 24px 70px rgba(0,0,0,.3);
+}
+.meta-card img{
+  width:54px;
+  height:44px;
+  object-fit:cover;
+  border-radius:3px;
+  filter:grayscale(.2) contrast(1.05);
+}
+.meta-card b{
+  display:block;
+  margin-bottom:3px;
+  font-size:11px;
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.meta-card span{
+  display:block;
+  font-size:10px;
+  line-height:1.15;
+  color:rgba(17,16,15,.62);
+}
+@media(max-width:980px){
+  body{overflow:auto}
+  .screen{min-height:100svh}
+  .nav{
+    top:12px;
+    width:calc(100% - 20px);
+    grid-template-columns:auto 1fr auto;
+  }
+  .nav-side a:not(:first-child){display:none}
+  .nav-side:last-child a:not(:last-child){display:none}
+  .nav a{padding:0 11px}
+  .nav-logo{padding:0 10px;font-size:13px}
+  .hero-image img{object-position:54% 20%;filter:grayscale(.82) contrast(1.22) brightness(.55)}
+  .ambient-title{top:39vh;font-size:29vw}
+  .content{
+    width:calc(100% - 28px);
+    padding:82px 0 18px;
+  }
+  .tags{
+    grid-template-columns:1fr 1fr;
+    align-self:start;
+    padding-top:74px;
+    gap:14px 18px;
+    font-size:11px;
+  }
+  .bottom{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .name{font-size:26vw}
+  .summary{
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:14px;
+  }
+  .kicker{max-width:280px}
+  .lead{max-width:360px}
+  .promo{width:min(100%,330px);min-height:158px}
+  .promo img{min-height:158px}
+  .meta-card{
+    display:none;
+  }
+  .m1{left:12%;top:34%}
+  .m2{right:13%;top:44%}
+  .m3{display:none}
+}
+@media(max-width:560px){
+  .tags{display:none}
+  .content{padding-top:74px}
+  .bottom{align-self:end}
+  .summary{border-top-color:rgba(248,244,237,.26)}
+  .lead{font-size:24px}
+}
+</style>
+</head>
+<body>
+<section class="screen" aria-label="Первый экран">
+  <nav class="nav" aria-label="Навигация">
+    <div class="nav-side">
+      <a href="#events">События</a>
+      <a href="#standup">Стендап</a>
+    </div>
+    <a class="nav-logo" href="#top">ADIS MAMMO</a>
+    <div class="nav-side">
+      <a href="#promo">Промо</a>
+      <a href="#contact">Контакт</a>
+    </div>
+  </nav>
+
+  <div class="hero-image" aria-hidden="true">
+    <img src="https://twokaif.ru/images/tild3735-3038-4637-a138-336362303064.webp" alt="">
+  </div>
+
+  <div class="ambient-title" aria-hidden="true">Adis Mammo</div>
+  <div class="mark m1" aria-hidden="true"></div>
+  <div class="mark m2" aria-hidden="true"></div>
+  <div class="mark m3" aria-hidden="true"></div>
+
+  <aside class="meta-card" aria-label="Статус">
+    <img src="https://twokaif.ru/images/tild3964-3738-4334-b433-633237336434.webp" alt="Фрагмент события">
+    <div>
+      <b>Wedding Magazine</b>
+      <span>Лучший ведущий страны по версии премии</span>
+    </div>
+  </aside>
+
+  <main class="content" id="top">
+    <div class="tags" aria-label="Роли">
+      <div class="tag">ведущий</div>
+      <div class="tag">стендап-комик</div>
+      <div class="tag">креатор</div>
+      <div class="tag">частные события</div>
+    </div>
+
+    <div class="bottom">
+      <div>
+        <h1 class="name"><span>Adis</span><span>Mammo</span></h1>
+        <div class="summary">
+          <p class="kicker">частные события · корпоративы · стендап · промо</p>
+          <p class="lead">Интеллигентно, ненавязчиво и смешно</p>
+        </div>
+      </div>
+
+      <a class="promo" href="#promo" aria-label="Смотреть промо">
+        <img src="https://twokaif.ru/images/tild3062-3166-4065-b137-336464323330.webp" alt="Промо Адиса Маммо">
+        <span class="promo-body">
+          <span class="promo-head"><span>showreel</span><span>2026</span></span>
+          <span class="promo-line" aria-hidden="true"></span>
+          <span class="promo-title">Смотреть промо</span>
+        </span>
+      </a>
+    </div>
+  </main>
+</section>
+</body>
+</html>
