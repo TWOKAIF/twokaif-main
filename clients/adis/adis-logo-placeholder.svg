@@ -1,0 +1,13 @@
+<svg width="240" height="100" viewBox="0 0 240 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text
+    x="120"
+    y="60"
+    text-anchor="middle"
+    fill="#8A8A8A"
+    font-family="Inter Tight, Arial, sans-serif"
+    font-size="34"
+    font-weight="800"
+    letter-spacing="3.2"
+  >ЛОГО</text>
+  <path d="M63 74H177" stroke="#5C5C5C" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+</svg>
