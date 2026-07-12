@@ -80,16 +80,13 @@ const deviceGateScript = `
         (() => {
             const updateDeviceGate = () => {
                 const ua = navigator.userAgent
-                const hasTouch = navigator.maxTouchPoints > 0
-                    || matchMedia("(any-pointer: coarse)").matches
-                    || matchMedia("(hover: none)").matches
                 const mobileOrTablet = /iPad|iPhone|Android|Mobile|Tablet|Silk|Kindle/i.test(ua)
                     || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)
                 const desktopGeometry = innerWidth >= 1200
                     && innerWidth / Math.max(innerHeight, 1) >= 1.45
                 document.documentElement.classList.toggle(
                     "adis-desktop-ok",
-                    desktopGeometry && !hasTouch && !mobileOrTablet,
+                    desktopGeometry && !mobileOrTablet,
                 )
             }
             updateDeviceGate()
@@ -161,7 +158,9 @@ const cleanupScript = `
                 document.querySelectorAll("h5").forEach(element => {
                     const text = element.textContent.replace(/\s+/g, " ").trim()
                     if (text.startsWith("BASED IN USA, I AM AN INNOVATIVE DESIGNER AND DIGITAL ARTIST")) {
-                        element.closest('[data-framer-component-type="RichTextContainer"]')?.remove()
+                        element.textContent = ""
+                        element.closest('[data-framer-component-type="RichTextContainer"]')
+                            ?.style.setProperty("display", "none", "important")
                         return
                     }
                     if (text.startsWith("I'M AN INNOVATIVE DESIGNER AND DIGITAL ARTIST IN TOKYO")) {
