@@ -89,7 +89,7 @@ const demoStyles = `
     <style id="adis-demo-overrides">
         #__framer-badge-container { display: none !important; }
         #adis-desktop-gate { display: none; }
-        @media (max-width: 1023.98px) {
+        @media (max-width: 1023.98px), (any-pointer: coarse) {
             html, body { overflow: hidden !important; background: #050505 !important; }
             #main { visibility: hidden !important; }
             #adis-desktop-gate {
@@ -138,11 +138,24 @@ const cleanupScript = `
         (() => {
             const pageTitle = "Адис Маммо — артист, ведущий, комик"
             const removeBadge = () => document.getElementById("__framer-badge-container")?.remove()
+            const removeEnglishBio = () => {
+                document.querySelectorAll("h5").forEach(element => {
+                    const text = element.textContent.replace(/\s+/g, " ").trim()
+                    if (text.startsWith("BASED IN USA, I AM AN INNOVATIVE DESIGNER AND DIGITAL ARTIST")) {
+                        element.closest('[data-framer-component-type="RichTextContainer"]')?.remove()
+                        return
+                    }
+                    if (text.startsWith("I'M AN INNOVATIVE DESIGNER AND DIGITAL ARTIST IN TOKYO")) {
+                        element.textContent = "АВТОР ПОДКАСТА «ТЁМНАЯ СТОРОНА» И СОЗДАТЕЛЬ КАНАЛА «САРКАЗМОШНАЯ»."
+                    }
+                })
+            }
             const lockTitle = () => {
                 if (document.title !== pageTitle) document.title = pageTitle
             }
             const cleanTemplateResidue = () => {
                 removeBadge()
+                removeEnglishBio()
                 lockTitle()
             }
             const menuIsOpen = () => [...document.querySelectorAll("*")].some(element => {
