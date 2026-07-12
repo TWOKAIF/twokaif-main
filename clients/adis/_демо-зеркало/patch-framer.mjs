@@ -67,63 +67,82 @@ replaceLiteralOnce(
     "<!-- Open Graph -->",
     `<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="preload" href="https://framerusercontent.com/assets/aHx6kD8NZziXZ3NAxl5MRap2lvg.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://framerusercontent.com/assets/9NFS0tfd3DVMOKZnkhYtK3Yw.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://framerusercontent.com/third-party-assets/fontshare/wf/2GQIT54GKQY3JRFTSHS4ARTRNRQISSAA/3CIP5EBHRRHE5FVQU3VFROPUERNDSTDF/JTSL5QESUXATU47LCPUNHZQBDDIWDOSW.woff2" as="font" type="font/woff2" crossorigin>
     <meta name="theme-color" content="#050505">
     <!-- Open Graph -->`,
     "local icons",
 )
 
-// Keep the approved XL composition on every desktop-width viewport.
-replaceLiteralOnce("@media(min-width: 1440px)", "@media(min-width: 1024px)", "XL breakpoint")
-replaceLiteralOnce(
-    "@media(min-width: 1200px) and (max-width: 1439.98px)",
-    "@media(min-width: 99998px) and (max-width: 99999px)",
-    "disabled L breakpoint",
-)
-replaceLiteralOnce(
-    "@media(min-width: 810px) and (max-width: 1199.98px)",
-    "@media(min-width: 810px) and (max-width: 1023.98px)",
-    "desktop threshold",
-)
+const deviceGateScript = `
+    <script id="adis-device-gate">
+        (() => {
+            const updateDeviceGate = () => {
+                const ua = navigator.userAgent
+                const hasTouch = navigator.maxTouchPoints > 0
+                    || matchMedia("(any-pointer: coarse)").matches
+                    || matchMedia("(hover: none)").matches
+                const mobileOrTablet = /iPad|iPhone|Android|Mobile|Tablet|Silk|Kindle/i.test(ua)
+                    || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)
+                const desktopGeometry = innerWidth >= 1200
+                    && innerWidth / Math.max(innerHeight, 1) >= 1.45
+                document.documentElement.classList.toggle(
+                    "adis-desktop-ok",
+                    desktopGeometry && !hasTouch && !mobileOrTablet,
+                )
+            }
+            updateDeviceGate()
+            addEventListener("resize", updateDeviceGate, { passive: true })
+            addEventListener("orientationchange", updateDeviceGate, { passive: true })
+        })()
+    </script>`
 
 const demoStyles = `
     <style id="adis-demo-overrides">
         #__framer-badge-container { display: none !important; }
-        #adis-desktop-gate { display: none; }
-        @media (max-width: 1023.98px), (any-pointer: coarse) {
-            html, body { overflow: hidden !important; background: #050505 !important; }
-            #main { visibility: hidden !important; }
-            #adis-desktop-gate {
-                position: fixed;
-                inset: 0;
-                z-index: 2147483646;
-                display: flex !important;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 32px;
-                background: #050505;
-                color: #fff;
-                text-align: center;
-                font-family: "Inter Tight", Arial, sans-serif;
-            }
-            #adis-desktop-gate strong {
-                max-width: 760px;
-                font-family: "Druk Wide Cyr Bold", "Arial Black", sans-serif;
-                font-size: clamp(34px, 10vw, 68px);
-                line-height: 0.9;
-                letter-spacing: 0;
-            }
-            #adis-desktop-gate span {
-                margin-top: 28px;
-                color: #8c8c8c;
-                font-size: 15px;
-                line-height: 1.35;
-                letter-spacing: 0;
+        html, body { overflow: hidden !important; background: #050505 !important; }
+        #main { visibility: hidden !important; }
+        #adis-desktop-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 2147483646;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            background: #050505;
+            color: #fff;
+            text-align: center;
+            font-family: "Inter Tight", Arial, sans-serif;
+        }
+        #adis-desktop-gate strong {
+            max-width: 760px;
+            font-family: "Druk Wide Cyr Bold", "Arial Black", sans-serif;
+            font-size: clamp(34px, 10vw, 68px);
+            line-height: 0.9;
+            letter-spacing: 0;
+        }
+        #adis-desktop-gate span {
+            margin-top: 28px;
+            color: #8c8c8c;
+            font-size: 15px;
+            line-height: 1.35;
+            letter-spacing: 0;
+        }
+        html.adis-desktop-ok, html.adis-desktop-ok body { overflow: auto !important; }
+        html.adis-desktop-ok.adis-content-clean #main { visibility: visible !important; }
+        html.adis-desktop-ok.adis-content-clean #adis-desktop-gate { display: none !important; }
+        @media (min-width: 1200px) and (max-width: 1439.98px) {
+            .framer-EsYhJ .framer-1mexjrf h3 {
+                --framer-line-height: 0.92em !important;
+                line-height: 0.92em !important;
             }
         }
     </style>`
 
-replaceOnce(/<\/head>/, `${demoStyles}\n</head>`, "demo styles")
+replaceOnce(/<\/head>/, `${deviceGateScript}\n${demoStyles}\n</head>`, "device gate and demo styles")
 
 const gate = `
     <div id="adis-desktop-gate" aria-label="Версия для компьютера">
@@ -150,12 +169,18 @@ const cleanupScript = `
                     }
                 })
             }
+            const translateFooter = () => {
+                document.querySelectorAll("h6").forEach(element => {
+                    if (element.textContent.trim() === "Back To Top") element.textContent = "НАВЕРХ"
+                })
+            }
             const lockTitle = () => {
                 if (document.title !== pageTitle) document.title = pageTitle
             }
             const cleanTemplateResidue = () => {
                 removeBadge()
                 removeEnglishBio()
+                translateFooter()
                 lockTitle()
             }
             const menuIsOpen = () => [...document.querySelectorAll("*")].some(element => {
@@ -183,15 +208,21 @@ const cleanupScript = `
                 sessionStorage.removeItem("adis-demo-scroll-position")
                 requestAnimationFrame(() => window.scrollTo(0, Number(saved) || 0))
             }
-            const observer = new MutationObserver(cleanTemplateResidue)
-            observer.observe(document.documentElement, { childList: true, subtree: true })
+            const revealCleanContent = () => {
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    cleanTemplateResidue()
+                    document.documentElement.classList.add("adis-content-clean")
+                }))
+            }
             document.addEventListener("click", closeMenuFallback, true)
-            cleanTemplateResidue()
             window.addEventListener("load", () => {
                 cleanTemplateResidue()
+                const observer = new MutationObserver(cleanTemplateResidue)
+                observer.observe(document.documentElement, { childList: true, subtree: true })
                 restoreScroll()
+                revealCleanContent()
+                window.setTimeout(() => observer.disconnect(), 15000)
             }, { once: true })
-            window.setTimeout(() => observer.disconnect(), 15000)
         })()
     </script>`
 
@@ -213,5 +244,6 @@ for (const marker of forbidden) {
     if (html.includes(marker)) throw new Error(`Forbidden template marker remains: ${marker}`)
 }
 
+html = html.replace(/\r\n/g, "\n").replace(/[ \t]+$/gm, "")
 writeFileSync(outputPath, html)
 console.log(`Prepared ${outputPath}`)
