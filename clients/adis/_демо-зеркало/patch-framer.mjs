@@ -67,17 +67,66 @@ replaceLiteralOnce(
     "<!-- Open Graph -->",
     `<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="preload" href="https://framerusercontent.com/assets/aHx6kD8NZziXZ3NAxl5MRap2lvg.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://framerusercontent.com/assets/9NFS0tfd3DVMOKZnkhYtK3Yw.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://framerusercontent.com/third-party-assets/fontshare/wf/2GQIT54GKQY3JRFTSHS4ARTRNRQISSAA/3CIP5EBHRRHE5FVQU3VFROPUERNDSTDF/JTSL5QESUXATU47LCPUNHZQBDDIWDOSW.woff2" as="font" type="font/woff2" crossorigin>
     <meta name="theme-color" content="#050505">
     <!-- Open Graph -->`,
     "local icons",
 )
 
-const deviceGateScript = `
-    <script id="adis-device-gate">
+const demoStyles = `
+    <style id="adis-demo-overrides">
+        #__framer-badge-container { display: none !important; }
+        html, body { overflow: hidden !important; background: #050505 !important; }
+        #main { visibility: hidden !important; }
+        body::before {
+            content: "АДИС МАММО";
+            position: fixed;
+            inset: 0;
+            z-index: 2147483646;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            background: #050505;
+            color: #fff;
+            text-align: center;
+            font-family: "Druk Wide Cyr Bold", "Arial Black", sans-serif;
+            font-size: clamp(34px, 10vw, 68px);
+            line-height: 0.9;
+            letter-spacing: 0;
+        }
+        body::after {
+            content: "Версия для компьютера.\AОткрой сайт на MacBook или ПК.";
+            position: fixed;
+            top: calc(50% + 58px);
+            left: 24px;
+            right: 24px;
+            z-index: 2147483647;
+            color: #8c8c8c;
+            text-align: center;
+            white-space: pre-line;
+            font-family: "Inter Tight", Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.35;
+            letter-spacing: 0;
+        }
+        html.adis-desktop-ok, html.adis-desktop-ok body { overflow: auto !important; }
+        html.adis-desktop-ok.adis-content-clean #main { visibility: visible !important; }
+        html.adis-desktop-ok.adis-content-clean body::before,
+        html.adis-desktop-ok.adis-content-clean body::after { display: none !important; }
+        @media (min-width: 1200px) and (max-width: 1439.98px) {
+            .framer-EsYhJ .framer-1mexjrf h3 {
+                --framer-line-height: 0.92em !important;
+                line-height: 0.92em !important;
+            }
+        }
+    </style>`
+
+replaceOnce(/<\/head>/, `${demoStyles}\n</head>`, "demo styles")
+
+const cleanupScript = `
+    <script id="adis-demo-cleanup">
         (() => {
+            const pageTitle = "Адис Маммо — артист, ведущий, комик"
             const updateDeviceGate = () => {
                 const ua = navigator.userAgent
                 const mobileOrTablet = /iPad|iPhone|Android|Mobile|Tablet|Silk|Kindle/i.test(ua)
@@ -89,71 +138,6 @@ const deviceGateScript = `
                     desktopGeometry && !mobileOrTablet,
                 )
             }
-            updateDeviceGate()
-            addEventListener("resize", updateDeviceGate, { passive: true })
-            addEventListener("orientationchange", updateDeviceGate, { passive: true })
-        })()
-    </script>`
-
-const demoStyles = `
-    <style id="adis-demo-overrides">
-        #__framer-badge-container { display: none !important; }
-        html, body { overflow: hidden !important; background: #050505 !important; }
-        #main { visibility: hidden !important; }
-        #adis-desktop-gate {
-            position: fixed;
-            inset: 0;
-            z-index: 2147483646;
-            display: flex !important;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 32px;
-            background: #050505;
-            color: #fff;
-            text-align: center;
-            font-family: "Inter Tight", Arial, sans-serif;
-        }
-        #adis-desktop-gate strong {
-            max-width: 760px;
-            font-family: "Druk Wide Cyr Bold", "Arial Black", sans-serif;
-            font-size: clamp(34px, 10vw, 68px);
-            line-height: 0.9;
-            letter-spacing: 0;
-        }
-        #adis-desktop-gate span {
-            margin-top: 28px;
-            color: #8c8c8c;
-            font-size: 15px;
-            line-height: 1.35;
-            letter-spacing: 0;
-        }
-        html.adis-desktop-ok, html.adis-desktop-ok body { overflow: auto !important; }
-        html.adis-desktop-ok.adis-content-clean #main { visibility: visible !important; }
-        html.adis-desktop-ok.adis-content-clean #adis-desktop-gate { display: none !important; }
-        @media (min-width: 1200px) and (max-width: 1439.98px) {
-            .framer-EsYhJ .framer-1mexjrf h3 {
-                --framer-line-height: 0.92em !important;
-                line-height: 0.92em !important;
-            }
-        }
-    </style>`
-
-replaceOnce(/<\/head>/, `${deviceGateScript}\n${demoStyles}\n</head>`, "device gate and demo styles")
-
-const gate = `
-    <div id="adis-desktop-gate" aria-label="Версия для компьютера">
-        <strong>АДИС МАММО</strong>
-        <span>Версия для компьютера.<br>Открой сайт на MacBook или ПК.</span>
-    </div>`
-
-replaceOnce(/<body([^>]*)>/, `<body$1>${gate}`, "desktop gate")
-
-const cleanupScript = `
-    <script id="adis-demo-cleanup">
-        (() => {
-            const pageTitle = "Адис Маммо — артист, ведущий, комик"
-            const removeBadge = () => document.getElementById("__framer-badge-container")?.remove()
             const removeEnglishBio = () => {
                 document.querySelectorAll("h5").forEach(element => {
                     const text = element.textContent.replace(/\s+/g, " ").trim()
@@ -177,7 +161,6 @@ const cleanupScript = `
                 if (document.title !== pageTitle) document.title = pageTitle
             }
             const cleanTemplateResidue = () => {
-                removeBadge()
                 removeEnglishBio()
                 translateFooter()
                 lockTitle()
@@ -213,15 +196,43 @@ const cleanupScript = `
                     document.documentElement.classList.add("adis-content-clean")
                 }))
             }
+            const scheduleCleanup = () => {
+                requestAnimationFrame(() => requestAnimationFrame(cleanTemplateResidue))
+            }
+            const finishAfterFramerSettles = () => {
+                const main = document.getElementById("main")
+                let finished = false
+                let settleTimer
+                let fallbackTimer
+                const finish = () => {
+                    if (finished) return
+                    finished = true
+                    clearTimeout(settleTimer)
+                    clearTimeout(fallbackTimer)
+                    hydrationObserver.disconnect()
+                    updateDeviceGate()
+                    cleanTemplateResidue()
+                    const cleanupObserver = new MutationObserver(cleanTemplateResidue)
+                    cleanupObserver.observe(document.documentElement, { childList: true, subtree: true })
+                    restoreScroll()
+                    revealCleanContent()
+                    window.setTimeout(() => cleanupObserver.disconnect(), 15000)
+                }
+                const scheduleFinish = () => {
+                    clearTimeout(settleTimer)
+                    settleTimer = window.setTimeout(finish, 1200)
+                }
+                const hydrationObserver = new MutationObserver(scheduleFinish)
+                if (main) hydrationObserver.observe(main, { childList: true, subtree: true })
+                scheduleFinish()
+                fallbackTimer = window.setTimeout(finish, 5000)
+            }
             document.addEventListener("click", closeMenuFallback, true)
-            window.addEventListener("load", () => {
-                cleanTemplateResidue()
-                const observer = new MutationObserver(cleanTemplateResidue)
-                observer.observe(document.documentElement, { childList: true, subtree: true })
-                restoreScroll()
-                revealCleanContent()
-                window.setTimeout(() => observer.disconnect(), 15000)
-            }, { once: true })
+            window.addEventListener("load", finishAfterFramerSettles, { once: true })
+            window.addEventListener("resize", updateDeviceGate, { passive: true })
+            window.addEventListener("orientationchange", updateDeviceGate, { passive: true })
+            window.addEventListener("resize", scheduleCleanup, { passive: true })
+            window.addEventListener("orientationchange", scheduleCleanup, { passive: true })
         })()
     </script>`
 
