@@ -95,7 +95,7 @@ const demoStyles = `
             letter-spacing: 0;
         }
         body::after {
-            content: "Версия для компьютера.\AОткрой сайт на MacBook или ПК.";
+            content: "Версия для компьютера.\\AОткрой сайт на MacBook или ПК.";
             position: fixed;
             top: calc(50% + 58px);
             left: 24px;
@@ -131,11 +131,12 @@ const cleanupScript = `
                 const ua = navigator.userAgent
                 const mobileOrTablet = /iPad|iPhone|Android|Mobile|Tablet|Silk|Kindle/i.test(ua)
                     || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)
-                const desktopGeometry = innerWidth >= 1200
-                    && innerWidth / Math.max(innerHeight, 1) >= 1.45
+                const previewDevice = new URLSearchParams(location.search).get("_twk_device")
+                const blockedPreview = ["iphone", "android", "ipad"].includes(previewDevice)
+                const allowedPreview = ["laptop", "desktop"].includes(previewDevice)
                 document.documentElement.classList.toggle(
                     "adis-desktop-ok",
-                    desktopGeometry && !mobileOrTablet,
+                    allowedPreview || (!blockedPreview && !mobileOrTablet),
                 )
             }
             const removeEnglishBio = () => {
@@ -199,17 +200,8 @@ const cleanupScript = `
             const scheduleCleanup = () => {
                 requestAnimationFrame(() => requestAnimationFrame(cleanTemplateResidue))
             }
-            const finishAfterFramerSettles = () => {
-                const main = document.getElementById("main")
-                let finished = false
-                let settleTimer
-                let fallbackTimer
-                const finish = () => {
-                    if (finished) return
-                    finished = true
-                    clearTimeout(settleTimer)
-                    clearTimeout(fallbackTimer)
-                    hydrationObserver.disconnect()
+            const finishAfterFramerLoads = () => {
+                window.setTimeout(() => {
                     updateDeviceGate()
                     cleanTemplateResidue()
                     const cleanupObserver = new MutationObserver(cleanTemplateResidue)
@@ -217,18 +209,10 @@ const cleanupScript = `
                     restoreScroll()
                     revealCleanContent()
                     window.setTimeout(() => cleanupObserver.disconnect(), 15000)
-                }
-                const scheduleFinish = () => {
-                    clearTimeout(settleTimer)
-                    settleTimer = window.setTimeout(finish, 1200)
-                }
-                const hydrationObserver = new MutationObserver(scheduleFinish)
-                if (main) hydrationObserver.observe(main, { childList: true, subtree: true })
-                scheduleFinish()
-                fallbackTimer = window.setTimeout(finish, 5000)
+                }, 250)
             }
             document.addEventListener("click", closeMenuFallback, true)
-            window.addEventListener("load", finishAfterFramerSettles, { once: true })
+            window.addEventListener("load", finishAfterFramerLoads, { once: true })
             window.addEventListener("resize", updateDeviceGate, { passive: true })
             window.addEventListener("orientationchange", updateDeviceGate, { passive: true })
             window.addEventListener("resize", scheduleCleanup, { passive: true })
