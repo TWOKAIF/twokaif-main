@@ -240,6 +240,14 @@ build_landing "sajty-vedushim" "lp-sajty" \
   "Сайты для ведущих, артистов и ивент-агентств: свой движок, адаптив, анимации. Без конструкторов и шаблонов." \
   "$TMP_BLOCKS/_schema-sajty.json" ""
 
+# ─── /go/* — постоянные ссылки для соцсетей ───────────────
+# Все маршруты используют один экран. Конечные адреса хранятся
+# внутри go/index.html, поэтому ссылки в сторис можно не менять.
+for slug in calendar agent syntx mzh png wedding; do
+  mkdir -p "$DIST/go/$slug"
+  cp go/index.html "$DIST/go/$slug/index.html"
+done
+
 # ─── 404.HTML (00 + 01 + 03 + 16 + 14 + 15) ──────────────
 {
   echo '<!DOCTYPE html>'
