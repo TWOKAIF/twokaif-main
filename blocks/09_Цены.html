@@ -122,6 +122,9 @@
 .pricing-card:nth-child(3){transition-delay:.12s}
 .pricing-card:nth-child(4){transition-delay:.18s}
 .pricing-card:nth-child(5){transition-delay:.24s}
+.pricing-card:nth-child(6){transition-delay:.30s}
+.pricing-card:nth-child(7){transition-delay:.36s}
+.pricing-card:nth-child(8){transition-delay:.42s}
 
 /* Инверсия при наведении/активации — полная ширина */
 .pricing-card::before{content:"";position:absolute;left:calc(-1 * var(--edge));right:calc(-1 * var(--edge));top:0;bottom:0;background:var(--text);opacity:0;transition:opacity .4s var(--ease-out);z-index:0;pointer-events:none}
@@ -176,6 +179,10 @@
 /* Описание внутри карточки */
 .pricing-card-desc{font-size:15px;font-weight:400;letter-spacing:-.16px;line-height:1.55;color:var(--muted);max-width:500px;margin-bottom:12px}
 .pricing-card.active .pricing-card-desc{color:#fff !important;opacity:.6}
+
+/* Короткая строка под ценой внутри раскрытия */
+.pricing-card-note{display:block;margin-bottom:12px;font-size:13px;font-weight:500;letter-spacing:-.1px;color:var(--muted)}
+.pricing-card.active .pricing-card-note{color:#fff !important;opacity:.62}
 
 /* Теги */
 .pricing-card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
@@ -261,19 +268,14 @@
           — Атрибуты autoplay loop muted playsinline обязательны для видео
         -->
 
-        <!-- 01 Обложка — замени src на своё фото или видео -->
-        <div class="pricing-preview-item pv-vertical active" data-price="0">
+        <!-- 05 Обложка или афиша — замени src на своё фото или видео -->
+        <div class="pricing-preview-item pv-vertical" data-price="4">
           <img src="https://static.tildacdn.com/tild3338-3430-4566-b766-646463383065/02_-.jpg" alt="Обложка">
           <!-- Или видео: <video src="ссылка.mp4" autoplay loop muted playsinline></video> -->
         </div>
 
-        <!-- 02 Афиша -->
-        <div class="pricing-preview-item pv-vertical" data-price="1">
-          <img src="https://static.tildacdn.com/tild3536-6363-4833-b931-623332303633/-_-.jpg" alt="Афиша">
-        </div>
-
-        <!-- 03 Презентация — авто-скролл слайдов с паузой при ховере -->
-        <div class="pricing-preview-item pv-vertical pv-slides" data-price="2">
+        <!-- 04 Презентация — авто-скролл слайдов с паузой при ховере -->
+        <div class="pricing-preview-item pv-vertical pv-slides" data-price="3">
           <div class="pv-slides-track" id="pvSlidesTrack" style="--pv-duration:60s">
             <img src="https://static.tildacdn.com/tild3937-6264-4934-b461-383461613261/slide-01.jpg" alt="Слайд презентации в прайсе 1" loading="lazy">
             <img src="https://static.tildacdn.com/tild6563-3666-4365-b463-643436336131/slide-02.jpg" alt="Слайд презентации в прайсе 2" loading="lazy">
@@ -305,16 +307,16 @@
           </div>
         </div>
 
-        <!-- 04 Сайт — заглушка -->
-        <div class="pricing-preview-item pv-vertical pv-site-placeholder" data-price="3">
+        <!-- 01 Сайт — заглушка -->
+        <div class="pricing-preview-item pv-vertical pv-site-placeholder active" data-price="0">
           <div class="pv-site-ph-inner">
             <span class="pv-site-ph-text">Формирую кейсы<br>новых адаптивных сайтов</span>
             <span class="pv-site-ph-cta">Успей занять своё место</span>
           </div>
         </div>
 
-        <!-- 05 Интерактивы -->
-        <div class="pricing-preview-item pv-vertical" data-price="4">
+        <!-- 07 Интерактив -->
+        <div class="pricing-preview-item pv-vertical" data-price="6">
           <img src="https://static.tildacdn.com/tild3062-6130-4334-b164-633337626666/02__.jpg" alt="Интерактивы">
         </div>
       </div>
@@ -324,84 +326,74 @@
 
     <!-- Список услуг справа -->
     <ul class="pricing-list" id="pricingList">
-      <!-- Услуга 1: Обложка -->
+      <!-- Услуга 1: Сайт -->
       <li class="pricing-card" data-price="0">
         <div class="pricing-card-head">
           <span class="pricing-card-index">01</span>
-          <span class="pricing-card-name">Обложка</span>
+          <span class="pricing-card-name">Сайт</span>
           <div class="pricing-card-right">
-            <span class="pricing-card-price">от&nbsp;3&nbsp;600&nbsp;₽</span>
+            <span class="pricing-card-price">от&nbsp;45&nbsp;000&nbsp;₽</span>
             <span class="pricing-toggle"></span>
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
-          <div class="pricing-variant-title">Варианты работы</div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-label">Делает команда Руслана</div>
-            <div class="pricing-variant-name">от&nbsp;3&nbsp;600&nbsp;₽</div>
-            <div class="pricing-variant-note">Стоимость одной обложки.<br>Ресайз <em style="opacity:.7">(адаптация под&nbsp;другой формат)</em>&nbsp;— 1&nbsp;000&nbsp;₽/шт.</div>
-            <div class="pricing-variant-tags">
-              <span class="pricing-tag">Срок изготовления от&nbsp;2—х рабочих дней</span>
-              <span class="pricing-tag">Срочный проект +%</span>
-            </div>
+          <span class="pricing-card-note">Под ключ · год хостинга включён</span>
+          <p class="pricing-card-desc">Личный сайт под&nbsp;твой стиль, не&nbsp;шаблон. Рисуем макет вместе, собираю в&nbsp;чистый код&nbsp;— живёт на&nbsp;моём сервере. Домен твой, настройку беру на&nbsp;себя.</p>
+          <div class="pricing-card-tags">
+            <span class="pricing-tag">Не&nbsp;шаблон</span>
+            <span class="pricing-tag">Домен&nbsp;— твоя собственность</span>
+            <span class="pricing-tag">Хостинг включён</span>
           </div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-label">Делает персонально Руслан</div>
-            <div class="pricing-variant-name">от&nbsp;7&nbsp;000&nbsp;₽ + ресайз</div>
-            <div class="pricing-variant-note">Авторский дизайн, персональный подход</div>
-            <div class="pricing-variant-tags">
-              <span class="pricing-tag">Изготовление от&nbsp;5—ти рабочих дней</span>
-              <span class="pricing-tag">Срочный проект +%</span>
-            </div>
-          </div>
-
-          <a href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
+          <a href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener" class="pricing-card-btn">Обсудить сайт</a>
         </div></div>
       </li>
 
-      <!-- Услуга 2: Афиша -->
+      <!-- Услуга 2: Свадебная анкета -->
       <li class="pricing-card" data-price="1">
         <div class="pricing-card-head">
           <span class="pricing-card-index">02</span>
-          <span class="pricing-card-name">Афиша</span>
+          <span class="pricing-card-name">Свадебная анкета</span>
           <div class="pricing-card-right">
-            <span class="pricing-card-price">от&nbsp;4&nbsp;400&nbsp;₽</span>
+            <span class="pricing-card-price">от&nbsp;7&nbsp;500&nbsp;₽</span>
             <span class="pricing-toggle"></span>
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
-          <div class="pricing-variant-title">Варианты работы</div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-label">Делает команда Руслана</div>
-            <div class="pricing-variant-name">от&nbsp;4&nbsp;400&nbsp;₽</div>
-            <div class="pricing-variant-note">Стоимость одной афиши.<br>Ресайз <em style="opacity:.7">(адаптация под&nbsp;другой формат)</em>&nbsp;— 1&nbsp;000&nbsp;₽/шт.</div>
-            <div class="pricing-variant-tags">
-              <span class="pricing-tag">Срок изготовления от&nbsp;2—х рабочих дней</span>
-              <span class="pricing-tag">Срочный проект +%</span>
-            </div>
+          <p class="pricing-card-desc">Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>1&nbsp;год работы бесплатно</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.</p>
+          <div class="pricing-card-tags">
+            <span class="pricing-tag">твоёимя.twokaif.ru</span>
+            <span class="pricing-tag">Готово за&nbsp;2-3 дня</span>
+            <span class="pricing-tag">Файл в&nbsp;Word</span>
           </div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-label">Делает персонально Руслан</div>
-            <div class="pricing-variant-name">от&nbsp;9&nbsp;000&nbsp;₽ + ресайз</div>
-            <div class="pricing-variant-note">Авторский дизайн, персональный подход</div>
-            <div class="pricing-variant-tags">
-              <span class="pricing-tag">Изготовление от&nbsp;5—ти рабочих дней</span>
-              <span class="pricing-tag">Срочный проект +%</span>
-            </div>
-          </div>
-
-          <a href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
+          <a href="https://wedding.twokaif.ru" target="_blank" rel="noopener" class="pricing-card-btn">Узнать подробнее</a>
         </div></div>
       </li>
 
-      <!-- Услуга 3: Презентация -->
+      <!-- Услуга 3: PNG для сторис -->
       <li class="pricing-card" data-price="2">
         <div class="pricing-card-head">
           <span class="pricing-card-index">03</span>
+          <span class="pricing-card-name">PNG для сторис</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">4&nbsp;900&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <p class="pricing-card-desc">Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте, дальше&nbsp;— <b>500&nbsp;₽/год</b>.</p>
+          <div class="pricing-card-tags">
+            <span class="pricing-tag">На&nbsp;телефоне</span>
+            <span class="pricing-tag">Свои шрифты</span>
+            <span class="pricing-tag">Свои цвета</span>
+          </div>
+          <a href="https://png-info.twokaif.ru" target="_blank" rel="noopener" class="pricing-card-btn">Узнать подробнее</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 4: Презентация -->
+      <li class="pricing-card" data-price="3">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">04</span>
           <span class="pricing-card-name">Презентация</span>
           <div class="pricing-card-right">
             <span class="pricing-card-price">от&nbsp;2&nbsp;600&nbsp;₽</span>
@@ -409,10 +401,10 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
-          <div class="pricing-variant-name">от&nbsp;2&nbsp;600&nbsp;₽ за&nbsp;слайд</div>
-          <p class="pricing-card-desc">Презентация&nbsp;— многоуровневая работа. Заявка на&nbsp;премию Wedding Awards, выступление на&nbsp;TOP100AWARDS, промо для&nbsp;агентства, КП&nbsp;для&nbsp;клиента&nbsp;— у&nbsp;каждой задачи свои условия</p>
-          <p class="pricing-card-desc" style="margin-bottom:16px">Смотрим ТЗ, оцениваем объём и&nbsp;сложность,<br>после чего называем точную стоимость и&nbsp;сроки</p>
-          <div class="pricing-variant-tags" style="margin-bottom:16px">
+          <span class="pricing-card-note">От&nbsp;2&nbsp;600&nbsp;₽ за&nbsp;слайд</span>
+          <p class="pricing-card-desc">Презентация&nbsp;— многоуровневая работа. Заявка на&nbsp;премию Wedding Awards, выступление на&nbsp;TOP100AWARDS, промо для&nbsp;агентства, КП&nbsp;для&nbsp;клиента&nbsp;— у&nbsp;каждой задачи свои условия.</p>
+          <p class="pricing-card-desc">Смотрим ТЗ, оцениваем объём и&nbsp;сложность, после чего называем точную стоимость и&nbsp;сроки.</p>
+          <div class="pricing-card-tags">
             <span class="pricing-tag">WA</span>
             <span class="pricing-tag">TOP100</span>
             <span class="pricing-tag">Промо</span>
@@ -424,57 +416,64 @@
         </div></div>
       </li>
 
-      <!-- Услуга 4: Сайт -->
-      <li class="pricing-card" data-price="3">
+      <!-- Услуга 5: Обложка или афиша -->
+      <li class="pricing-card" data-price="4">
         <div class="pricing-card-head">
-          <span class="pricing-card-index">04</span>
-          <span class="pricing-card-name">Сайт</span>
+          <span class="pricing-card-index">05</span>
+          <span class="pricing-card-name">Обложка или афиша</span>
           <div class="pricing-card-right">
-            <span class="pricing-card-price">от&nbsp;85&nbsp;000&nbsp;₽</span>
+            <span class="pricing-card-price">от&nbsp;2&nbsp;000&nbsp;₽</span>
             <span class="pricing-toggle"></span>
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
-          <div class="pricing-variant-title">Варианты работы</div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-name">Одностраничный&nbsp;— от&nbsp;85&nbsp;000&nbsp;₽</div>
-            <div class="pricing-variant-note">5–7&nbsp;блоков: главный экран, обо&nbsp;мне, услуги, портфолио, отзывы, контакты</div>
-          </div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-name">Многостраничный&nbsp;— от&nbsp;120&nbsp;000&nbsp;₽</div>
-            <div class="pricing-variant-note">Считаем блоки, стоимость зависит от&nbsp;объёма и&nbsp;сложности</div>
-          </div>
-
-          <div class="pricing-variant">
-            <div class="pricing-variant-name">Комплекс&nbsp;— от&nbsp;200&nbsp;000&nbsp;₽</div>
-            <div class="pricing-variant-note">Сайт + презентация + обложки в&nbsp;едином стиле</div>
-          </div>
-
-          <p class="pricing-card-desc" style="margin-bottom:12px;opacity:.4;font-size:13px">Блок&nbsp;— один смысловой раздел&nbsp;сайта<br><em style="opacity:.7">(главный экран, обо&nbsp;мне, тарифы, галерея)</em></p>
-          <div class="pricing-variant-tags" style="margin-bottom:16px">
-            <span class="pricing-tag">Срок изготовления от&nbsp;3–4&nbsp;недель</span>
+          <span class="pricing-card-note">Один макет · под нужный формат</span>
+          <p class="pricing-card-desc">Обложка или афиша&nbsp;— от&nbsp;2&nbsp;000&nbsp;₽. Ресайз <em style="opacity:.7">(адаптация под&nbsp;другой формат)</em>&nbsp;— от&nbsp;500&nbsp;₽/шт.</p>
+          <div class="pricing-card-tags">
+            <span class="pricing-tag">От&nbsp;2 рабочих дней</span>
+            <span class="pricing-tag">Ресайз</span>
             <span class="pricing-tag">Срочный проект +%</span>
           </div>
           <a href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener" class="pricing-card-btn">Заказать</a>
         </div></div>
       </li>
 
-      <!-- Услуга 5: Интерактивы -->
-      <li class="pricing-card" data-price="4">
+      <!-- Услуга 6: Агент для GPT -->
+      <li class="pricing-card" data-price="5">
         <div class="pricing-card-head">
-          <span class="pricing-card-index">05</span>
-          <span class="pricing-card-name">Интерактивы</span>
+          <span class="pricing-card-index">06</span>
+          <span class="pricing-card-name">Агент для GPT</span>
           <div class="pricing-card-right">
-            <span class="pricing-card-price">от&nbsp;5&nbsp;000&nbsp;₽</span>
+            <span class="pricing-card-price">1&nbsp;990&nbsp;₽</span>
             <span class="pricing-toggle"></span>
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
-          <p class="pricing-card-desc">Помогаем ведущим оформлять их&nbsp;идеи и&nbsp;задумки в&nbsp;интерактивы для&nbsp;мероприятий. Сейчас почти на&nbsp;каждом ивенте есть экраны&nbsp;— и&nbsp;мы&nbsp;делаем контент для&nbsp;них: соединяем лица гостей со&nbsp;звёздами, превращаем любой кадр в&nbsp;юмористическое видео, создаём визуальные шоу и&nbsp;эффекты, которые вовлекают зал</p>
-          <p class="pricing-card-desc">Открыты к&nbsp;любым форматам и&nbsp;нестандартным задачам&nbsp;— поможем воплотить твою задумку в&nbsp;жизнь. Понимаем важность дедлайнов и&nbsp;всегда укладываемся в&nbsp;сроки</p>
-          <div class="pricing-variant-tags" style="margin-bottom:12px">
+          <span class="pricing-card-note">Для работы нужен GPT</span>
+          <p class="pricing-card-desc">AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.</p>
+          <div class="pricing-card-tags">
+            <span class="pricing-tag">Карусели и&nbsp;посты</span>
+            <span class="pricing-tag">Афиши и&nbsp;Reels</span>
+            <span class="pricing-tag">Под твой стиль</span>
+          </div>
+          <a href="https://telegram.me/tukaif_agent_bot" target="_blank" rel="noopener" class="pricing-card-btn">Узнать подробнее</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 7: Интерактив -->
+      <li class="pricing-card" data-price="6">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">07</span>
+          <span class="pricing-card-name">Интерактив</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;1&nbsp;000&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <p class="pricing-card-desc">Помогаем ведущим превращать идеи в&nbsp;интерактивы для&nbsp;мероприятий: соединяем лица гостей со&nbsp;звёздами, превращаем кадры в&nbsp;юмористические видео, создаём визуальные шоу и&nbsp;эффекты для&nbsp;экрана.</p>
+          <p class="pricing-card-desc">Открыты к&nbsp;любым форматам и&nbsp;нестандартным задачам&nbsp;— поможем воплотить твою задумку в&nbsp;жизнь.</p>
+          <div class="pricing-card-tags">
             <span class="pricing-tag">PDF</span>
             <span class="pricing-tag">PNG</span>
             <span class="pricing-tag">JPEG</span>
@@ -483,6 +482,28 @@
             <span class="pricing-tag">Срочный проект +%</span>
           </div>
           <a href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener" class="pricing-card-btn">Обсудить проект</a>
+        </div></div>
+      </li>
+
+      <!-- Услуга 8: Календарь занятости -->
+      <li class="pricing-card" data-price="7">
+        <div class="pricing-card-head">
+          <span class="pricing-card-index">08</span>
+          <span class="pricing-card-name">Календарь занятости</span>
+          <div class="pricing-card-right">
+            <span class="pricing-card-price">от&nbsp;290&nbsp;₽</span>
+            <span class="pricing-toggle"></span>
+          </div>
+        </div>
+        <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <span class="pricing-card-note">290&nbsp;₽/мес · 1&nbsp;990&nbsp;₽/год · подписка</span>
+          <p class="pricing-card-desc">Все твои даты в&nbsp;одном месте. Отмечаешь занятость&nbsp;— показываешь клиенту красивой картинкой. Всё в&nbsp;Telegram, иконкой на&nbsp;телефоне.</p>
+          <div class="pricing-card-tags">
+            <span class="pricing-tag">В&nbsp;Telegram</span>
+            <span class="pricing-tag">Картинка клиенту</span>
+            <span class="pricing-tag">Месяц · год · всё</span>
+          </div>
+          <a href="https://telegram.me/twokaif_calendar_bot" target="_blank" rel="noopener" class="pricing-card-btn">Узнать подробнее</a>
         </div></div>
       </li>
     </ul>
@@ -496,15 +517,15 @@ var pC=document.querySelectorAll(".pricing-card"),pP=document.querySelectorAll("
 var pO=new IntersectionObserver(function(e){e.forEach(function(n){if(n.isIntersecting)n.target.classList.add("visible")})},{threshold:.1});
 pC.forEach(function(e){pO.observe(e)});
 /* Превью по наведению */
-pC.forEach(function(c){c.addEventListener("mouseenter",function(){var i=c.dataset.price;pP.forEach(function(p){p.classList.remove("active")});var t=document.querySelector('.pricing-preview-item[data-price="'+i+'"]');if(t)t.classList.add("active")})});
+pC.forEach(function(c){c.addEventListener("mouseenter",function(){var i=c.dataset.price,t=document.querySelector('.pricing-preview-item[data-price="'+i+'"]');if(!t)return;pP.forEach(function(p){p.classList.remove("active")});t.classList.add("active")})});
 /* Аккордеон по клику */
-document.querySelectorAll(".pricing-card-head").forEach(function(h){h.addEventListener("click",function(){var c=h.closest(".pricing-card"),w=c.classList.contains("active");pC.forEach(function(x){x.classList.remove("active")});if(!w)c.classList.add("active")})});
+document.querySelectorAll(".pricing-card-head").forEach(function(h){h.addEventListener("click",function(){var c=h.closest(".pricing-card"),b=c.querySelector(".pricing-card-body");if(!b)return;var w=c.classList.contains("active");pC.forEach(function(x){x.classList.remove("active")});if(!w)c.classList.add("active")})});
 
 /* Авто-скролл презентации с паузой при ховере */
 (function(){
   var track=document.getElementById('pvSlidesTrack');
   if(!track)return;
-  var card=document.querySelector('.pricing-card[data-price="2"]');
+  var card=document.querySelector('.pricing-card[data-price="3"]');
   if(!card)return;
   var preview=track.closest('.pricing-preview-item');
 
@@ -553,7 +574,8 @@ document.querySelectorAll(".pricing-card-head").forEach(function(h){h.addEventLi
       if(!start)start=ts;
       var p=Math.min((ts-start)/dur,1);
       var val=Math.round(target*(1-Math.pow(1-p,3)));
-      if(p<1){el.innerHTML='от&nbsp;'+fmt(val)+'&nbsp;₽';requestAnimationFrame(step);}
+      var prefix=/^\s*от\b/i.test(el.textContent)?'от&nbsp;':'';
+      if(p<1){el.innerHTML=prefix+fmt(val)+'&nbsp;₽';requestAnimationFrame(step);}
       else el.innerHTML=orig;
     }
     requestAnimationFrame(step);
