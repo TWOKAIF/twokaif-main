@@ -1198,40 +1198,40 @@ function closeMenu(){
 
 <!-- ═══ 04_Главный-экран ═══ -->
 <!-- ============================================
-     БЛОК 4: HERO — Титульный экран
-     T123 блок — огромный логотип ТУКАЙФ + крутящаяся снежинка
+     БЛОК 4: HERO — объёмный логотип ТУКАЙФ
 
-     Здесь меняй:
-     — Текст логотипа: class="hero-brand-text" (сейчас ТУКАЙФ)
-     — Снежинка: SVG внутри class="hero-brand-snowflake"
+     Источник точной формы букв:
+     — assets/hero-logo-3d.svg
+     — генерируется tools/generate_hero_logo_svg.py
 
-     НАСТРОЙКИ ПК (десктоп):
-     — Логотип: 18vw (автоматически масштабируется)
-     — Снежинка: 10% ширины, макс. 120px, вращение 10с
-     — Отступ между снежинкой и текстом: 20px
-     — Высота секции: 100vh (весь экран)
-
-     НАСТРОЙКИ МОБИЛЕ (до 640px):
-     — Логотип: 20vw, буквенный интервал: -1vw
-     — Отступ: 10px
+     3D:
+     — Three.js и SVGLoader лежат локально в assets/js/vendor/three
+     — каждая буква собрана из корпуса и тонкого лицевого слоя
+     — исходный HTML-логотип остаётся fallback, если WebGL недоступен
+     — движение останавливается вне экрана и уважает reduced-motion
      ============================================ -->
 <style>
 .hero {
+  position: relative;
   height: 100vh;
   height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--bg);
   padding: 0 var(--edge);
   overflow: hidden;
 }
 .hero-brand {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.hero-brand-fallback {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  width: 100%;
+  transition: opacity .32s ease;
 }
 .hero-brand-snowflake {
   width: 10%;
@@ -1252,32 +1252,382 @@ function closeMenu(){
   color: var(--text);
   white-space: nowrap;
 }
+.hero-brand-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .38s ease;
+}
+.hero-brand.is-3d-ready .hero-brand-canvas { opacity: 1; }
+.hero-brand.is-3d-ready .hero-brand-fallback { opacity: 0; }
 
 /* Скрытый SEO-текст */
 .hero-seo {
   position: absolute;
-  width: 1px; height: 1px;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
   clip: rect(0,0,0,0);
   white-space: nowrap;
 }
 
-/* === Адаптив: мобилка (до 640px) === */
 @media (max-width: 640px) {
-  .hero-brand { gap: 10px; }
+  .hero-brand-fallback { gap: 10px; }
   .hero-brand-text { font-size: 20vw; letter-spacing: -1vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-brand-fallback,
+  .hero-brand-canvas { transition: none; }
+  .hero-brand-snowflake .snowflake { animation: none; }
 }
 </style>
 
 <section class="hero" id="hero">
-  <div class="hero-brand">
-    <svg class="hero-brand-snowflake" viewBox="-3 18 81 81" fill="none">
-      <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
-    </svg>
-    <h1 class="hero-brand-text">ТУКАЙФ</h1>
+  <div class="hero-brand" id="heroBrand3d">
+    <div class="hero-brand-fallback">
+      <svg class="hero-brand-snowflake" viewBox="-3 18 81 81" fill="none" aria-hidden="true">
+        <g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g>
+      </svg>
+      <h1 class="hero-brand-text">ТУКАЙФ</h1>
+    </div>
+    <canvas class="hero-brand-canvas" id="heroBrandCanvas" aria-hidden="true"></canvas>
     <span class="hero-seo">Ивент-дизайнер для профессионалов — сайты, обложки, афиши, презентации</span>
   </div>
 </section>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "/js/vendor/three/three.module.min.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { SVGLoader } from '/js/vendor/three/SVGLoader.js';
+
+const hero = document.getElementById('hero');
+const brand = document.getElementById('heroBrand3d');
+const canvas = document.getElementById('heroBrandCanvas');
+
+if (hero && brand && canvas) {
+  initHero3d().catch(function(error) {
+    console.warn('Hero 3D fallback:', error);
+  });
+}
+
+async function initHero3d() {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarsePointer = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+    alpha: false,
+    powerPreference: 'high-performance'
+  });
+  renderer.setClearColor(0xffffff, 1);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.06;
+  renderer.shadowMap.enabled = !coarsePointer;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(24, 1, 100, 150000);
+  camera.position.set(0, 0, 14000);
+
+  const pivot = new THREE.Group();
+  const logo = new THREE.Group();
+  pivot.add(logo);
+  scene.add(pivot);
+
+  const shoulderMaterial = new THREE.MeshBasicMaterial({
+    color: 0x27272b,
+    toneMapped: false
+  });
+  const faceMaterial = new THREE.MeshBasicMaterial({
+    color: 0x1d1d1f,
+    toneMapped: false
+  });
+  const bodyMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0x303034,
+    metalness: 0.12,
+    roughness: 0.42,
+    clearcoat: 0.14,
+    clearcoatRoughness: 0.46
+  });
+  const bevelMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0x55555b,
+    metalness: 0.16,
+    roughness: 0.26,
+    clearcoat: 0.28,
+    clearcoatRoughness: 0.3
+  });
+
+  const loader = new SVGLoader();
+  const data = await loader.loadAsync('/hero-logo-3d.svg');
+  let snowflake = null;
+  const glyphs = [];
+  let tuPair = null;
+
+  data.paths.forEach(function(path, pathIndex) {
+    const pathGroup = new THREE.Group();
+    const shapes = SVGLoader.createShapes(path);
+
+    shapes.forEach(function(shape) {
+      const bodyGeometry = new THREE.ExtrudeGeometry(shape, {
+        depth: 224,
+        steps: 1,
+        curveSegments: 16,
+        bevelEnabled: true,
+        bevelThickness: 10,
+        bevelSize: 7,
+        bevelOffset: 0,
+        bevelSegments: 5
+      });
+      bodyGeometry.translate(0, 0, -112);
+
+      const body = new THREE.Mesh(bodyGeometry, [shoulderMaterial, bodyMaterial]);
+      body.castShadow = !coarsePointer;
+      pathGroup.add(body);
+
+      /* A shallow inset cap creates a second, jewellery-like bevel step. */
+      const faceGeometry = new THREE.ExtrudeGeometry(shape, {
+        depth: 14,
+        steps: 1,
+        curveSegments: 16,
+        bevelEnabled: true,
+        bevelThickness: 5,
+        bevelSize: 3.5,
+        bevelOffset: 0,
+        bevelSegments: 4
+      });
+      faceGeometry.translate(0, 0, 120);
+
+      const face = new THREE.Mesh(faceGeometry, [faceMaterial, bevelMaterial]);
+      face.castShadow = !coarsePointer;
+      face.userData.isFaceLayer = true;
+      pathGroup.add(face);
+    });
+
+    /* Give every letter its own optical centre, not only the snowflake. */
+    const pathBox = new THREE.Box3().setFromObject(pathGroup);
+    const pathCenter = pathBox.getCenter(new THREE.Vector3());
+    pathGroup.children.forEach(function(mesh) {
+      mesh.geometry.translate(-pathCenter.x, -pathCenter.y, 0);
+      if (mesh.userData.isFaceLayer) mesh.scale.set(0.996, 0.996, 1);
+    });
+    pathGroup.position.set(pathCenter.x, pathCenter.y, 0);
+
+    if (pathIndex === 0) {
+      snowflake = pathGroup;
+    } else {
+      pathGroup.userData.motionIndex = pathIndex - 1;
+      glyphs.push(pathGroup);
+    }
+
+    logo.add(pathGroup);
+  });
+
+  /* Т and У share one pivot so their carefully spaced joint stays intact. */
+  if (glyphs.length >= 2) {
+    const pairBox = new THREE.Box3();
+    pairBox.expandByObject(glyphs[0]);
+    pairBox.expandByObject(glyphs[1]);
+    const pairCenter = pairBox.getCenter(new THREE.Vector3());
+    pairCenter.z = 0;
+    tuPair = new THREE.Group();
+    tuPair.position.copy(pairCenter);
+
+    glyphs.slice(0, 2).forEach(function(glyph) {
+      const originalPosition = glyph.position.clone();
+      logo.remove(glyph);
+      tuPair.add(glyph);
+      glyph.position.copy(originalPosition.sub(pairCenter));
+    });
+    logo.add(tuPair);
+  }
+
+  /* SVG uses a downward Y axis; flip once, then centre the full 3D lockup. */
+  logo.scale.y = -1;
+  logo.updateMatrixWorld(true);
+  const logoBox = new THREE.Box3().setFromObject(logo);
+  const logoCenter = logoBox.getCenter(new THREE.Vector3());
+  const logoSize = logoBox.getSize(new THREE.Vector3());
+  logo.position.set(-logoCenter.x, -logoCenter.y, -logoCenter.z);
+
+  const hemi = new THREE.HemisphereLight(0xffffff, 0xd9d9df, 1.42);
+  scene.add(hemi);
+
+  const key = new THREE.DirectionalLight(0xffffff, 3.15);
+  key.position.set(-3100, 2900, 7200);
+  scene.add(key);
+  scene.add(key.target);
+
+  const fill = new THREE.DirectionalLight(0xd8dcf4, 0.56);
+  fill.position.set(5200, -1800, 3600);
+  scene.add(fill);
+
+  const rim = new THREE.DirectionalLight(0xffffff, 1.34);
+  rim.position.set(1800, 3600, -2600);
+  scene.add(rim);
+
+  if (!coarsePointer) {
+    const shadowLight = new THREE.DirectionalLight(0xffffff, 0.56);
+    shadowLight.position.set(-2600, 3600, 7600);
+    shadowLight.castShadow = true;
+    shadowLight.shadow.mapSize.set(2048, 2048);
+    shadowLight.shadow.camera.near = 100;
+    shadowLight.shadow.camera.far = 24000;
+    shadowLight.shadow.camera.left = -5400;
+    shadowLight.shadow.camera.right = 5400;
+    shadowLight.shadow.camera.top = 2100;
+    shadowLight.shadow.camera.bottom = -2100;
+    shadowLight.shadow.bias = -0.00015;
+    shadowLight.shadow.normalBias = 0.7;
+    scene.add(shadowLight);
+    scene.add(shadowLight.target);
+
+    const shadowPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(13000, 4700),
+      new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.045 })
+    );
+    shadowPlane.position.z = -280;
+    shadowPlane.receiveShadow = true;
+    scene.add(shadowPlane);
+  }
+
+  const rotation = { x: 0.064, y: -0.105 };
+  const rotationTarget = { x: rotation.x, y: rotation.y };
+  const lightTarget = new THREE.Vector2(-3100, 2900);
+  const pointer = new THREE.Vector2();
+  const pointerTarget = new THREE.Vector2();
+  let visible = true;
+  let running = false;
+  let lastTime = performance.now();
+
+  function fitCamera() {
+    const width = Math.max(1, brand.clientWidth);
+    const height = Math.max(1, brand.clientHeight);
+    const aspect = width / height;
+    const fit = width <= 640 ? 0.76 : 0.835;
+    const halfFov = THREE.MathUtils.degToRad(camera.fov * 0.5);
+    const distanceForHeight = logoSize.y / (2 * Math.tan(halfFov) * 0.52);
+    const distanceForWidth = logoSize.x / (2 * Math.tan(halfFov) * aspect * fit);
+
+    camera.aspect = aspect;
+    camera.position.z = Math.max(distanceForHeight, distanceForWidth) + 240;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false);
+  }
+
+  function requestRender() {
+    if (running || !visible || document.hidden) return;
+    running = true;
+    lastTime = performance.now();
+    requestAnimationFrame(renderFrame);
+  }
+
+  function renderFrame(now) {
+    const delta = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+    const easing = 1 - Math.exp(-7.5 * delta);
+
+    if (coarsePointer && !reducedMotion) {
+      rotationTarget.x = 0.054 + Math.sin(now * 0.00038) * 0.024;
+      rotationTarget.y = -0.09 + Math.sin(now * 0.00027) * 0.045;
+    }
+
+    rotation.x += (rotationTarget.x - rotation.x) * easing;
+    rotation.y += (rotationTarget.y - rotation.y) * easing;
+    pivot.rotation.x = rotation.x;
+    pivot.rotation.y = rotation.y;
+
+    pointer.lerp(pointerTarget, easing);
+    if (tuPair) {
+      const pairSpread = -0.8;
+      tuPair.position.z = pointer.x * pairSpread * 58 - Math.abs(pointer.y) * (1 - Math.abs(pairSpread)) * 10;
+      tuPair.rotation.x = -pointer.y * (0.014 + Math.abs(pairSpread) * 0.008);
+      tuPair.rotation.y = pointer.x * (0.026 + pairSpread * 0.01);
+    }
+
+    glyphs.slice(tuPair ? 2 : 0).forEach(function(glyph, relativeIndex) {
+      const glyphIndex = relativeIndex + (tuPair ? 2 : 0);
+      const spread = (glyphIndex - (glyphs.length - 1) * 0.5) / Math.max(1, (glyphs.length - 1) * 0.5);
+      glyph.position.z = pointer.x * spread * 58 - Math.abs(pointer.y) * (1 - Math.abs(spread)) * 10;
+      glyph.rotation.x = -pointer.y * (0.014 + Math.abs(spread) * 0.008);
+      glyph.rotation.y = pointer.x * (0.026 + spread * 0.01);
+    });
+
+    key.position.x += (lightTarget.x - key.position.x) * easing;
+    key.position.y += (lightTarget.y - key.position.y) * easing;
+
+    if (snowflake && !reducedMotion) {
+      snowflake.rotation.z += delta * 0.48;
+    }
+
+    renderer.render(scene, camera);
+
+    if (visible && !document.hidden && !reducedMotion) {
+      requestAnimationFrame(renderFrame);
+    } else {
+      running = false;
+    }
+  }
+
+  function handlePointerMove(event) {
+    if (reducedMotion || event.pointerType === 'touch') return;
+    const rect = hero.getBoundingClientRect();
+    const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+    pointerTarget.set(nx, ny);
+    rotationTarget.x = THREE.MathUtils.clamp(-ny * 0.105 + 0.04, -0.085, 0.14);
+    rotationTarget.y = THREE.MathUtils.clamp(nx * 0.145 - 0.075, -0.19, 0.095);
+    lightTarget.set(nx * 5200, -ny * 3200 + 900);
+    requestRender();
+  }
+
+  function handlePointerLeave() {
+    pointerTarget.set(0, 0);
+    rotationTarget.x = 0.064;
+    rotationTarget.y = -0.105;
+    lightTarget.set(-3100, 2900);
+  }
+
+  hero.addEventListener('pointermove', handlePointerMove, { passive: true });
+  hero.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+
+  const resizeObserver = new ResizeObserver(function() {
+    fitCamera();
+    requestRender();
+  });
+  resizeObserver.observe(brand);
+
+  const visibilityObserver = new IntersectionObserver(function(entries) {
+    visible = entries[0].isIntersecting;
+    if (visible) requestRender();
+  }, { threshold: 0.01 });
+  visibilityObserver.observe(hero);
+
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) requestRender();
+  });
+
+  fitCamera();
+  pivot.rotation.set(rotation.x, rotation.y, 0);
+  renderer.render(scene, camera);
+  brand.classList.add('is-3d-ready');
+  requestRender();
+}
+</script>
 
 <script>
 /* Hero parallax: логотип чуть отстаёт от скролла + растворяется — ощущение глубины */
