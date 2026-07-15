@@ -618,43 +618,14 @@
   }
 }
 
-/* Карточки по логике Property Hover Card: белая типографика → полноэкранный визуал */
-#promo-card-sites {
-  --promo-art:
-    linear-gradient(180deg, rgba(11,11,13,.06) 18%, rgba(8,8,10,.9) 100%),
-    radial-gradient(circle at 72% 20%, rgba(113,119,255,.95), transparent 34%),
-    repeating-linear-gradient(135deg, #111217 0 18px, #1b1c24 18px 36px);
-}
-#promo-card-anketa {
-  --promo-art:
-    linear-gradient(180deg, rgba(52,8,26,.02) 18%, rgba(38,5,18,.9) 100%),
-    radial-gradient(circle at 22% 18%, rgba(255,221,226,.96), transparent 34%),
-    linear-gradient(135deg, #ce5e7d 0%, #6c1737 100%);
-}
-#promo-card-png {
-  --promo-art:
-    linear-gradient(180deg, rgba(20,16,57,.03) 15%, rgba(15,11,45,.9) 100%),
-    radial-gradient(circle at 76% 20%, rgba(114,216,255,.9), transparent 30%),
-    linear-gradient(135deg, #7348f2 0%, #272063 100%);
-}
-#promo-card-agent {
-  --promo-art:
-    linear-gradient(180deg, rgba(3,36,29,.02) 15%, rgba(3,28,23,.92) 100%),
-    radial-gradient(circle at 70% 22%, rgba(96,244,186,.86), transparent 31%),
-    repeating-linear-gradient(90deg, #0b624c 0 20px, #0c4f40 20px 40px);
-}
-#promo-card-mzh {
-  --promo-art:
-    linear-gradient(180deg, rgba(20,25,61,.03) 15%, rgba(16,19,45,.9) 100%),
-    radial-gradient(circle at 20% 18%, rgba(90,154,255,.9), transparent 31%),
-    radial-gradient(circle at 82% 25%, rgba(255,100,126,.86), transparent 33%),
-    linear-gradient(135deg, #173b81 0%, #7d2749 100%);
-}
+/* Один фирменный графит вместо шести цветных миров. */
+#promo-card-sites,
+#promo-card-anketa,
+#promo-card-png,
+#promo-card-agent,
+#promo-card-mzh,
 #promo-card-cal {
-  --promo-art:
-    linear-gradient(180deg, rgba(44,29,5,.02) 15%, rgba(39,25,4,.88) 100%),
-    radial-gradient(circle at 24% 18%, rgba(255,230,139,.96), transparent 32%),
-    repeating-linear-gradient(135deg, #d7891f 0 22px, #b96614 22px 44px);
+  --promo-art: #1d1d1f;
 }
 
 .promo-card,
@@ -833,8 +804,8 @@
     transform: translateY(0);
   }
   .promo-cta:hover .promo-cta-label {
-    background: var(--text);
-    color: #fff;
+    background: #fff;
+    color: var(--text);
     transform: translateY(-2px);
   }
   .promo-cta:hover .promo-cta-arr {
@@ -844,8 +815,8 @@
     transform: translateY(0) scale(.97);
   }
   .promo-cta:focus-visible .promo-cta-label {
-    background: var(--text);
-    color: #fff;
+    background: #fff;
+    color: var(--text);
   }
   .promo-card:focus-within::after,
   .promo-card:focus-within::before,

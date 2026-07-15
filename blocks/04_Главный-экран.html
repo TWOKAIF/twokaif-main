@@ -429,19 +429,3 @@ async function initHero3d() {
   requestRender();
 }
 </script>
-
-<script>
-/* Hero parallax: логотип чуть отстаёт от скролла + растворяется — ощущение глубины */
-document.addEventListener('DOMContentLoaded',function(){
-  if(!window.gsap||!window.ScrollTrigger)return;
-  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  gsap.registerPlugin(ScrollTrigger);
-  var brand=document.querySelector('.hero-brand');
-  if(!brand)return;
-  brand.style.willChange='transform';
-  gsap.to(brand,{
-    yPercent:38, opacity:0, ease:'none',
-    scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:0.5}
-  });
-});
-</script>
