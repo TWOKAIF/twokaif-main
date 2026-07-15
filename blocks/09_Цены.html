@@ -111,6 +111,21 @@
 .cal-export{margin-top:12px;font-size:10px;font-weight:500;letter-spacing:-.1px;color:var(--muted);text-align:center;padding:8px;border:1px solid rgba(0,0,0,.08);cursor:pointer;transition:all .3s var(--ease-out)}
 .cal-export:hover{background:var(--text);color:#fff;border-color:var(--text)}
 
+/* Единая временная заглушка для услуг без готовых кейсов */
+.pv-hold{display:block;overflow:hidden;background:#111;color:#fff;font-family:var(--font-body);isolation:isolate}
+.pv-hold::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);background-size:48px 48px}
+.pv-hold::after{content:"";position:absolute;left:38px;right:38px;top:50%;height:1px;background:rgba(255,255,255,.18);transform:scaleX(0);transform-origin:left;transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.pv-hold.active::after{transform:scaleX(1)}
+.pv-hold-inner{position:absolute;inset:0;padding:38px;display:flex;flex-direction:column;justify-content:space-between}
+.pv-hold-top{display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.pv-hold-status{display:flex;align-items:center;gap:8px}
+.pv-hold-dot{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.45}
+.pv-hold-name{max-width:90%;font-size:clamp(44px,4.4vw,64px);font-weight:700;letter-spacing:-3px;line-height:.88;text-transform:uppercase;text-wrap:balance;opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.pv-hold.active .pv-hold-name{opacity:1;transform:translateY(0)}
+.pv-hold.active .pv-hold-dot{animation:pvHoldPulse 2s ease-in-out infinite}
+@keyframes pvHoldPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+@media(prefers-reduced-motion:reduce){.pv-hold.active .pv-hold-dot{animation:none}.pv-hold-name{opacity:1;transform:none}.pv-hold.active::after{transform:scaleX(1)}}
+
 /* Список услуг справа */
 .pricing-list{list-style:none;padding-left:0 !important}
 
@@ -307,17 +322,49 @@
           </div>
         </div>
 
-        <!-- 01 Сайт — заглушка -->
-        <div class="pricing-preview-item pv-vertical pv-site-placeholder active" data-price="0">
-          <div class="pv-site-ph-inner">
-            <span class="pv-site-ph-text">Формирую кейсы<br>новых адаптивных сайтов</span>
-            <span class="pv-site-ph-cta">Успей занять своё место</span>
+        <!-- 01 Сайт — временная заглушка -->
+        <div class="pricing-preview-item pv-hold active" data-price="0" aria-hidden="true">
+          <div class="pv-hold-inner">
+            <div class="pv-hold-top"><span>01</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
+            <div class="pv-hold-name">Сайт</div>
+          </div>
+        </div>
+
+        <!-- 02 Свадебная анкета — временная заглушка -->
+        <div class="pricing-preview-item pv-hold" data-price="1" aria-hidden="true">
+          <div class="pv-hold-inner">
+            <div class="pv-hold-top"><span>02</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
+            <div class="pv-hold-name">Свадебная<br>анкета</div>
+          </div>
+        </div>
+
+        <!-- 03 PNG для сторис — временная заглушка -->
+        <div class="pricing-preview-item pv-hold" data-price="2" aria-hidden="true">
+          <div class="pv-hold-inner">
+            <div class="pv-hold-top"><span>03</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
+            <div class="pv-hold-name">PNG для<br>сторис</div>
+          </div>
+        </div>
+
+        <!-- 06 Агент для GPT — временная заглушка -->
+        <div class="pricing-preview-item pv-hold" data-price="5" aria-hidden="true">
+          <div class="pv-hold-inner">
+            <div class="pv-hold-top"><span>06</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
+            <div class="pv-hold-name">Агент<br>для GPT</div>
           </div>
         </div>
 
         <!-- 07 Интерактив -->
         <div class="pricing-preview-item pv-vertical" data-price="6">
           <img src="https://static.tildacdn.com/tild3062-6130-4334-b164-633337626666/02__.jpg" alt="Интерактивы">
+        </div>
+
+        <!-- 08 Календарь занятости — временная заглушка -->
+        <div class="pricing-preview-item pv-hold" data-price="7" aria-hidden="true">
+          <div class="pv-hold-inner">
+            <div class="pv-hold-top"><span>08</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
+            <div class="pv-hold-name">Календарь<br>занятости</div>
+          </div>
         </div>
       </div>
       <!-- Пакетные предложения -->
