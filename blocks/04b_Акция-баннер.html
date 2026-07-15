@@ -265,7 +265,6 @@
   transition: background .35s var(--ease-out), color .35s var(--ease-out), border-color .35s var(--ease-out);
 }
 .promo-cta-arr { transition: transform .25s var(--ease-out); }
-.promo-cta:hover .promo-cta-arr { transform: translateX(4px); }
 
 .promos:not(.is-active) { display: none; }
 
@@ -325,6 +324,609 @@
   .promo-cta { margin-top: 24px; padding: 11px 22px; font-size: 14px; }
   .promo-cd { font-size: 11.5px; padding: 4px 9px; }
 }
+
+/* === 2026-07: компактные витринные плашки === */
+.promos {
+  padding: 80px var(--edge) 96px;
+  background: var(--surface, #f5f5f7);
+}
+.promos-head {
+  margin-bottom: 30px;
+}
+.promos-h2 {
+  font-size: clamp(36px, 4.2vw, 56px);
+  letter-spacing: -.035em;
+}
+.promos-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 14px;
+  perspective: 1200px;
+}
+.promo-card {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --content-x: 0px;
+  --content-y: 0px;
+  --number-x: 0px;
+  --number-y: 0px;
+  min-height: 250px;
+  height: 250px;
+  padding: 28px;
+  border-color: #e5e5e7;
+  background: #fff;
+  color: var(--text);
+  isolation: isolate;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  transform: translateY(14px);
+  transition:
+    transform .45s var(--ease-out),
+    opacity .5s var(--ease-out),
+    border-color .35s var(--ease-out);
+}
+.promo-card.visible {
+  transform: translateY(0);
+}
+.promo-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 150px at var(--glow-x) var(--glow-y),
+    rgba(29, 29, 31, .055),
+    rgba(29, 29, 31, 0) 72%
+  );
+  opacity: 0;
+  transition: opacity .22s cubic-bezier(.23, 1, .32, 1);
+}
+.promo-card::before {
+  position: absolute;
+  top: 12px;
+  right: 22px;
+  z-index: 1;
+  color: rgba(29,29,31,.055);
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.11em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  transition:
+    color .22s cubic-bezier(.23, 1, .32, 1),
+    transform .24s cubic-bezier(.23, 1, .32, 1);
+}
+.promo-card:nth-child(1)::before { content: '01'; }
+.promo-card:nth-child(2)::before { content: '02'; }
+.promo-card:nth-child(3)::before { content: '03'; }
+.promo-card:nth-child(4)::before { content: '04'; }
+.promo-card:nth-child(5)::before { content: '05'; }
+.promo-card:nth-child(6)::before { content: '06'; }
+.promo-card > div:first-child {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform .24s cubic-bezier(.23, 1, .32, 1);
+}
+.promo-head {
+  min-height: 16px;
+}
+.promo-tag {
+  font-size: 10.5px;
+  letter-spacing: .11em;
+}
+.promo-title {
+  max-width: 82%;
+  min-height: 0;
+  margin-top: 18px;
+  font-size: clamp(22px, 2.25vw, 30px);
+  line-height: .98;
+  white-space: nowrap;
+}
+.promo-prices {
+  margin-top: auto;
+  padding-top: 28px;
+}
+.promo-price {
+  font-size: clamp(27px, 3vw, 36px);
+  letter-spacing: .005em;
+}
+.promo-old {
+  font-size: 15px;
+}
+.promo-pricenote {
+  max-width: calc(100% - 42px);
+  margin-top: 7px;
+  font-size: 11.5px;
+}
+.promo-sub,
+.promo-chips,
+.promo-timer {
+  display: none;
+}
+.promo-cta {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: block;
+  align-self: stretch;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 0;
+}
+.promo-cta:hover,
+.promo-card.is-invert .promo-cta:hover {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+.promo-cta::before {
+  display: none;
+}
+.promo-cta-arr {
+  position: absolute;
+  right: 27px;
+  bottom: 29px;
+  width: 19px;
+  height: 19px;
+  z-index: 1;
+  transform: rotate(-45deg);
+  transition:
+    color .18s cubic-bezier(.23, 1, .32, 1),
+    transform .22s cubic-bezier(.23, 1, .32, 1);
+}
+.promo-cta:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: -3px;
+}
+.promo-card:focus-within::after {
+  opacity: .7;
+}
+.promo-card:focus-within::before {
+  color: rgba(29,29,31,.095);
+  transform: translate3d(-3px, -2px, 0);
+}
+.promo-card:hover .promo-tag,
+.promo-card:hover .promo-pricenote,
+.promo-card:focus-within .promo-tag,
+.promo-card:focus-within .promo-pricenote {
+  color: var(--muted);
+}
+.promo-card:hover .promo-title,
+.promo-card:hover .promo-price,
+.promo-card:focus-within .promo-title,
+.promo-card:focus-within .promo-price {
+  color: var(--text);
+}
+.promo-card:hover .promo-old,
+.promo-card:focus-within .promo-old {
+  color: var(--muted);
+}
+.promo-card:focus-within .promo-cta-arr {
+  transform: translate(3px, -3px) rotate(-45deg);
+}
+
+.promo-card.is-invert,
+.promo-card.is-soon {
+  border-color: #e5e5e7;
+  background: #fff;
+}
+.promo-card.is-invert .promo-tag,
+.promo-card.is-invert .promo-pricenote,
+.promo-card.is-soon .promo-tag {
+  color: var(--muted);
+}
+.promo-card.is-invert .promo-title,
+.promo-card.is-invert .promo-price {
+  color: var(--text);
+}
+.promo-card.is-invert .promo-cta {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+.promo-card.is-invert:hover .promo-tag,
+.promo-card.is-invert:hover .promo-pricenote,
+.promo-card.is-invert:focus-within .promo-tag,
+.promo-card.is-invert:focus-within .promo-pricenote {
+  color: var(--muted);
+}
+.promo-card.is-invert:hover .promo-title,
+.promo-card.is-invert:hover .promo-price,
+.promo-card.is-invert:focus-within .promo-title,
+.promo-card.is-invert:focus-within .promo-price {
+  color: var(--text);
+}
+
+@media (max-width: 919px) {
+  .promos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 734px) {
+  .promos {
+    padding: 52px var(--edge) 64px;
+  }
+  .promos-head {
+    margin-bottom: 24px;
+  }
+  .promos-h2 {
+    font-size: clamp(34px, 10.2vw, 42px);
+  }
+  .promos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .promo-card {
+    min-height: 204px;
+    height: 204px;
+    padding: 20px;
+  }
+  .promo-card::before {
+    top: 11px;
+    right: 14px;
+    font-size: 48px;
+  }
+  .promo-tag {
+    font-size: 9px;
+  }
+  .promo-title {
+    max-width: 100%;
+    margin-top: 14px;
+    font-size: clamp(17px, 4.8vw, 21px);
+  }
+  .promo-prices {
+    gap: 7px;
+    padding-top: 18px;
+  }
+  .promo-price {
+    font-size: clamp(21px, 6.2vw, 27px);
+  }
+  .promo-old {
+    font-size: 11px;
+  }
+  .promo-pricenote {
+    max-width: calc(100% - 28px);
+    font-size: 9.5px;
+    line-height: 1.25;
+  }
+  .promo-cta-arr {
+    right: 18px;
+    bottom: 20px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 359px) {
+  .promos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (hover: none) {
+  .promo-card:active {
+    opacity: .78;
+  }
+}
+
+/* Карточки по логике Property Hover Card: белая типографика → полноэкранный визуал */
+#promo-card-sites {
+  --promo-art:
+    linear-gradient(180deg, rgba(11,11,13,.06) 18%, rgba(8,8,10,.9) 100%),
+    radial-gradient(circle at 72% 20%, rgba(113,119,255,.95), transparent 34%),
+    repeating-linear-gradient(135deg, #111217 0 18px, #1b1c24 18px 36px);
+}
+#promo-card-anketa {
+  --promo-art:
+    linear-gradient(180deg, rgba(52,8,26,.02) 18%, rgba(38,5,18,.9) 100%),
+    radial-gradient(circle at 22% 18%, rgba(255,221,226,.96), transparent 34%),
+    linear-gradient(135deg, #ce5e7d 0%, #6c1737 100%);
+}
+#promo-card-png {
+  --promo-art:
+    linear-gradient(180deg, rgba(20,16,57,.03) 15%, rgba(15,11,45,.9) 100%),
+    radial-gradient(circle at 76% 20%, rgba(114,216,255,.9), transparent 30%),
+    linear-gradient(135deg, #7348f2 0%, #272063 100%);
+}
+#promo-card-agent {
+  --promo-art:
+    linear-gradient(180deg, rgba(3,36,29,.02) 15%, rgba(3,28,23,.92) 100%),
+    radial-gradient(circle at 70% 22%, rgba(96,244,186,.86), transparent 31%),
+    repeating-linear-gradient(90deg, #0b624c 0 20px, #0c4f40 20px 40px);
+}
+#promo-card-mzh {
+  --promo-art:
+    linear-gradient(180deg, rgba(20,25,61,.03) 15%, rgba(16,19,45,.9) 100%),
+    radial-gradient(circle at 20% 18%, rgba(90,154,255,.9), transparent 31%),
+    radial-gradient(circle at 82% 25%, rgba(255,100,126,.86), transparent 33%),
+    linear-gradient(135deg, #173b81 0%, #7d2749 100%);
+}
+#promo-card-cal {
+  --promo-art:
+    linear-gradient(180deg, rgba(44,29,5,.02) 15%, rgba(39,25,4,.88) 100%),
+    radial-gradient(circle at 24% 18%, rgba(255,230,139,.96), transparent 32%),
+    repeating-linear-gradient(135deg, #d7891f 0 22px, #b96614 22px 44px);
+}
+
+.promo-card,
+.promo-card.is-invert {
+  min-height: 360px;
+  height: 360px;
+  padding: 28px;
+  overflow: hidden;
+  border-color: #dedee2;
+  background: #fff;
+  color: var(--text);
+}
+.promo-card::after {
+  inset: -1px;
+  z-index: 0;
+  background: var(--promo-art);
+  opacity: 0;
+  transform: scale(1.08);
+  transform-origin: center;
+  transition:
+    opacity .22s ease,
+    transform .24s cubic-bezier(.22, 1, .36, 1);
+}
+.promo-card::before {
+  top: 30px;
+  right: 28px;
+  left: 28px;
+  z-index: 2;
+  width: auto;
+  color: var(--text);
+  font-size: 82px;
+  letter-spacing: -.07em;
+  text-align: left;
+  transform: translateX(calc(50% - 30px)) scale(.58);
+  transform-origin: left top;
+  transition:
+    color .2s ease,
+    transform .24s cubic-bezier(.22, 1, .36, 1);
+}
+.promo-card > div:first-child {
+  z-index: 2;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding-top: 82px;
+  padding-bottom: 42px;
+  transform: translate3d(0, 0, 0);
+  transition: transform .24s cubic-bezier(.22, 1, .36, 1);
+}
+.promo-head,
+.promo-title,
+.promo-prices,
+.promo-pricenote {
+  flex-shrink: 0;
+}
+.promo-head {
+  min-height: 0;
+  margin: 0 0 10px;
+}
+.promo-title {
+  max-width: 100%;
+  margin: 0;
+  font-size: clamp(25px, 2.65vw, 34px);
+  font-weight: 700;
+  line-height: .9;
+}
+.promo-prices {
+  margin: 17px 0 0;
+  padding: 0;
+}
+.promo-price {
+  font-size: clamp(30px, 3vw, 38px);
+  letter-spacing: .005em;
+}
+.promo-pricenote {
+  max-width: calc(100% - 16px);
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+.promo-cta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 28px 25px;
+}
+.promo-cta-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 11px;
+  background: #fff;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity .16s ease,
+    color .14s ease,
+    background-color .14s ease,
+    transform .16s cubic-bezier(.22, 1, .36, 1);
+}
+.promo-cta-arr {
+  right: 28px;
+  bottom: 28px;
+  color: #fff;
+  opacity: 0;
+  transform: translate(-5px, 5px) rotate(-45deg);
+  transition:
+    color .14s ease,
+    opacity .16s ease,
+    transform .16s cubic-bezier(.22, 1, .36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .promo-cta {
+    pointer-events: none;
+  }
+  .promo-cta-label {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .promo-cta-arr {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .promo-card:hover,
+  .promo-card:focus-within {
+    border-color: transparent;
+  }
+  .promo-card:hover::after,
+  .promo-card:focus-within::after {
+    opacity: 1;
+    transform: scale(1);
+    transition-duration: .32s, .52s;
+  }
+  .promo-card:hover::before,
+  .promo-card:focus-within::before {
+    color: #fff;
+    transform: translateX(0) scale(1);
+    transition-duration: .2s, .42s;
+  }
+  .promo-card:hover > div:first-child,
+  .promo-card:focus-within > div:first-child {
+    transform: translate3d(0, -3px, 0);
+    transition-duration: .42s;
+  }
+  .promo-card:hover .promo-tag,
+  .promo-card:hover .promo-pricenote,
+  .promo-card:hover .promo-old,
+  .promo-card:focus-within .promo-tag,
+  .promo-card:focus-within .promo-pricenote,
+  .promo-card:focus-within .promo-old {
+    color: rgba(255,255,255,.7);
+  }
+  .promo-card:hover .promo-title,
+  .promo-card:hover .promo-price,
+  .promo-card:focus-within .promo-title,
+  .promo-card:focus-within .promo-price,
+  .promo-card.is-invert:hover .promo-title,
+  .promo-card.is-invert:hover .promo-price,
+  .promo-card.is-invert:focus-within .promo-title,
+  .promo-card.is-invert:focus-within .promo-price {
+    color: #fff;
+  }
+  .promo-card:hover .promo-cta-label,
+  .promo-card:focus-within .promo-cta-label,
+  .promo-card:hover .promo-cta-arr,
+  .promo-card:focus-within .promo-cta-arr {
+    opacity: 1;
+    transform: translate(0, 0) rotate(-45deg);
+  }
+  .promo-card:hover .promo-cta-label,
+  .promo-card:focus-within .promo-cta-label {
+    transform: translateY(0);
+  }
+  .promo-cta:hover .promo-cta-label {
+    background: var(--text);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  .promo-cta:hover .promo-cta-arr {
+    transform: translate(4px, -4px) rotate(-45deg);
+  }
+  .promo-cta:active .promo-cta-label {
+    transform: translateY(0) scale(.97);
+  }
+  .promo-cta:focus-visible .promo-cta-label {
+    background: var(--text);
+    color: #fff;
+  }
+  .promo-card:focus-within::after,
+  .promo-card:focus-within::before,
+  .promo-card:focus-within > div:first-child,
+  .promo-card:focus-within .promo-cta-label,
+  .promo-card:focus-within .promo-cta-arr {
+    transition-duration: .01ms;
+  }
+}
+
+@media (max-width: 734px) {
+  .promo-card,
+  .promo-card.is-invert {
+    min-height: 286px;
+    height: 286px;
+    padding: 20px;
+  }
+  .promo-card::before {
+    top: 21px;
+    right: 20px;
+    left: 20px;
+    font-size: 64px;
+    transform: translateX(calc(50% - 23px)) scale(.58);
+  }
+  .promo-card > div:first-child {
+    padding-top: 68px;
+    padding-bottom: 30px;
+  }
+  .promo-head {
+    margin-bottom: 8px;
+  }
+  .promo-title {
+    margin: 0;
+    font-size: clamp(19px, 5.1vw, 21.5px);
+    line-height: .9;
+  }
+  .promo-prices {
+    margin-top: 13px;
+    padding: 0;
+  }
+  .promo-price {
+    font-size: clamp(22px, 6vw, 27px);
+  }
+  .promo-pricenote {
+    max-width: calc(100% - 8px);
+    font-size: 9.5px;
+  }
+  .promo-cta {
+    padding: 0 20px 18px;
+    pointer-events: auto;
+  }
+  .promo-cta-label {
+    display: none;
+  }
+  .promo-cta-arr {
+    right: 20px;
+    bottom: 20px;
+    color: var(--text);
+    opacity: 1;
+    transform: rotate(-45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-card,
+  .promo-card::before,
+  .promo-card::after,
+  .promo-card > div:first-child,
+  .promo-cta-arr {
+    transition: none;
+  }
+  .promo-cta-label {
+    transition: none;
+  }
+}
 </style>
 
 <section class="promos" id="promos" aria-label="Активные предложения">
@@ -334,7 +936,6 @@
       <span class="promos-label"><span class="promos-label-dot"></span>Сейчас</span>
       <h2 class="promos-h2">Активные акции</h2>
     </div>
-    <span class="promos-meta">Закрываются по&nbsp;таймеру</span>
   </div>
   <div class="promos-grid">
 
@@ -342,13 +943,13 @@
     <div class="promo-card is-invert" id="promo-card-sites">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Новое направление</span>
+          <span class="promo-tag">НОВИНКА</span>
         </div>
-        <h3 class="promo-title">Сайт ведущему</h3>
+        <h3 class="promo-title">Сайт<br>ведущего</h3>
         <div class="promo-prices">
           <span class="promo-price">от&nbsp;45&nbsp;000&nbsp;₽</span>
         </div>
-        <span class="promo-pricenote">под&nbsp;ключ · год хостинга включён</span>
+        <span class="promo-pricenote">Под&nbsp;ключ — мой хостинг на&nbsp;год бесплатно!</span>
         <p class="promo-sub">
           Личный сайт под&nbsp;твой стиль, не&nbsp;шаблон. Рисуем макет вместе, собираю в&nbsp;чистый код&nbsp;— живёт на&nbsp;моём сервере. Домен твой, настройку беру на&nbsp;себя.
         </p>
@@ -368,7 +969,7 @@
         </div>
       </div>
       <a href="https://telegram.me/twokaif_ruslan" class="promo-cta" target="_blank" rel="noopener">
-        Обсудить сайт
+        <span class="promo-cta-label">Обсудить сайт</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -377,13 +978,14 @@
     <div class="promo-card" id="promo-card-anketa" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag" id="promo-tag">Акция</span>
+          <span class="promo-tag" id="promo-tag">АКЦИЯ</span>
         </div>
-        <h3 class="promo-title">Свадебная анкета</h3>
+        <h3 class="promo-title">Анкета<br>свадебная</h3>
         <div class="promo-prices">
           <span class="promo-price" id="promo-price">7 500 ₽</span>
           <span class="promo-old" id="promo-old"></span>
         </div>
+        <span class="promo-pricenote">Можно с&nbsp;твоими вопросами — год бесплатно</span>
         <p class="promo-sub" id="promo-sub">
           Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>1&nbsp;год работы бесплатно</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.
         </p>
@@ -412,7 +1014,7 @@
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://wedding.twokaif.ru" class="promo-cta" target="_blank" rel="noopener">
-        Узнать подробнее
+        <span class="promo-cta-label">Узнать подробнее</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -421,12 +1023,13 @@
     <div class="promo-card" id="promo-card-png" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Акция</span>
+          <span class="promo-tag">АКЦИЯ</span>
         </div>
-        <h3 class="promo-title">PNG для&nbsp;сторис</h3>
+        <h3 class="promo-title">Png<br>для&nbsp;сторис</h3>
         <div class="promo-prices">
           <span class="promo-price">4 900 ₽</span>
         </div>
+        <span class="promo-pricenote">Техподдержка 1&nbsp;год — далее 500&nbsp;₽/год</span>
         <p class="promo-sub">
           Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте, дальше&nbsp;— <b>500&nbsp;₽/год</b>.
         </p>
@@ -455,7 +1058,7 @@
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://png-info.twokaif.ru" class="promo-cta" target="_blank" rel="noopener">
-        Узнать подробнее
+        <span class="promo-cta-label">Узнать подробнее</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -464,12 +1067,13 @@
     <div class="promo-card" id="promo-card-agent" data-cd-end="">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Акция</span>
+          <span class="promo-tag">АКЦИЯ</span>
         </div>
-        <h3 class="promo-title">АГЕНТ&nbsp;— AI&#8209;дизайнер</h3>
+        <h3 class="promo-title">Агент<br>помощник GPT</h3>
         <div class="promo-prices">
           <span class="promo-price">1 990 ₽</span>
         </div>
+        <span class="promo-pricenote">Доступ навсегда — нужен GPT</span>
         <p class="promo-sub">
           AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.
         </p>
@@ -498,7 +1102,7 @@
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://telegram.me/tukaif_agent_bot" class="promo-cta" target="_blank" rel="noopener">
-        Узнать подробнее
+        <span class="promo-cta-label">Узнать подробнее</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -507,13 +1111,13 @@
     <div class="promo-card" id="promo-card-mzh" data-cd-end="2026-06-30T23:59:59+03:00">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Новинка</span>
+          <span class="promo-tag">НОВИНКА</span>
         </div>
-        <h3 class="promo-title">МУЖЧИНЫ vs&nbsp;ЖЕНЩИНЫ</h3>
+        <h3 class="promo-title">Мужчины<br>vs&nbsp;Женщины</h3>
         <div class="promo-prices">
-          <span class="promo-price">от&nbsp;350&nbsp;₽</span>
+          <span class="promo-price">225&nbsp;₽</span>
         </div>
-        <span class="promo-pricenote">за&nbsp;пару лиц · с&nbsp;1 июля&nbsp;— 450&nbsp;₽</span>
+        <span class="promo-pricenote">За&nbsp;пару лиц — 450&nbsp;₽</span>
         <p class="promo-sub">
           Игра про&nbsp;твоих гостей на&nbsp;любой праздник. Лица гостей на&nbsp;экране, зал угадывает факты&nbsp;— и&nbsp;все&nbsp;ржут. Собираем под&nbsp;твой ивент, играешь в&nbsp;обычном PowerPoint.
         </p>
@@ -542,7 +1146,7 @@
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://telegram.me/twokaif_mzh_bot" class="promo-cta" target="_blank" rel="noopener">
-        Узнать подробнее
+        <span class="promo-cta-label">Узнать подробнее</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -551,13 +1155,13 @@
     <div class="promo-card" id="promo-card-cal" data-cd-end="" data-cd-monthly="1">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">Новинка</span>
+          <span class="promo-tag">НОВИНКА</span>
         </div>
-        <h3 class="promo-title">Календарь занятости</h3>
+        <h3 class="promo-title">Календарь<br>занятости&nbsp;ивентера</h3>
         <div class="promo-prices">
           <span class="promo-price">от&nbsp;290&nbsp;₽</span>
         </div>
-        <span class="promo-pricenote">290&nbsp;₽/мес · 1&nbsp;990&nbsp;₽/год · подписка</span>
+        <span class="promo-pricenote">Месяц — 290&nbsp;₽ — Год — 1&nbsp;990&nbsp;₽</span>
         <p class="promo-sub">
           Все твои даты в&nbsp;одном месте. Отмечаешь занятость&nbsp;— показываешь клиенту красивой картинкой. Всё в&nbsp;Telegram, иконкой на&nbsp;телефоне.
         </p>
@@ -586,7 +1190,7 @@
         <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://telegram.me/twokaif_calendar_bot" class="promo-cta" target="_blank" rel="noopener">
-        Узнать подробнее
+        <span class="promo-cta-label">Узнать подробнее</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -742,5 +1346,6 @@
   } else {
     document.querySelectorAll('.promo-card').forEach(el => el.classList.add('visible'));
   }
+
 })();
 </script>
