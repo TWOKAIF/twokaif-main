@@ -618,12 +618,6 @@
   }
 }
 
-@media (hover: none) {
-  .promo-card:active {
-    opacity: .78;
-  }
-}
-
 /* Карточки по логике Property Hover Card: белая типографика → полноэкранный визуал */
 #promo-card-sites {
   --promo-art:
@@ -860,6 +854,42 @@
   .promo-card:focus-within .promo-cta-arr {
     transition-duration: .01ms;
   }
+}
+
+.promo-card.is-tap-active {
+  border-color: transparent;
+}
+.promo-card.is-tap-active::after {
+  opacity: 1;
+  transform: scale(1);
+}
+.promo-card.is-tap-active::before {
+  color: #fff;
+  transform: translateX(0) scale(1);
+}
+.promo-card.is-tap-active > div:first-child {
+  transform: translate3d(0, -3px, 0);
+}
+.promo-card.is-tap-active .promo-tag,
+.promo-card.is-tap-active .promo-pricenote,
+.promo-card.is-tap-active .promo-old {
+  color: rgba(255,255,255,.7);
+}
+.promo-card.is-tap-active .promo-title,
+.promo-card.is-tap-active .promo-price,
+.promo-card.is-invert.is-tap-active .promo-title,
+.promo-card.is-invert.is-tap-active .promo-price {
+  color: #fff;
+}
+.promo-card.is-tap-active .promo-cta-label {
+  display: inline-flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+.promo-card.is-tap-active .promo-cta-arr {
+  color: #fff;
+  opacity: 1;
+  transform: translate(4px, -4px) rotate(-45deg);
 }
 
 @media (max-width: 734px) {
@@ -1346,6 +1376,39 @@
   } else {
     document.querySelectorAll('.promo-card').forEach(el => el.classList.add('visible'));
   }
+
+  // На тач-экране: первый тап показывает эффект, второй открывает ссылку.
+  const isTouchLike = (event) => {
+    if (event && event.pointerType) return event.pointerType === 'touch';
+    return navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(hover: none)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
+  };
+  const closeTapCards = (except) => {
+    document.querySelectorAll('.promo-card.is-tap-active').forEach(el => {
+      if (el === except) return;
+      el.classList.remove('is-tap-active');
+      const link = el.querySelector('.promo-cta');
+      if (link) link.setAttribute('aria-expanded', 'false');
+    });
+  };
+  document.querySelectorAll('.promo-card .promo-cta').forEach(link => {
+    link.setAttribute('aria-expanded', 'false');
+    link.addEventListener('click', event => {
+      // detail === 0 — клавиатура/ассистивный ввод: ссылку открываем сразу.
+      if (!isTouchLike(event) || event.detail === 0) return;
+      const tapCard = link.closest('.promo-card');
+      if (!tapCard || tapCard.classList.contains('is-tap-active')) return;
+      event.preventDefault();
+      closeTapCards(tapCard);
+      tapCard.classList.add('is-tap-active');
+      link.setAttribute('aria-expanded', 'true');
+    });
+  });
+  document.addEventListener('click', event => {
+    if (!isTouchLike(event) || event.target.closest('.promo-card')) return;
+    closeTapCards();
+  });
 
 })();
 </script>
