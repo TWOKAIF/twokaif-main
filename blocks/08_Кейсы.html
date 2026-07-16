@@ -58,10 +58,10 @@
   align-items: flex-end;
 }
 .cases-title {
-  font-size: clamp(42px, 5vw, 64px);
-  font-weight: 600;
-  letter-spacing: clamp(-2px, -0.4vw, -4px);
-  line-height: 0.85;
+  font-size: var(--type-section);
+  font-weight: 700;
+  letter-spacing: var(--type-section-tracking);
+  line-height: var(--type-section-leading);
   color: var(--text);
 }
 
@@ -167,31 +167,32 @@
 }
 .case-client { margin-bottom: 20px; }
 .case-name {
-  font-size: clamp(22px, 3vw, 32px);
-  font-weight: 600;
-  letter-spacing: clamp(-1px, -0.3vw, -2px);
-  line-height: 0.9;
+  font-size: var(--type-card-title);
+  font-weight: 700;
+  letter-spacing: var(--type-card-tracking);
+  line-height: var(--type-card-leading);
   margin-bottom: 6px;
   color: var(--text);
 }
 .case-role {
-  font-size: 11px;
+  font-size: var(--type-meta);
   font-weight: 400;
-  letter-spacing: -0.12px;
+  letter-spacing: var(--type-copy-tracking);
+  line-height: var(--type-meta-leading);
   color: var(--muted);
 }
 .case-desc {
-  font-size: clamp(12px, 1.2vw, 13px);
+  font-size: var(--type-copy);
   font-weight: 400;
-  letter-spacing: -0.16px;
-  line-height: 1.55;
+  letter-spacing: var(--type-copy-tracking);
+  line-height: var(--type-copy-leading);
   color: var(--muted);
   margin-bottom: 20px;
 }
 
 /* --- Превью работ (3 картинки) --- */
 .case-works-label {
-  font-size: 9px;
+  font-size: var(--type-micro);
   font-weight: 500;
   letter-spacing: 0.4px;
   text-transform: uppercase;
@@ -252,7 +253,7 @@
 .case-stat:nth-child(3) .case-stat-number { transition-delay: 0.2s; }
 .case-stat:nth-child(4) .case-stat-number { transition-delay: 0.3s; }
 .case-stat-label {
-  font-size: 10px;
+  font-size: var(--type-micro);
   font-weight: 400;
   letter-spacing: -0.1px;
   color: var(--muted);
@@ -340,21 +341,21 @@
     object-fit: cover;
   }
   .case-content { padding: 16px; }
-  .case-name { font-size: 20px; }
-  .case-desc { font-size: 13px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .case-name { font-size: var(--type-card-title); }
+  .case-desc { font-size: var(--type-copy); line-height: var(--type-copy-leading); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .case-stat-number { font-size: 18px; }
-  .case-stat-label { font-size: 10px; }
+  .case-stat-label { font-size: var(--type-micro); }
   .case-stats { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .case-stat { padding: 10px 0; }
   .case-works { gap: 6px; }
-  .case-works-label { font-size: 9px; margin-bottom: 6px; }
+  .case-works-label { font-size: var(--type-micro); margin-bottom: 6px; }
   .cases-nav-btn { width: 44px; height: 44px; font-size: 18px; }
 }
 
 /* --- Маленький мобиле (до 480px) --- */
 @media (max-width: 480px) {
   .case-content { padding: 12px; }
-  .case-name { font-size: 18px; }
+  .case-name { font-size: var(--type-card-title); }
   .case-stat-number { font-size: 16px; }
 }
 
@@ -421,7 +422,7 @@
             <div class="case-name">Влад Сапунов</div>
             <div class="case-role">Ведущий · Стендап—комик · Креатор</div>
           </div>
-          <p class="case-desc">Работаю с&nbsp;Владом более 3-х лет — не&nbsp;только ивенты, но&nbsp;и&nbsp;визуал для его образовательных продуктов</p>
+          <p class="case-desc">Работаю с&nbsp;Владом более 3-х лет — не&nbsp;только ивенты, но&nbsp;и&nbsp;визуал для&nbsp;его образовательных продуктов</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
             <div class="case-work"><img loading="lazy" decoding="async" src="https://static.tildacdn.com/tild6337-3532-4731-b465-636161396632/08.jpg" alt="Обложка для Влада Сапунова"></div>
@@ -539,7 +540,7 @@
             <div class="case-name">Логинов и&nbsp;Зайцев</div>
             <div class="case-role">Дуэт ведущих</div>
           </div>
-          <p class="case-desc">Работаю с&nbsp;дуэтом более 2-х лет — визуал для премий, видеозаявок, шоурилов и&nbsp;всего, что помогает выделиться</p>
+          <p class="case-desc">Работаю с&nbsp;дуэтом более 2-х лет — визуал для премий, видеозаявок, шоурилов и&nbsp;всего, что помогает&nbsp;выделиться</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
             <div class="case-work"><img loading="lazy" decoding="async" src="https://static.tildacdn.com/tild3734-3233-4539-b963-386230656337/29_.jpg" alt="Обложка для дуэта Логинов и Зайцев"></div>
@@ -571,7 +572,7 @@
             <div class="case-name">Дмитрий Акатьев</div>
             <div class="case-role">Ведущий</div>
           </div>
-          <p class="case-desc">Работаю с&nbsp;Димой более 2-х лет — визуал для премий и&nbsp;начинаем плотно работать над оформлением ивентов</p>
+          <p class="case-desc">Работаю с&nbsp;Димой более 2-х лет — визуал для премий и&nbsp;начинаем плотно работать над&nbsp;оформлением&nbsp;ивентов</p>
           <div class="case-works-label">Примеры работ</div>
           <div class="case-works">
             <div class="case-work"><img loading="lazy" decoding="async" src="https://static.tildacdn.com/tild3564-3534-4261-b138-383963616537/21_.jpg" alt="Обложка мероприятия Дмитрия Акатьева"></div>

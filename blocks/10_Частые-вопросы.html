@@ -26,8 +26,8 @@
 
 /* Шапка */
 .faq-header{margin-bottom:56px}
-.faq-title{font-size:var(--text-display);font-weight:700;letter-spacing:clamp(-1px,-.3vw,-2.5px);line-height:.88;color:var(--text)}
-.faq-subtitle{font-size:var(--text-body);font-weight:400;color:var(--muted);margin-top:16px;max-width:400px}
+.faq-title{font-size:var(--type-section);font-weight:700;letter-spacing:var(--type-section-tracking);line-height:var(--type-section-leading);color:var(--text)}
+.faq-subtitle{font-size:var(--type-lead);font-weight:400;letter-spacing:var(--type-lead-tracking);line-height:var(--type-lead-leading);color:var(--muted);margin-top:16px;max-width:var(--type-lead-measure)}
 
 /* Двухколоночный лейаут */
 .faq-grid{display:flex;gap:48px}
@@ -47,7 +47,7 @@
 .faq-question{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;cursor:pointer;user-select:none;position:relative;z-index:1}
 
 /* Текст вопроса */
-.faq-question-text{font-size:var(--text-caption);font-weight:500;letter-spacing:-.1px;line-height:1.25;color:var(--muted);transition:color .3s var(--ease-out)}
+.faq-question-text{font-size:var(--type-copy);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:1.4;color:var(--muted);transition:color .3s var(--ease-out)}
 .faq-item.active .faq-question-text{color:var(--text)}
 
 /* Затухание неактивных */
@@ -69,7 +69,7 @@
 /* Ответ */
 .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s var(--ease-out)}
 .faq-answer-inner{padding:4px 0 14px}
-.faq-answer-text{font-size:var(--text-caption);font-weight:400;letter-spacing:-.2px;line-height:1.55;color:var(--muted)}
+.faq-answer-text{font-size:var(--type-copy);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-copy-leading);color:var(--muted)}
 
 /* === Адаптив === */
 @media(max-width:960px){
@@ -84,9 +84,9 @@
   .faq-col{display:contents}
   .faq-col:first-child .faq-list::after{display:none}
   .faq-subtitle{max-width:100%}
-  .faq-title{letter-spacing:-2px}
-  .faq-question-text{letter-spacing:0px;font-size:15px;line-height:1.3;color:var(--text)}
-  .faq-answer-text{letter-spacing:0px}
+  .faq-title{letter-spacing:var(--type-section-tracking)}
+  .faq-question-text{letter-spacing:var(--type-copy-tracking);font-size:var(--type-copy);line-height:1.4;color:var(--text)}
+  .faq-answer-text{letter-spacing:var(--type-copy-tracking)}
 }
 </style>
 

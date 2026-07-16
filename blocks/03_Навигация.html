@@ -22,21 +22,21 @@
 .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite;will-change:transform}
 .logo-text{font-size:16px;font-weight:700;letter-spacing:-.32px;line-height:1;color:#1d1d1f}
 .logo-sep{width:1px;height:26px;background:rgba(29,29,31,.08);flex-shrink:0;margin:0 12px}
-.logo-sub{font-size:11px;font-weight:400;letter-spacing:-.16px;line-height:.9;color:#6e6e73}
+.logo-sub{font-size:var(--type-meta);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);color:#6e6e73}
 
 /* --- Центральные ссылки (десктоп) --- */
 .nav-links{display:flex;align-items:center;gap:28px;list-style:none;padding:0!important;margin:0!important;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-links a{font-size:12px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f;text-decoration:none;position:relative;display:block;height:16px;overflow:hidden;perspective:200px}
+.nav-links a{font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:#1d1d1f;text-decoration:none;position:relative;display:block;height:1.2em;overflow:hidden;perspective:200px}
 .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
 .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .nav-links a:hover .nav-link-flip{transform:translateY(-100%)}
 
 /* --- Правая часть --- */
 .nav-right{display:flex;align-items:center;gap:20px;flex-shrink:0}
-.nav-time{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#6e6e73;opacity:.8}
+.nav-time{font-size:var(--type-meta);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);color:#6e6e73;opacity:.8}
 
 /* Кнопка CTA — маленькая с заливкой */
-.nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
+.nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:var(--type-ui);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
 .nav-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
 .nav-cta span{position:relative;z-index:1}
 .nav-cta:hover::before{transform:scaleX(1)}
@@ -79,10 +79,10 @@
 .menu-overlay.active .menu-links li:nth-child(6) a{transition-delay:.30s}
 
 /* Соцсети */
-.menu-social-label{font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-social-label{font-size:var(--type-meta);font-weight:600;letter-spacing:.08em;line-height:var(--type-meta-leading);text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
 .menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.35s}
 .menu-social-links{display:flex;gap:20px;list-style:none;padding:0!important;margin:0!important}
-.menu-social-links a{font-size:14px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:18px;overflow:hidden}
+.menu-social-links a{font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:1.2em;overflow:hidden}
 .menu-social-links a .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
 .menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .menu-social-links a:hover .nav-link-flip{transform:translateY(-100%)}
@@ -92,7 +92,7 @@
 .menu-overlay.active .menu-social-links li:nth-child(3) a{transition-delay:.50s}
 
 /* CTA мобильное меню */
-.menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
+.menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:var(--type-button);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
 .menu-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
 .menu-cta:hover::before{transform:scaleX(1)}
 .menu-cta:hover{color:#1d1d1f!important}
@@ -115,11 +115,10 @@
     </a>
     <ul class="nav-links">
       <li><a href="#about"><span class="nav-link-flip" data-text="Обо мне">Обо&nbsp;мне</span></a></li>
-      <li><a href="#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
-      <li><a href="#services"><span class="nav-link-flip" data-text="Услуги">Услуги</span></a></li>
-      <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
+      <li><a href="#services"><span class="nav-link-flip" data-text="Услуги и цены">Услуги&nbsp;и&nbsp;цены</span></a></li>
       <li><a href="#cases"><span class="nav-link-flip" data-text="Кейсы">Кейсы</span></a></li>
-      <li><a href="#pricing"><span class="nav-link-flip" data-text="Цены">Цены</span></a></li>
+      <li><a href="#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
+      <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
       <li><a href="#faq"><span class="nav-link-flip" data-text="Вопросы">Вопросы</span></a></li>
       <li><a href="#contacts"><span class="nav-link-flip" data-text="Контакты">Контакты</span></a></li>
     </ul>
@@ -141,11 +140,10 @@
     <div class="menu-panel-inner">
       <ul class="menu-links">
         <li><a href="#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
-        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
-        <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги">Услуги</span></span></a></li>
-        <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
+        <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги и цены">Услуги&nbsp;и&nbsp;цены</span></span></a></li>
         <li><a href="#cases"><span class="menu-flip"><span class="menu-flip-inner" data-text="Кейсы">Кейсы</span></span></a></li>
-        <li><a href="#pricing"><span class="menu-flip"><span class="menu-flip-inner" data-text="Цены">Цены</span></span></a></li>
+        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
+        <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
         <li><a href="#faq"><span class="menu-flip"><span class="menu-flip-inner" data-text="Вопросы">Вопросы</span></span></a></li>
         <li><a href="#contacts"><span class="menu-flip"><span class="menu-flip-inner" data-text="Контакты">Контакты</span></span></a></li>
       </ul>

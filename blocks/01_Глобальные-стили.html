@@ -47,6 +47,33 @@ body { background-color: #ffffff !important; }
   --text-body: 19px;
   --text-caption: 16px;
   --text-micro: 14px;
+
+  /* Единая иерархия главной страницы */
+  --type-section: clamp(44px, 5vw, 72px);
+  --type-section-leading: 0.9;
+  --type-section-tracking: clamp(-3.2px, -0.24vw, -1.4px);
+  --type-category: clamp(32px, 3.35vw, 48px);
+  --type-category-leading: 0.92;
+  --type-category-tracking: clamp(-2.2px, -0.17vw, -1px);
+  --type-lead: clamp(16px, 1.4vw, 20px);
+  --type-lead-leading: 1.2;
+  --type-lead-tracking: -0.2px;
+  --type-lead-measure: 38ch;
+  --type-card-title: clamp(23px, 2.22vw, 32px);
+  --type-card-leading: 1;
+  --type-card-tracking: clamp(-1.2px, -0.12vw, -0.45px);
+  --type-copy: clamp(15px, 1.12vw, 16px);
+  --type-copy-leading: 1.28;
+  --type-copy-tracking: -0.12px;
+  --type-caption: clamp(12px, 0.9vw, 13px);
+  --type-caption-leading: 1.18;
+  --type-meta: clamp(11px, 0.84vw, 12px);
+  --type-meta-leading: 1.15;
+  --type-micro: clamp(10px, 0.76vw, 11px);
+  --type-ui: clamp(13px, 0.98vw, 14px);
+  --type-ui-leading: 1.2;
+  --type-button: clamp(13px, 1vw, 14px);
+  --type-legal: clamp(10px, 0.76vw, 11px);
 }
 
 /* --- Tablet (≤1200px) --- */
@@ -213,7 +240,7 @@ body {
   color: #ffffff !important;
   border: 1px solid var(--text) !important;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--type-button);
   font-weight: 500;
   letter-spacing: -0.3px;
   text-decoration: none !important;
@@ -253,7 +280,7 @@ body {
   color: var(--text);
   border: 1px solid var(--border-row);
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--type-button);
   font-weight: 500;
   letter-spacing: -0.3px;
   text-decoration: none;

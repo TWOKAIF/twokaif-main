@@ -1,6 +1,6 @@
 <!-- ============================================
-     БЛОК 7: ЦЕНЫ
-     T123 блок — аккордеон услуг с превью слева
+     БЛОК 7: УСЛУГИ И ЦЕНЫ
+     Единый каталог услуг — визуал слева, цены и раскрытия справа
 
      Здесь меняй:
      — Заголовок: class="pricing-title"
@@ -11,7 +11,7 @@
      — Кнопка: class="pricing-card-btn" (href — ссылка)
      — Превью: class="pricing-preview-item" (img или video)
 
-     ПРЕВЬЮ-КАРТИНКИ (видны только на ПК, скрыты на планшете):
+     ПРЕВЬЮ-КАРТИНКИ (на телефоне дублируются внутри раскрытия):
      — Размер: 720×1080 px (вертикальное, 2:3)
      — Формат: JPG, до 300 КБ
      — Можно заменить на видео:
@@ -32,21 +32,26 @@
      — Название услуги: clamp(14px, 3.5vw, 18px)
      ============================================ -->
 <style>
-/* Секция цен */
-.pricing{padding:clamp(80px,10vw,140px) var(--edge) clamp(60px,8vw,100px);position:relative}
+/* Единая секция услуг и цен */
+.pricing{padding:clamp(88px,10vw,140px) var(--edge) clamp(72px,9vw,120px);position:relative;background:linear-gradient(180deg,#fff 0%,#fff 88%,#f5f5f7 100%)}
+.pricing-anchor-alias{position:absolute;top:-80px;left:0;width:1px;height:1px;pointer-events:none}
 
 /* Заголовок */
-.pricing-header{margin-bottom:clamp(40px,5vw,72px)}
-.pricing-title{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:clamp(-1px,-.3vw,-2.5px);line-height:.92;color:var(--text)}
+.pricing-header{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,430px);gap:clamp(32px,6vw,96px);align-items:end;margin-bottom:clamp(48px,6vw,84px)}
+.pricing-heading{display:flex;flex-direction:column;gap:14px}
+.pricing-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pricing-title{font-size:var(--type-section);font-weight:700;letter-spacing:var(--type-section-tracking);line-height:var(--type-section-leading);color:var(--text);text-wrap:balance}
+.pricing-intro{max-width:var(--type-lead-measure);font-size:var(--type-lead);font-weight:400;letter-spacing:var(--type-lead-tracking);line-height:var(--type-lead-leading);color:var(--muted);text-wrap:pretty}
 
 /* Двухколоночный макет: превью + список */
 .pricing-body{display:grid;grid-template-columns:clamp(320px,36vw,480px) 1fr;gap:clamp(40px,5vw,80px);align-items:start}
 
 /* Превью-панель слева */
 .pricing-preview-panel{position:sticky;top:100px}
-.pricing-preview-wrap{width:100%;aspect-ratio:2/3;overflow:hidden;position:relative;background:var(--surface)}
-.pricing-preview-item{position:absolute;inset:0;opacity:0;transition:opacity .6s var(--ease-out)}
-.pricing-preview-item.active{opacity:1}
+.pricing-preview-wrap{width:100%;aspect-ratio:2/3;overflow:hidden;position:relative;background:#111;box-shadow:0 24px 70px rgba(29,29,31,.08)}
+.pricing-preview-item{position:absolute;inset:0;opacity:0;transition:none}
+.pricing-preview-item.active{opacity:1;animation:pricingPreviewIn .32s var(--ease-out) both}
+@keyframes pricingPreviewIn{from{opacity:.55}to{opacity:1}}
 .pricing-preview-item img,.pricing-preview-item video{width:100%;height:100%;object-fit:cover;display:block}
 
 
@@ -126,6 +131,51 @@
 @keyframes pvHoldPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
 @media(prefers-reduced-motion:reduce){.pv-hold.active .pv-hold-dot{animation:none}.pv-hold-name{opacity:1;transform:none}.pv-hold.active::after{transform:scaleX(1)}}
 
+/* Уникальные объёмные сцены для сайта и анкеты */
+.pv-hold--visual .pv-hold-inner{z-index:4}
+.pv-hold--visual .pv-hold-name{font-size:clamp(38px,3.7vw,54px);position:relative;z-index:4}
+.pv-product-object{position:absolute;z-index:2;left:8%;right:8%;top:18%;height:50%;perspective:900px;opacity:0;transform:translateY(20px) scale(.96);transition:opacity .85s var(--ease-out) .08s,transform 1s cubic-bezier(.16,1,.3,1) .08s}
+.pv-hold.active .pv-product-object{opacity:1;transform:translateY(0) scale(1)}
+.pv-site-shot{position:absolute;display:block;width:84%;aspect-ratio:1440/980;border:1px solid rgba(255,255,255,.28);background:#fff;box-shadow:0 30px 64px rgba(0,0,0,.45);transform-style:preserve-3d;overflow:hidden;padding-top:12px;box-sizing:border-box}
+.pv-site-shot::before{content:"";position:absolute;left:0;right:0;top:0;height:12px;background:#202023;border-bottom:1px solid rgba(255,255,255,.14);z-index:2}
+.pv-site-shot::after{content:"";position:absolute;left:8px;top:4px;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.55;box-shadow:7px 0 0 rgba(255,255,255,.3),14px 0 0 rgba(255,255,255,.16);z-index:3}
+.pv-site-shot img{width:100%;height:100%;display:block;object-fit:cover;object-position:top}
+.pv-site-shot--back{left:0;top:0;transform:rotateY(13deg) rotateX(4deg) translateZ(-38px);opacity:.48}
+.pv-site-shot--mid{right:0;top:17%;transform:rotateY(-12deg) rotateX(3deg) translateZ(-10px);opacity:.78}
+.pv-site-shot--front{left:8%;top:34%;transform:rotateY(5deg) rotateX(-2deg) translateZ(28px)}
+.pv-form-paper{position:absolute;display:block;left:1%;top:9%;width:64%;height:76%;background:#f5f5f7;color:#111;box-shadow:0 28px 60px rgba(0,0,0,.32);transform:rotateY(16deg) rotateZ(-4deg);padding:9% 7%;box-sizing:border-box}
+.pv-form-paper::before{content:"Ответы молодожёнов";display:block;font-size:8px;font-weight:700;letter-spacing:-.1px;margin-bottom:16%;white-space:nowrap}
+.pv-form-paper::after{content:"";display:block;width:100%;height:2px;background:#111;opacity:.72;box-shadow:0 12px 0 rgba(17,17,17,.42),0 24px 0 rgba(17,17,17,.24),0 36px 0 rgba(17,17,17,.15),0 48px 0 rgba(17,17,17,.1)}
+.pv-form-phone{position:absolute;display:block;right:4%;top:0;width:43%;aspect-ratio:428/926;border:5px solid #242427;background:#111;box-shadow:0 32px 62px rgba(0,0,0,.5);transform:rotateY(-12deg) rotateZ(4deg);overflow:hidden;box-sizing:border-box}
+.pv-form-phone::before{content:"";position:absolute;left:50%;top:5px;width:34%;height:7px;border-radius:20px;background:#111;transform:translateX(-50%);z-index:2}
+.pv-form-phone img{width:100%;height:100%;display:block;object-fit:cover;object-position:top}
+
+/* На телефоне визуал живёт внутри раскрытой услуги */
+.pricing-mobile-preview{display:none;position:relative;width:100%;aspect-ratio:4/3;margin:0 0 18px;overflow:hidden;background:#111;color:#fff}
+.pricing-mobile-preview img{width:100%;height:100%;object-fit:contain;display:block}
+.pricing-mobile-preview::after{content:attr(data-label);position:absolute;left:14px;bottom:12px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.7)}
+.pricing-mobile-preview.pv-hold::after{content:none}
+
+/* Единая типографическая заглушка — без фотографий и мокапов */
+.service-art{position:relative;overflow:hidden;background:#151517;color:#f5f5f7;isolation:isolate;font-family:var(--font-body)}
+.pricing-preview-item.service-art{position:absolute;inset:0}
+.service-art::before{content:"";position:absolute;inset:0;z-index:-2;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:48px 48px}
+.service-art::after{content:"";position:absolute;inset:-25%;z-index:-1;background:radial-gradient(circle at 72% 38%,rgba(255,255,255,.07),transparent 42%);transform:translate3d(0,0,0);transition:transform .9s var(--ease-out)}
+.service-art.active::after{transform:translate3d(-3%,3%,0)}
+.service-art__inner{position:absolute;inset:0;padding:38px;display:grid;grid-template-rows:auto 1fr auto auto;gap:18px}
+.service-art__meta,.service-art__foot{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.46)}
+.service-art__brand{width:16px;height:16px;display:block;background:currentColor;-webkit-mask:url('/favicon.svg') center/contain no-repeat;mask:url('/favicon.svg') center/contain no-repeat}
+.service-art__mark{align-self:center;display:flex;align-items:baseline;gap:.12em;font-size:clamp(54px,6vw,88px);font-weight:600;letter-spacing:-.08em;line-height:.82;color:#fff;font-variant-numeric:tabular-nums;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.service-art.active .service-art__mark{transform:translateX(5px)}
+.service-art__mark small{font-size:.18em;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.42)}
+.service-art__rule{height:1px;background:rgba(255,255,255,.2);transform:scaleX(.24);transform-origin:left;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.service-art.active .service-art__rule{transform:scaleX(1)}
+.service-art__bottom{display:grid;gap:14px}
+.service-art__title{font-size:clamp(42px,4.4vw,64px);font-weight:700;letter-spacing:-.065em;line-height:.88;text-transform:uppercase;text-wrap:balance}
+.service-art--form .service-art__mark,.service-art--calendar .service-art__mark{font-size:clamp(44px,5vw,72px)}
+.service-art--poster .service-art__mark{font-weight:300}
+.service-art--live .service-art__mark{letter-spacing:-.03em}
+
 /* Список услуг справа */
 .pricing-list{list-style:none;padding-left:0 !important}
 
@@ -153,6 +203,7 @@
 
 /* Голова карточки */
 .pricing-card-head{display:grid;grid-template-columns:32px 1fr auto;gap:16px;align-items:center;padding:0 0 0 20px;position:relative;z-index:1;min-height:60px}
+.pricing-card-head:focus-visible{outline:2px solid currentColor;outline-offset:-4px}
 
 /* Индекс */
 .pricing-card-index{font-size:14px;font-weight:400;letter-spacing:-.16px;color:var(--muted);transition:color .4s var(--ease-out)}
@@ -174,8 +225,8 @@
 .pricing-card-right{display:flex;align-items:center;padding-right:0}
 
 /* Затухание неактивных при наведении на список */
-.pricing-list:hover .pricing-card:not(:hover) .pricing-card-name,
-.pricing-list:hover .pricing-card:not(:hover) .pricing-card-price{opacity:.3}
+.pricing-list:hover .pricing-card:not(:hover):not(.active) .pricing-card-name,
+.pricing-list:hover .pricing-card:not(:hover):not(.active) .pricing-card-price{opacity:.3}
 
 /* Кнопка раскрытия +/- */
 .pricing-toggle{width:32px;height:32px;flex-shrink:0;position:relative;margin-left:16px;border:1px solid rgba(0,0,0,.12);background:transparent;transition:border-color .35s var(--ease-out),background .35s var(--ease-out)}
@@ -187,21 +238,21 @@
 
 /* Тело карточки (раскрывается) */
 .pricing-card-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease-out);position:relative;z-index:2}
-.pricing-card.active .pricing-card-body{max-height:800px}
+.pricing-card.active .pricing-card-body{max-height:1100px}
 .pricing-card-body-inner{padding:2px 20px 14px 68px;position:relative;z-index:1;opacity:0;transform:translateY(10px);transition:opacity .45s var(--ease-out) .06s,transform .55s cubic-bezier(.16,1,.3,1) .06s}
 .pricing-card.active .pricing-card-body-inner{background:var(--text);padding:6px 20px 14px 68px;opacity:1;transform:translateY(0)}
 
 /* Описание внутри карточки */
-.pricing-card-desc{font-size:15px;font-weight:400;letter-spacing:-.16px;line-height:1.55;color:var(--muted);max-width:500px;margin-bottom:12px}
+.pricing-card-desc{font-size:var(--type-copy);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-copy-leading);color:var(--muted);max-width:500px;margin-bottom:12px}
 .pricing-card.active .pricing-card-desc{color:#fff !important;opacity:.6}
 
 /* Короткая строка под ценой внутри раскрытия */
-.pricing-card-note{display:block;margin-bottom:12px;font-size:13px;font-weight:500;letter-spacing:-.1px;color:var(--muted)}
+.pricing-card-note{display:block;margin-bottom:12px;font-size:var(--type-caption);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:var(--muted)}
 .pricing-card.active .pricing-card-note{color:#fff !important;opacity:.62}
 
 /* Теги */
 .pricing-card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.pricing-tag{font-size:13px;font-weight:500;letter-spacing:-.1px;padding:5px 12px;border:1px solid rgba(0,0,0,.1);color:var(--muted)}
+.pricing-tag{font-size:var(--type-meta);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);padding:5px 12px;border:1px solid rgba(0,0,0,.1);color:var(--muted)}
 .pricing-card.active .pricing-tag{border-color:rgba(255,255,255,.2);opacity:.5;color:#fff !important}
 
 /* Варианты работы */
@@ -221,7 +272,7 @@
 .pricing-variant-tags{display:flex;gap:6px;flex-wrap:wrap}
 
 /* Кнопка «Заказать» — с заливкой ::before при ховере */
-.pricing-card-btn{display:inline-block;padding:12px 28px;background:var(--text);color:var(--bg) !important;font-family:var(--font-body);font-size:15px;font-weight:500;letter-spacing:-.18px;text-decoration:none;border:1px solid var(--text);position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out)}
+.pricing-card-btn{display:inline-block;padding:12px 28px;background:var(--text);color:var(--bg) !important;font-family:var(--font-body);font-size:var(--type-button);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);text-decoration:none;border:1px solid var(--text);position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out)}
 .pricing-card-btn::before{content:"";position:absolute;inset:0;background:var(--bg);transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:-1}
 .pricing-card-btn:hover::before{transform:scaleX(1)}
 .pricing-card-btn:hover{color:var(--text) !important}
@@ -237,133 +288,174 @@
   .pricing-body{grid-template-columns:1fr;gap:0}
   .pricing-preview-panel{display:none}
   .pricing-note{max-width:100%}
+  .pricing-header{grid-template-columns:1fr;gap:20px}
+  .pricing-intro{max-width:620px}
+  .pricing-mobile-preview{display:block}
+  .pricing-mobile-preview.pv-hold{position:relative;isolation:isolate}
+  .pricing-mobile-preview .pv-hold-inner{padding:18px}
+  .pricing-mobile-preview .pv-hold-top{font-size:8px}
+  .pricing-mobile-preview .pv-hold-name{font-size:clamp(24px,6vw,34px);letter-spacing:-1.5px;max-width:62%}
+  .pricing-mobile-preview .pv-product-object{left:34%;right:3%;top:10%;height:76%}
+  .pricing-mobile-preview .pv-product-browser{left:18%;right:1%;top:10%;height:72%}
+  .pricing-mobile-preview .pv-site-shot{padding-top:8px}
+  .pricing-mobile-preview .pv-site-shot::before{height:8px}
+  .pricing-mobile-preview .pv-site-shot::after{left:5px;top:2px;width:2px;height:2px;box-shadow:5px 0 0 rgba(255,255,255,.3),10px 0 0 rgba(255,255,255,.16)}
+  .pricing-mobile-preview .pv-form-phone{right:2%;width:42%;border-width:3px}
+  .pricing-mobile-preview .pv-form-paper::before{font-size:6px}
+  .pricing-mobile-preview.service-art{aspect-ratio:16/10}
+  .pricing-mobile-preview .service-art__inner{padding:18px;gap:10px}
+  .pricing-mobile-preview .service-art__meta,.pricing-mobile-preview .service-art__foot{font-size:8px;letter-spacing:.11em}
+  .pricing-mobile-preview .service-art__brand{width:12px;height:12px}
+  .pricing-mobile-preview .service-art__mark{font-size:clamp(40px,12vw,54px)}
+  .pricing-mobile-preview .service-art__mark small{font-size:.17em}
+  .pricing-mobile-preview .service-art__bottom{gap:8px}
+  .pricing-mobile-preview .service-art__title{font-size:clamp(26px,8vw,38px);letter-spacing:-.055em}
+  .pricing-mobile-preview.service-art--form .service-art__mark,.pricing-mobile-preview.service-art--calendar .service-art__mark{font-size:clamp(32px,9vw,44px)}
 }
 @media(max-width:734px){
   .pricing{padding:clamp(48px,8vw,80px) var(--edge) clamp(32px,6vw,48px)}
-  .pricing-header{margin-bottom:28px}
-  .pricing-title{font-size:clamp(28px,7vw,40px)}
+  .pricing-header{margin-bottom:36px;gap:16px}
+  .pricing-heading{gap:10px}
+  .pricing-title{font-size:var(--type-section);line-height:var(--type-section-leading)}
+  .pricing-intro{font-size:var(--type-lead);line-height:var(--type-lead-leading);max-width:var(--type-lead-measure)}
   .pricing-card-head{grid-template-columns:24px 1fr auto;gap:10px;padding:0 0 0 8px;min-height:54px}
   .pricing-card-name{font-size:clamp(14px,3.5vw,18px)}
   .pricing-card-price{font-size:clamp(14px,3.5vw,18px)}
   .pricing-toggle{width:28px;height:28px;margin-left:10px}
   .pricing-card-body-inner{padding:4px 16px 20px 40px!important}
   .pricing-card.active .pricing-card-body-inner{padding:10px 16px 20px 40px!important}
-  .pricing-card-desc{font-size:14px;max-width:100%}
-  .pricing-tag{font-size:12px;padding:4px 10px}
-  .pricing-card-btn{font-size:14px;padding:10px 24px}
+  .pricing-card-desc{font-size:var(--type-copy);max-width:100%}
+  .pricing-tag{font-size:var(--type-meta);padding:4px 10px}
+  .pricing-card-btn{font-size:var(--type-button);padding:10px 24px}
+  .pricing-mobile-preview{margin-bottom:16px}
+}
+
+/* Финальная композиция: редакционный каталог без превью-картинок */
+.pricing-body{display:block}
+.pricing-preview-panel{display:none}
+.pricing-list{width:100%;margin:0;padding:0;overflow:visible}
+.pricing-card-head{grid-template-columns:56px minmax(0,1fr) auto;gap:20px;min-height:clamp(104px,9vw,132px);padding:0;align-items:center}
+.pricing-card-index{align-self:center;font-size:13px;font-variant-numeric:tabular-nums}
+.pricing-card-name{font-size:clamp(36px,4.8vw,72px);font-weight:700;letter-spacing:clamp(-1.6px,-.3vw,-4.6px);line-height:.9;text-wrap:balance;transition:color .35s var(--ease-out),transform .55s cubic-bezier(.16,1,.3,1),opacity .35s var(--ease-out)}
+.pricing-card-name::after{content:"";display:inline-block;width:.42em;height:.42em;margin-left:.18em;background:currentColor;-webkit-mask:url('/favicon.svg') center/contain no-repeat;mask:url('/favicon.svg') center/contain no-repeat;opacity:0;transform:scale(.25) rotate(-35deg);transition:opacity .35s var(--ease-out),transform .65s cubic-bezier(.16,1,.3,1);vertical-align:.05em}
+.pricing-card:hover .pricing-card-name,.pricing-card.active .pricing-card-name{transform:translateX(10px)}
+.pricing-card:hover .pricing-card-name::after,.pricing-card.active .pricing-card-name::after{opacity:1;transform:scale(1) rotate(0)}
+.pricing-card-price{font-size:clamp(16px,1.55vw,22px);font-weight:600;font-variant-numeric:tabular-nums}
+.pricing-card-right{align-items:center}
+.pricing-toggle{width:38px;height:38px;margin-left:20px}
+.pricing-card-body-inner,.pricing-card.active .pricing-card-body-inner{max-width:820px;padding:0 0 38px 76px!important;background:transparent}
+.pricing-card-desc{max-width:650px;font-size:var(--type-copy);line-height:var(--type-copy-leading)}
+.pricing-card-tags{max-width:720px;margin-bottom:18px}
+.pricing-card-btn{padding:13px 28px}
+.pricing-mobile-preview{display:none!important}
+
+@media(max-width:734px){
+  .pricing-card-head{grid-template-columns:24px minmax(0,1fr) auto;gap:10px;min-height:82px;padding:0}
+  .pricing-card-index{font-size:12px}
+  .pricing-card-name{font-size:clamp(23px,6.8vw,31px);letter-spacing:clamp(-1px,-.28vw,-1.7px);line-height:.94}
+  .pricing-card-name::after{display:none}
+  .pricing-card:hover .pricing-card-name,.pricing-card.active .pricing-card-name{transform:translateX(4px)}
+  .pricing-card-price{font-size:13px}
+  .pricing-toggle{width:30px;height:30px;margin-left:8px}
+  .pricing-card-body-inner,.pricing-card.active .pricing-card-body-inner{max-width:none;padding:0 0 26px 34px!important}
+  .pricing-card-desc{font-size:var(--type-copy);line-height:var(--type-copy-leading)}
+  .pricing-card-tags{margin-bottom:14px}
+  .pricing-card-btn{padding:11px 24px}
 }
 </style>
 
-<!-- ЦЕНЫ -->
-<section class="pricing" id="pricing">
+<!-- УСЛУГИ И ЦЕНЫ -->
+<section class="pricing services-pricing" id="services">
+  <span class="pricing-anchor-alias" id="pricing" aria-hidden="true"></span>
   <div class="pricing-header">
-    <!-- Здесь меняй заголовок секции -->
-    <h2 class="pricing-title head-reveal">Цены</h2>
+    <div class="pricing-heading">
+      <span class="pricing-kicker">Дизайн и цифровые продукты</span>
+      <h2 class="pricing-title head-reveal">Услуги и&nbsp;цены</h2>
+    </div>
+    <p class="pricing-intro">Выбирай направление&nbsp;— внутри состав работы, сроки и&nbsp;понятная отправная цена.</p>
   </div>
 
   <div class="pricing-body">
     <!-- Превью слева -->
     <div class="pricing-preview-panel" id="pricingPreview">
       <div class="pricing-preview-wrap">
-        <!--
-          === ПРЕВЬЮ УСЛУГ ===
-
-          Можно вставлять КАРТИНКУ или ВИДЕО:
-
-          Картинка:
-          <img src="ссылка.jpg" alt="Превью работы в прайсе">
-
-          Видео:
-          <video src="ссылка.mp4" autoplay loop muted playsinline></video>
-
-          РАЗМЕРЫ:
-          — Формат кадра: 2:3 (вертикальное)
-          — Картинка: 720×1080 px, JPG, до 300 КБ
-          — Видео: 720×1080 px, MP4 (H.264), до 5—8 МБ
-          — Атрибуты autoplay loop muted playsinline обязательны для видео
-        -->
-
-        <!-- 05 Обложка или афиша — замени src на своё фото или видео -->
-        <div class="pricing-preview-item pv-vertical" data-price="4">
-          <img src="https://static.tildacdn.com/tild3338-3430-4566-b766-646463383065/02_-.jpg" alt="Обложка">
-          <!-- Или видео: <video src="ссылка.mp4" autoplay loop muted playsinline></video> -->
-        </div>
-
-        <!-- 04 Презентация — авто-скролл слайдов с паузой при ховере -->
-        <div class="pricing-preview-item pv-vertical pv-slides" data-price="3">
-          <div class="pv-slides-track" id="pvSlidesTrack" style="--pv-duration:60s">
-            <img src="https://static.tildacdn.com/tild3937-6264-4934-b461-383461613261/slide-01.jpg" alt="Слайд презентации в прайсе 1" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6563-3666-4365-b463-643436336131/slide-02.jpg" alt="Слайд презентации в прайсе 2" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6536-6331-4635-a565-616535313366/slide-03.jpg" alt="Слайд презентации в прайсе 3" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6432-3864-4961-b365-313664326330/slide-04.jpg" alt="Слайд презентации в прайсе 4" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3333-6430-4062-b563-373966396636/slide-05.jpg" alt="Слайд презентации в прайсе 5" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3435-3339-4566-b634-663033626331/slide-06.jpg" alt="Слайд презентации в прайсе 6" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6131-6330-4634-a365-396164633136/slide-07.jpg" alt="Слайд презентации в прайсе 7" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3763-3339-4630-b934-396639303835/slide-08.jpg" alt="Слайд презентации в прайсе 8" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3731-6138-4236-b039-646136356466/slide-09.jpg" alt="Слайд презентации в прайсе 9" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3330-6261-4438-a365-666263663534/slide-10.jpg" alt="Слайд презентации в прайсе 10" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3933-3361-4436-a333-363162303264/slide-11.jpg" alt="Слайд презентации в прайсе 11" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6532-6432-4264-b231-613631366534/slide-12.jpg" alt="Слайд презентации в прайсе 12" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6636-6566-4339-a139-313231353363/slide-13.jpg" alt="Слайд презентации в прайсе 13" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3235-3133-4231-b464-343166363265/slide-14.jpg" alt="Слайд презентации в прайсе 14" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3831-3064-4432-b435-326434633338/slide-15.jpg" alt="Слайд презентации в прайсе 15" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6237-3230-4339-b334-353632323765/slide-16.jpg" alt="Слайд презентации в прайсе 16" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3863-6635-4365-a439-633035386433/slide-17.jpg" alt="Слайд презентации в прайсе 17" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6134-3163-4962-b561-323035663531/slide-18.jpg" alt="Слайд презентации в прайсе 18" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6237-3632-4734-b866-633332653464/slide-19.jpg" alt="Слайд презентации в прайсе 19" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3666-6439-4032-a166-663933316131/slide-20.jpg" alt="Слайд презентации в прайсе 20" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6138-6162-4333-b432-343136663666/slide-21.jpg" alt="Слайд презентации в прайсе 21" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3336-3135-4533-b066-306238666335/slide-22.jpg" alt="Слайд презентации в прайсе 22" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6636-3766-4436-b762-616565613932/slide-23.jpg" alt="Слайд презентации в прайсе 23" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3037-3763-4437-b533-383263326435/slide-24.jpg" alt="Слайд презентации в прайсе 24" loading="lazy">
-            <img src="https://static.tildacdn.com/tild6634-3164-4963-b837-363162633831/slide-25.jpg" alt="Слайд презентации в прайсе 25" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3765-6535-4962-a438-636235623935/slide-26.jpg" alt="Слайд презентации в прайсе 26" loading="lazy">
-            <img src="https://static.tildacdn.com/tild3965-3335-4331-a434-373962393030/slide-27.jpg" alt="Слайд презентации в прайсе 27" loading="lazy">
+        <!-- 05 Обложка или афиша -->
+        <div class="pricing-preview-item service-art service-art--poster" data-price="4" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>05 · Макет</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">A2<small>poster</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Обложка<br>или афиша</div><div class="service-art__foot"><span>Композиция</span><span>Типографика</span></div></div>
           </div>
         </div>
 
-        <!-- 01 Сайт — временная заглушка -->
-        <div class="pricing-preview-item pv-hold active" data-price="0" aria-hidden="true">
-          <div class="pv-hold-inner">
-            <div class="pv-hold-top"><span>01</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
-            <div class="pv-hold-name">Сайт</div>
+        <!-- 04 Презентация -->
+        <div class="pricing-preview-item service-art service-art--slides" data-price="3" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>04 · Слайды</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">01/27<small>slides</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Презентация</div><div class="service-art__foot"><span>Сценарий</span><span>Дизайн</span></div></div>
           </div>
         </div>
 
-        <!-- 02 Свадебная анкета — временная заглушка -->
-        <div class="pricing-preview-item pv-hold" data-price="1" aria-hidden="true">
-          <div class="pv-hold-inner">
-            <div class="pv-hold-top"><span>02</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
-            <div class="pv-hold-name">Свадебная<br>анкета</div>
+        <!-- 01 Сайт -->
+        <div class="pricing-preview-item service-art service-art--site active" data-price="0" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>01 · Web</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">&lt;/&gt;<small>code</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Сайт</div><div class="service-art__foot"><span>Дизайн</span><span>Адаптив</span></div></div>
           </div>
         </div>
 
-        <!-- 03 PNG для сторис — временная заглушка -->
-        <div class="pricing-preview-item pv-hold" data-price="2" aria-hidden="true">
-          <div class="pv-hold-inner">
-            <div class="pv-hold-top"><span>03</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
-            <div class="pv-hold-name">PNG для<br>сторис</div>
+        <!-- 02 Свадебная анкета -->
+        <div class="pricing-preview-item service-art service-art--form" data-price="1" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>02 · Форма</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">01→DOC<small>word</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Свадебная<br>анкета</div><div class="service-art__foot"><span>Вопросы</span><span>Готовый файл</span></div></div>
           </div>
         </div>
 
-        <!-- 06 Агент для GPT — временная заглушка -->
-        <div class="pricing-preview-item pv-hold" data-price="5" aria-hidden="true">
-          <div class="pv-hold-inner">
-            <div class="pv-hold-top"><span>06</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
-            <div class="pv-hold-name">Агент<br>для GPT</div>
+        <!-- 03 PNG для сторис -->
+        <div class="pricing-preview-item service-art service-art--font" data-price="2" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>03 · Инструмент</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">Aa<small>png</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">PNG для<br>сторис</div><div class="service-art__foot"><span>Шрифт</span><span>Цвет</span></div></div>
+          </div>
+        </div>
+
+        <!-- 06 Агент для GPT -->
+        <div class="pricing-preview-item service-art service-art--agent" data-price="5" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>06 · GPT</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">&gt;_<small>prompt</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Агент<br>для GPT</div><div class="service-art__foot"><span>Задача</span><span>Результат</span></div></div>
           </div>
         </div>
 
         <!-- 07 Интерактив -->
-        <div class="pricing-preview-item pv-vertical" data-price="6">
-          <img src="https://static.tildacdn.com/tild3062-6130-4334-b164-633337626666/02__.jpg" alt="Интерактивы">
+        <div class="pricing-preview-item service-art service-art--live" data-price="6" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>07 · Event</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">LIVE<small>screen</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Интерактив</div><div class="service-art__foot"><span>Идея</span><span>Экран</span></div></div>
+          </div>
         </div>
 
-        <!-- 08 Календарь занятости — временная заглушка -->
-        <div class="pricing-preview-item pv-hold" data-price="7" aria-hidden="true">
-          <div class="pv-hold-inner">
-            <div class="pv-hold-top"><span>08</span><span class="pv-hold-status"><i class="pv-hold-dot"></i>Кейсы формируются</span></div>
-            <div class="pv-hold-name">Календарь<br>занятости</div>
+        <!-- 08 Календарь занятости -->
+        <div class="pricing-preview-item service-art service-art--calendar" data-price="7" aria-hidden="true">
+          <div class="service-art__inner">
+            <div class="service-art__meta"><span>08 · Telegram</span><i class="service-art__brand"></i></div>
+            <div class="service-art__mark">07×05<small>days</small></div>
+            <div class="service-art__rule"></div>
+            <div class="service-art__bottom"><div class="service-art__title">Календарь<br>занятости</div><div class="service-art__foot"><span>Даты</span><span>Клиенты</span></div></div>
           </div>
         </div>
       </div>
@@ -384,6 +476,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--site active" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>01 · Web</span><i class="service-art__brand"></i></div><div class="service-art__mark">&lt;/&gt;<small>code</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Сайт</div><div class="service-art__foot"><span>Дизайн</span><span>Адаптив</span></div></div></div></div>
           <span class="pricing-card-note">Под ключ · год хостинга включён</span>
           <p class="pricing-card-desc">Личный сайт под&nbsp;твой стиль, не&nbsp;шаблон. Рисуем макет вместе, собираю в&nbsp;чистый код&nbsp;— живёт на&nbsp;моём сервере. Домен твой, настройку беру на&nbsp;себя.</p>
           <div class="pricing-card-tags">
@@ -406,6 +499,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--form active" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>02 · Форма</span><i class="service-art__brand"></i></div><div class="service-art__mark">01→DOC<small>word</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Свадебная анкета</div><div class="service-art__foot"><span>Вопросы</span><span>Файл</span></div></div></div></div>
           <p class="pricing-card-desc">Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>1&nbsp;год работы бесплатно</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.</p>
           <div class="pricing-card-tags">
             <span class="pricing-tag">твоёимя.twokaif.ru</span>
@@ -427,6 +521,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--font active" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>03 · Инструмент</span><i class="service-art__brand"></i></div><div class="service-art__mark">Aa<small>png</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">PNG для сторис</div><div class="service-art__foot"><span>Шрифт</span><span>Цвет</span></div></div></div></div>
           <p class="pricing-card-desc">Меняешь системные шрифты в&nbsp;сторис на&nbsp;свои. Выбираешь шрифты, цвета&nbsp;— делаешь надписи поверх фото. <b>1&nbsp;год</b> техподдержки в&nbsp;комплекте, дальше&nbsp;— <b>500&nbsp;₽/год</b>.</p>
           <div class="pricing-card-tags">
             <span class="pricing-tag">На&nbsp;телефоне</span>
@@ -448,8 +543,9 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--slides" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>04 · Слайды</span><i class="service-art__brand"></i></div><div class="service-art__mark">01/27<small>slides</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Презентация</div><div class="service-art__foot"><span>Сценарий</span><span>Дизайн</span></div></div></div></div>
           <span class="pricing-card-note">От&nbsp;2&nbsp;600&nbsp;₽ за&nbsp;слайд</span>
-          <p class="pricing-card-desc">Презентация&nbsp;— многоуровневая работа. Заявка на&nbsp;премию Wedding Awards, выступление на&nbsp;TOP100AWARDS, промо для&nbsp;агентства, КП&nbsp;для&nbsp;клиента&nbsp;— у&nbsp;каждой задачи свои условия.</p>
+          <p class="pricing-card-desc">Презентация&nbsp;— многоуровневая работа. Заявка на&nbsp;премию Wedding Awards, выступление на&nbsp;TOP100AWARDS, промо для&nbsp;агентства, КП&nbsp;для&nbsp;клиента&nbsp;— у&nbsp;каждой задачи свои&nbsp;условия.</p>
           <p class="pricing-card-desc">Смотрим ТЗ, оцениваем объём и&nbsp;сложность, после чего называем точную стоимость и&nbsp;сроки.</p>
           <div class="pricing-card-tags">
             <span class="pricing-tag">WA</span>
@@ -474,6 +570,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--poster" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>05 · Макет</span><i class="service-art__brand"></i></div><div class="service-art__mark">A2<small>poster</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Обложка или афиша</div><div class="service-art__foot"><span>Композиция</span><span>Типографика</span></div></div></div></div>
           <span class="pricing-card-note">Один макет · под нужный формат</span>
           <p class="pricing-card-desc">Обложка или афиша&nbsp;— от&nbsp;2&nbsp;000&nbsp;₽. Ресайз <em style="opacity:.7">(адаптация под&nbsp;другой формат)</em>&nbsp;— от&nbsp;500&nbsp;₽/шт.</p>
           <div class="pricing-card-tags">
@@ -496,6 +593,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--agent active" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>06 · GPT</span><i class="service-art__brand"></i></div><div class="service-art__mark">&gt;_<small>prompt</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Агент для GPT</div><div class="service-art__foot"><span>Задача</span><span>Результат</span></div></div></div></div>
           <span class="pricing-card-note">Для работы нужен GPT</span>
           <p class="pricing-card-desc">AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.</p>
           <div class="pricing-card-tags">
@@ -518,6 +616,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--live" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>07 · Event</span><i class="service-art__brand"></i></div><div class="service-art__mark">LIVE<small>screen</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Интерактив</div><div class="service-art__foot"><span>Идея</span><span>Экран</span></div></div></div></div>
           <p class="pricing-card-desc">Помогаем ведущим превращать идеи в&nbsp;интерактивы для&nbsp;мероприятий: соединяем лица гостей со&nbsp;звёздами, превращаем кадры в&nbsp;юмористические видео, создаём визуальные шоу и&nbsp;эффекты для&nbsp;экрана.</p>
           <p class="pricing-card-desc">Открыты к&nbsp;любым форматам и&nbsp;нестандартным задачам&nbsp;— поможем воплотить твою задумку в&nbsp;жизнь.</p>
           <div class="pricing-card-tags">
@@ -543,6 +642,7 @@
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+          <div class="pricing-mobile-preview service-art service-art--calendar active" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>08 · Telegram</span><i class="service-art__brand"></i></div><div class="service-art__mark">07×05<small>days</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Календарь занятости</div><div class="service-art__foot"><span>Даты</span><span>Клиенты</span></div></div></div></div>
           <span class="pricing-card-note">290&nbsp;₽/мес · 1&nbsp;990&nbsp;₽/год · подписка</span>
           <p class="pricing-card-desc">Все твои даты в&nbsp;одном месте. Отмечаешь занятость&nbsp;— показываешь клиенту красивой картинкой. Всё в&nbsp;Telegram, иконкой на&nbsp;телефоне.</p>
           <div class="pricing-card-tags">
@@ -563,44 +663,46 @@
 var pC=document.querySelectorAll(".pricing-card"),pP=document.querySelectorAll(".pricing-preview-item");
 var pO=new IntersectionObserver(function(e){e.forEach(function(n){if(n.isIntersecting)n.target.classList.add("visible")})},{threshold:.1});
 pC.forEach(function(e){pO.observe(e)});
+function setPricingPreview(c){
+  var i=c.dataset.price,t=document.querySelector('.pricing-preview-item[data-price="'+i+'"]');
+  if(!t)return;
+  pP.forEach(function(p){p.classList.remove("active")});
+  t.classList.add("active");
+}
 /* Превью по наведению */
-pC.forEach(function(c){c.addEventListener("mouseenter",function(){var i=c.dataset.price,t=document.querySelector('.pricing-preview-item[data-price="'+i+'"]');if(!t)return;pP.forEach(function(p){p.classList.remove("active")});t.classList.add("active")})});
-/* Аккордеон по клику */
-document.querySelectorAll(".pricing-card-head").forEach(function(h){h.addEventListener("click",function(){var c=h.closest(".pricing-card"),b=c.querySelector(".pricing-card-body");if(!b)return;var w=c.classList.contains("active");pC.forEach(function(x){x.classList.remove("active")});if(!w)c.classList.add("active")})});
-
-/* Авто-скролл презентации с паузой при ховере */
-(function(){
-  var track=document.getElementById('pvSlidesTrack');
-  if(!track)return;
-  var card=document.querySelector('.pricing-card[data-price="3"]');
-  if(!card)return;
-  var preview=track.closest('.pricing-preview-item');
-
-  /* Дублируем слайды для бесшовного цикла */
-  track.innerHTML+=track.innerHTML;
-
-  /* Запуск скролла при наведении на карточку «Презентация» */
-  card.addEventListener('mouseenter',function(){
-    track.classList.add('scrolling');
-    track.classList.remove('paused');
-  });
-  card.addEventListener('mouseleave',function(){
-    track.classList.remove('scrolling');
-    track.style.animation='none';
-    void track.offsetWidth;
-    track.style.animation='';
-  });
-
-  /* Пауза при наведении на само превью */
-  if(preview){
-    preview.addEventListener('mouseenter',function(){
-      track.classList.add('paused');
+pC.forEach(function(c){c.addEventListener("mouseenter",function(){setPricingPreview(c)})});
+/* Аккордеон по клику и с клавиатуры */
+document.querySelectorAll(".pricing-card-head").forEach(function(h){
+  h.setAttribute("role","button");
+  h.setAttribute("tabindex","0");
+  h.setAttribute("aria-expanded","false");
+  function togglePricingCard(){
+    var c=h.closest(".pricing-card"),b=c.querySelector(".pricing-card-body");
+    if(!b)return;
+    var wasOpen=c.classList.contains("active");
+    pC.forEach(function(x){
+      x.classList.remove("active");
+      var head=x.querySelector(".pricing-card-head");
+      if(head)head.setAttribute("aria-expanded","false");
     });
-    preview.addEventListener('mouseleave',function(){
-      track.classList.remove('paused');
-    });
+    if(!wasOpen){
+      c.classList.add("active");
+      h.setAttribute("aria-expanded","true");
+      setPricingPreview(c);
+    }
   }
-})();
+  h.addEventListener("click",togglePricingCard);
+  h.addEventListener("keydown",function(e){
+    if(e.key==="Enter"||e.key===" "){e.preventDefault();togglePricingCard()}
+  });
+});
+/* На телефоне сразу показываем, как устроена карточка услуги */
+if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
+  pC[0].classList.add("active");
+  var firstPricingHead=pC[0].querySelector(".pricing-card-head");
+  if(firstPricingHead)firstPricingHead.setAttribute("aria-expanded","true");
+  setPricingPreview(pC[0]);
+}
 
 /* Счётчик цен «от X ₽» — отсчёт при появлении в зоне видимости.
    Защита: пока не пошёл первый кадр rAF, цена = исходный HTML (не залипнет на 0).

@@ -24,10 +24,10 @@
 /* Шапка */
 .posters-header{padding:40px var(--edge) 40px;display:flex;justify-content:space-between;align-items:flex-end}
 .posters-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(8px,1.5vw,16px)}
-.posters-title{font-size:var(--text-headline);font-weight:700;letter-spacing:-1px;line-height:.9;color:#fff;width:100%}
+.posters-title{font-size:var(--type-category);font-weight:700;letter-spacing:var(--type-category-tracking);line-height:var(--type-category-leading);color:#fff;width:100%}
 .posters-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.posters-tag{font-size:13px;font-weight:400;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);padding:5px 12px;white-space:nowrap}
-.posters-sub{display:none;font-size:14px;font-weight:400;letter-spacing:-.2px;color:rgba(255,255,255,.45)}
+.posters-tag{font-size:var(--type-caption);font-weight:400;line-height:var(--type-caption-leading);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);padding:5px 12px;white-space:nowrap}
+.posters-sub{display:none;font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:rgba(255,255,255,.45)}
 .posters-sub::before{content:'— '}
 
 /* Карусель — управление через JS, без CSS-анимации */

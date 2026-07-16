@@ -349,6 +349,33 @@ body { background-color: #ffffff !important; }
   --text-body: 19px;
   --text-caption: 16px;
   --text-micro: 14px;
+
+  /* Единая иерархия главной страницы */
+  --type-section: clamp(44px, 5vw, 72px);
+  --type-section-leading: 0.9;
+  --type-section-tracking: clamp(-3.2px, -0.24vw, -1.4px);
+  --type-category: clamp(32px, 3.35vw, 48px);
+  --type-category-leading: 0.92;
+  --type-category-tracking: clamp(-2.2px, -0.17vw, -1px);
+  --type-lead: clamp(16px, 1.4vw, 20px);
+  --type-lead-leading: 1.2;
+  --type-lead-tracking: -0.2px;
+  --type-lead-measure: 38ch;
+  --type-card-title: clamp(23px, 2.22vw, 32px);
+  --type-card-leading: 1;
+  --type-card-tracking: clamp(-1.2px, -0.12vw, -0.45px);
+  --type-copy: clamp(15px, 1.12vw, 16px);
+  --type-copy-leading: 1.28;
+  --type-copy-tracking: -0.12px;
+  --type-caption: clamp(12px, 0.9vw, 13px);
+  --type-caption-leading: 1.18;
+  --type-meta: clamp(11px, 0.84vw, 12px);
+  --type-meta-leading: 1.15;
+  --type-micro: clamp(10px, 0.76vw, 11px);
+  --type-ui: clamp(13px, 0.98vw, 14px);
+  --type-ui-leading: 1.2;
+  --type-button: clamp(13px, 1vw, 14px);
+  --type-legal: clamp(10px, 0.76vw, 11px);
 }
 
 /* --- Tablet (≤1200px) --- */
@@ -515,7 +542,7 @@ body {
   color: #ffffff !important;
   border: 1px solid var(--text) !important;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--type-button);
   font-weight: 500;
   letter-spacing: -0.3px;
   text-decoration: none !important;
@@ -555,7 +582,7 @@ body {
   color: var(--text);
   border: 1px solid var(--border-row);
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--type-button);
   font-weight: 500;
   letter-spacing: -0.3px;
   text-decoration: none;
@@ -775,21 +802,21 @@ setTimeout(observeSections, 2000);
 .snowflake{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite;will-change:transform}
 .logo-text{font-size:16px;font-weight:700;letter-spacing:-.32px;line-height:1;color:#1d1d1f}
 .logo-sep{width:1px;height:26px;background:rgba(29,29,31,.08);flex-shrink:0;margin:0 12px}
-.logo-sub{font-size:11px;font-weight:400;letter-spacing:-.16px;line-height:.9;color:#6e6e73}
+.logo-sub{font-size:var(--type-meta);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);color:#6e6e73}
 
 /* --- Центральные ссылки (десктоп) --- */
 .nav-links{display:flex;align-items:center;gap:28px;list-style:none;padding:0!important;margin:0!important;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-links a{font-size:12px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f;text-decoration:none;position:relative;display:block;height:16px;overflow:hidden;perspective:200px}
+.nav-links a{font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:#1d1d1f;text-decoration:none;position:relative;display:block;height:1.2em;overflow:hidden;perspective:200px}
 .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
 .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .nav-links a:hover .nav-link-flip{transform:translateY(-100%)}
 
 /* --- Правая часть --- */
 .nav-right{display:flex;align-items:center;gap:20px;flex-shrink:0}
-.nav-time{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#6e6e73;opacity:.8}
+.nav-time{font-size:var(--type-meta);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);color:#6e6e73;opacity:.8}
 
 /* Кнопка CTA — маленькая с заливкой */
-.nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
+.nav-cta{display:inline-flex;align-items:center;padding:5px 16px;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:var(--type-ui);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .4s var(--ease-out)}
 .nav-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
 .nav-cta span{position:relative;z-index:1}
 .nav-cta:hover::before{transform:scaleX(1)}
@@ -832,10 +859,10 @@ setTimeout(observeSections, 2000);
 .menu-overlay.active .menu-links li:nth-child(6) a{transition-delay:.30s}
 
 /* Соцсети */
-.menu-social-label{font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-social-label{font-size:var(--type-meta);font-weight:600;letter-spacing:.08em;line-height:var(--type-meta-leading);text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
 .menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.35s}
 .menu-social-links{display:flex;gap:20px;list-style:none;padding:0!important;margin:0!important}
-.menu-social-links a{font-size:14px;font-weight:400;letter-spacing:-.01em;color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:18px;overflow:hidden}
+.menu-social-links a{font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:1.2em;overflow:hidden}
 .menu-social-links a .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
 .menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .menu-social-links a:hover .nav-link-flip{transform:translateY(-100%)}
@@ -845,7 +872,7 @@ setTimeout(observeSections, 2000);
 .menu-overlay.active .menu-social-links li:nth-child(3) a{transition-delay:.50s}
 
 /* CTA мобильное меню */
-.menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
+.menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:var(--type-button);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
 .menu-cta::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--ease-out);z-index:0}
 .menu-cta:hover::before{transform:scaleX(1)}
 .menu-cta:hover{color:#1d1d1f!important}
@@ -868,11 +895,10 @@ setTimeout(observeSections, 2000);
     </a>
     <ul class="nav-links">
       <li><a href="#about"><span class="nav-link-flip" data-text="Обо мне">Обо&nbsp;мне</span></a></li>
-      <li><a href="#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
-      <li><a href="#services"><span class="nav-link-flip" data-text="Услуги">Услуги</span></a></li>
-      <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
+      <li><a href="#services"><span class="nav-link-flip" data-text="Услуги и цены">Услуги&nbsp;и&nbsp;цены</span></a></li>
       <li><a href="#cases"><span class="nav-link-flip" data-text="Кейсы">Кейсы</span></a></li>
-      <li><a href="#pricing"><span class="nav-link-flip" data-text="Цены">Цены</span></a></li>
+      <li><a href="#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
+      <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
       <li><a href="#faq"><span class="nav-link-flip" data-text="Вопросы">Вопросы</span></a></li>
       <li><a href="#contacts"><span class="nav-link-flip" data-text="Контакты">Контакты</span></a></li>
     </ul>
@@ -894,11 +920,10 @@ setTimeout(observeSections, 2000);
     <div class="menu-panel-inner">
       <ul class="menu-links">
         <li><a href="#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
-        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
-        <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги">Услуги</span></span></a></li>
-        <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
+        <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги и цены">Услуги&nbsp;и&nbsp;цены</span></span></a></li>
         <li><a href="#cases"><span class="menu-flip"><span class="menu-flip-inner" data-text="Кейсы">Кейсы</span></span></a></li>
-        <li><a href="#pricing"><span class="menu-flip"><span class="menu-flip-inner" data-text="Цены">Цены</span></span></a></li>
+        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
+        <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
         <li><a href="#faq"><span class="menu-flip"><span class="menu-flip-inner" data-text="Вопросы">Вопросы</span></span></a></li>
         <li><a href="#contacts"><span class="menu-flip"><span class="menu-flip-inner" data-text="Контакты">Контакты</span></span></a></li>
       </ul>
@@ -1149,14 +1174,14 @@ function closeMenu(){
 /* CTA + соцсети */
 .footer-row{padding:48px 0;display:flex;justify-content:space-between;align-items:flex-start}
 .footer-cta{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
-.footer-cta-label{font-size:11px;font-weight:400;letter-spacing:-.16px;color:var(--muted);margin-bottom:4px}
-.footer-hours{font-size:12px;font-weight:400;letter-spacing:-.18px;color:#515154}
+.footer-cta-label{font-size:var(--type-meta);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);color:var(--muted);margin-bottom:4px}
+.footer-hours{font-size:var(--type-meta);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-meta-leading);color:#515154}
 
 /* Соцсети */
 .footer-social{text-align:right;display:flex;flex-direction:column;gap:16px;padding-top:calc(11px + 4px + 16px)}
-.footer-social-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.footer-social-title{font-size:var(--type-meta);font-weight:600;letter-spacing:.08em;line-height:var(--type-meta-leading);text-transform:uppercase;color:var(--muted)}
 .footer-social-links{display:flex;gap:24px;justify-content:flex-end}
-.footer-social-links a{font-size:13px;font-weight:400;letter-spacing:-.18px;color:var(--text)!important;text-decoration:none;position:relative;opacity:.55;transition:opacity .3s var(--ease-out);display:block;height:17px;overflow:hidden}
+.footer-social-links a{font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:var(--text)!important;text-decoration:none;position:relative;opacity:.55;transition:opacity .3s var(--ease-out);display:block;height:1.2em;overflow:hidden}
 .footer-social-links a:hover{opacity:1}
 .footer-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
 .footer-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:var(--muted)}
@@ -1164,18 +1189,18 @@ function closeMenu(){
 
 /* Приватность */
 .footer-privacy{padding:24px 0;border-top:1px solid var(--border-row);text-align:center}
-.footer-privacy-text{font-size:12px;font-weight:400;letter-spacing:-.18px;line-height:1.6;color:#515154;max-width:560px;margin:0 auto}
+.footer-privacy-text{font-size:var(--type-legal);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-copy-leading);color:#515154;max-width:560px;margin:0 auto}
 .footer-privacy-text a{color:var(--text)!important;text-decoration:underline;text-underline-offset:2px;transition:opacity .3s var(--ease-out)}
 .footer-privacy-text a:hover{opacity:.7}
-.footer-meta-note{font-size:10px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:#515154;max-width:520px;margin:8px auto 0;font-style:italic}
+.footer-meta-note{font-size:var(--type-legal);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:#515154;max-width:520px;margin:8px auto 0;font-style:italic}
 
 /* Низ */
 .footer-bottom{padding:20px 0;border-top:1px solid var(--border-row);display:flex;justify-content:space-between;align-items:center;gap:20px}
 .footer-top-btn{width:40px;height:40px;flex-shrink:0;border:1px solid var(--border-row);background:transparent;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s var(--ease-out),border-color .3s var(--ease-out),color .3s var(--ease-out)}
 .footer-top-btn:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
-.footer-copy{font-size:11px;font-weight:400;letter-spacing:-.16px;color:#515154}
-.footer-legal{font-size:10px;font-weight:400;letter-spacing:-.12px;color:#515154}
-.footer-rkn{font-size:10px;font-weight:400;letter-spacing:-.12px;color:var(--muted);opacity:.3;margin-top:2px}
+.footer-copy{font-size:var(--type-legal);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:#515154}
+.footer-legal{font-size:var(--type-legal);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:#515154}
+.footer-rkn{font-size:var(--type-legal);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:var(--muted);opacity:.3;margin-top:2px}
 .footer-rkn a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
 .footer-rkn a:hover{opacity:.7}
 
@@ -1190,14 +1215,14 @@ function closeMenu(){
   .footer-hours{text-align:center}
   .footer-social{text-align:center}
   .footer-social-links{justify-content:center}
-  .footer-privacy-text{font-size:11px}
+  .footer-privacy-text{font-size:var(--type-legal)}
   .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
 }
 @media(max-width:480px){
   .footer{padding:0 var(--edge) calc(20px + env(safe-area-inset-bottom,0px))}
   .footer-brand{padding:24px 0 0}
-  .footer-copy{font-size:10px}
-  .footer-legal{font-size:8px}
+  .footer-copy{font-size:var(--type-legal)}
+  .footer-legal{font-size:var(--type-legal)}
 }
 </style>
 
@@ -1231,8 +1256,8 @@ function closeMenu(){
   </div>
 
   <div class="footer-privacy">
-    <p class="footer-privacy-text">Сайт использует файлы cookie и&nbsp;сервисы аналитики для улучшения работы. Персональные данные через формы не&nbsp;собираются&nbsp;&mdash; связь напрямую через Телеграм. Подробности в&nbsp;<a href="/privacy">политике конфиденциальности</a> и&nbsp;<a href="/oferta">оферте</a>. <a href="#" id="footerCookieSettings">Настройки cookies</a>.</p>
-    <p class="footer-meta-note">*Instagram принадлежит компании Meta, признанной экстремистской организацией на&nbsp;территории РФ</p>
+    <p class="footer-privacy-text">Сайт использует файлы cookie и&nbsp;сервисы аналитики для&nbsp;улучшения работы. Персональные данные через формы не&nbsp;собираются&nbsp;&mdash; связь напрямую через&nbsp;Телеграм. Подробности в&nbsp;<a href="/privacy">политике конфиденциальности</a> и&nbsp;<a href="/oferta">оферте</a>. <a href="#" id="footerCookieSettings">Настройки&nbsp;cookies</a>.</p>
+    <p class="footer-meta-note">*Instagram принадлежит компании Meta, признанной экстремистской организацией на&nbsp;территории&nbsp;РФ</p>
   </div>
 
   <div class="footer-bottom">
@@ -1313,7 +1338,7 @@ document.addEventListener('click',function(e){
 .cookie-banner.visible{opacity:1;transform:translateY(0);pointer-events:auto}
 .cookie-banner.hiding{opacity:0;transform:translateY(20px);pointer-events:none}
 .cookie-text{
-  font-size:13px;font-weight:400;letter-spacing:-.18px;line-height:1.55;
+  font-size:var(--type-caption);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-copy-leading);
   color:rgba(255,255,255,.72)
 }
 .cookie-text a{
@@ -1325,7 +1350,7 @@ document.addEventListener('click',function(e){
 .cookie-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .cookie-btn{
   padding:10px 20px;border:none;
-  font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:-.2px;
+  font-family:var(--font-body);font-size:var(--type-button);font-weight:500;letter-spacing:var(--type-copy-tracking);
   cursor:pointer;transition:opacity .3s var(--ease-out),background .3s var(--ease-out);
   flex-shrink:0;line-height:1
 }
@@ -1344,8 +1369,8 @@ document.addEventListener('click',function(e){
 .cookie-banner.settings-open .cookie-settings{display:flex}
 .cookie-row{display:flex;align-items:flex-start;gap:14px;justify-content:space-between}
 .cookie-row-text{flex:1;min-width:0}
-.cookie-row-title{font-size:13px;font-weight:500;letter-spacing:-.18px;color:#fff;margin-bottom:3px}
-.cookie-row-desc{font-size:11px;font-weight:400;letter-spacing:-.12px;line-height:1.5;color:rgba(255,255,255,.55)}
+.cookie-row-title{font-size:var(--type-caption);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:#fff;margin-bottom:3px}
+.cookie-row-desc{font-size:var(--type-legal);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-caption-leading);color:rgba(255,255,255,.55)}
 
 /* Toggle */
 .cookie-toggle{position:relative;width:36px;height:20px;flex-shrink:0;display:block;cursor:pointer}
@@ -1358,8 +1383,8 @@ document.addEventListener('click',function(e){
 
 @media(max-width:640px){
   .cookie-banner{left:var(--edge);right:var(--edge);bottom:var(--edge);max-width:none}
-  .cookie-text{font-size:12px}
-  .cookie-btn{font-size:12px;padding:10px 16px}
+  .cookie-text{font-size:var(--type-caption)}
+  .cookie-btn{font-size:var(--type-button);padding:10px 16px}
 }
 @media(max-width:480px){
   .cookie-banner{padding:18px 20px}

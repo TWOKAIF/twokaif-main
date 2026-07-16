@@ -42,10 +42,10 @@
 }
 @keyframes promosPulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 .promos-h2 {
-  font-size: clamp(28px, 3.4vw, 44px);
-  font-weight: 600;
-  letter-spacing: -.022em;
-  line-height: 1.05;
+  font-size: var(--type-section);
+  font-weight: 700;
+  letter-spacing: var(--type-section-tracking);
+  line-height: var(--type-section-leading);
   margin: 8px 0 0;
   color: var(--text);
 }
@@ -180,10 +180,10 @@
 }
 
 .promo-title {
-  font-size: clamp(24px, 2.6vw, 32px);
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.12;
+  font-size: var(--type-card-title);
+  font-weight: 700;
+  letter-spacing: var(--type-card-tracking);
+  line-height: var(--type-card-leading);
   margin: 18px 0 0;
   color: var(--text);
   transition: color .35s var(--ease-out);
@@ -285,7 +285,7 @@
 @keyframes soonpulse { 0% { transform: scale(.5); opacity: .5; } 100% { transform: scale(1.5); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .promo-soon-dot::after { animation: none; } }
 /* пометка под ценой (напр. «с 1 июля 450 ₽») */
-.promo-pricenote { display: block; margin-top: 8px; font-size: 13px; color: var(--muted); letter-spacing: -.1px; }
+.promo-pricenote { display: block; margin-top: 8px; font-size: var(--type-meta); line-height: var(--type-meta-leading); color: var(--muted); letter-spacing: var(--type-copy-tracking); }
 
 /* инверсная карточка (Сайт ведущему) — чёрная, всё белое, кнопка наоборот */
 .promo-card.is-invert { background: var(--text); border-color: var(--text); }
@@ -334,8 +334,8 @@
   margin-bottom: 30px;
 }
 .promos-h2 {
-  font-size: clamp(36px, 4.2vw, 56px);
-  letter-spacing: -.035em;
+  font-size: var(--type-section);
+  letter-spacing: var(--type-section-tracking);
 }
 .promos-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -426,8 +426,8 @@
   max-width: 82%;
   min-height: 0;
   margin-top: 18px;
-  font-size: clamp(22px, 2.25vw, 30px);
-  line-height: .98;
+  font-size: var(--type-card-title);
+  line-height: var(--type-card-leading);
   white-space: nowrap;
 }
 .promo-prices {
@@ -444,7 +444,7 @@
 .promo-pricenote {
   max-width: calc(100% - 42px);
   margin-top: 7px;
-  font-size: 11.5px;
+  font-size: var(--type-meta);
 }
 .promo-sub,
 .promo-chips,
@@ -565,7 +565,7 @@
     margin-bottom: 24px;
   }
   .promos-h2 {
-    font-size: clamp(34px, 10.2vw, 42px);
+    font-size: var(--type-section);
   }
   .promos-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -587,7 +587,7 @@
   .promo-title {
     max-width: 100%;
     margin-top: 14px;
-    font-size: clamp(17px, 4.8vw, 21px);
+    font-size: var(--type-card-title);
   }
   .promo-prices {
     gap: 7px;
@@ -601,8 +601,8 @@
   }
   .promo-pricenote {
     max-width: calc(100% - 28px);
-    font-size: 9.5px;
-    line-height: 1.25;
+    font-size: var(--type-meta);
+    line-height: var(--type-meta-leading);
   }
   .promo-cta-arr {
     right: 18px;
@@ -687,9 +687,10 @@
 .promo-title {
   max-width: 100%;
   margin: 0;
-  font-size: clamp(25px, 2.65vw, 34px);
+  font-size: var(--type-card-title);
   font-weight: 700;
-  line-height: .9;
+  letter-spacing: var(--type-card-tracking);
+  line-height: var(--type-card-leading);
 }
 .promo-prices {
   margin: 17px 0 0;
@@ -702,8 +703,8 @@
 .promo-pricenote {
   max-width: calc(100% - 16px);
   margin-top: 8px;
-  font-size: 12px;
-  line-height: 1.25;
+  font-size: var(--type-meta);
+  line-height: var(--type-meta-leading);
 }
 .promo-cta {
   display: flex;
@@ -886,8 +887,11 @@
   }
   .promo-title {
     margin: 0;
-    font-size: clamp(19px, 5.1vw, 21.5px);
-    line-height: .9;
+    font-size: var(--type-card-title);
+    line-height: var(--type-card-leading);
+  }
+  #promo-card-agent .promo-title {
+    font-size: 21.5px;
   }
   .promo-prices {
     margin-top: 13px;
@@ -898,7 +902,7 @@
   }
   .promo-pricenote {
     max-width: calc(100% - 8px);
-    font-size: 9.5px;
+    font-size: var(--type-meta);
   }
   .promo-cta {
     padding: 0 20px 18px;
@@ -1074,7 +1078,7 @@
         <div class="promo-prices">
           <span class="promo-price">1 990 ₽</span>
         </div>
-        <span class="promo-pricenote">Доступ навсегда — нужен GPT</span>
+        <span class="promo-pricenote">Доступ навсегда — нужен&nbsp;GPT</span>
         <p class="promo-sub">
           AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.
         </p>

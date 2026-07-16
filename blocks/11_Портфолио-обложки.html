@@ -44,10 +44,10 @@
     gap: clamp(16px, 2.5vw, 32px);
   }
   .portfolio-title {
-    font-size: var(--text-display, 80px);
+    font-size: var(--type-category);
     font-weight: 700;
-    letter-spacing: -2px;
-    line-height: 0.9;
+    letter-spacing: var(--type-category-tracking);
+    line-height: var(--type-category-leading);
     color: #fff;
     width: 100%;
   }
@@ -58,7 +58,7 @@
     margin-bottom: 0;
   }
   .portfolio-tag {
-    font-size: 13px;
+    font-size: var(--type-caption);
     font-weight: 400;
     letter-spacing: -0.18px;
     color: rgba(255,255,255,0.4);
@@ -68,17 +68,17 @@
   }
   @media (max-width: 960px) {
     .portfolio-header { padding: 64px var(--edge, 32px) 64px; }
-    .portfolio-title { letter-spacing: -3px; }
+    .portfolio-title { letter-spacing: var(--type-category-tracking); }
   }
   /* Подзаголовок — только на мобиле */
   .portfolio-sub { display: none; }
 
   @media (max-width: 640px) {
     .portfolio-header { padding: 48px var(--edge, 20px) 48px; }
-    .portfolio-title { letter-spacing: -1.5px; font-size: var(--text-headline, 30px); }
+    .portfolio-title { letter-spacing: var(--type-category-tracking); font-size: var(--type-category); }
     .portfolio-top { gap: 6px; flex-direction: column; align-items: flex-start; }
     .portfolio-tags { display: none; }
-    .portfolio-sub { display: block; font-size: 14px; font-weight: 400; letter-spacing: -.2px; color: rgba(255,255,255,.45); }
+    .portfolio-sub { display: block; font-size: var(--type-ui); font-weight: 400; letter-spacing: var(--type-copy-tracking); line-height: var(--type-ui-leading); color: rgba(255,255,255,.45); }
     .portfolio-sub::before { content: '— '; }
   }
 </style>
@@ -103,7 +103,7 @@
   </a>
 </div>
 <style>
-.portfolio-more-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 36px;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.2px;color:#fff !important;border:1px solid rgba(255,255,255,.6);background:transparent;text-decoration:none !important;position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out),border-color .4s var(--ease-out)}
+.portfolio-more-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 36px;font-family:var(--font-body);font-size:var(--type-button);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:#fff !important;border:1px solid rgba(255,255,255,.6);background:transparent;text-decoration:none !important;position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out),border-color .4s var(--ease-out)}
 .portfolio-more-btn::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleY(0);transform-origin:bottom center;transition:transform .5s var(--ease-out);z-index:-1}
 .portfolio-more-btn svg{position:relative}
 .portfolio-more-btn:hover::before{transform:scaleY(1)}
@@ -111,7 +111,7 @@
 .portfolio-more-btn:active{transform:scale(.97)}
 .portfolio-more-btn svg{transition:transform .4s var(--ease-out)}
 .portfolio-more-btn:hover svg{transform:translate(3px,-3px)}
-@media(max-width:640px){.portfolio-more-btn{width:100%;justify-content:center;padding:14px 24px;font-size:13px}
+@media(max-width:640px){.portfolio-more-btn{width:100%;justify-content:center;padding:14px 24px;font-size:var(--type-button)}
 .portfolio-more-btn+.portfolio-more-btn{margin-top:0}}
 </style>
 
