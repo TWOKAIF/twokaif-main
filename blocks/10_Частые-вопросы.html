@@ -18,7 +18,7 @@
      НАСТРОЙКИ ПЛАНШЕТ (до 960px):
      — Две колонки, отступ 32px
 
-     НАСТРОЙКИ МОБИЛЕ (до 640px):
+     НАСТРОЙКИ МОБИЛЕ (до 780px):
      — Одна колонка (вертикально)
      ============================================ -->
 <style>
@@ -30,28 +30,30 @@
 .faq-subtitle{font-size:var(--type-lead);font-weight:400;letter-spacing:var(--type-lead-tracking);line-height:var(--type-lead-leading);color:var(--muted);margin-top:16px;max-width:var(--type-lead-measure)}
 
 /* Двухколоночный лейаут */
-.faq-grid{display:flex;gap:48px}
-.faq-col{flex:1;min-width:0}
+.faq-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.faq-col{min-width:0}
 
 /* Список */
 .faq-list{list-style:none;padding-left:0!important}
 
 /* Элемент */
-.faq-item{position:relative;cursor:pointer}
+.faq-item{position:relative}
 
 /* Разделители */
 .faq-item::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(0,0,0,.08)}
 .faq-col .faq-list::after{content:'';display:block;height:1px;background:rgba(0,0,0,.08)}
 
 /* Вопрос */
-.faq-question{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;cursor:pointer;user-select:none;position:relative;z-index:1}
+.faq-question{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:14px 0;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer;user-select:none;position:relative;z-index:1}
 
 /* Текст вопроса */
 .faq-question-text{font-size:var(--type-copy);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:1.4;color:var(--muted);transition:color .3s var(--ease-out)}
 .faq-item.active .faq-question-text{color:var(--text)}
 
 /* Затухание неактивных */
-.faq-list:hover .faq-item:not(:hover):not(.active) .faq-question-text{opacity:.3;transition:opacity .3s var(--ease-out)}
+@media(hover:hover) and (pointer:fine){
+  .faq-list:hover .faq-item:not(:hover):not(.active) .faq-question-text{opacity:.3;transition:opacity .3s var(--ease-out)}
+}
 
 /* Кнопка +/× */
 .faq-toggle{width:24px;height:24px;flex-shrink:0;position:relative;border:1px solid rgba(0,0,0,.12);background:transparent;transition:border-color .3s var(--ease-out),background .3s var(--ease-out)}
@@ -77,11 +79,10 @@
   .faq-header{margin-bottom:40px}
   .faq-grid{gap:32px}
 }
-@media(max-width:640px){
+@media(max-width:780px){
   .faq{padding:56px var(--edge) 56px}
   .faq-header{margin-bottom:28px}
-  .faq-grid{display:block}
-  .faq-col{display:contents}
+  .faq-grid{grid-template-columns:1fr;gap:0}
   .faq-col:first-child .faq-list::after{display:none}
   .faq-subtitle{max-width:100%}
   .faq-title{letter-spacing:var(--type-section-tracking)}
@@ -98,66 +99,30 @@
   </div>
 
   <div class="faq-grid">
-    <!-- Левая колонка — 4 вопроса -->
+    <!-- Левая колонка — 5 вопросов -->
     <div class="faq-col">
       <ul class="faq-list" id="faqList1">
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Как начинается работа?</span><span class="faq-toggle"></span></div><div class="faq-answer" id="faqFirstAnswer"><div class="faq-answer-inner"><p class="faq-answer-text"><strong>1.</strong>&nbsp;Отправляешь запрос в&nbsp;Телеграм&nbsp;— описываешь задачу и&nbsp;желаемый&nbsp;дедлайн.</p><p class="faq-answer-text" style="margin-top:6px"><strong>2.</strong>&nbsp;Оцениваем пожелания, смотрим в&nbsp;календарь занятости и&nbsp;даём развёрнутый ответ: свободный слот в&nbsp;расписании, сроки и&nbsp;стоимость.</p><p class="faq-answer-text" style="margin-top:6px"><strong>3.</strong>&nbsp;Если всё устраивает&nbsp;— отправляешь сумму брони слота и&nbsp;фиксируешь наше рабочее&nbsp;время.</p><p class="faq-answer-text" style="margin-top:6px"><strong>4.</strong>&nbsp;Оговариваем срок предоставления ТЗ&nbsp;с&nbsp;твоей&nbsp;стороны.</p><p class="faq-answer-text" style="margin-top:6px"><strong>5.</strong>&nbsp;Получаем ТЗ, оцениваем, задаём уточняющие вопросы&nbsp;— и&nbsp;приступаем&nbsp;к&nbsp;работе.</p></div></div></li>
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Что нужно подготовить для&nbsp;старта?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Главное&nbsp;— техническое задание <em style="opacity:.7">(ТЗ)</em>: тексты, фотоматериалы в&nbsp;максимальном качестве, ссылки и&nbsp;референсы <em style="opacity:.7">(примеры работ и&nbsp;стиля, на&nbsp;которые&nbsp;ориентируешься)</em>.</p><p class="faq-answer-text" style="margin-top:8px">Видео загружай на&nbsp;Кинескоп <em style="opacity:.7">(российский видеохостинг без&nbsp;рекламы и&nbsp;блокировок)</em>.</p><p class="faq-answer-text" style="margin-top:8px">Чем полнее ТЗ&nbsp;— тем быстрее&nbsp;сделаем.</p></div></div></li>
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Ты&nbsp;пишешь тексты для&nbsp;дизайна?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Нет, мы&nbsp;не&nbsp;копирайтеры. Но&nbsp;проверяем всё, что&nbsp;присылаешь&nbsp;— если находим ошибку или&nbsp;хотим сократить, согласовываем с&nbsp;тобой. Уважаем&nbsp;авторство.</p></div></div></li>
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Как устроена предоплата?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Предоплаты нет. Ты&nbsp;бронируешь слот <em style="opacity:.7">(место в&nbsp;рабочем&nbsp;календаре)</em>&nbsp;— фиксируешь наше время под&nbsp;твою&nbsp;задачу.</p><p class="faq-answer-text" style="margin-top:8px">Если&nbsp;ТЗ&nbsp;и&nbsp;материалы не&nbsp;предоставлены вовремя&nbsp;— бронь обнуляется, слот уходит&nbsp;следующему.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Как начинается работа?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text"><strong>1.</strong>&nbsp;Пишешь в&nbsp;Телеграм и&nbsp;коротко описываешь задачу.</p><p class="faq-answer-text" style="margin-top:6px"><strong>2.</strong>&nbsp;Сверяемся по&nbsp;составу работы, материалам, срокам и&nbsp;стоимости.</p><p class="faq-answer-text" style="margin-top:6px"><strong>3.</strong>&nbsp;Фиксируем договорённости и&nbsp;оплату.</p><p class="faq-answer-text" style="margin-top:6px"><strong>4.</strong>&nbsp;После получения полного ТЗ&nbsp;и&nbsp;материалов начинаем&nbsp;работу.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Что нужно подготовить?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Тексты, фотографии в&nbsp;максимальном качестве, ссылки, логотипы и&nbsp;референсы&nbsp;— примеры стиля, который тебе&nbsp;близок.</p><p class="faq-answer-text" style="margin-top:8px">Для&nbsp;видео подойдёт ссылка на&nbsp;Кинескоп или&nbsp;другое облако. Чем полнее материалы, тем точнее сроки и&nbsp;меньше лишних&nbsp;согласований.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Как определяются сроки?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Срок зависит от&nbsp;направления, объёма и&nbsp;занятости команды. До&nbsp;оплаты называем дату старта и&nbsp;ориентир по&nbsp;готовности.</p><p class="faq-answer-text" style="margin-top:8px">Отсчёт начинается после получения оплаты, полного ТЗ&nbsp;и&nbsp;всех материалов. Срочные задачи возможны, если в&nbsp;календаре есть&nbsp;место.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Как проходит оплата?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Формат фиксируем до&nbsp;старта: полная оплата или&nbsp;оплата по&nbsp;этапам&nbsp;— зависит от&nbsp;проекта. Оплата подтверждает заказ и&nbsp;закрепляет рабочее время в&nbsp;календаре.</p><p class="faq-answer-text" style="margin-top:8px">Точный состав, стоимость и&nbsp;условия всегда согласовываем до&nbsp;начала&nbsp;работы.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Сколько правок входит?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">В&nbsp;дизайн-проекты входят две итерации правок в&nbsp;рамках согласованного ТЗ. Новые блоки, функции или&nbsp;смена направления после старта считаются дополнительной&nbsp;работой.</p></div></div></li>
       </ul>
     </div>
 
-    <!-- Правая колонка — 3 вопроса -->
+    <!-- Правая колонка — 4 вопроса -->
     <div class="faq-col">
       <ul class="faq-list" id="faqList2">
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Сколько правок входит в&nbsp;проект?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Две итерации правок включены. Перед стартом подробно обсуждаем задачу&nbsp;— обычно всё попадает с&nbsp;первого&nbsp;раза.</p></div></div></li>
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">В&nbsp;каком формате получу&nbsp;файлы?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Обложки и&nbsp;афиши&nbsp;— PNG, JPG.</p><p class="faq-answer-text" style="margin-top:8px">Презентации и&nbsp;интерактивы&nbsp;— PDF, PPTX <em style="opacity:.7">(формат PowerPoint)</em>.</p><p class="faq-answer-text" style="margin-top:8px">Если нужна редактируемая версия в&nbsp;PowerPoint&nbsp;— сделаем, стоимость зависит от&nbsp;объёма и&nbsp;сложности&nbsp;файла.</p><p class="faq-answer-text" style="margin-top:8px">Сайты&nbsp;— готовый проект на&nbsp;Тильде с&nbsp;полным&nbsp;доступом.</p><p class="faq-answer-text" style="margin-top:8px">Исходные файлы дизайна не&nbsp;передаём&nbsp;— дорожим авторским&nbsp;правом.</p><p class="faq-answer-text" style="margin-top:8px">Ты&nbsp;получаешь готовый результат в&nbsp;финальном&nbsp;формате.</p></div></div></li>
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Работаете только с&nbsp;ивент—индустрией?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Основной фокус&nbsp;— ведущие, ивент—агентства и&nbsp;артисты. Но&nbsp;открыты к&nbsp;смежным&nbsp;сферам.</p><p class="faq-answer-text" style="margin-top:8px">Музыка, шоу—бизнес, спорт, премиальные&nbsp;бренды.</p></div></div></li>
-        <li class="faq-item"><div class="faq-question"><span class="faq-question-text">Есть&nbsp;ли рабочий&nbsp;график?</span><span class="faq-toggle"></span></div><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Будни с&nbsp;10:00 до&nbsp;19:00&nbsp;МСК. По&nbsp;выходным отдыхаем&nbsp;— команда тоже должна&nbsp;заряжаться.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Помогаешь с&nbsp;текстами?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Полный копирайтинг в&nbsp;базовую стоимость не&nbsp;входит. Но&nbsp;я&nbsp;вычитываю материалы, исправляю явные ошибки и&nbsp;предлагаю, где текст можно сделать короче или&nbsp;сильнее. Все изменения согласовываю с&nbsp;тобой.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Что я&nbsp;получу в&nbsp;итоге?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Обложки и&nbsp;афиши&nbsp;— в&nbsp;готовых PNG/JPG. Презентации и&nbsp;интерактивы&nbsp;— в&nbsp;согласованном PDF, PPTX, PNG или&nbsp;видео.</p><p class="faq-answer-text" style="margin-top:8px">Сайт&nbsp;— готовая адаптивная страница в&nbsp;чистом коде на&nbsp;моём сервере; домен остаётся твоей собственностью. Для&nbsp;анкеты, PNG, GPT&#8209;агента и&nbsp;календаря получаешь доступ к&nbsp;готовому&nbsp;инструменту.</p><p class="faq-answer-text" style="margin-top:8px">Редактируемые исходники передаются только по&nbsp;отдельной договорённости.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Что происходит после первого года?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Для&nbsp;сайта первый год хостинга включён. Для&nbsp;свадебной анкеты первый год работы включён, дальше&nbsp;— 1&nbsp;000&nbsp;₽/год. Для&nbsp;PNG первый год техподдержки включён, дальше&nbsp;— 500&nbsp;₽/год.</p><p class="faq-answer-text" style="margin-top:8px">Перед окончанием периода маякну заранее. Продление оплачивается только если хочешь продолжать пользоваться&nbsp;сервисом.</p></div></div></li>
+        <li class="faq-item"><button class="faq-question" type="button"><span class="faq-question-text">Работаешь только с&nbsp;ивент—индустрией?</span><span class="faq-toggle" aria-hidden="true"></span></button><div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Основной фокус&nbsp;— ведущие, ивент—агентства и&nbsp;артисты. Но&nbsp;я&nbsp;открыт к&nbsp;смежным сферам: музыка, шоу—бизнес, спорт и&nbsp;бренды. Если задача близка по&nbsp;стилю&nbsp;— обсудим.</p></div></div></li>
       </ul>
     </div>
   </div>
 </section>
 
 <script>
-/* На мобиле (до 640px) переносим вопросы из второго списка в первый */
-/* Используем matchMedia чтобы корректно реагировать на поворот экрана */
-var faqMobileQuery = window.matchMedia('(max-width: 640px)');
-var faqList2Original = null;
-var faqList2Parent = null;
-
-function mergeFaqColumns(mq) {
-  var list1 = document.getElementById('faqList1');
-  var list2 = document.getElementById('faqList2');
-  if (mq.matches) {
-    /* Мобиле — объединяем */
-    if (list1 && list2 && list2.parentNode) {
-      faqList2Parent = list2.parentNode;
-      faqList2Original = [];
-      while (list2.firstElementChild) {
-        faqList2Original.push(list2.firstElementChild);
-        list1.appendChild(list2.firstElementChild);
-      }
-      list2.parentNode.removeChild(list2);
-    }
-  } else {
-    /* Десктоп — восстанавливаем если были объединены */
-    if (faqList2Parent && faqList2Original && faqList2Original.length) {
-      var newList2 = document.createElement('ul');
-      newList2.className = 'faq-list';
-      newList2.id = 'faqList2';
-      faqList2Original.forEach(function(item) { newList2.appendChild(item); });
-      var col2 = faqList2Parent;
-      col2.appendChild(newList2);
-      /* Линия-разделитель снизу */
-      faqList2Original = null;
-    }
-  }
-}
-mergeFaqColumns(faqMobileQuery);
-faqMobileQuery.addEventListener('change', mergeFaqColumns);
-
 /* Все вопросы закрыты по умолчанию */
 
 /* Аккордеон FAQ — работает для обеих колонок (+доступность с клавиатуры) */
@@ -167,8 +132,6 @@ faqMobileQuery.addEventListener('change', mergeFaqColumns);
     var q = item.querySelector('.faq-question');
     var ans = item.querySelector('.faq-answer');
     if(!ans.id) ans.id = 'faqAnswer' + idx;
-    q.setAttribute('role','button');
-    q.setAttribute('tabindex','0');
     q.setAttribute('aria-expanded','false');
     q.setAttribute('aria-controls', ans.id);
     ans.setAttribute('role','region');
@@ -186,18 +149,22 @@ faqMobileQuery.addEventListener('change', mergeFaqColumns);
       });
       if(!wasActive){
         item.classList.add('active');
-        ans.style.maxHeight = Math.min(ans.scrollHeight,300) + 'px';
+        ans.style.maxHeight = ans.scrollHeight + 'px';
         ans.setAttribute('aria-hidden','false');
         q.setAttribute('aria-expanded','true');
       }
     }
     q.addEventListener('click', toggle);
-    q.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
-        e.preventDefault();
-        toggle();
-      }
-    });
+  });
+
+  /* Открытый ответ подстраивается при повороте экрана и смене ширины. */
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      var active = document.querySelector('.faq-item.active .faq-answer');
+      if(active) active.style.maxHeight = active.scrollHeight + 'px';
+    }, 100);
   });
 })();
 </script>

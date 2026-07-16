@@ -13,7 +13,7 @@
      ============================================ -->
 <style>
 /* --- Навбар --- */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:48px;padding-top:env(safe-area-inset-top,0px);background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(29,29,31,.08)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100000;height:48px;padding-top:env(safe-area-inset-top,0px);background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(29,29,31,.08)}
 .nav-inner{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 var(--edge);max-width:100%;position:relative}
 
 /* --- Логотип --- */
@@ -55,13 +55,13 @@
 .burger-btn.active .burger-line:nth-child(2){top:17px;transform:translateX(-50%) rotate(-45deg)}
 
 /* --- Оверлей меню --- */
-.menu-overlay{position:fixed;inset:0;z-index:190;pointer-events:none;visibility:hidden;transition:visibility 0s .5s}
+.menu-overlay{position:fixed;inset:0;z-index:99999;pointer-events:none;visibility:hidden;transition:visibility 0s .5s}
 .menu-overlay.active{pointer-events:all;visibility:visible;transition:visibility 0s}
 .menu-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .4s var(--ease-out)}
 .menu-overlay.active .menu-backdrop{background:rgba(0,0,0,.4)}
-.menu-panel{position:absolute;z-index:2;top:48px;left:0;right:0;background:#ffffff;transform:translateY(-100%);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
+.menu-panel{position:absolute;z-index:2;top:calc(48px + env(safe-area-inset-top,0px));left:0;right:0;max-height:calc(100dvh - 48px - env(safe-area-inset-top,0px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:#ffffff;transform:translateY(-100%);opacity:0;transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
 .menu-overlay.active .menu-panel{transform:translateY(0);opacity:1}
-.menu-panel-inner{padding:8px var(--edge) 40px}
+.menu-panel-inner{padding:8px var(--edge) calc(28px + env(safe-area-inset-bottom,0px))}
 .menu-links{list-style:none;padding:0!important;margin:0!important}
 .menu-links li{border-bottom:1px solid rgba(29,29,31,.08)}
 .menu-links li:last-child{border-bottom:none}
@@ -77,19 +77,20 @@
 .menu-overlay.active .menu-links li:nth-child(4) a{transition-delay:.20s}
 .menu-overlay.active .menu-links li:nth-child(5) a{transition-delay:.25s}
 .menu-overlay.active .menu-links li:nth-child(6) a{transition-delay:.30s}
+.menu-overlay.active .menu-links li:nth-child(7) a{transition-delay:.35s}
 
 /* Соцсети */
 .menu-social-label{font-size:var(--type-meta);font-weight:600;letter-spacing:.08em;line-height:var(--type-meta-leading);text-transform:uppercase;color:#6e6e73;margin-top:28px;margin-bottom:12px;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out)}
-.menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.35s}
+.menu-overlay.active .menu-social-label{transform:translateY(0);opacity:1;transition-delay:.40s}
 .menu-social-links{display:flex;gap:20px;list-style:none;padding:0!important;margin:0!important}
 .menu-social-links a{font-size:var(--type-ui);font-weight:400;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);color:#1d1d1f!important;text-decoration:none;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out);position:relative;display:block;height:1.2em;overflow:hidden}
 .menu-social-links a .nav-link-flip{display:block;position:relative;transition:transform .4s var(--ease-out)}
 .menu-social-links a .nav-link-flip::after{content:attr(data-text);display:block;position:absolute;top:100%;left:0;color:#6e6e73}
 .menu-social-links a:hover .nav-link-flip{transform:translateY(-100%)}
 .menu-overlay.active .menu-social-links a{opacity:1;transform:translateY(0)}
-.menu-overlay.active .menu-social-links li:nth-child(1) a{transition-delay:.40s}
-.menu-overlay.active .menu-social-links li:nth-child(2) a{transition-delay:.45s}
-.menu-overlay.active .menu-social-links li:nth-child(3) a{transition-delay:.50s}
+.menu-overlay.active .menu-social-links li:nth-child(1) a{transition-delay:.45s}
+.menu-overlay.active .menu-social-links li:nth-child(2) a{transition-delay:.50s}
+.menu-overlay.active .menu-social-links li:nth-child(3) a{transition-delay:.55s}
 
 /* CTA мобильное меню */
 .menu-cta{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;padding:14px 0;width:100%;background:#1d1d1f;color:#fff!important;border:1px solid #1d1d1f;font-family:var(--font-body);font-size:var(--type-button);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:var(--type-ui-leading);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(10px);transition:transform .4s var(--ease-out),opacity .3s var(--ease-out),color .4s var(--ease-out)}
@@ -97,11 +98,18 @@
 .menu-cta:hover::before{transform:scaleX(1)}
 .menu-cta:hover{color:#1d1d1f!important}
 .menu-cta span{position:relative;z-index:1}
-.menu-overlay.active .menu-cta{opacity:1;transform:translateY(0);transition-delay:.55s,.55s,0s}
+.menu-overlay.active .menu-cta{opacity:1;transform:translateY(0);transition-delay:.60s,.60s,0s}
 
 /* === Адаптив === */
-@media(max-width:960px){.nav-links{display:none}.burger-btn{display:flex}.nav-cta{display:none}}
+@media(max-width:1100px){.nav-links{display:none}.burger-btn{display:flex}.nav-cta{display:none}}
 @media(max-width:640px){.logo-sub,.logo-sep{display:none}.nav-time{display:none}.menu-links a{font-size:28px;padding:16px 0}.menu-links a .menu-flip{height:28px}.menu-social-links{flex-wrap:wrap;gap:12px}}
+@media(max-height:700px){
+  .menu-panel-inner{padding-top:4px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+  .menu-links a{font-size:24px;padding:12px 0}
+  .menu-links a .menu-flip{height:24px}
+  .menu-social-label{margin-top:18px;margin-bottom:8px}
+  .menu-cta{margin-top:18px;padding:12px 0}
+}
 </style>
 
 <!-- НАВИГАЦИЯ -->
@@ -125,7 +133,7 @@
     <div class="nav-right">
       <span class="nav-time" id="navTime">00:00:00 (МСК)</span>
       <a href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener" class="nav-cta"><span>Написать</span></a>
-      <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню">
+      <button class="burger-btn" id="burgerBtn" type="button" aria-label="Открыть меню" aria-controls="menuOverlay" aria-expanded="false">
         <span class="burger-line"></span>
         <span class="burger-line"></span>
       </button>
@@ -134,9 +142,9 @@
 </nav>
 
 <!-- МЕНЮ -->
-<div class="menu-overlay" id="menuOverlay">
+<div class="menu-overlay" id="menuOverlay" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
-  <div class="menu-panel">
+  <div class="menu-panel" role="dialog" aria-modal="true" aria-label="Меню сайта">
     <div class="menu-panel-inner">
       <ul class="menu-links">
         <li><a href="#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
@@ -225,31 +233,82 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
 // --- Бургер-меню ---
 var burgerBtn=document.getElementById('burgerBtn');
 var menuOverlay=document.getElementById('menuOverlay');
+var menuPanel=menuOverlay.querySelector('.menu-panel');
+var bodyOverflowBeforeMenu='';
+var previousMenuFocus=null;
+var cookieAriaBeforeMenu=null;
 
 burgerBtn.addEventListener('click',function(){
-  var isOpen=menuOverlay.classList.toggle('active');
-  burgerBtn.classList.toggle('active',isOpen);
-  if(isOpen) document.body.style.overflow='hidden';
-  else document.body.style.overflow='';
+  if(menuOverlay.classList.contains('active')) closeMenu();
+  else openMenu();
 });
 
 document.getElementById('menuBackdrop').addEventListener('click',closeMenu);
+
+function openMenu(){
+  var cookieBanner=document.getElementById('cookieBanner');
+  previousMenuFocus=document.activeElement;
+  bodyOverflowBeforeMenu=document.body.style.overflow;
+  menuOverlay.classList.add('active');
+  menuOverlay.setAttribute('aria-hidden','false');
+  burgerBtn.classList.add('active');
+  burgerBtn.setAttribute('aria-expanded','true');
+  burgerBtn.setAttribute('aria-label','Закрыть меню');
+  document.body.style.overflow='hidden';
+  if(cookieBanner){
+    cookieAriaBeforeMenu=cookieBanner.getAttribute('aria-hidden');
+    cookieBanner.setAttribute('aria-hidden','true');
+  }
+}
 
 // --- Мобильные ссылки — плавный скролл ---
 document.querySelectorAll('.menu-links a').forEach(function(a){
   a.addEventListener('click',function(e){
     e.preventDefault();
     var target=document.querySelector(a.getAttribute('href'));
-    closeMenu();
+    closeMenu(false);
     setTimeout(function(){ smoothScrollTo(target); },400);
   });
 });
 
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMenu(); });
+document.addEventListener('keydown',function(e){
+  if(!menuOverlay.classList.contains('active')) return;
+  if(e.key==='Escape'){
+    e.preventDefault();
+    closeMenu();
+    return;
+  }
+  if(e.key==='Tab'){
+    var focusable=[burgerBtn].concat(Array.prototype.slice.call(menuPanel.querySelectorAll('a[href],button:not([disabled])')));
+    if(!focusable.length) return;
+    var first=focusable[0];
+    var last=focusable[focusable.length-1];
+    if(e.shiftKey && document.activeElement===first){
+      e.preventDefault();last.focus();
+    }else if(!e.shiftKey && document.activeElement===last){
+      e.preventDefault();first.focus();
+    }
+  }
+});
 
-function closeMenu(){
+function closeMenu(restoreFocus){
+  if(!menuOverlay.classList.contains('active')) return;
+  var cookieBanner=document.getElementById('cookieBanner');
   menuOverlay.classList.remove('active');
+  menuOverlay.setAttribute('aria-hidden','true');
   burgerBtn.classList.remove('active');
-  document.body.style.overflow='';
+  burgerBtn.setAttribute('aria-expanded','false');
+  burgerBtn.setAttribute('aria-label','Открыть меню');
+  document.body.style.overflow=bodyOverflowBeforeMenu;
+  if(cookieBanner){
+    if(cookieAriaBeforeMenu===null) cookieBanner.removeAttribute('aria-hidden');
+    else cookieBanner.setAttribute('aria-hidden',cookieAriaBeforeMenu);
+  }
+  window.setTimeout(function(){ menuPanel.scrollTop=0; },400);
+  if(restoreFocus!==false && previousMenuFocus && typeof previousMenuFocus.focus==='function') previousMenuFocus.focus();
 }
+
+/* При переходе к десктопной шапке мобильное меню не остаётся заблокированным. */
+var desktopNavQuery=window.matchMedia('(min-width:1101px)');
+desktopNavQuery.addEventListener('change',function(e){ if(e.matches) closeMenu(false); });
 </script>
