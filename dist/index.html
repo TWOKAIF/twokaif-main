@@ -6787,12 +6787,13 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
 .faq-question{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:14px 0;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer;user-select:none;position:relative;z-index:1}
 
 /* Текст вопроса */
-.faq-question-text{font-size:var(--type-copy);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:1.4;color:var(--muted);transition:color .3s var(--ease-out)}
+.faq-question-text{font-size:var(--type-copy);font-weight:500;letter-spacing:var(--type-copy-tracking);line-height:1.4;color:var(--muted);transition:color .3s var(--ease-out),opacity .3s var(--ease-out)}
 .faq-item.active .faq-question-text{color:var(--text)}
 
 /* Затухание неактивных */
 @media(hover:hover) and (pointer:fine){
-  .faq-list:hover .faq-item:not(:hover):not(.active) .faq-question-text{opacity:.3;transition:opacity .3s var(--ease-out)}
+  .faq-grid:has(.faq-item:hover) .faq-item:not(:hover):not(.active) .faq-question-text{opacity:.3}
+  .faq-item:hover .faq-question-text{color:var(--text);opacity:1}
 }
 
 /* Кнопка +/× */
