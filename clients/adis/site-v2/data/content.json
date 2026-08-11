@@ -1,0 +1,70 @@
+{
+  "published": {
+    "header": {
+      "brand": "АДИС МАММО",
+      "formats": [
+        "ЧАСТНЫЕ СОБЫТИЯ",
+        "КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ",
+        "STAND UP"
+      ],
+      "contactLabel": "СВЯЗАТЬСЯ",
+      "contactHref": "#contacts",
+      "menu": [
+        {
+          "label": "СМОТРЕТЬ",
+          "href": "#watch"
+        },
+        {
+          "label": "ОБ АДИСЕ",
+          "href": "#about"
+        },
+        {
+          "label": "ИЗБРАННОЕ",
+          "href": "#selected"
+        },
+        {
+          "label": "ФОТО",
+          "href": "#photos"
+        },
+        {
+          "label": "КОНТАКТЫ",
+          "href": "#contacts"
+        }
+      ]
+    }
+  },
+  "draft": {
+    "header": {
+      "brand": "АДИС МАММО",
+      "formats": [
+        "ЧАСТНЫЕ СОБЫТИЯ",
+        "КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ",
+        "STAND UP"
+      ],
+      "contactLabel": "СВЯЗАТЬСЯ",
+      "contactHref": "#contacts",
+      "menu": [
+        {
+          "label": "СМОТРЕТЬ",
+          "href": "#watch"
+        },
+        {
+          "label": "ОБ АДИСЕ",
+          "href": "#about"
+        },
+        {
+          "label": "ИЗБРАННОЕ",
+          "href": "#selected"
+        },
+        {
+          "label": "ФОТО",
+          "href": "#photos"
+        },
+        {
+          "label": "КОНТАКТЫ",
+          "href": "#contacts"
+        }
+      ]
+    }
+  }
+}
