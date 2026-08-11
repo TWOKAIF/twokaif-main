@@ -32,12 +32,38 @@
         }
       ],
       "socials": [
-        { "label": "TELEGRAM", "href": "#" },
-        { "label": "WHATSAPP", "href": "#" },
-        { "label": "MAX", "href": "#" },
-        { "label": "INSTAGRAM", "href": "#" },
-        { "label": "YOUTUBE", "href": "#" }
+        {
+          "label": "TELEGRAM",
+          "href": "#"
+        },
+        {
+          "label": "WHATSAPP",
+          "href": "#"
+        },
+        {
+          "label": "MAX",
+          "href": "#"
+        },
+        {
+          "label": "INSTAGRAM",
+          "href": "#"
+        },
+        {
+          "label": "YOUTUBE",
+          "href": "#"
+        }
       ]
+    },
+    "hero": {
+      "nameTop": "ADIS",
+      "nameBottom": "MAMMO",
+      "role": "ВЕДУЩИЙ / КОМИК",
+      "accent": "#9B1406",
+      "image": "/images/adis-hero.png",
+      "redHeight": 50,
+      "portraitHeight": 94,
+      "portraitX": 0,
+      "portraitY": 0
     }
   },
   "draft": {
@@ -73,12 +99,87 @@
         }
       ],
       "socials": [
-        { "label": "TELEGRAM", "href": "#" },
-        { "label": "WHATSAPP", "href": "#" },
-        { "label": "MAX", "href": "#" },
-        { "label": "INSTAGRAM", "href": "#" },
-        { "label": "YOUTUBE", "href": "#" }
+        {
+          "label": "TELEGRAM",
+          "href": "#"
+        },
+        {
+          "label": "WHATSAPP",
+          "href": "#"
+        },
+        {
+          "label": "MAX",
+          "href": "#"
+        },
+        {
+          "label": "INSTAGRAM",
+          "href": "#"
+        },
+        {
+          "label": "YOUTUBE",
+          "href": "#"
+        }
       ]
+    },
+    "hero": {
+      "nameTop": "ADIS",
+      "nameBottom": "MAMMO",
+      "role": "ВЕДУЩИЙ / КОМИК",
+      "accent": "#9B1406",
+      "portrait": {
+        "id": "",
+        "url": "/images/adis-hero.png",
+        "alt": "Адис Маммо",
+        "originalName": "",
+        "width": 2401,
+        "height": 2548,
+        "bytes": 0
+      },
+      "layouts": {
+        "desktop": {
+          "minHeight": 1078,
+          "redHeight": 50,
+          "sideGutter": 5,
+          "copyTop": 62,
+          "titleSize": 207,
+          "titleLineHeight": 76,
+          "roleSize": 30,
+          "roleGap": 14,
+          "portraitHeight": 94,
+          "portraitMaxWidth": 82,
+          "portraitX": 0,
+          "portraitY": 0
+        },
+        "tablet": {
+          "minHeight": 1020,
+          "redHeight": 54,
+          "sideGutter": 5,
+          "copyTop": 48,
+          "titleSize": 158,
+          "titleLineHeight": 80,
+          "roleSize": 25,
+          "roleGap": 12,
+          "portraitHeight": 100,
+          "portraitMaxWidth": 110,
+          "portraitX": 0,
+          "portraitY": 0
+        },
+        "mobile": {
+          "minHeight": 810,
+          "redHeight": 55,
+          "sideGutter": 3,
+          "copyTop": 38,
+          "titleSize": 124,
+          "titleLineHeight": 82,
+          "roleSize": 22,
+          "roleGap": 10,
+          "portraitHeight": 112,
+          "portraitMaxWidth": 165,
+          "portraitX": -14,
+          "portraitY": 0
+        }
+      },
+      "motion": "text"
     }
   }
 }

@@ -6,10 +6,14 @@ import cookieSession from 'cookie-session'
 import express from 'express'
 import { rateLimit } from 'express-rate-limit'
 import helmet from 'helmet'
+import multer from 'multer'
+import sharp from 'sharp'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..')
-const contentPath = path.join(rootDir, 'data', 'content.json')
+const dataDir = process.env.DATA_DIR || path.join(rootDir, 'data')
+const contentPath = path.join(dataDir, 'content.json')
+const heroUploadsDir = path.join(dataDir, 'uploads', 'hero')
 const distDir = path.join(rootDir, 'dist')
 const isProduction = process.env.NODE_ENV === 'production'
 const port = Number(process.env.PORT || 8787)
@@ -24,6 +28,7 @@ const app = express()
 app.disable('x-powered-by')
 app.use(helmet({ contentSecurityPolicy: isProduction ? undefined : false }))
 app.use(express.json({ limit: '128kb' }))
+app.use('/media/hero', express.static(heroUploadsDir, { immutable: true, maxAge: '1y', fallthrough: true }))
 app.use(
   cookieSession({
     name: 'adis_admin',
@@ -36,6 +41,7 @@ app.use(
 )
 
 const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: true, legacyHeaders: false })
+const heroUpload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024, files: 1 } })
 
 async function readContent() {
   return JSON.parse(await fs.readFile(contentPath, 'utf8'))
@@ -52,6 +58,11 @@ function requireAdmin(request, response, next) {
   return response.status(401).json({ error: 'Нужно войти в админку' })
 }
 
+function cleanHref(value, fallback = '#') {
+  const href = String(value || fallback).trim().slice(0, 300)
+  return /^(#[a-z0-9_-]*|https:\/\/[^\s]+|mailto:[^\s]+|tel:[+0-9() -]+)$/i.test(href) ? href : fallback
+}
+
 function cleanHeader(input) {
   const fallback = {
     brand: 'АДИС МАММО',
@@ -66,25 +77,91 @@ function cleanHeader(input) {
     brand: String(source.brand || fallback.brand).slice(0, 40),
     formats: Array.isArray(source.formats) ? source.formats.slice(0, 5).map((item) => String(item).slice(0, 80)) : [],
     contactLabel: String(source.contactLabel || fallback.contactLabel).slice(0, 40),
-    contactHref: String(source.contactHref || fallback.contactHref).slice(0, 300),
+    contactHref: cleanHref(source.contactHref, fallback.contactHref),
     menu: Array.isArray(source.menu)
       ? source.menu.slice(0, 8).map((item) => ({
           label: String(item?.label || '').slice(0, 50),
-          href: String(item?.href || '#').slice(0, 300),
+          href: cleanHref(item?.href),
         }))
       : [],
     socials: Array.isArray(source.socials)
       ? source.socials.slice(0, 8).map((item) => ({
           label: String(item?.label || '').slice(0, 50),
-          href: String(item?.href || '#').slice(0, 300),
+          href: cleanHref(item?.href),
         }))
       : [],
+  }
+}
+
+function cleanHero(input) {
+  const clamp = (value, min, max, fallbackValue) => {
+    const number = Number(value)
+    return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallbackValue
+  }
+  const layoutDefaults = {
+    desktop: { minHeight: 1078, redHeight: 50, sideGutter: 5, copyTop: 62, titleSize: 207, titleLineHeight: 76, roleSize: 30, roleGap: 14, portraitHeight: 94, portraitMaxWidth: 82, portraitX: 0, portraitY: 0 },
+    tablet: { minHeight: 1020, redHeight: 54, sideGutter: 5, copyTop: 48, titleSize: 158, titleLineHeight: 80, roleSize: 25, roleGap: 12, portraitHeight: 100, portraitMaxWidth: 110, portraitX: 0, portraitY: 0 },
+    mobile: { minHeight: 810, redHeight: 55, sideGutter: 3, copyTop: 38, titleSize: 124, titleLineHeight: 82, roleSize: 22, roleGap: 10, portraitHeight: 112, portraitMaxWidth: 165, portraitX: -14, portraitY: 0 },
+  }
+  const fallbackPortrait = { url: '/images/adis-hero.png', alt: 'Адис Маммо', width: 2401, height: 2548 }
+  const fallback = { nameTop: 'ADIS', nameBottom: 'MAMMO', role: 'ВЕДУЩИЙ / КОМИК', accent: '#9B1406', portrait: fallbackPortrait, layouts: layoutDefaults, motion: 'text' }
+  const source = input && typeof input === 'object' ? input : fallback
+  const legacyDesktop = {
+    ...layoutDefaults.desktop,
+    redHeight: clamp(source.redHeight, 35, 65, layoutDefaults.desktop.redHeight),
+    portraitHeight: clamp(source.portraitHeight, 70, 150, layoutDefaults.desktop.portraitHeight),
+    portraitX: clamp(source.portraitX, -220, 180, layoutDefaults.desktop.portraitX),
+    portraitY: clamp(source.portraitY, -160, 180, layoutDefaults.desktop.portraitY),
+  }
+  const cleanLayout = (inputLayout, defaults) => {
+    const layout = inputLayout && typeof inputLayout === 'object' ? inputLayout : defaults
+    return {
+      minHeight: clamp(layout.minHeight, 680, 1180, defaults.minHeight),
+      redHeight: clamp(layout.redHeight, 35, 65, defaults.redHeight),
+      sideGutter: clamp(layout.sideGutter, 2, 8, defaults.sideGutter),
+      copyTop: clamp(layout.copyTop, 20, 110, defaults.copyTop),
+      titleSize: clamp(layout.titleSize, 96, 240, defaults.titleSize),
+      titleLineHeight: clamp(layout.titleLineHeight, 70, 96, defaults.titleLineHeight),
+      roleSize: clamp(layout.roleSize, 16, 40, defaults.roleSize),
+      roleGap: clamp(layout.roleGap, 0, 40, defaults.roleGap),
+      portraitHeight: clamp(layout.portraitHeight, 70, 150, defaults.portraitHeight),
+      portraitMaxWidth: clamp(layout.portraitMaxWidth, 60, 180, defaults.portraitMaxWidth),
+      portraitX: clamp(layout.portraitX, -220, 180, defaults.portraitX),
+      portraitY: clamp(layout.portraitY, -160, 180, defaults.portraitY),
+    }
+  }
+  const portraitSource = source.portrait && typeof source.portrait === 'object'
+    ? source.portrait
+    : { ...fallbackPortrait, url: source.image || fallbackPortrait.url }
+  const portraitUrl = String(portraitSource.url || fallbackPortrait.url)
+  const safePortraitUrl = portraitUrl.startsWith('/images/') || portraitUrl.startsWith('/media/hero/') ? portraitUrl : fallbackPortrait.url
+  return {
+    nameTop: String(source.nameTop || fallback.nameTop).slice(0, 32),
+    nameBottom: String(source.nameBottom || fallback.nameBottom).slice(0, 32),
+    role: String(source.role || fallback.role).slice(0, 80),
+    accent: /^#[0-9a-f]{6}$/i.test(String(source.accent || '')) ? String(source.accent).toUpperCase() : fallback.accent,
+    portrait: {
+      id: String(portraitSource.id || '').slice(0, 80),
+      url: safePortraitUrl.slice(0, 300),
+      alt: String(portraitSource.alt || fallbackPortrait.alt).slice(0, 120),
+      originalName: String(portraitSource.originalName || '').slice(0, 120),
+      width: clamp(portraitSource.width, 1, 6000, fallbackPortrait.width),
+      height: clamp(portraitSource.height, 1, 6000, fallbackPortrait.height),
+      bytes: clamp(portraitSource.bytes, 0, 15 * 1024 * 1024, 0),
+    },
+    layouts: {
+      desktop: cleanLayout(source.layouts?.desktop || legacyDesktop, legacyDesktop),
+      tablet: cleanLayout(source.layouts?.tablet, layoutDefaults.tablet),
+      mobile: cleanLayout(source.layouts?.mobile, layoutDefaults.mobile),
+    },
+    motion: source.motion === 'none' ? 'none' : 'text',
   }
 }
 
 app.get('/api/content', async (_request, response, next) => {
   try {
     const content = await readContent()
+    response.set('Cache-Control', 'no-store')
     response.json(content.published)
   } catch (error) {
     next(error)
@@ -114,6 +191,41 @@ app.get('/api/admin/content', requireAdmin, async (_request, response, next) => 
   }
 })
 
+app.post('/api/admin/assets/hero', requireAdmin, heroUpload.single('portrait'), async (request, response, next) => {
+  try {
+    if (!request.file) return response.status(400).json({ error: 'Сначала выбери фотографию' })
+    const image = sharp(request.file.buffer, { animated: false, limitInputPixels: 30_000_000 })
+    const metadata = await image.metadata()
+    if (!['png', 'jpeg', 'webp'].includes(metadata.format)) return response.status(400).json({ error: 'Подойдёт PNG, JPG или WebP' })
+    if (!metadata.width || !metadata.height || metadata.width > 6000 || metadata.height > 6000 || metadata.width * metadata.height > 30_000_000) {
+      return response.status(400).json({ error: 'Фото слишком большое. Максимум 6000 × 6000 px' })
+    }
+    const id = crypto.randomUUID()
+    const temporaryPath = path.join(heroUploadsDir, `${id}.tmp`)
+    const finalPath = path.join(heroUploadsDir, `${id}.webp`)
+    await fs.mkdir(heroUploadsDir, { recursive: true })
+    const pipeline = image.rotate()
+    if (metadata.width > 2800) pipeline.resize({ width: 2800, withoutEnlargement: true })
+    const output = await pipeline.webp({ quality: 95, lossless: Boolean(metadata.hasAlpha) }).toBuffer({ resolveWithObject: true })
+    await fs.writeFile(temporaryPath, output.data)
+    await fs.rename(temporaryPath, finalPath)
+    return response.json({
+      ok: true,
+      asset: {
+        id,
+        url: `/media/hero/${id}.webp`,
+        alt: 'Адис Маммо',
+        originalName: path.basename(request.file.originalname).slice(0, 120),
+        width: output.info.width,
+        height: output.info.height,
+        bytes: output.info.size,
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.put('/api/admin/draft/header', requireAdmin, async (request, response, next) => {
   try {
     const content = await readContent()
@@ -125,10 +237,42 @@ app.put('/api/admin/draft/header', requireAdmin, async (request, response, next)
   }
 })
 
-app.post('/api/admin/publish', requireAdmin, async (_request, response, next) => {
+app.put('/api/admin/draft/hero', requireAdmin, async (request, response, next) => {
   try {
     const content = await readContent()
-    content.published = structuredClone(content.draft)
+    content.draft.hero = cleanHero(request.body)
+    await writeContent(content)
+    response.json({ ok: true, draft: content.draft })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.put('/api/admin/draft', requireAdmin, async (request, response, next) => {
+  try {
+    const content = await readContent()
+    content.draft = {
+      ...content.draft,
+      header: cleanHeader(request.body?.header),
+      hero: cleanHero(request.body?.hero),
+    }
+    await writeContent(content)
+    response.json({ ok: true, draft: content.draft })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/admin/publish', requireAdmin, async (request, response, next) => {
+  try {
+    const content = await readContent()
+    const nextContent = {
+      ...content.draft,
+      header: cleanHeader(request.body?.header),
+      hero: cleanHero(request.body?.hero),
+    }
+    content.draft = structuredClone(nextContent)
+    content.published = structuredClone(nextContent)
     await writeContent(content)
     response.json({ ok: true, published: content.published })
   } catch (error) {
@@ -143,6 +287,9 @@ if (isProduction) {
 
 app.use((error, _request, response, _next) => {
   console.error(error)
+  if (error instanceof multer.MulterError) {
+    return response.status(400).json({ error: error.code === 'LIMIT_FILE_SIZE' ? 'Файл тяжелее 15 МБ' : 'Не удалось загрузить фотографию' })
+  }
   response.status(500).json({ error: 'Не удалось выполнить действие' })
 })
 
