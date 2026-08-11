@@ -27,6 +27,12 @@ const fallbackHeader = {
   ],
 }
 
+const previewDevices = [
+  { id: 'desktop', label: 'Компьютер', width: 1440, height: 900 },
+  { id: 'tablet', label: 'iPad', width: 1024, height: 1366 },
+  { id: 'mobile', label: 'iPhone', width: 428, height: 926 },
+]
+
 function DotsIcon({ close = false }) {
   return close ? (
     <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg>
@@ -38,6 +44,20 @@ function DotsIcon({ close = false }) {
   )
 }
 
+function RollingMenuLabel({ label }) {
+  return (
+    <span className="menu-link-roller" aria-hidden="true">
+      <span className="menu-link-inner">
+        {Array.from(label).map((character, index) => (
+          <span className="menu-character" style={{ '--character-index': index }} key={`${character}-${index}`}>
+            {character === ' ' ? '\u00A0' : character}
+          </span>
+        ))}
+      </span>
+    </span>
+  )
+}
+
 function SiteHeader({ content = fallbackHeader, preview = false }) {
   const [open, setOpen] = useState(false)
   const [activeMenuIndex, setActiveMenuIndex] = useState(0)
@@ -45,19 +65,17 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
 
   useGSAP(() => {
     if (!overlayRef.current) return
-    const links = overlayRef.current.querySelectorAll('.menu-link-inner')
-    const socials = overlayRef.current.querySelectorAll('.menu-social-link')
-    gsap.killTweensOf([overlayRef.current, ...links, ...socials])
+    gsap.killTweensOf(overlayRef.current)
     if (open) {
       gsap.set(overlayRef.current, { visibility: 'visible' })
-      const timeline = gsap.timeline()
-      timeline
-        .fromTo(overlayRef.current, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.68, ease: 'power4.inOut' })
-        .fromTo(links, { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.62, stagger: 0.055, ease: 'power4.out' }, '-=0.3')
-        .fromTo(socials, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, stagger: 0.04, ease: 'power3.out' }, '-=0.36')
+      gsap.fromTo(
+        overlayRef.current,
+        { y: window.innerHeight, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.68, ease: 'power4.out' },
+      )
     } else {
       gsap.to(overlayRef.current, {
-        clipPath: 'inset(0 0 100% 0)', duration: 0.52, ease: 'power4.inOut',
+        y: window.innerHeight, opacity: 0, duration: 0.58, ease: 'power4.inOut',
         onComplete: () => gsap.set(overlayRef.current, { visibility: 'hidden' }),
       })
     }
@@ -69,10 +87,22 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
     return () => window.removeEventListener('keydown', closeOnEscape)
   }, [])
 
+  const followLink = (href, closeMenu = false) => {
+    if (closeMenu) setOpen(false)
+    if (!href || href === '#') return
+    if (href.startsWith('#')) {
+      const scrollToSection = () => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (closeMenu) requestAnimationFrame(scrollToSection)
+      else scrollToSection()
+      return
+    }
+    window.open(href, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <>
       <header className={`site-header${preview ? ' site-header-preview' : ''}`}>
-        <a className="brand" href="#top">{content.brand}</a>
+        <button className="brand brand-button" type="button" onClick={() => followLink('#top')}>{content.brand}</button>
         <div className="format-line" aria-label="Форматы работы">
           <div className="format-line-track">
             {content.formats.map((format, index) => (
@@ -84,36 +114,37 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
           </div>
         </div>
         <div className="header-actions">
-          <a className="contact-button" href={content.contactHref}>{content.contactLabel}</a>
+          <button className="contact-button" type="button" onClick={() => followLink(content.contactHref)}>{content.contactLabel}</button>
           <button className="menu-button" type="button" aria-label="Открыть меню" onClick={() => setOpen(true)}><DotsIcon /></button>
         </div>
       </header>
 
       <aside ref={overlayRef} className={`menu-overlay${preview ? ' menu-overlay-preview' : ''}`} aria-hidden={!open}>
         <div className="menu-header">
-          <span className="brand">{content.brand}</span>
+          <button className="brand brand-button" type="button" onClick={() => followLink('#top', true)}>{content.brand}</button>
           <div className="header-actions">
-            <a className="contact-button contact-button-dark" href={content.contactHref}>{content.contactLabel}</a>
+            <button className="contact-button contact-button-dark" type="button" onClick={() => followLink(content.contactHref, true)}>{content.contactLabel}</button>
             <button className="menu-button menu-button-dark" type="button" aria-label="Закрыть меню" onClick={() => setOpen(false)}><DotsIcon close /></button>
           </div>
         </div>
-        <nav className="menu-list" aria-label="Основная навигация">
+        <nav className="menu-list" aria-label="Основная навигация" onMouseLeave={() => setActiveMenuIndex(0)}>
           {content.menu.map((item, index) => (
-            <a
+            <button
               className={`menu-link${index === activeMenuIndex ? ' is-active' : ''}`}
-              href={item.href}
+              type="button"
+              aria-label={item.label}
               key={`${item.label}-${index}`}
-              onClick={() => setOpen(false)}
+              onClick={() => followLink(item.href, true)}
               onFocus={() => setActiveMenuIndex(index)}
               onMouseEnter={() => setActiveMenuIndex(index)}
             >
-              <span className="menu-link-inner">{item.label}</span>
-            </a>
+              <RollingMenuLabel label={item.label} />
+            </button>
           ))}
         </nav>
         <nav className="menu-socials" aria-label="Социальные сети">
           {(content.socials || fallbackHeader.socials).map((item, index) => (
-            <a className="menu-social-link" href={item.href} key={`${item.label}-${index}`}>{item.label}</a>
+            <button className="menu-social-link" type="button" onClick={() => followLink(item.href, true)} key={`${item.label}-${index}`}>{item.label}</button>
           ))}
         </nav>
       </aside>
@@ -124,6 +155,16 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
 function PublicSite() {
   const [header, setHeader] = useState(fallbackHeader)
   useEffect(() => {
+    const isAdminPreview = new URLSearchParams(window.location.search).get('preview') === 'admin'
+    if (isAdminPreview) {
+      const receivePreview = (event) => {
+        if (event.origin !== window.location.origin || event.data?.type !== 'adis-preview-header') return
+        setHeader(event.data.header)
+      }
+      window.addEventListener('message', receivePreview)
+      window.parent.postMessage({ type: 'adis-preview-ready' }, window.location.origin)
+      return () => window.removeEventListener('message', receivePreview)
+    }
     fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((content) => setHeader(content.header)).catch(() => {})
   }, [])
 
@@ -162,6 +203,76 @@ function Login({ onSuccess }) {
         <p className="admin-note">Для локальной проверки пароль: adis-local</p>
       </form>
     </main>
+  )
+}
+
+function DeviceIcon({ device }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      {device === 'desktop' && <><rect x="3" y="4" width="18" height="12" rx="1.5" /><path d="M8 20h8M12 16v4" /></>}
+      {device === 'tablet' && <><rect x="5" y="2.5" width="14" height="19" rx="2" /><path d="M11 18.5h2" /></>}
+      {device === 'mobile' && <><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M10.5 5h3M11 19h2" /></>}
+    </svg>
+  )
+}
+
+function AdminDevicePreview({ header }) {
+  const [deviceId, setDeviceId] = useState('desktop')
+  const [scale, setScale] = useState(0.6)
+  const stageRef = useRef(null)
+  const iframeRef = useRef(null)
+  const device = previewDevices.find((item) => item.id === deviceId) || previewDevices[0]
+
+  const sendPreview = () => iframeRef.current?.contentWindow?.postMessage({ type: 'adis-preview-header', header }, window.location.origin)
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return undefined
+    const resize = () => {
+      const availableWidth = Math.max(280, stage.clientWidth - 32)
+      setScale(Math.min(1, availableWidth / device.width, 620 / device.height))
+    }
+    resize()
+    const observer = new ResizeObserver(resize)
+    observer.observe(stage)
+    return () => observer.disconnect()
+  }, [device.width, device.height])
+
+  useEffect(() => { sendPreview() }, [header, deviceId])
+
+  useEffect(() => {
+    const receiveReady = (event) => {
+      if (event.origin === window.location.origin && event.data?.type === 'adis-preview-ready') sendPreview()
+    }
+    window.addEventListener('message', receiveReady)
+    return () => window.removeEventListener('message', receiveReady)
+  }, [header])
+
+  return (
+    <section className="admin-device-preview" aria-label="Предпросмотр сайта на разных устройствах">
+      <div className="admin-preview-toolbar">
+        <div><span className="admin-kicker">ЖИВОЙ ПРЕДПРОСМОТР</span><strong>{device.width} × {device.height}</strong></div>
+        <div className="admin-device-switcher" role="group" aria-label="Размер устройства">
+          {previewDevices.map((item) => (
+            <button className={item.id === deviceId ? 'is-active' : ''} type="button" aria-pressed={item.id === deviceId} onClick={() => setDeviceId(item.id)} key={item.id}>
+              <DeviceIcon device={item.id} />
+              <span><b>{item.label}</b><small>{item.width} × {item.height}</small></span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="admin-preview-stage" ref={stageRef}>
+        <div className="admin-preview-frame" style={{ width: device.width * scale, height: device.height * scale }}>
+          <iframe
+            ref={iframeRef}
+            src="/?preview=admin"
+            title={`Предпросмотр: ${device.label}`}
+            style={{ width: device.width, height: device.height, transform: `scale(${scale})` }}
+            onLoad={sendPreview}
+          />
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -208,7 +319,7 @@ function AdminApp() {
       <section className="admin-workspace">
         <div className="admin-toolbar"><div><span className="admin-kicker">БЛОК 01</span><h2>Хедер и меню</h2></div><div className="admin-toolbar-actions"><span>{status}</span><button type="button" onClick={saveDraft}>Сохранить черновик</button><button className="admin-primary" type="button" onClick={publish}>Опубликовать</button></div></div>
 
-        <div className="admin-preview"><SiteHeader content={header} preview /><div className="admin-preview-label">ЖИВОЙ ПРЕДПРОСМОТР</div></div>
+        <AdminDevicePreview header={header} />
 
         <div className="admin-form-grid">
           <section className="admin-panel">
