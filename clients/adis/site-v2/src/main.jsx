@@ -55,6 +55,89 @@ const fallbackHero = {
   motion: 'text',
 }
 
+const fallbackAbout = {
+  kicker: '// ОБ АДИСЕ',
+  mediaLabel: 'ФОТО',
+  image: '/images/adis-about-02.png',
+  imageAlt: 'Портрет Адиса Маммо',
+  lead: 'ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.',
+  secondary: 'АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ.',
+}
+
+const fallbackVideo = {
+  kicker: '// ВИДЕО',
+  title: 'В РАБОТЕ',
+  items: [
+    { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
+    { title: 'СВАДЕБНЫЙ ЛАЙФ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
+    { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
+    { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
+  ],
+}
+
+const brandLogos = [
+  { name: 'S7', src: '/logos/s7.svg', shape: 'mark' },
+  { name: 'LVMH', src: '/logos/lvmh.svg', shape: 'wide' },
+  { name: 'Сбер', src: '/logos/sber.svg', shape: 'wide' },
+  { name: 'Clarins', src: '/logos/clarins.svg', shape: 'wide' },
+  { name: 'СИБУР', src: '/logos/sibur.svg', shape: 'wide' },
+  { name: 'VK', src: '/logos/vk.svg', shape: 'mark-wide' },
+  { name: 'Яндекс', src: '/logos/yandex.svg', shape: 'wide' },
+  { name: 'Альфа-Банк', src: '/logos/alfa-bank.svg', shape: 'mark' },
+  { name: 'BetBoom', src: '/logos/betboom.svg', shape: 'wide' },
+  { name: 'Kaspersky', src: '/logos/kaspersky.svg', shape: 'wide' },
+  { name: 'Фармстандарт', src: '/logos/pharmstandard.svg', shape: 'wide' },
+]
+
+const tickerLayoutDefaults = {
+  desktop: { cardWidth: 340, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
+  tablet: { cardWidth: 286, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
+  mobile: { cardWidth: 220, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
+}
+
+const fallbackTicker = {
+  cardColor: '#303030',
+  layouts: tickerLayoutDefaults,
+  logos: brandLogos.map((logo) => ({ name: logo.name, enabled: true, scale: 100 })),
+}
+
+function normalizeTicker(input = {}) {
+  const incomingLogos = Array.isArray(input?.logos) ? input.logos : []
+  const knownNames = new Set(brandLogos.map((logo) => logo.name))
+  const ordered = incomingLogos
+    .filter((logo) => knownNames.has(logo?.name))
+    .map((logo) => ({ name: logo.name, enabled: logo.enabled !== false, scale: Number(logo.scale || 100) }))
+  const presentNames = new Set(ordered.map((logo) => logo.name))
+  const missing = brandLogos.filter((logo) => !presentNames.has(logo.name)).map((logo) => ({ name: logo.name, enabled: true, scale: 100 }))
+  return {
+    ...fallbackTicker,
+    ...(input || {}),
+    layouts: {
+      desktop: { ...tickerLayoutDefaults.desktop, ...(input?.layouts?.desktop || {}) },
+      tablet: { ...tickerLayoutDefaults.tablet, ...(input?.layouts?.tablet || {}) },
+      mobile: { ...tickerLayoutDefaults.mobile, ...(input?.layouts?.mobile || {}) },
+    },
+    logos: [...ordered, ...missing],
+  }
+}
+
+function getTickerStyle(content) {
+  const ticker = normalizeTicker(content)
+  const variables = Object.entries(ticker.layouts).reduce((result, [device, layout]) => {
+    Object.entries(layout).forEach(([key, value]) => { result[`--ticker-${device}-${key}`] = value })
+    return result
+  }, {})
+  return { ...variables, '--ticker-card-color': ticker.cardColor }
+}
+
+function normalizeVideo(input = {}) {
+  return {
+    ...fallbackVideo,
+    ...(input || {}),
+    items: fallbackVideo.items.map((fallbackItem, index) => ({ ...fallbackItem, ...(input?.items?.[index] || {}) })),
+  }
+}
+
 function normalizeHero(input = {}) {
   const legacyLayout = {
     ...heroLayoutDefaults.desktop,
@@ -291,32 +374,130 @@ function HeroSection({ content = fallbackHero }) {
   )
 }
 
+function AboutSection({ content = fallbackAbout }) {
+  const about = { ...fallbackAbout, ...(content || {}) }
+  return (
+    <section className="about-section" id="about" aria-labelledby="about-title">
+      <div className="about-column">
+        <p className="about-kicker">{about.kicker}</p>
+        <div className="about-media">
+          <img src={about.image} alt={about.imageAlt || 'Портрет Адиса Маммо'} />
+        </div>
+        <h2 id="about-title">{about.lead}</h2>
+        <p className="about-secondary">{about.secondary}</p>
+      </div>
+    </section>
+  )
+}
+
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 7.5 16.5 12 9 16.5Z" />
+    </svg>
+  )
+}
+
+function VideoSection({ content = fallbackVideo }) {
+  const video = normalizeVideo(content)
+  return (
+    <section className="video-section" id="video" aria-labelledby="video-title">
+      <header className="video-heading">
+        <p>{video.kicker}</p>
+        <h2 id="video-title">{video.title}</h2>
+      </header>
+      <div className="video-list">
+        {video.items.map((item, index) => (
+          <article className="video-row" key={`${item.title}-${index}`}>
+            <div className={`video-placeholder${item.url ? ' has-video' : ''}`}>
+              {item.url && (
+                <button
+                  className="video-launch"
+                  type="button"
+                  aria-label={`Смотреть: ${item.title}`}
+                  onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}
+                >
+                  <span className="video-play"><PlayIcon /></span>
+                </button>
+              )}
+            </div>
+            <div className="video-copy">
+              <h3>{item.title}</h3>
+              <p>{item.subtitle}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="video-more" aria-label="Смотреть ещё видео">
+        <span>СМОТРЕТЬ ЕЩЁ</span>
+        <svg viewBox="0 0 32 16" aria-hidden="true">
+          <path d="M1 8h28M23 2l6 6-6 6" />
+        </svg>
+      </div>
+    </section>
+  )
+}
+
+function BrandTicker({ content = fallbackTicker }) {
+  const ticker = normalizeTicker(content)
+  const visibleLogos = ticker.logos
+    .filter((logo) => logo.enabled)
+    .map((logo) => ({ ...brandLogos.find((asset) => asset.name === logo.name), ...logo }))
+    .filter((logo) => logo.src)
+  if (!visibleLogos.length) return null
+  return (
+    <section className="brand-ticker" id="brands" aria-label="Бренды, для которых Адис проводил мероприятия" style={getTickerStyle(ticker)}>
+      <h2 className="visually-hidden">Бренды и компании</h2>
+      <div className="brand-ticker-viewport">
+        <div className="brand-ticker-track">
+          {[0, 1].map((setIndex) => (
+            <div className="brand-ticker-set" aria-hidden={setIndex === 1} key={setIndex}>
+              {visibleLogos.map((logo) => (
+                <div className={`brand-logo-card brand-logo-${logo.shape}`} style={{ '--logo-scale': logo.scale / 100 }} key={`${setIndex}-${logo.name}`}>
+                  <img src={logo.src} alt={setIndex === 0 ? logo.name : ''} loading="lazy" draggable="false" />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function PublicSite() {
-  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero })
+  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero, about: fallbackAbout, video: fallbackVideo, ticker: fallbackTicker })
   const isAdminPreview = new URLSearchParams(window.location.search).get('preview') === 'admin'
   useEffect(() => {
     if (isAdminPreview) {
       const receivePreview = (event) => {
         if (event.origin !== window.location.origin || event.data?.type !== 'adis-preview-content') return
-        setContent({ header: event.data.content.header, hero: normalizeHero(event.data.content.hero) })
+        setContent({ header: event.data.content.header, hero: normalizeHero(event.data.content.hero), about: event.data.content.about || fallbackAbout, video: normalizeVideo(event.data.content.video), ticker: normalizeTicker(event.data.content.ticker) })
       }
       window.addEventListener('message', receivePreview)
       window.parent.postMessage({ type: 'adis-preview-ready' }, window.location.origin)
       return () => window.removeEventListener('message', receivePreview)
     }
-    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero) })).catch(() => {})
+    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero), about: nextContent.about || fallbackAbout, video: normalizeVideo(nextContent.video), ticker: normalizeTicker(nextContent.ticker) })).catch(() => {})
   }, [isAdminPreview])
 
   return (
     <main className="site-shell" id="top" style={getHeroStyle(content.hero)}>
       <SiteHeader content={content.header} preview={isAdminPreview} />
       <HeroSection content={content.hero} />
+      <AboutSection content={content.about} />
+      <VideoSection content={content.video} />
+      <BrandTicker content={content.ticker} />
     </main>
   )
 }
 
 function TextField({ label, value, onChange, placeholder }) {
   return <label className="admin-field"><span>{label}</span><input value={value} placeholder={placeholder} onChange={(event) => onChange(event.target.value)} /></label>
+}
+
+function TextAreaField({ label, value, onChange, rows = 5 }) {
+  return <label className="admin-field"><span>{label}</span><textarea rows={rows} value={value} onChange={(event) => onChange(event.target.value)} /></label>
 }
 
 function NumberField({ label, value, onChange, min, max, suffix }) {
@@ -487,6 +668,9 @@ function AdminApp() {
   const [authenticated, setAuthenticated] = useState(null)
   const [header, setHeader] = useState(fallbackHeader)
   const [hero, setHero] = useState(fallbackHero)
+  const [about, setAbout] = useState(fallbackAbout)
+  const [video, setVideo] = useState(fallbackVideo)
+  const [ticker, setTicker] = useState(fallbackTicker)
   const [activeSection, setActiveSection] = useState('header')
   const [deviceId, setDeviceId] = useState('desktop')
   const [status, setStatus] = useState('')
@@ -498,6 +682,9 @@ function AdminApp() {
     const content = await response.json()
     setHeader(content.draft.header)
     setHero(normalizeHero(content.draft.hero))
+    setAbout({ ...fallbackAbout, ...(content.draft.about || {}) })
+    setVideo(normalizeVideo(content.draft.video))
+    setTicker(normalizeTicker(content.draft.ticker))
     setAuthenticated(true)
   }
 
@@ -508,6 +695,49 @@ function AdminApp() {
   const changeSocial = (index, key, value) => setHeader((current) => ({ ...current, socials: (current.socials || fallbackHeader.socials).map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item) }))
   const updateHero = (changes) => {
     setHero((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateAbout = (changes) => {
+    setAbout((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateVideo = (changes) => {
+    setVideo((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateTicker = (changes) => {
+    setTicker((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const changeTickerLayout = (key, value) => {
+    setTicker((current) => ({
+      ...current,
+      layouts: { ...current.layouts, [deviceId]: { ...current.layouts[deviceId], [key]: value } },
+    }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const changeTickerLogo = (index, changes) => {
+    setTicker((current) => ({
+      ...current,
+      logos: current.logos.map((logo, logoIndex) => logoIndex === index ? { ...logo, ...changes } : logo),
+    }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const moveTickerLogo = (index, direction) => {
+    setTicker((current) => {
+      const nextIndex = index + direction
+      if (nextIndex < 0 || nextIndex >= current.logos.length) return current
+      const logos = [...current.logos]
+      ;[logos[index], logos[nextIndex]] = [logos[nextIndex], logos[index]]
+      return { ...current, logos }
+    })
+    setStatus('Есть несохранённые изменения')
+  }
+  const changeVideoItem = (index, key, value) => {
+    setVideo((current) => ({
+      ...current,
+      items: current.items.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item),
+    }))
     setStatus('Есть несохранённые изменения')
   }
   const changeHeroLayout = (key, value) => {
@@ -529,7 +759,7 @@ function AdminApp() {
     setSaving(true)
     setStatus('Сохраняю…')
     try {
-      const response = await fetch('/api/admin/draft', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero }) })
+      const response = await fetch('/api/admin/draft', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker }) })
       setStatus(response.ok ? 'Черновик сохранён' : 'Не удалось сохранить')
       return response.ok
     } catch {
@@ -543,7 +773,7 @@ function AdminApp() {
     setSaving(true)
     setStatus('Публикую…')
     try {
-      const response = await fetch('/api/admin/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero }) })
+      const response = await fetch('/api/admin/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker }) })
       setStatus(response.ok ? 'Опубликовано на сайте' : 'Не удалось опубликовать')
     } catch {
       setStatus('Не удалось опубликовать')
@@ -556,6 +786,13 @@ function AdminApp() {
   if (!authenticated) return <Login onSuccess={load} />
   const selectedDevice = previewDevices.find((item) => item.id === deviceId) || previewDevices[0]
   const currentLayout = hero.layouts[deviceId]
+  const sectionMeta = {
+    header: { number: '01', title: 'Верх сайта', description: 'Название, направления работы, кнопка «Связаться» и раскрывающееся меню.' },
+    hero: { number: '02', title: 'Первый экран', description: 'Имя, подпись, портрет и красный фон.' },
+    about: { number: '03', title: 'Об Адисе', description: 'Короткое представление, главные регалии и место для портрета.' },
+    video: { number: '04', title: 'Видео', description: 'Шоурил и три направления работы. Ролики можно подключить позже.' },
+    ticker: { number: '05', title: 'Бегущая строка', description: 'Логотипы брендов, их порядок, размер и движение.' },
+  }[activeSection]
 
   return (
     <main className="admin-layout">
@@ -564,14 +801,17 @@ function AdminApp() {
         <nav>
           <button className={activeSection === 'header' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('header'); setStatus('') }}><span>01</span> Верх сайта</button>
           <button className={activeSection === 'hero' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('hero'); setStatus('') }}><span>02</span> Первый экран</button>
+          <button className={activeSection === 'about' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('about'); setStatus('') }}><span>03</span> Об Адисе</button>
+          <button className={activeSection === 'video' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('video'); setStatus('') }}><span>04</span> Видео</button>
+          <button className={activeSection === 'ticker' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('ticker'); setStatus('') }}><span>05</span> Бегущая строка</button>
         </nav>
         <span className="admin-sidebar-note">Собираем сайт по одному блоку.</span>
       </aside>
 
       <section className="admin-workspace">
-        <div className="admin-toolbar"><div><span className="admin-kicker">БЛОК {activeSection === 'hero' ? '02' : '01'}</span><h2>{activeSection === 'hero' ? 'Первый экран' : 'Верх сайта'}</h2><p className="admin-section-description">{activeSection === 'hero' ? 'Имя, подпись, портрет и красный фон.' : 'Название, направления работы, кнопка «Связаться» и раскрывающееся меню.'}</p></div><div className="admin-toolbar-actions"><span role="status" aria-live="polite">{status}</span><button type="button" disabled={saving} onClick={saveDraft}>Сохранить черновик</button><button className="admin-primary" type="button" disabled={saving} onClick={publish}>Опубликовать</button></div></div>
+        <div className="admin-toolbar"><div><span className="admin-kicker">БЛОК {sectionMeta.number}</span><h2>{sectionMeta.title}</h2><p className="admin-section-description">{sectionMeta.description}</p></div><div className="admin-toolbar-actions"><span role="status" aria-live="polite">{status}</span><button type="button" disabled={saving} onClick={saveDraft}>Сохранить черновик</button><button className="admin-primary" type="button" disabled={saving} onClick={publish}>Опубликовать</button></div></div>
 
-        <AdminDevicePreview content={{ header, hero }} deviceId={deviceId} onDeviceChange={setDeviceId} />
+        <AdminDevicePreview content={{ header, hero, about, video, ticker }} deviceId={deviceId} onDeviceChange={setDeviceId} />
 
         {activeSection === 'header' ? <div className="admin-form-grid">
           <section className="admin-panel">
@@ -589,7 +829,7 @@ function AdminApp() {
             <h3>Соцсети внизу меню</h3>
             {(header.socials || fallbackHeader.socials).map((item, index) => <div className="admin-menu-row" key={index}><TextField label={`Соцсеть ${index + 1}`} value={item.label} onChange={(value) => changeSocial(index, 'label', value)} /><TextField label="Ссылка" value={item.href} onChange={(value) => changeSocial(index, 'href', value)} /></div>)}
           </section>
-        </div> : <div className="admin-form-grid admin-hero-grid">
+        </div> : activeSection === 'hero' ? <div className="admin-form-grid admin-hero-grid">
           <section className="admin-panel">
             <div className="admin-panel-heading"><div><span className="admin-kicker">ОБЩЕЕ ДЛЯ ВСЕХ РАЗМЕРОВ</span><h3>Текст и цвет</h3></div></div>
             <TextField label="Первая строка имени" value={hero.nameTop} onChange={(value) => updateHero({ nameTop: value })} />
@@ -632,6 +872,71 @@ function AdminApp() {
               <button className={hero.motion === 'text' ? 'is-active' : ''} type="button" onClick={() => updateHero({ motion: 'text' })}>Только текст</button>
             </div>
             <p className="admin-note">Портрет и красный фон всегда остаются на своих местах. Они больше не выдвигаются и не перекрывают друг друга.</p>
+          </section>
+        </div> : activeSection === 'about' ? <div className="admin-form-grid admin-about-grid">
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">СОДЕРЖАНИЕ БЛОКА</span><h3>Текст «Об Адисе»</h3></div></div>
+            <TextField label="Метка над фотографией" value={about.kicker} onChange={(value) => updateAbout({ kicker: value })} />
+            <TextAreaField label="Главное представление" rows={4} value={about.lead} onChange={(value) => updateAbout({ lead: value })} />
+            <TextAreaField label="Регалии и проекты" rows={7} value={about.secondary} onChange={(value) => updateAbout({ secondary: value })} />
+          </section>
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">МЕДИА</span><h3>Портрет</h3></div></div>
+            <p className="admin-panel-intro">Пока оставляем аккуратную тёмную заглушку. Когда выберем фотографию для этого блока, добавим её отдельной кнопкой и настроим кадрирование.</p>
+            <TextField label="Надпись внутри заглушки" value={about.mediaLabel} onChange={(value) => updateAbout({ mediaLabel: value })} />
+          </section>
+        </div> : activeSection === 'video' ? <div className="admin-form-grid admin-video-grid">
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Видео</h3></div></div>
+            <TextField label="Метка" value={video.kicker} onChange={(value) => updateVideo({ kicker: value })} />
+            <TextField label="Большой заголовок" value={video.title} onChange={(value) => updateVideo({ title: value })} />
+          </section>
+          {video.items.map((item, index) => (
+            <section className="admin-panel" key={`${item.title}-${index}`}>
+              <div className="admin-panel-heading"><div><span className="admin-kicker">ВИДЕОМЕСТО {String(index + 1).padStart(2, '0')}</span><h3>{index === 0 ? 'Главный шоурил' : item.title}</h3></div></div>
+              <TextField label="Название" value={item.title} onChange={(value) => changeVideoItem(index, 'title', value)} />
+              <TextAreaField label="Короткая подпись" rows={3} value={item.subtitle} onChange={(value) => changeVideoItem(index, 'subtitle', value)} />
+              <TextField label="Ссылка на видео — можно добавить позже" value={item.url} placeholder="https://" onChange={(value) => changeVideoItem(index, 'url', value)} />
+              <p className="admin-note">Пока ссылка пустая, на сайте остаётся аккуратная заглушка без перехода.</p>
+            </section>
+          ))}
+        </div> : <div className="admin-form-grid admin-ticker-grid">
+          <section className="admin-panel admin-layout-panel">
+            <div className="admin-panel-heading">
+              <div><span className="admin-kicker">МАСШТАБ И ДВИЖЕНИЕ</span><h3>Лента — {selectedDevice.label}</h3></div>
+              <span className="admin-device-badge"><DeviceIcon device={deviceId} />{selectedDevice.width} × {selectedDevice.height}</span>
+            </div>
+            <p className="admin-panel-intro">Переключи устройство в предпросмотре: размеры ленты настраиваются отдельно для компьютера, iPad и iPhone.</p>
+            <div className="admin-precise-grid">
+              <NumberField label="Максимальная ширина одной карточки" value={ticker.layouts[deviceId].cardWidth} min={180} max={420} suffix="px" onChange={(value) => changeTickerLayout('cardWidth', value)} />
+              <NumberField label="Расстояние между карточками" value={ticker.layouts[deviceId].gap} min={8} max={48} suffix="px" onChange={(value) => changeTickerLayout('gap', value)} />
+              <NumberField label="Отступ от блока с видео" value={ticker.layouts[deviceId].paddingTop} min={0} max={100} suffix="px" onChange={(value) => changeTickerLayout('paddingTop', value)} />
+              <NumberField label="Отступ после ленты" value={ticker.layouts[deviceId].paddingBottom} min={0} max={100} suffix="px" onChange={(value) => changeTickerLayout('paddingBottom', value)} />
+              <NumberField label="Мягкость краёв" value={ticker.layouts[deviceId].fade} min={0} max={14} suffix="%" onChange={(value) => changeTickerLayout('fade', value)} />
+              <NumberField label="Скорость полного прохода" value={ticker.layouts[deviceId].speed} min={20} max={90} suffix="сек" onChange={(value) => changeTickerLayout('speed', value)} />
+            </div>
+            <label className="admin-field admin-color-field"><span>Цвет карточек</span><span><input type="color" value={ticker.cardColor} onChange={(event) => updateTicker({ cardColor: event.target.value.toUpperCase() })} /><input value={ticker.cardColor} onChange={(event) => updateTicker({ cardColor: event.target.value })} /></span></label>
+          </section>
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">СОСТАВ ЛЕНТЫ</span><h3>Логотипы и порядок</h3></div></div>
+            <p className="admin-panel-intro">Отключай лишние логотипы, меняй их порядок и подравнивай оптический размер. Исходные SVG остаются без потери качества.</p>
+            <div className="admin-logo-list">
+              {ticker.logos.map((logo, index) => {
+                const asset = brandLogos.find((item) => item.name === logo.name)
+                return (
+                  <div className="admin-logo-row" key={logo.name}>
+                    <div className="admin-logo-preview"><img src={asset?.src} alt="" /></div>
+                    <strong>{logo.name}</strong>
+                    <label className="admin-logo-toggle"><input type="checkbox" checked={logo.enabled} onChange={(event) => changeTickerLogo(index, { enabled: event.target.checked })} /><span>Показывать</span></label>
+                    <div className="admin-logo-scale"><span>Размер</span><input aria-label={`Размер логотипа ${logo.name}`} type="number" min="70" max="130" value={logo.scale} onChange={(event) => changeTickerLogo(index, { scale: Math.min(130, Math.max(70, Number(event.target.value))) })} /><small>%</small></div>
+                    <div className="admin-logo-order">
+                      <button type="button" aria-label={`Поднять ${logo.name}`} disabled={index === 0} onClick={() => moveTickerLogo(index, -1)}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 14 5-5 5 5" /></svg></button>
+                      <button type="button" aria-label={`Опустить ${logo.name}`} disabled={index === ticker.logos.length - 1} onClick={() => moveTickerLogo(index, 1)}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </section>
         </div>}
       </section>

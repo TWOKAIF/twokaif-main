@@ -158,6 +158,93 @@ function cleanHero(input) {
   }
 }
 
+function cleanAbout(input) {
+  const fallback = {
+    kicker: '// ОБ АДИСЕ',
+    mediaLabel: 'ФОТО',
+    image: '/images/adis-about-02.png',
+    imageAlt: 'Портрет Адиса Маммо',
+    lead: 'ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.',
+    secondary: 'АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ.',
+  }
+  const source = input && typeof input === 'object' ? input : fallback
+  return {
+    kicker: String(source.kicker || fallback.kicker).slice(0, 40),
+    mediaLabel: String(source.mediaLabel || fallback.mediaLabel).slice(0, 40),
+    image: String(source.image || fallback.image).slice(0, 500),
+    imageAlt: String(source.imageAlt || fallback.imageAlt).slice(0, 160),
+    lead: String(source.lead || fallback.lead).slice(0, 700),
+    secondary: String(source.secondary || fallback.secondary).slice(0, 1400),
+  }
+}
+
+function cleanVideo(input) {
+  const fallback = {
+    kicker: '// ВИДЕО',
+    title: 'В РАБОТЕ',
+    items: [
+      { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
+      { title: 'СВАДЕБНЫЙ ЛАЙФ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
+      { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
+      { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
+    ],
+  }
+  const source = input && typeof input === 'object' ? input : fallback
+  return {
+    kicker: String(source.kicker || fallback.kicker).slice(0, 40),
+    title: String(source.title || fallback.title).slice(0, 80),
+    items: fallback.items.map((fallbackItem, index) => {
+      const item = source.items?.[index] && typeof source.items[index] === 'object' ? source.items[index] : fallbackItem
+      return {
+        title: String(item.title || fallbackItem.title).slice(0, 100),
+        subtitle: String(item.subtitle || fallbackItem.subtitle).slice(0, 220),
+        url: cleanHref(item.url, ''),
+      }
+    }),
+  }
+}
+
+function cleanTicker(input) {
+  const clamp = (value, min, max, fallbackValue) => {
+    const number = Number(value)
+    return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallbackValue
+  }
+  const knownLogos = ['S7', 'LVMH', 'Сбер', 'Clarins', 'СИБУР', 'VK', 'Яндекс', 'Альфа-Банк', 'BetBoom', 'Kaspersky', 'Фармстандарт']
+  const defaults = {
+    cardColor: '#303030',
+    layouts: {
+      desktop: { cardWidth: 340, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
+      tablet: { cardWidth: 286, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
+      mobile: { cardWidth: 220, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
+    },
+  }
+  const source = input && typeof input === 'object' ? input : defaults
+  const cleanLayout = (layout, fallback) => ({
+    cardWidth: clamp(layout?.cardWidth, 180, 420, fallback.cardWidth),
+    gap: clamp(layout?.gap, 8, 48, fallback.gap),
+    paddingTop: clamp(layout?.paddingTop, 0, 100, fallback.paddingTop),
+    paddingBottom: clamp(layout?.paddingBottom, 0, 100, fallback.paddingBottom),
+    fade: clamp(layout?.fade, 0, 14, fallback.fade),
+    speed: clamp(layout?.speed, 20, 90, fallback.speed),
+  })
+  const sourceLogos = Array.isArray(source.logos) ? source.logos : []
+  const ordered = sourceLogos
+    .filter((logo) => knownLogos.includes(logo?.name))
+    .filter((logo, index, logos) => logos.findIndex((candidate) => candidate.name === logo.name) === index)
+    .map((logo) => ({ name: logo.name, enabled: logo.enabled !== false, scale: clamp(logo.scale, 70, 130, 100) }))
+  const presentNames = new Set(ordered.map((logo) => logo.name))
+  knownLogos.forEach((name) => { if (!presentNames.has(name)) ordered.push({ name, enabled: true, scale: 100 }) })
+  return {
+    cardColor: /^#[0-9a-f]{6}$/i.test(String(source.cardColor || '')) ? String(source.cardColor).toUpperCase() : defaults.cardColor,
+    layouts: {
+      desktop: cleanLayout(source.layouts?.desktop, defaults.layouts.desktop),
+      tablet: cleanLayout(source.layouts?.tablet, defaults.layouts.tablet),
+      mobile: cleanLayout(source.layouts?.mobile, defaults.layouts.mobile),
+    },
+    logos: ordered,
+  }
+}
+
 app.get('/api/content', async (_request, response, next) => {
   try {
     const content = await readContent()
@@ -255,6 +342,9 @@ app.put('/api/admin/draft', requireAdmin, async (request, response, next) => {
       ...content.draft,
       header: cleanHeader(request.body?.header),
       hero: cleanHero(request.body?.hero),
+      about: cleanAbout(request.body?.about),
+      video: cleanVideo(request.body?.video),
+      ticker: cleanTicker(request.body?.ticker),
     }
     await writeContent(content)
     response.json({ ok: true, draft: content.draft })
@@ -270,6 +360,9 @@ app.post('/api/admin/publish', requireAdmin, async (request, response, next) => 
       ...content.draft,
       header: cleanHeader(request.body?.header),
       hero: cleanHero(request.body?.hero),
+      about: cleanAbout(request.body?.about),
+      video: cleanVideo(request.body?.video),
+      ticker: cleanTicker(request.body?.ticker),
     }
     content.draft = structuredClone(nextContent)
     content.published = structuredClone(nextContent)
