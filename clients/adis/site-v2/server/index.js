@@ -59,6 +59,7 @@ function cleanHeader(input) {
     contactLabel: 'СВЯЗАТЬСЯ',
     contactHref: '#contacts',
     menu: [],
+    socials: [],
   }
   const source = input && typeof input === 'object' ? input : fallback
   return {
@@ -68,6 +69,12 @@ function cleanHeader(input) {
     contactHref: String(source.contactHref || fallback.contactHref).slice(0, 300),
     menu: Array.isArray(source.menu)
       ? source.menu.slice(0, 8).map((item) => ({
+          label: String(item?.label || '').slice(0, 50),
+          href: String(item?.href || '#').slice(0, 300),
+        }))
+      : [],
+    socials: Array.isArray(source.socials)
+      ? source.socials.slice(0, 8).map((item) => ({
           label: String(item?.label || '').slice(0, 50),
           href: String(item?.href || '#').slice(0, 300),
         }))

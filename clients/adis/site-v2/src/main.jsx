@@ -12,11 +12,18 @@ const fallbackHeader = {
   contactLabel: 'СВЯЗАТЬСЯ',
   contactHref: '#contacts',
   menu: [
-    { label: 'СМОТРЕТЬ', href: '#watch' },
     { label: 'ОБ АДИСЕ', href: '#about' },
+    { label: 'ВИДЕО', href: '#video' },
     { label: 'ИЗБРАННОЕ', href: '#selected' },
     { label: 'ФОТО', href: '#photos' },
     { label: 'КОНТАКТЫ', href: '#contacts' },
+  ],
+  socials: [
+    { label: 'TELEGRAM', href: '#' },
+    { label: 'WHATSAPP', href: '#' },
+    { label: 'MAX', href: '#' },
+    { label: 'INSTAGRAM', href: '#' },
+    { label: 'YOUTUBE', href: '#' },
   ],
 }
 
@@ -33,17 +40,21 @@ function DotsIcon({ close = false }) {
 
 function SiteHeader({ content = fallbackHeader, preview = false }) {
   const [open, setOpen] = useState(false)
+  const [activeMenuIndex, setActiveMenuIndex] = useState(0)
   const overlayRef = useRef(null)
 
   useGSAP(() => {
     if (!overlayRef.current) return
     const links = overlayRef.current.querySelectorAll('.menu-link-inner')
+    const socials = overlayRef.current.querySelectorAll('.menu-social-link')
+    gsap.killTweensOf([overlayRef.current, ...links, ...socials])
     if (open) {
       gsap.set(overlayRef.current, { visibility: 'visible' })
       const timeline = gsap.timeline()
       timeline
         .fromTo(overlayRef.current, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.68, ease: 'power4.inOut' })
-        .fromTo(links, { yPercent: 112 }, { yPercent: 0, duration: 0.68, stagger: 0.045, ease: 'power4.out' }, '-=0.3')
+        .fromTo(links, { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.62, stagger: 0.055, ease: 'power4.out' }, '-=0.3')
+        .fromTo(socials, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, stagger: 0.04, ease: 'power3.out' }, '-=0.36')
     } else {
       gsap.to(overlayRef.current, {
         clipPath: 'inset(0 0 100% 0)', duration: 0.52, ease: 'power4.inOut',
@@ -88,10 +99,21 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
         </div>
         <nav className="menu-list" aria-label="Основная навигация">
           {content.menu.map((item, index) => (
-            <a className="menu-link" href={item.href} key={`${item.label}-${index}`} onClick={() => setOpen(false)}>
-              <span className="menu-number">0{index + 1}</span>
-              <span className="menu-link-crop"><span className="menu-link-inner">{item.label}</span></span>
+            <a
+              className={`menu-link${index === activeMenuIndex ? ' is-active' : ''}`}
+              href={item.href}
+              key={`${item.label}-${index}`}
+              onClick={() => setOpen(false)}
+              onFocus={() => setActiveMenuIndex(index)}
+              onMouseEnter={() => setActiveMenuIndex(index)}
+            >
+              <span className="menu-link-inner">{item.label}</span>
             </a>
+          ))}
+        </nav>
+        <nav className="menu-socials" aria-label="Социальные сети">
+          {(content.socials || fallbackHeader.socials).map((item, index) => (
+            <a className="menu-social-link" href={item.href} key={`${item.label}-${index}`}>{item.label}</a>
           ))}
         </nav>
       </aside>
@@ -160,6 +182,7 @@ function AdminApp() {
 
   const changeFormat = (index, value) => setHeader((current) => ({ ...current, formats: current.formats.map((item, itemIndex) => itemIndex === index ? value : item) }))
   const changeMenu = (index, key, value) => setHeader((current) => ({ ...current, menu: current.menu.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item) }))
+  const changeSocial = (index, key, value) => setHeader((current) => ({ ...current, socials: (current.socials || fallbackHeader.socials).map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item) }))
   const saveDraft = async () => {
     setStatus('Сохраняю…')
     const response = await fetch('/api/admin/draft/header', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(header) })
@@ -198,6 +221,10 @@ function AdminApp() {
           <section className="admin-panel">
             <h3>Пункты меню</h3>
             {header.menu.map((item, index) => <div className="admin-menu-row" key={index}><TextField label={`Пункт ${index + 1}`} value={item.label} onChange={(value) => changeMenu(index, 'label', value)} /><TextField label="Ссылка" value={item.href} onChange={(value) => changeMenu(index, 'href', value)} /></div>)}
+          </section>
+          <section className="admin-panel admin-panel-social">
+            <h3>Соцсети внизу меню</h3>
+            {(header.socials || fallbackHeader.socials).map((item, index) => <div className="admin-menu-row" key={index}><TextField label={`Соцсеть ${index + 1}`} value={item.label} onChange={(value) => changeSocial(index, 'label', value)} /><TextField label="Ссылка" value={item.href} onChange={(value) => changeSocial(index, 'href', value)} /></div>)}
           </section>
         </div>
       </section>

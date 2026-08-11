@@ -11,12 +11,12 @@
       "contactHref": "#contacts",
       "menu": [
         {
-          "label": "СМОТРЕТЬ",
-          "href": "#watch"
-        },
-        {
           "label": "ОБ АДИСЕ",
           "href": "#about"
+        },
+        {
+          "label": "ВИДЕО",
+          "href": "#video"
         },
         {
           "label": "ИЗБРАННОЕ",
@@ -30,6 +30,13 @@
           "label": "КОНТАКТЫ",
           "href": "#contacts"
         }
+      ],
+      "socials": [
+        { "label": "TELEGRAM", "href": "#" },
+        { "label": "WHATSAPP", "href": "#" },
+        { "label": "MAX", "href": "#" },
+        { "label": "INSTAGRAM", "href": "#" },
+        { "label": "YOUTUBE", "href": "#" }
       ]
     }
   },
@@ -45,12 +52,12 @@
       "contactHref": "#contacts",
       "menu": [
         {
-          "label": "СМОТРЕТЬ",
-          "href": "#watch"
-        },
-        {
           "label": "ОБ АДИСЕ",
           "href": "#about"
+        },
+        {
+          "label": "ВИДЕО",
+          "href": "#video"
         },
         {
           "label": "ИЗБРАННОЕ",
@@ -64,6 +71,13 @@
           "label": "КОНТАКТЫ",
           "href": "#contacts"
         }
+      ],
+      "socials": [
+        { "label": "TELEGRAM", "href": "#" },
+        { "label": "WHATSAPP", "href": "#" },
+        { "label": "MAX", "href": "#" },
+        { "label": "INSTAGRAM", "href": "#" },
+        { "label": "YOUTUBE", "href": "#" }
       ]
     }
   }
