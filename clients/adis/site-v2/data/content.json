@@ -59,16 +59,65 @@
       "nameBottom": "MAMMO",
       "role": "ВЕДУЩИЙ / КОМИК",
       "accent": "#9B1406",
-      "image": "/images/adis-hero.png",
-      "redHeight": 50,
-      "portraitHeight": 94,
-      "portraitX": 0,
-      "portraitY": 0
+      "portrait": {
+        "id": "",
+        "url": "/images/adis-hero.png",
+        "alt": "Адис Маммо",
+        "originalName": "",
+        "width": 2401,
+        "height": 2548,
+        "bytes": 0
+      },
+      "layouts": {
+        "desktop": {
+          "minHeight": 1078,
+          "redHeight": 50,
+          "sideGutter": 5,
+          "copyTop": 62,
+          "titleSize": 207,
+          "titleLineHeight": 76,
+          "roleSize": 30,
+          "roleGap": 14,
+          "portraitHeight": 94,
+          "portraitMaxWidth": 82,
+          "portraitX": 0,
+          "portraitY": 0
+        },
+        "tablet": {
+          "minHeight": 1020,
+          "redHeight": 54,
+          "sideGutter": 5,
+          "copyTop": 48,
+          "titleSize": 158,
+          "titleLineHeight": 80,
+          "roleSize": 25,
+          "roleGap": 12,
+          "portraitHeight": 100,
+          "portraitMaxWidth": 110,
+          "portraitX": 0,
+          "portraitY": 0
+        },
+        "mobile": {
+          "minHeight": 810,
+          "redHeight": 55,
+          "sideGutter": 3,
+          "copyTop": 38,
+          "titleSize": 124,
+          "titleLineHeight": 82,
+          "roleSize": 22,
+          "roleGap": 10,
+          "portraitHeight": 112,
+          "portraitMaxWidth": 165,
+          "portraitX": -14,
+          "portraitY": 0
+        }
+      },
+      "motion": "text"
     },
     "about": {
       "kicker": "// ОБ АДИСЕ",
       "mediaLabel": "ФОТО",
-      "image": "/images/adis-about-02.png",
+      "image": "/images/adis-about-02-clean.png",
       "imageAlt": "Портрет Адиса Маммо",
       "lead": "ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.",
       "secondary": "АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ."
@@ -80,12 +129,12 @@
         {
           "title": "ШОУРИЛ 2025",
           "subtitle": "ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ",
-          "url": ""
+          "url": "https://kinescope.io/embed/da7f4528-b31d-4df6-aa3d-1045ad19d59c"
         },
         {
-          "title": "СВАДЕБНЫЙ ЛАЙФ",
+          "title": "СВАДЕБНЫЙ ЛАЙВ",
           "subtitle": "РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.",
-          "url": ""
+          "url": "https://kinescope.io/embed/5e4dc825-1b11-4ba8-8bb5-87e3fa1a6c4f"
         },
         {
           "title": "НАЗВАНИЕ",
@@ -96,6 +145,92 @@
           "title": "НАЗВАНИЕ",
           "subtitle": "ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО",
           "url": ""
+        }
+      ]
+    },
+    "ticker": {
+      "cardColor": "#303030",
+      "layouts": {
+        "desktop": {
+          "cardWidth": 280,
+          "gap": 10,
+          "paddingTop": 28,
+          "paddingBottom": 40,
+          "fade": 1,
+          "speed": 70
+        },
+        "tablet": {
+          "cardWidth": 240,
+          "gap": 20,
+          "paddingTop": 24,
+          "paddingBottom": 34,
+          "fade": 1,
+          "speed": 44
+        },
+        "mobile": {
+          "cardWidth": 184,
+          "gap": 14,
+          "paddingTop": 18,
+          "paddingBottom": 26,
+          "fade": 2,
+          "speed": 38
+        }
+      },
+      "logos": [
+        {
+          "name": "S7",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "LVMH",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Сбер",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Clarins",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "СИБУР",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "VK",
+          "enabled": true,
+          "scale": 78
+        },
+        {
+          "name": "Яндекс",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Альфа-Банк",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "BetBoom",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Kaspersky",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Фармстандарт",
+          "enabled": true,
+          "scale": 100
         }
       ]
     }
@@ -218,7 +353,7 @@
     "about": {
       "kicker": "// ОБ АДИСЕ",
       "mediaLabel": "ФОТО",
-      "image": "/images/adis-about-02.png",
+      "image": "/images/adis-about-02-clean.png",
       "imageAlt": "Портрет Адиса Маммо",
       "lead": "ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.",
       "secondary": "АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ."
@@ -230,12 +365,12 @@
         {
           "title": "ШОУРИЛ 2025",
           "subtitle": "ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ",
-          "url": ""
+          "url": "https://kinescope.io/embed/da7f4528-b31d-4df6-aa3d-1045ad19d59c"
         },
         {
-          "title": "СВАДЕБНЫЙ ЛАЙФ",
+          "title": "СВАДЕБНЫЙ ЛАЙВ",
           "subtitle": "РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.",
-          "url": ""
+          "url": "https://kinescope.io/embed/5e4dc825-1b11-4ba8-8bb5-87e3fa1a6c4f"
         },
         {
           "title": "НАЗВАНИЕ",
@@ -246,6 +381,92 @@
           "title": "НАЗВАНИЕ",
           "subtitle": "ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО",
           "url": ""
+        }
+      ]
+    },
+    "ticker": {
+      "cardColor": "#303030",
+      "layouts": {
+        "desktop": {
+          "cardWidth": 280,
+          "gap": 10,
+          "paddingTop": 28,
+          "paddingBottom": 40,
+          "fade": 1,
+          "speed": 70
+        },
+        "tablet": {
+          "cardWidth": 240,
+          "gap": 20,
+          "paddingTop": 24,
+          "paddingBottom": 34,
+          "fade": 1,
+          "speed": 44
+        },
+        "mobile": {
+          "cardWidth": 184,
+          "gap": 14,
+          "paddingTop": 18,
+          "paddingBottom": 26,
+          "fade": 2,
+          "speed": 38
+        }
+      },
+      "logos": [
+        {
+          "name": "S7",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "LVMH",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Сбер",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Clarins",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "СИБУР",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "VK",
+          "enabled": true,
+          "scale": 78
+        },
+        {
+          "name": "Яндекс",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Альфа-Банк",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "BetBoom",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Kaspersky",
+          "enabled": true,
+          "scale": 100
+        },
+        {
+          "name": "Фармстандарт",
+          "enabled": true,
+          "scale": 100
         }
       ]
     }

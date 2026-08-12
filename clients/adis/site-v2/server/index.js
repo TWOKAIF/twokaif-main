@@ -14,6 +14,8 @@ const rootDir = path.resolve(__dirname, '..')
 const dataDir = process.env.DATA_DIR || path.join(rootDir, 'data')
 const contentPath = path.join(dataDir, 'content.json')
 const heroUploadsDir = path.join(dataDir, 'uploads', 'hero')
+const selectedUploadsDir = path.join(dataDir, 'uploads', 'selected')
+const galleryUploadsDir = path.join(dataDir, 'uploads', 'gallery')
 const distDir = path.join(rootDir, 'dist')
 const isProduction = process.env.NODE_ENV === 'production'
 const port = Number(process.env.PORT || 8787)
@@ -29,6 +31,8 @@ app.disable('x-powered-by')
 app.use(helmet({ contentSecurityPolicy: isProduction ? undefined : false }))
 app.use(express.json({ limit: '128kb' }))
 app.use('/media/hero', express.static(heroUploadsDir, { immutable: true, maxAge: '1y', fallthrough: true }))
+app.use('/media/selected', express.static(selectedUploadsDir, { immutable: true, maxAge: '1y', fallthrough: true }))
+app.use('/media/gallery', express.static(galleryUploadsDir, { immutable: true, maxAge: '1y', fallthrough: true }))
 app.use(
   cookieSession({
     name: 'adis_admin',
@@ -42,6 +46,8 @@ app.use(
 
 const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: true, legacyHeaders: false })
 const heroUpload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024, files: 1 } })
+const selectedUpload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024, files: 1 } })
+const galleryUpload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024, files: 1 } })
 
 async function readContent() {
   return JSON.parse(await fs.readFile(contentPath, 'utf8'))
@@ -162,7 +168,7 @@ function cleanAbout(input) {
   const fallback = {
     kicker: '// ОБ АДИСЕ',
     mediaLabel: 'ФОТО',
-    image: '/images/adis-about-02.png',
+    image: '/images/adis-about-02-clean.png',
     imageAlt: 'Портрет Адиса Маммо',
     lead: 'ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.',
     secondary: 'АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ.',
@@ -182,9 +188,11 @@ function cleanVideo(input) {
   const fallback = {
     kicker: '// ВИДЕО',
     title: 'В РАБОТЕ',
+    moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+    moreHref: '',
     items: [
       { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
-      { title: 'СВАДЕБНЫЙ ЛАЙФ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
+      { title: 'СВАДЕБНЫЙ ЛАЙВ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
       { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
       { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
     ],
@@ -193,6 +201,8 @@ function cleanVideo(input) {
   return {
     kicker: String(source.kicker || fallback.kicker).slice(0, 40),
     title: String(source.title || fallback.title).slice(0, 80),
+    moreLabel: String(source.moreLabel || fallback.moreLabel).slice(0, 60),
+    moreHref: cleanHref(source.moreHref, ''),
     items: fallback.items.map((fallbackItem, index) => {
       const item = source.items?.[index] && typeof source.items[index] === 'object' ? source.items[index] : fallbackItem
       return {
@@ -213,9 +223,9 @@ function cleanTicker(input) {
   const defaults = {
     cardColor: '#303030',
     layouts: {
-      desktop: { cardWidth: 340, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
-      tablet: { cardWidth: 286, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
-      mobile: { cardWidth: 220, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
+      desktop: { cardWidth: 280, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
+      tablet: { cardWidth: 240, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
+      mobile: { cardWidth: 184, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
     },
   }
   const source = input && typeof input === 'object' ? input : defaults
@@ -242,6 +252,92 @@ function cleanTicker(input) {
       mobile: cleanLayout(source.layouts?.mobile, defaults.layouts.mobile),
     },
     logos: ordered,
+  }
+}
+
+function cleanSelected(input) {
+  const fallback = {
+    kicker: '// ИЗБРАННОЕ',
+    title: 'ИМЕНА И СОБЫТИЯ',
+    moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+    moreHref: '',
+    items: [
+      { name: 'СВАДЬБЫ', type: '', description: 'ГАРИК ХАРЛАМОВ\nАНДРЕЙ БЕБУРИШВИЛИ', image: '/images/selected/weddings-garik.webp', imageAlt: 'Адис Маммо и Гарик Харламов на свадебной церемонии' },
+      { name: 'ГОДОВЩИНЫ', type: '', description: 'КСЕНИЯ СОБЧАК\nИ КОНСТАНТИН БОГОМОЛОВ', image: '/images/selected/anniversary-sobchak.webp', imageAlt: 'Адис Маммо и Ксения Собчак на сцене' },
+      { name: 'ДНИ РОЖДЕНИЯ', type: '', description: 'НИКОЛАЙ БАСКОВ\nОЛЬГА БУЗОВА\nЛЮСЯ ЧЕБОТИНА\nАННА ХИЛЬКЕВИЧ\nАЛСУ', image: '/images/selected/birthdays-baskov.webp', imageAlt: 'Адис Маммо и Николай Басков' },
+      { name: 'ДУЭТЫ', type: '', description: 'ИВАН УРГАНТ\nЕКАТЕРИНА ВАРНАВА\nАЛЛА МИХЕЕВА\nАЛЕКСАНДР ГУДКОВ\nМАКСИМ ГАЛКИН\nГАРИК ХАРЛАМОВ\nКСЕНИЯ СОБЧАК\nСЕРГЕЙ МИНАЕВ\nФИЛИПП КИРКОРОВ\nМАРИНА ФЕДУНКИВ\nИ ДРУГИЕ', image: '/images/selected/duets-urgant.webp', imageAlt: 'Адис Маммо и Иван Ургант на сцене' },
+    ],
+  }
+  const source = input && typeof input === 'object' ? input : fallback
+  return {
+    kicker: String(source.kicker || fallback.kicker).slice(0, 40),
+    title: String(source.title || fallback.title).slice(0, 100),
+    moreLabel: String(source.moreLabel || fallback.moreLabel).slice(0, 60),
+    moreHref: cleanHref(source.moreHref, ''),
+    items: fallback.items.map((fallbackItem, index) => {
+      const item = source.items?.[index] && typeof source.items[index] === 'object' ? source.items[index] : fallbackItem
+      const rawImage = String(item.image || '')
+      const safeImage = rawImage.startsWith('/images/') || rawImage.startsWith('/media/selected/') ? rawImage : ''
+      return {
+        name: String(item.name || fallbackItem.name).slice(0, 120),
+        type: String(item.type || fallbackItem.type).slice(0, 120),
+        description: String(item.description || fallbackItem.description).slice(0, 700),
+        image: safeImage.slice(0, 400),
+        imageAlt: String(item.imageAlt || '').slice(0, 160),
+      }
+    }),
+  }
+}
+
+function cleanGallery(input) {
+  const fallback = {
+    kicker: '// ФОТО',
+    title: 'ВНЕ СЦЕНАРИЯ',
+    moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+    moreHref: '',
+    items: [
+      { image: '/images/gallery/01.webp', imageAlt: 'Адис Маммо ведёт свадебную церемонию под открытым небом' },
+      { image: '/images/gallery/02.webp', imageAlt: 'Адис Маммо с микрофоном на камерной церемонии' },
+      { image: '/images/gallery/03.webp', imageAlt: 'Адис Маммо и Екатерина Варнава на сцене' },
+      { image: '/images/gallery/04.webp', imageAlt: 'Адис Маммо ведёт событие в белом смокинге' },
+      { image: '/images/gallery/05.webp', imageAlt: 'Портрет Адиса Маммо на открытом воздухе' },
+      { image: '/images/gallery/06.webp', imageAlt: 'Адис Маммо на фоне красной сценографии' },
+      { image: '/images/gallery/07.webp', imageAlt: 'Адис Маммо ведёт событие на сцене' },
+      { image: '/images/gallery/08.webp', imageAlt: 'Адис Маммо с гостьей светского события' },
+    ],
+  }
+  const source = input && typeof input === 'object' ? input : fallback
+  return {
+    kicker: String(source.kicker || fallback.kicker).slice(0, 40),
+    title: String(source.title || fallback.title).slice(0, 100),
+    moreLabel: String(source.moreLabel || fallback.moreLabel).slice(0, 60),
+    moreHref: cleanHref(source.moreHref, ''),
+    items: fallback.items.map((fallbackItem, index) => {
+      const item = source.items?.[index] && typeof source.items[index] === 'object' ? source.items[index] : fallbackItem
+      const rawImage = String(item.image || '')
+      const safeImage = rawImage.startsWith('/images/') || rawImage.startsWith('/media/gallery/') ? rawImage : ''
+      return {
+        image: safeImage.slice(0, 400),
+        imageAlt: String(item.imageAlt || fallbackItem.imageAlt).slice(0, 160),
+      }
+    }),
+  }
+}
+
+function cleanContact(input) {
+  const fallback = {
+    kicker: '// КОНТАКТЫ', title: 'ПРЯМАЯ СВЯЗЬ', brandTop: 'ADIS', brandBottom: 'MAMMO', role: 'ВЕДУЩИЙ / КОМИК',
+    portrait: '/images/adis-contact.png', portraitAlt: 'Адис Маммо', materialsLabel: 'МАТЕРИАЛЫ ДЛЯ ОРГАНИЗАТОРОВ', materialsHref: '#', copyright: '© 2026',
+    developmentLabel: 'РАЗРАБОТКА САЙТА', developmentHref: '#', privacyLabel: 'ПОЛИТИКА / COOKIE', privacyHref: '#', topLabel: 'НАВЕРХ',
+  }
+  const source = input && typeof input === 'object' ? input : fallback
+  const rawPortrait = String(source.portrait || '')
+  return {
+    kicker: String(source.kicker || fallback.kicker).slice(0, 40), title: String(source.title || fallback.title).slice(0, 100),
+    brandTop: String(source.brandTop || fallback.brandTop).slice(0, 40), brandBottom: String(source.brandBottom || fallback.brandBottom).slice(0, 40), role: String(source.role || fallback.role).slice(0, 80),
+    portrait: rawPortrait.startsWith('/images/') || rawPortrait.startsWith('/media/contact/') ? rawPortrait.slice(0, 400) : fallback.portrait, portraitAlt: String(source.portraitAlt || fallback.portraitAlt).slice(0, 160),
+    materialsLabel: String(source.materialsLabel || fallback.materialsLabel).slice(0, 100), materialsHref: cleanHref(source.materialsHref, '#'), copyright: String(source.copyright || fallback.copyright).slice(0, 40),
+    developmentLabel: String(source.developmentLabel || fallback.developmentLabel).slice(0, 80), developmentHref: cleanHref(source.developmentHref, '#'), privacyLabel: String(source.privacyLabel || fallback.privacyLabel).slice(0, 80), privacyHref: cleanHref(source.privacyHref, '#'), topLabel: String(source.topLabel || fallback.topLabel).slice(0, 40),
   }
 }
 
@@ -313,6 +409,76 @@ app.post('/api/admin/assets/hero', requireAdmin, heroUpload.single('portrait'), 
   }
 })
 
+app.post('/api/admin/assets/selected', requireAdmin, selectedUpload.single('image'), async (request, response, next) => {
+  try {
+    if (!request.file) return response.status(400).json({ error: 'Сначала выбери фотографию' })
+    const image = sharp(request.file.buffer, { animated: false, limitInputPixels: 30_000_000 })
+    const metadata = await image.metadata()
+    if (!['png', 'jpeg', 'webp'].includes(metadata.format)) return response.status(400).json({ error: 'Подойдёт PNG, JPG или WebP' })
+    if (!metadata.width || !metadata.height || metadata.width > 6000 || metadata.height > 6000 || metadata.width * metadata.height > 30_000_000) {
+      return response.status(400).json({ error: 'Фото слишком большое. Максимум 6000 × 6000 px' })
+    }
+    const id = crypto.randomUUID()
+    const temporaryPath = path.join(selectedUploadsDir, `${id}.tmp`)
+    const finalPath = path.join(selectedUploadsDir, `${id}.webp`)
+    await fs.mkdir(selectedUploadsDir, { recursive: true })
+    const output = await image
+      .rotate()
+      .resize({ width: 2400, height: 1800, fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 92 })
+      .toBuffer({ resolveWithObject: true })
+    await fs.writeFile(temporaryPath, output.data)
+    await fs.rename(temporaryPath, finalPath)
+    return response.json({
+      ok: true,
+      asset: {
+        url: `/media/selected/${id}.webp`,
+        originalName: path.basename(request.file.originalname).slice(0, 120),
+        width: output.info.width,
+        height: output.info.height,
+        bytes: output.info.size,
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/admin/assets/gallery', requireAdmin, galleryUpload.single('image'), async (request, response, next) => {
+  try {
+    if (!request.file) return response.status(400).json({ error: 'Сначала выбери фотографию' })
+    const image = sharp(request.file.buffer, { animated: false, limitInputPixels: 30_000_000 })
+    const metadata = await image.metadata()
+    if (!['png', 'jpeg', 'webp'].includes(metadata.format)) return response.status(400).json({ error: 'Подойдёт PNG, JPG или WebP' })
+    if (!metadata.width || !metadata.height || metadata.width > 6000 || metadata.height > 6000 || metadata.width * metadata.height > 30_000_000) {
+      return response.status(400).json({ error: 'Фото слишком большое. Максимум 6000 × 6000 px' })
+    }
+    const id = crypto.randomUUID()
+    const temporaryPath = path.join(galleryUploadsDir, `${id}.tmp`)
+    const finalPath = path.join(galleryUploadsDir, `${id}.webp`)
+    await fs.mkdir(galleryUploadsDir, { recursive: true })
+    const output = await image
+      .rotate()
+      .resize({ width: 2600, height: 2600, fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 92 })
+      .toBuffer({ resolveWithObject: true })
+    await fs.writeFile(temporaryPath, output.data)
+    await fs.rename(temporaryPath, finalPath)
+    return response.json({
+      ok: true,
+      asset: {
+        url: `/media/gallery/${id}.webp`,
+        originalName: path.basename(request.file.originalname).slice(0, 120),
+        width: output.info.width,
+        height: output.info.height,
+        bytes: output.info.size,
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.put('/api/admin/draft/header', requireAdmin, async (request, response, next) => {
   try {
     const content = await readContent()
@@ -345,6 +511,9 @@ app.put('/api/admin/draft', requireAdmin, async (request, response, next) => {
       about: cleanAbout(request.body?.about),
       video: cleanVideo(request.body?.video),
       ticker: cleanTicker(request.body?.ticker),
+      selected: cleanSelected(request.body?.selected),
+      gallery: cleanGallery(request.body?.gallery),
+      contact: cleanContact(request.body?.contact),
     }
     await writeContent(content)
     response.json({ ok: true, draft: content.draft })
@@ -363,6 +532,9 @@ app.post('/api/admin/publish', requireAdmin, async (request, response, next) => 
       about: cleanAbout(request.body?.about),
       video: cleanVideo(request.body?.video),
       ticker: cleanTicker(request.body?.ticker),
+      selected: cleanSelected(request.body?.selected),
+      gallery: cleanGallery(request.body?.gallery),
+      contact: cleanContact(request.body?.contact),
     }
     content.draft = structuredClone(nextContent)
     content.published = structuredClone(nextContent)

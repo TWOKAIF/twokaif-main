@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { createRoot } from 'react-dom/client'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -58,7 +59,7 @@ const fallbackHero = {
 const fallbackAbout = {
   kicker: '// ОБ АДИСЕ',
   mediaLabel: 'ФОТО',
-  image: '/images/adis-about-02.png',
+  image: '/images/adis-about-02-clean.png',
   imageAlt: 'Портрет Адиса Маммо',
   lead: 'ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.',
   secondary: 'АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ.',
@@ -67,12 +68,62 @@ const fallbackAbout = {
 const fallbackVideo = {
   kicker: '// ВИДЕО',
   title: 'В РАБОТЕ',
+  moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+  moreHref: '',
   items: [
     { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
-    { title: 'СВАДЕБНЫЙ ЛАЙФ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
+    { title: 'СВАДЕБНЫЙ ЛАЙВ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
     { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
     { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
   ],
+}
+
+const fallbackSelected = {
+  kicker: '// ИЗБРАННОЕ',
+  title: 'ИМЕНА И СОБЫТИЯ',
+  moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+  moreHref: '',
+  items: [
+    { name: 'СВАДЬБЫ', type: '', description: 'ГАРИК ХАРЛАМОВ\nАНДРЕЙ БЕБУРИШВИЛИ', image: '/images/selected/weddings-garik.webp', imageAlt: 'Адис Маммо и Гарик Харламов на свадебной церемонии' },
+    { name: 'ГОДОВЩИНЫ', type: '', description: 'КСЕНИЯ СОБЧАК\nИ КОНСТАНТИН БОГОМОЛОВ', image: '/images/selected/anniversary-sobchak.webp', imageAlt: 'Адис Маммо и Ксения Собчак на сцене' },
+    { name: 'ДНИ РОЖДЕНИЯ', type: '', description: 'НИКОЛАЙ БАСКОВ\nОЛЬГА БУЗОВА\nЛЮСЯ ЧЕБОТИНА\nАННА ХИЛЬКЕВИЧ\nАЛСУ', image: '/images/selected/birthdays-baskov.webp', imageAlt: 'Адис Маммо и Николай Басков' },
+    { name: 'ДУЭТЫ', type: '', description: 'ИВАН УРГАНТ\nЕКАТЕРИНА ВАРНАВА\nАЛЛА МИХЕЕВА\nАЛЕКСАНДР ГУДКОВ\nМАКСИМ ГАЛКИН\nГАРИК ХАРЛАМОВ\nКСЕНИЯ СОБЧАК\nСЕРГЕЙ МИНАЕВ\nФИЛИПП КИРКОРОВ\nМАРИНА ФЕДУНКИВ\nИ ДРУГИЕ', image: '/images/selected/duets-urgant.webp', imageAlt: 'Адис Маммо и Иван Ургант на сцене' },
+  ],
+}
+
+const fallbackGallery = {
+  kicker: '// ФОТО',
+  title: 'ВНЕ СЦЕНАРИЯ',
+  moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+  moreHref: '',
+  items: [
+    { image: '/images/gallery/01.webp', imageAlt: 'Адис Маммо ведёт свадебную церемонию под открытым небом' },
+    { image: '/images/gallery/02.webp', imageAlt: 'Адис Маммо с микрофоном на камерной церемонии' },
+    { image: '/images/gallery/03.webp', imageAlt: 'Адис Маммо и Екатерина Варнава на сцене' },
+    { image: '/images/gallery/04.webp', imageAlt: 'Адис Маммо ведёт событие в белом смокинге' },
+    { image: '/images/gallery/05.webp', imageAlt: 'Портрет Адиса Маммо на открытом воздухе' },
+    { image: '/images/gallery/06.webp', imageAlt: 'Адис Маммо на фоне красной сценографии' },
+    { image: '/images/gallery/07.webp', imageAlt: 'Адис Маммо ведёт событие на сцене' },
+    { image: '/images/gallery/08.webp', imageAlt: 'Адис Маммо с гостьей светского события' },
+  ],
+}
+
+const fallbackContact = {
+  kicker: '// КОНТАКТЫ',
+  title: 'ПРЯМАЯ СВЯЗЬ',
+  brandTop: 'ADIS',
+  brandBottom: 'MAMMO',
+  role: 'ВЕДУЩИЙ / КОМИК',
+  portrait: '/images/adis-contact.png',
+  portraitAlt: 'Адис Маммо',
+  materialsLabel: 'МАТЕРИАЛЫ ДЛЯ ОРГАНИЗАТОРОВ',
+  materialsHref: '#',
+  copyright: '© 2026',
+  developmentLabel: 'РАЗРАБОТКА САЙТА',
+  developmentHref: '#',
+  privacyLabel: 'ПОЛИТИКА / COOKIE',
+  privacyHref: '#',
+  topLabel: 'НАВЕРХ',
 }
 
 const brandLogos = [
@@ -81,7 +132,7 @@ const brandLogos = [
   { name: 'Сбер', src: '/logos/sber.svg', shape: 'wide' },
   { name: 'Clarins', src: '/logos/clarins.svg', shape: 'wide' },
   { name: 'СИБУР', src: '/logos/sibur.svg', shape: 'wide' },
-  { name: 'VK', src: '/logos/vk.svg', shape: 'mark-wide' },
+  { name: 'VK', src: '/logos/vk.svg', shape: 'mark-wide', defaultScale: 78 },
   { name: 'Яндекс', src: '/logos/yandex.svg', shape: 'wide' },
   { name: 'Альфа-Банк', src: '/logos/alfa-bank.svg', shape: 'mark' },
   { name: 'BetBoom', src: '/logos/betboom.svg', shape: 'wide' },
@@ -90,15 +141,15 @@ const brandLogos = [
 ]
 
 const tickerLayoutDefaults = {
-  desktop: { cardWidth: 340, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
-  tablet: { cardWidth: 286, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
-  mobile: { cardWidth: 220, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
+  desktop: { cardWidth: 280, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
+  tablet: { cardWidth: 240, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
+  mobile: { cardWidth: 184, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
 }
 
 const fallbackTicker = {
   cardColor: '#303030',
   layouts: tickerLayoutDefaults,
-  logos: brandLogos.map((logo) => ({ name: logo.name, enabled: true, scale: 100 })),
+  logos: brandLogos.map((logo) => ({ name: logo.name, enabled: true, scale: logo.defaultScale || 100 })),
 }
 
 function normalizeTicker(input = {}) {
@@ -108,7 +159,7 @@ function normalizeTicker(input = {}) {
     .filter((logo) => knownNames.has(logo?.name))
     .map((logo) => ({ name: logo.name, enabled: logo.enabled !== false, scale: Number(logo.scale || 100) }))
   const presentNames = new Set(ordered.map((logo) => logo.name))
-  const missing = brandLogos.filter((logo) => !presentNames.has(logo.name)).map((logo) => ({ name: logo.name, enabled: true, scale: 100 }))
+  const missing = brandLogos.filter((logo) => !presentNames.has(logo.name)).map((logo) => ({ name: logo.name, enabled: true, scale: logo.defaultScale || 100 }))
   return {
     ...fallbackTicker,
     ...(input || {}),
@@ -136,6 +187,26 @@ function normalizeVideo(input = {}) {
     ...(input || {}),
     items: fallbackVideo.items.map((fallbackItem, index) => ({ ...fallbackItem, ...(input?.items?.[index] || {}) })),
   }
+}
+
+function normalizeSelected(input = {}) {
+  return {
+    ...fallbackSelected,
+    ...(input || {}),
+    items: fallbackSelected.items.map((fallbackItem, index) => ({ ...fallbackItem, ...(input?.items?.[index] || {}) })),
+  }
+}
+
+function normalizeGallery(input = {}) {
+  return {
+    ...fallbackGallery,
+    ...(input || {}),
+    items: fallbackGallery.items.map((fallbackItem, index) => ({ ...fallbackItem, ...(input?.items?.[index] || {}) })),
+  }
+}
+
+function normalizeContact(input = {}) {
+  return { ...fallbackContact, ...(input || {}) }
 }
 
 function normalizeHero(input = {}) {
@@ -216,16 +287,19 @@ function RollingMenuLabel({ label }) {
   )
 }
 
-function FormatLine({ formats, className = '' }) {
+function FormatLine({ formats, className = '', activeLabel = '' }) {
+  const contextKey = activeLabel || 'formats'
   return (
-    <div className={`format-line${className ? ` ${className}` : ''}`} aria-label="Форматы работы">
-      <div className="format-line-track">
-        {formats.map((format, index) => (
-          <React.Fragment key={`${format}-${index}`}>
-            {index > 0 && <span className="format-divider" aria-hidden="true">/</span>}
-            <span>{format}</span>
-          </React.Fragment>
-        ))}
+    <div className={`format-line${activeLabel ? ' header-context' : ''}${className ? ` ${className}` : ''}`} aria-label={activeLabel ? `Текущий раздел: ${activeLabel}` : 'Форматы работы'} aria-live="polite">
+      <div className={`format-line-track${activeLabel ? ' header-context-track' : ''}`} key={contextKey}>
+        {activeLabel
+          ? <span>{activeLabel}</span>
+          : formats.map((format, index) => (
+            <React.Fragment key={`${format}-${index}`}>
+              {index > 0 && <span className="format-divider" aria-hidden="true">/</span>}
+              <span>{format}</span>
+            </React.Fragment>
+          ))}
       </div>
     </div>
   )
@@ -234,7 +308,9 @@ function FormatLine({ formats, className = '' }) {
 function SiteHeader({ content = fallbackHeader, preview = false }) {
   const [open, setOpen] = useState(false)
   const [activeMenuIndex, setActiveMenuIndex] = useState(0)
+  const [activeSectionLabel, setActiveSectionLabel] = useState('')
   const overlayRef = useRef(null)
+  const progressRef = useRef(null)
   const openButtonRef = useRef(null)
   const closeButtonRef = useRef(null)
   const lastFocusedRef = useRef(null)
@@ -299,6 +375,36 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
     return () => window.removeEventListener('message', receivePreviewMenu)
   }, [preview])
 
+  useEffect(() => {
+    let frame = 0
+    const updateHeaderContext = () => {
+      frame = 0
+      const viewportHeight = window.innerHeight || 1
+      const marker = (document.querySelector('.site-header')?.getBoundingClientRect().bottom || 80) + 24
+      let nextLabel = ''
+      document.querySelectorAll('[data-header-label]').forEach((section) => {
+        if (section.getBoundingClientRect().top <= marker) nextLabel = section.dataset.headerLabel || ''
+      })
+      setActiveSectionLabel((current) => current === nextLabel ? current : nextLabel)
+
+      const scrollable = Math.max(1, document.documentElement.scrollHeight - viewportHeight)
+      const progress = Math.min(1, Math.max(0, window.scrollY / scrollable))
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
+    }
+    const requestUpdate = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(updateHeaderContext)
+    }
+    updateHeaderContext()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+    }
+  }, [])
+
   const followLink = (href, closeMenu = false) => {
     if (closeMenu) setOpen(false)
     if (!href || href === '#') return
@@ -319,11 +425,12 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
     <>
       <header className={`site-header${preview ? ' site-header-preview' : ''}`}>
         <button className="brand brand-button" type="button" onClick={() => followLink('#top')}>{content.brand}</button>
-        <FormatLine formats={content.formats} />
+        <FormatLine formats={content.formats} activeLabel={activeSectionLabel} />
         <div className="header-actions">
           <button className="contact-button" type="button" onClick={() => followLink(content.contactHref)}>{content.contactLabel}</button>
           <button ref={openButtonRef} className="menu-button" type="button" aria-label="Открыть меню" aria-expanded={open} aria-controls="site-menu-dialog" onClick={openMenu}><DotsIcon /></button>
         </div>
+        <span className="header-scroll-progress" ref={progressRef} aria-hidden="true" />
       </header>
 
       <aside ref={overlayRef} id="site-menu-dialog" className={`menu-overlay${preview ? ' menu-overlay-preview' : ''}`} role="dialog" aria-modal="true" aria-label="Меню сайта" aria-hidden={!open}>
@@ -335,21 +442,26 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
             <button ref={closeButtonRef} className="menu-button menu-button-dark" type="button" aria-label="Закрыть меню" onClick={() => setOpen(false)}><DotsIcon close /></button>
           </div>
         </div>
-        <nav className="menu-list" aria-label="Основная навигация" onMouseLeave={() => setActiveMenuIndex(0)}>
-          {content.menu.map((item, index) => (
-            <button
-              className={`menu-link${index === activeMenuIndex ? ' is-active' : ''}`}
-              type="button"
-              aria-label={item.label}
-              key={`${item.label}-${index}`}
-              onClick={() => followLink(item.href, true)}
-              onFocus={() => setActiveMenuIndex(index)}
-              onMouseEnter={() => setActiveMenuIndex(index)}
-            >
-              <RollingMenuLabel label={item.label} />
-            </button>
-          ))}
-        </nav>
+        <div className="menu-stage">
+          <figure className="menu-portrait" aria-hidden="true">
+            <img src="/images/adis-menu.webp" alt="" />
+          </figure>
+          <nav className="menu-list" aria-label="Основная навигация" onMouseLeave={() => setActiveMenuIndex(0)}>
+            {content.menu.map((item, index) => (
+              <button
+                className={`menu-link${index === activeMenuIndex ? ' is-active' : ''}`}
+                type="button"
+                aria-label={item.label}
+                key={`${item.label}-${index}`}
+                onClick={() => followLink(item.href, true)}
+                onFocus={() => setActiveMenuIndex(index)}
+                onMouseEnter={() => setActiveMenuIndex(index)}
+              >
+                <RollingMenuLabel label={item.label} />
+              </button>
+            ))}
+          </nav>
+        </div>
         <nav className="menu-socials" aria-label="Социальные сети">
           {(content.socials || fallbackHeader.socials).map((item, index) => (
             <button className="menu-social-link" type="button" onClick={() => followLink(item.href, true)} key={`${item.label}-${index}`}>{item.label}</button>
@@ -377,13 +489,13 @@ function HeroSection({ content = fallbackHero }) {
 function AboutSection({ content = fallbackAbout }) {
   const about = { ...fallbackAbout, ...(content || {}) }
   return (
-    <section className="about-section" id="about" aria-labelledby="about-title">
-      <div className="about-column">
-        <p className="about-kicker">{about.kicker}</p>
-        <div className="about-media">
+    <section className="about-section" id="about" aria-labelledby="about-title" data-header-label={about.kicker}>
+      <div className="about-column editorial-reveal editorial-reveal-no-line" data-editorial-reveal>
+        <p className="about-kicker editorial-reveal-kicker">{about.kicker}</p>
+        <div className="about-media editorial-reveal-media">
           <img src={about.image} alt={about.imageAlt || 'Портрет Адиса Маммо'} />
         </div>
-        <h2 id="about-title">{about.lead}</h2>
+        <h2 id="about-title"><span className="editorial-reveal-title">{about.lead}</span></h2>
         <p className="about-secondary">{about.secondary}</p>
       </div>
     </section>
@@ -393,48 +505,143 @@ function AboutSection({ content = fallbackAbout }) {
 function PlayIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M9 7.5 16.5 12 9 16.5Z" />
+      <path d="M7 4.8 19 12 7 19.2Z" />
     </svg>
   )
 }
 
+function getKinescopePoster(url) {
+  const videoId = String(url || '').match(/kinescope\.io\/embed\/([a-f0-9-]+)/i)?.[1]
+  return videoId ? `https://kinescope.io/${videoId}/poster/lg.jpg` : ''
+}
+
 function VideoSection({ content = fallbackVideo }) {
   const video = normalizeVideo(content)
+  const [playingIndex, setPlayingIndex] = useState(null)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [playerRect, setPlayerRect] = useState(null)
+  const videoSlotsRef = useRef([])
+  const frameRequestRef = useRef(null)
+  const expandButtonRef = useRef(null)
+  const closeButtonRef = useRef(null)
+  const playingVideo = playingIndex === null ? null : video.items[playingIndex]
+
+  useEffect(() => {
+    if (playingIndex === null || isExpanded) return undefined
+    const syncPlayerRect = () => {
+      if (frameRequestRef.current) window.cancelAnimationFrame(frameRequestRef.current)
+      frameRequestRef.current = window.requestAnimationFrame(() => {
+        const slot = videoSlotsRef.current[playingIndex]
+        if (!slot) return
+        const rect = slot.getBoundingClientRect()
+        setPlayerRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+      })
+    }
+    syncPlayerRect()
+    const resizeObserver = new ResizeObserver(syncPlayerRect)
+    const slot = videoSlotsRef.current[playingIndex]
+    if (slot) resizeObserver.observe(slot)
+    window.addEventListener('resize', syncPlayerRect)
+    window.addEventListener('scroll', syncPlayerRect, true)
+    return () => {
+      if (frameRequestRef.current) window.cancelAnimationFrame(frameRequestRef.current)
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', syncPlayerRect)
+      window.removeEventListener('scroll', syncPlayerRect, true)
+    }
+  }, [playingIndex, isExpanded])
+
+  useEffect(() => {
+    if (!isExpanded) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.requestAnimationFrame(() => closeButtonRef.current?.focus())
+    const handleKeyDown = (event) => {
+      if (event.key !== 'Escape') return
+      event.preventDefault()
+      setIsExpanded(false)
+      window.requestAnimationFrame(() => expandButtonRef.current?.focus())
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isExpanded])
+
+  const startVideo = (index) => {
+    setPlayingIndex(index)
+    setIsExpanded(false)
+  }
+
+  const collapsePlayer = () => {
+    setIsExpanded(false)
+    window.requestAnimationFrame(() => expandButtonRef.current?.focus())
+  }
+
   return (
-    <section className="video-section" id="video" aria-labelledby="video-title">
-      <header className="video-heading">
-        <p>{video.kicker}</p>
-        <h2 id="video-title">{video.title}</h2>
-      </header>
-      <div className="video-list">
-        {video.items.map((item, index) => (
-          <article className="video-row" key={`${item.title}-${index}`}>
-            <div className={`video-placeholder${item.url ? ' has-video' : ''}`}>
-              {item.url && (
-                <button
-                  className="video-launch"
-                  type="button"
-                  aria-label={`Смотреть: ${item.title}`}
-                  onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}
-                >
-                  <span className="video-play"><PlayIcon /></span>
-                </button>
-              )}
-            </div>
-            <div className="video-copy">
-              <h3>{item.title}</h3>
-              <p>{item.subtitle}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-      <div className="video-more" aria-label="Смотреть ещё видео">
-        <span>СМОТРЕТЬ ЕЩЁ</span>
-        <svg viewBox="0 0 32 16" aria-hidden="true">
-          <path d="M1 8h28M23 2l6 6-6 6" />
-        </svg>
-      </div>
-    </section>
+    <>
+      <section className="video-section" id="video" aria-labelledby="video-title" data-header-label={video.kicker}>
+        <header className="video-heading editorial-reveal" data-editorial-reveal>
+          <p className="editorial-reveal-kicker">{video.kicker}</p>
+          <h2 id="video-title"><span className="editorial-reveal-title">{video.title}</span></h2>
+        </header>
+        <div className="video-list">
+          {video.items.map((item, index) => (
+            <article className="video-row" key={`${item.title}-${index}`}>
+              <div
+                className={`video-placeholder${item.url ? ' has-video' : ''}${playingIndex === index ? ' is-playing' : ''}`}
+                ref={(node) => { videoSlotsRef.current[index] = node }}
+              >
+                {item.url && playingIndex !== index && (
+                  <button className="video-launch" type="button" aria-label={`Смотреть: ${item.title}`} onClick={() => startVideo(index)}>
+                    <img className="video-poster" src={getKinescopePoster(item.url)} alt="" loading="lazy" />
+                    <span className="video-poster-shade" aria-hidden="true" />
+                    <span className="video-play"><PlayIcon /></span>
+                  </button>
+                )}
+              </div>
+              <div className="video-copy">
+                <h3>{item.title}</h3>
+                <p>{item.subtitle}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <EditorialAction className="video-more" href={video.moreHref} label={video.moreLabel} external />
+      </section>
+      {playingVideo && playerRect && createPortal(
+        <div
+          className={`video-player-shell${isExpanded ? ' is-expanded' : ' is-inline'}`}
+          style={isExpanded ? undefined : playerRect}
+          role={isExpanded ? 'dialog' : undefined}
+          aria-modal={isExpanded ? 'true' : undefined}
+          aria-label={isExpanded ? `Видео: ${playingVideo.title}` : undefined}
+        >
+          {isExpanded && <button className="video-player-backdrop" type="button" aria-label="Вернуть видео в карточку" onClick={collapsePlayer} />}
+          <div className="video-player-stage" key="video-player-stage">
+            <iframe
+              key={playingVideo.url}
+              src={`${playingVideo.url}?autoplay=1`}
+              title={`${playingVideo.title} — видео`}
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock"
+              allowFullScreen
+            />
+            {!isExpanded && (
+              <button className="video-player-expand" type="button" aria-label="Развернуть видео" ref={expandButtonRef} onClick={() => setIsExpanded(true)}>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" /></svg>
+              </button>
+            )}
+            {isExpanded && (
+              <button className="video-lightbox-close" type="button" aria-label="Вернуть видео в карточку" ref={closeButtonRef} onClick={collapsePlayer}>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+              </button>
+            )}
+          </div>
+        </div>,
+        document.body,
+      )}
+    </>
   )
 }
 
@@ -465,21 +672,247 @@ function BrandTicker({ content = fallbackTicker }) {
   )
 }
 
+function EditorialArrow({ direction = 'right' }) {
+  if (direction === 'up') {
+    return <svg className="editorial-action-arrow editorial-action-arrow-up" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 31V3M3 12l9-9 9 9" vectorEffect="non-scaling-stroke" /></svg>
+  }
+  if (direction === 'left') {
+    return <svg className="editorial-action-arrow" viewBox="0 0 36 20" aria-hidden="true"><path d="M35 10H3M11 2 3 10l8 8" vectorEffect="non-scaling-stroke" /></svg>
+  }
+  return <svg className="editorial-action-arrow" viewBox="0 0 36 20" aria-hidden="true"><path d="M1 10h32M25 2l8 8-8 8" vectorEffect="non-scaling-stroke" /></svg>
+}
+
+function EditorialAction({ className = '', href = '', label, direction = 'right', external = false }) {
+  const classes = `editorial-action editorial-action-${direction}${href && href !== '#' ? '' : ' is-disabled'}${className ? ` ${className}` : ''}`
+  const content = <><span className="editorial-action-label">{label}</span><EditorialArrow direction={direction} /></>
+  if (!href || href === '#') return <span className={classes} aria-disabled="true">{content}</span>
+  return <a className={classes} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{content}</a>
+}
+
+function SelectedProjects({ content = fallbackSelected }) {
+  const selected = normalizeSelected(content)
+  return (
+    <section className="selected-section" id="selected" aria-labelledby="selected-title" data-header-label={`// ${selected.title}`}>
+      <header className="selected-heading editorial-reveal" data-editorial-reveal>
+        <p className="editorial-reveal-kicker">{selected.kicker}</p>
+        <h2 id="selected-title"><span className="editorial-reveal-title">{selected.title}</span></h2>
+      </header>
+      <div className="selected-list">
+        {selected.items.map((item, index) => (
+          <article className="selected-project" style={{ '--selected-order': index + 1 }} key={`${item.name}-${index}`}>
+            <div className="selected-project-head">
+              <span className="selected-index">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.name}</h3>
+            </div>
+            <div className="selected-project-body">
+              <div className={`selected-meta${item.type ? '' : ' selected-meta-names'}`}>
+                {item.type && <strong>{item.type}</strong>}
+                {item.description && <p>{item.description.split('\n').map((line, lineIndex) => <span className={line === 'И ДРУГИЕ' ? 'selected-meta-note' : ''} key={`${line}-${lineIndex}`}>{line}</span>)}</p>}
+              </div>
+              <div className={`selected-media${item.image ? ' has-image' : ''}`}>
+                {item.image ? <img src={item.image} alt={item.imageAlt || item.name} loading="lazy" /> : <span>ФОТО</span>}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      <EditorialAction className="selected-more" href={selected.moreHref} label={selected.moreLabel} external />
+    </section>
+  )
+}
+
+function PhotoGallery({ content = fallbackGallery }) {
+  const gallery = normalizeGallery(content)
+  const [activePhoto, setActivePhoto] = useState(null)
+  const dialogRef = useRef(null)
+  const closeButtonRef = useRef(null)
+  const photoButtonsRef = useRef([])
+  const openerIndexRef = useRef(null)
+
+  const closeLightbox = () => {
+    const trigger = openerIndexRef.current !== null ? photoButtonsRef.current[openerIndexRef.current] : null
+    setActivePhoto(null)
+    window.requestAnimationFrame(() => trigger?.focus())
+  }
+  const showPrevious = () => setActivePhoto((current) => current && ({ ...current, index: (current.index - 1 + gallery.items.length) % gallery.items.length }))
+  const showNext = () => setActivePhoto((current) => current && ({ ...current, index: (current.index + 1) % gallery.items.length }))
+
+  useEffect(() => {
+    if (activePhoto === null) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    if (!activePhoto.instant) window.requestAnimationFrame(() => closeButtonRef.current?.focus())
+    else closeButtonRef.current?.focus({ preventScroll: true })
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        closeLightbox()
+        return
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        showPrevious()
+        return
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        showNext()
+        return
+      }
+      if (event.key !== 'Tab') return
+      const focusable = [...(dialogRef.current?.querySelectorAll('button:not([disabled])') || [])]
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [activePhoto !== null, gallery.items.length])
+
+  const activeItem = activePhoto === null ? null : gallery.items[activePhoto.index]
+  return (
+    <section className="gallery-section" id="photos" aria-labelledby="gallery-title" data-header-label={gallery.kicker}>
+      <header className="gallery-heading editorial-reveal" data-editorial-reveal>
+        <p className="editorial-reveal-kicker">{gallery.kicker}</p>
+        <h2 id="gallery-title"><span className="editorial-reveal-title">{gallery.title}</span></h2>
+      </header>
+      <div className="gallery-grid">
+        {gallery.items.map((item, index) => (
+          <figure className={`gallery-item gallery-item-${index + 1}`} key={index}>
+            <button
+              className={`gallery-media${item.image ? ' has-image' : ''}`}
+              type="button"
+              disabled={!item.image}
+              ref={(node) => { photoButtonsRef.current[index] = node }}
+              aria-label={item.image ? `Открыть фотографию ${index + 1} на весь экран` : undefined}
+              onClick={(event) => {
+                if (!item.image) return
+                openerIndexRef.current = index
+                setActivePhoto({ index, instant: event.detail === 0 })
+              }}
+            >
+              {item.image
+                ? <img src={item.image} alt={item.imageAlt || `Адис Маммо — фото ${index + 1}`} loading="lazy" />
+                : <span>ФОТО</span>}
+            </button>
+          </figure>
+        ))}
+      </div>
+      <EditorialAction className="gallery-more" href={gallery.moreHref} label={gallery.moreLabel} external />
+      {activeItem && (
+        <div
+          className={`gallery-lightbox${activePhoto.instant ? ' is-instant' : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Фотография ${activePhoto.index + 1} из ${gallery.items.length}`}
+          ref={dialogRef}
+          onMouseDown={(event) => event.target === event.currentTarget && closeLightbox()}
+        >
+          <button className="gallery-lightbox-close" type="button" aria-label="Закрыть фотографию" ref={closeButtonRef} onClick={closeLightbox}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+          </button>
+          <button className="gallery-lightbox-nav gallery-lightbox-prev" type="button" aria-label="Предыдущая фотография" onClick={showPrevious}>
+            <EditorialArrow direction="left" />
+          </button>
+          <figure className="gallery-lightbox-media">
+            <img src={activeItem.image} alt={activeItem.imageAlt || `Адис Маммо — фото ${activePhoto.index + 1}`} />
+            <figcaption>{String(activePhoto.index + 1).padStart(2, '0')} / {String(gallery.items.length).padStart(2, '0')}</figcaption>
+          </figure>
+          <button className="gallery-lightbox-nav gallery-lightbox-next" type="button" aria-label="Следующая фотография" onClick={showNext}>
+            <EditorialArrow direction="right" />
+          </button>
+        </div>
+      )}
+    </section>
+  )
+}
+
+function ContactLink({ className, href, children, external = false }) {
+  if (!href || href === '#') return <span className={className}>{children}</span>
+  return <a className={className} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{children}</a>
+}
+
+function ContactSection({ content = fallbackContact, header = fallbackHeader }) {
+  const contact = normalizeContact(content)
+  return (
+    <section className="contact-section editorial-reveal editorial-reveal-no-line" id="contacts" aria-labelledby="contact-title" data-header-label={contact.kicker} data-editorial-reveal>
+      <div className="contact-topline">
+        <p className="editorial-reveal-kicker">{contact.kicker}</p>
+        <nav className="contact-menu" aria-label="Навигация в подвале">
+          <strong>МЕНЮ</strong>
+          {header.menu.map((item, index) => <ContactLink href={item.href} key={`${item.label}-${index}`}>{item.label}</ContactLink>)}
+        </nav>
+      </div>
+      <h2 id="contact-title"><span className="editorial-reveal-title">{contact.title}</span></h2>
+      <nav className="contact-socials" aria-label="Социальные сети">
+        {(header.socials || fallbackHeader.socials).map((item, index) => <ContactLink className="contact-social-link" href={item.href} external key={`${item.label}-${index}`}>{item.label}</ContactLink>)}
+      </nav>
+      <div className="contact-main">
+        <div className="contact-signature">
+          <p><span>{contact.brandTop}</span><span>{contact.brandBottom}</span></p>
+          <small>{contact.role}</small>
+        </div>
+        <div className="contact-materials">
+          <div className={`contact-portrait${contact.portrait ? ' has-image' : ''}`}>
+            {contact.portrait ? <img src={contact.portrait} alt={contact.portraitAlt} loading="lazy" /> : <span>ФОТО</span>}
+          </div>
+          <ContactLink className="contact-materials-link" href={contact.materialsHref} external>{contact.materialsLabel}</ContactLink>
+        </div>
+      </div>
+      <footer className="contact-footer">
+        <span>{contact.copyright}</span>
+        <ContactLink className="contact-footer-link" href={contact.developmentHref} external>{contact.developmentLabel}</ContactLink>
+        <ContactLink className="contact-footer-link" href={contact.privacyHref}>{contact.privacyLabel}</ContactLink>
+        <EditorialAction className="contact-top-link" href="#top" label={contact.topLabel} direction="up" />
+      </footer>
+    </section>
+  )
+}
+
 function PublicSite() {
-  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero, about: fallbackAbout, video: fallbackVideo, ticker: fallbackTicker })
+  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero, about: fallbackAbout, video: fallbackVideo, ticker: fallbackTicker, selected: fallbackSelected, gallery: fallbackGallery, contact: fallbackContact })
   const isAdminPreview = new URLSearchParams(window.location.search).get('preview') === 'admin'
   useEffect(() => {
     if (isAdminPreview) {
       const receivePreview = (event) => {
         if (event.origin !== window.location.origin || event.data?.type !== 'adis-preview-content') return
-        setContent({ header: event.data.content.header, hero: normalizeHero(event.data.content.hero), about: event.data.content.about || fallbackAbout, video: normalizeVideo(event.data.content.video), ticker: normalizeTicker(event.data.content.ticker) })
+        setContent({ header: event.data.content.header, hero: normalizeHero(event.data.content.hero), about: event.data.content.about || fallbackAbout, video: normalizeVideo(event.data.content.video), ticker: normalizeTicker(event.data.content.ticker), selected: normalizeSelected(event.data.content.selected), gallery: normalizeGallery(event.data.content.gallery), contact: normalizeContact(event.data.content.contact) })
       }
       window.addEventListener('message', receivePreview)
       window.parent.postMessage({ type: 'adis-preview-ready' }, window.location.origin)
       return () => window.removeEventListener('message', receivePreview)
     }
-    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero), about: nextContent.about || fallbackAbout, video: normalizeVideo(nextContent.video), ticker: normalizeTicker(nextContent.ticker) })).catch(() => {})
+    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero), about: nextContent.about || fallbackAbout, video: normalizeVideo(nextContent.video), ticker: normalizeTicker(nextContent.ticker), selected: normalizeSelected(nextContent.selected), gallery: normalizeGallery(nextContent.gallery), contact: normalizeContact(nextContent.contact) })).catch(() => {})
   }, [isAdminPreview])
+
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll('[data-editorial-reveal]'))
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      sections.forEach((section) => section.classList.add('is-revealed'))
+      return undefined
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-revealed')
+        observer.unobserve(entry.target)
+      })
+    }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' })
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
+  }, [content])
 
   return (
     <main className="site-shell" id="top" style={getHeroStyle(content.hero)}>
@@ -488,6 +921,9 @@ function PublicSite() {
       <AboutSection content={content.about} />
       <VideoSection content={content.video} />
       <BrandTicker content={content.ticker} />
+      <SelectedProjects content={content.selected} />
+      <PhotoGallery content={content.gallery} />
+      <ContactSection content={content.contact} header={content.header} />
     </main>
   )
 }
@@ -664,6 +1100,93 @@ function HeroPortraitField({ portrait, onChange }) {
   )
 }
 
+function SelectedPhotoField({ item, onChange }) {
+  const inputRef = useRef(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
+
+  const upload = async (event) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+    setError('')
+    if (file.size > 15 * 1024 * 1024) return setError('Файл тяжелее 15 МБ. Выбери фотографию поменьше.')
+    setUploading(true)
+    try {
+      const body = new FormData()
+      body.append('image', file)
+      const response = await fetch('/api/admin/assets/selected', { method: 'POST', body })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'Не удалось загрузить фото')
+      onChange({ image: result.asset.url, imageAlt: item.imageAlt || `${item.name} — Адис Маммо` })
+    } catch (uploadError) {
+      setError(uploadError.message)
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  return (
+    <div className="admin-selected-photo-field">
+      <span className="admin-field-label">Фотография</span>
+      <div className={`admin-selected-photo-preview${item.image ? ' has-image' : ''}`}>
+        {item.image ? <img src={item.image} alt={item.imageAlt || item.name} /> : <span>ФОТО ПОКА НЕТ</span>}
+      </div>
+      <input ref={inputRef} className="admin-file-input" type="file" accept="image/png,image/jpeg,image/webp" onChange={upload} />
+      <div className="admin-photo-actions">
+        <button className="admin-primary" type="button" disabled={uploading} onClick={() => inputRef.current?.click()}>{uploading ? 'Загружаю…' : item.image ? 'Заменить фото' : 'Выбрать фото'}</button>
+        <button type="button" disabled={uploading || !item.image} onClick={() => onChange({ image: '', imageAlt: '' })}>Убрать</button>
+      </div>
+      <p className="admin-note">Лучший формат — горизонтальный кадр 2040 × 1500 px. На сайте фотография аккуратно заполняет карточку.</p>
+      {error && <p className="admin-error">{error}</p>}
+    </div>
+  )
+}
+
+function GalleryPhotoField({ item, index, onChange }) {
+  const inputRef = useRef(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
+
+  const upload = async (event) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+    setError('')
+    if (file.size > 15 * 1024 * 1024) return setError('Файл тяжелее 15 МБ. Выбери фотографию поменьше.')
+    setUploading(true)
+    try {
+      const body = new FormData()
+      body.append('image', file)
+      const response = await fetch('/api/admin/assets/gallery', { method: 'POST', body })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'Не удалось загрузить фото')
+      onChange({ image: result.asset.url, imageAlt: item.imageAlt || `Адис Маммо — фото ${index + 1}` })
+    } catch (uploadError) {
+      setError(uploadError.message)
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const slotNames = ['Широкий кадр', 'Левый кадр', 'Правый кадр', 'Широкий кадр', 'Вертикальный кадр', 'Вертикальный кадр', 'Вертикальный кадр', 'Вертикальный кадр']
+  return (
+    <section className="admin-panel">
+      <div className="admin-panel-heading"><div><span className="admin-kicker">ФОТО {String(index + 1).padStart(2, '0')}</span><h3>{slotNames[index]}</h3></div></div>
+      <div className={`admin-gallery-photo-preview admin-gallery-photo-${index + 1}${item.image ? ' has-image' : ''}`}>
+        {item.image ? <img src={item.image} alt={item.imageAlt || `Фото ${index + 1}`} /> : <span>ФОТО ПОКА НЕТ</span>}
+      </div>
+      <input ref={inputRef} className="admin-file-input" type="file" accept="image/png,image/jpeg,image/webp" onChange={upload} />
+      <div className="admin-photo-actions">
+        <button className="admin-primary" type="button" disabled={uploading} onClick={() => inputRef.current?.click()}>{uploading ? 'Загружаю…' : item.image ? 'Заменить фото' : 'Выбрать фото'}</button>
+        <button type="button" disabled={uploading || !item.image} onClick={() => onChange({ image: '', imageAlt: '' })}>Убрать</button>
+      </div>
+      <TextField label="Описание фотографии" value={item.imageAlt} onChange={(value) => onChange({ imageAlt: value })} />
+      {error && <p className="admin-error">{error}</p>}
+    </section>
+  )
+}
+
 function AdminApp() {
   const [authenticated, setAuthenticated] = useState(null)
   const [header, setHeader] = useState(fallbackHeader)
@@ -671,6 +1194,9 @@ function AdminApp() {
   const [about, setAbout] = useState(fallbackAbout)
   const [video, setVideo] = useState(fallbackVideo)
   const [ticker, setTicker] = useState(fallbackTicker)
+  const [selected, setSelected] = useState(fallbackSelected)
+  const [gallery, setGallery] = useState(fallbackGallery)
+  const [contact, setContact] = useState(fallbackContact)
   const [activeSection, setActiveSection] = useState('header')
   const [deviceId, setDeviceId] = useState('desktop')
   const [status, setStatus] = useState('')
@@ -685,6 +1211,9 @@ function AdminApp() {
     setAbout({ ...fallbackAbout, ...(content.draft.about || {}) })
     setVideo(normalizeVideo(content.draft.video))
     setTicker(normalizeTicker(content.draft.ticker))
+    setSelected(normalizeSelected(content.draft.selected))
+    setGallery(normalizeGallery(content.draft.gallery))
+    setContact(normalizeContact(content.draft.contact))
     setAuthenticated(true)
   }
 
@@ -707,6 +1236,32 @@ function AdminApp() {
   }
   const updateTicker = (changes) => {
     setTicker((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateSelected = (changes) => {
+    setSelected((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateGallery = (changes) => {
+    setGallery((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateContact = (changes) => {
+    setContact((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const changeSelectedItem = (index, key, value) => {
+    setSelected((current) => ({
+      ...current,
+      items: current.items.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item),
+    }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const changeGalleryItem = (index, changes) => {
+    setGallery((current) => ({
+      ...current,
+      items: current.items.map((item, itemIndex) => itemIndex === index ? { ...item, ...changes } : item),
+    }))
     setStatus('Есть несохранённые изменения')
   }
   const changeTickerLayout = (key, value) => {
@@ -759,7 +1314,7 @@ function AdminApp() {
     setSaving(true)
     setStatus('Сохраняю…')
     try {
-      const response = await fetch('/api/admin/draft', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker }) })
+      const response = await fetch('/api/admin/draft', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker, selected, gallery, contact }) })
       setStatus(response.ok ? 'Черновик сохранён' : 'Не удалось сохранить')
       return response.ok
     } catch {
@@ -773,7 +1328,7 @@ function AdminApp() {
     setSaving(true)
     setStatus('Публикую…')
     try {
-      const response = await fetch('/api/admin/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker }) })
+      const response = await fetch('/api/admin/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker, selected, gallery, contact }) })
       setStatus(response.ok ? 'Опубликовано на сайте' : 'Не удалось опубликовать')
     } catch {
       setStatus('Не удалось опубликовать')
@@ -792,6 +1347,9 @@ function AdminApp() {
     about: { number: '03', title: 'Об Адисе', description: 'Короткое представление, главные регалии и место для портрета.' },
     video: { number: '04', title: 'Видео', description: 'Шоурил и три направления работы. Ролики можно подключить позже.' },
     ticker: { number: '05', title: 'Бегущая строка', description: 'Логотипы брендов, их порядок, размер и движение.' },
+    selected: { number: '06', title: 'Знаковые проекты', description: 'Частные события, дни рождения и совместные выходы на сцену.' },
+    gallery: { number: '07', title: 'Галерея', description: 'Журнальная сетка фотографий. Сами кадры добавим позже.' },
+    contact: { number: '08', title: 'Контакты', description: 'Прямая связь, соцсети, материалы для организаторов и нижняя строка сайта.' },
   }[activeSection]
 
   return (
@@ -804,6 +1362,9 @@ function AdminApp() {
           <button className={activeSection === 'about' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('about'); setStatus('') }}><span>03</span> Об Адисе</button>
           <button className={activeSection === 'video' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('video'); setStatus('') }}><span>04</span> Видео</button>
           <button className={activeSection === 'ticker' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('ticker'); setStatus('') }}><span>05</span> Бегущая строка</button>
+          <button className={activeSection === 'selected' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('selected'); setStatus('') }}><span>06</span> Знаковые проекты</button>
+          <button className={activeSection === 'gallery' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('gallery'); setStatus('') }}><span>07</span> Галерея</button>
+          <button className={activeSection === 'contact' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('contact'); setStatus('') }}><span>08</span> Контакты</button>
         </nav>
         <span className="admin-sidebar-note">Собираем сайт по одному блоку.</span>
       </aside>
@@ -811,7 +1372,7 @@ function AdminApp() {
       <section className="admin-workspace">
         <div className="admin-toolbar"><div><span className="admin-kicker">БЛОК {sectionMeta.number}</span><h2>{sectionMeta.title}</h2><p className="admin-section-description">{sectionMeta.description}</p></div><div className="admin-toolbar-actions"><span role="status" aria-live="polite">{status}</span><button type="button" disabled={saving} onClick={saveDraft}>Сохранить черновик</button><button className="admin-primary" type="button" disabled={saving} onClick={publish}>Опубликовать</button></div></div>
 
-        <AdminDevicePreview content={{ header, hero, about, video, ticker }} deviceId={deviceId} onDeviceChange={setDeviceId} />
+        <AdminDevicePreview content={{ header, hero, about, video, ticker, selected, gallery, contact }} deviceId={deviceId} onDeviceChange={setDeviceId} />
 
         {activeSection === 'header' ? <div className="admin-form-grid">
           <section className="admin-panel">
@@ -890,6 +1451,9 @@ function AdminApp() {
             <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Видео</h3></div></div>
             <TextField label="Метка" value={video.kicker} onChange={(value) => updateVideo({ kicker: value })} />
             <TextField label="Большой заголовок" value={video.title} onChange={(value) => updateVideo({ title: value })} />
+            <TextField label="Надпись в конце блока" value={video.moreLabel} onChange={(value) => updateVideo({ moreLabel: value })} />
+            <TextField label="Ссылка для «Смотреть ещё»" value={video.moreHref} placeholder="https://" onChange={(value) => updateVideo({ moreHref: value })} />
+            <p className="admin-note">Пока ссылка пустая, надпись остаётся спокойной редакционной заглушкой и не притворяется кнопкой.</p>
           </section>
           {video.items.map((item, index) => (
             <section className="admin-panel" key={`${item.title}-${index}`}>
@@ -900,7 +1464,7 @@ function AdminApp() {
               <p className="admin-note">Пока ссылка пустая, на сайте остаётся аккуратная заглушка без перехода.</p>
             </section>
           ))}
-        </div> : <div className="admin-form-grid admin-ticker-grid">
+        </div> : activeSection === 'ticker' ? <div className="admin-form-grid admin-ticker-grid">
           <section className="admin-panel admin-layout-panel">
             <div className="admin-panel-heading">
               <div><span className="admin-kicker">МАСШТАБ И ДВИЖЕНИЕ</span><h3>Лента — {selectedDevice.label}</h3></div>
@@ -937,6 +1501,62 @@ function AdminApp() {
                 )
               })}
             </div>
+          </section>
+        </div> : activeSection === 'selected' ? <div className="admin-form-grid admin-selected-grid">
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Имена и события</h3></div></div>
+            <TextField label="Метка" value={selected.kicker} onChange={(value) => updateSelected({ kicker: value })} />
+            <TextField label="Большой заголовок" value={selected.title} onChange={(value) => updateSelected({ title: value })} />
+            <TextField label="Надпись в конце блока" value={selected.moreLabel} onChange={(value) => updateSelected({ moreLabel: value })} />
+            <TextField label="Ссылка для «Смотреть ещё»" value={selected.moreHref} placeholder="https://" onChange={(value) => updateSelected({ moreHref: value })} />
+          </section>
+          {selected.items.map((item, index) => (
+            <section className="admin-panel" key={`${item.name}-${index}`}>
+              <div className="admin-panel-heading"><div><span className="admin-kicker">ПРОЕКТ {String(index + 1).padStart(2, '0')}</span><h3>{item.name}</h3></div></div>
+              <TextField label="Название" value={item.name} onChange={(value) => changeSelectedItem(index, 'name', value)} />
+              <TextField label="Подводка — необязательно" value={item.type} onChange={(value) => changeSelectedItem(index, 'type', value)} />
+              <TextAreaField label="Имена или короткое описание" rows={6} value={item.description} onChange={(value) => changeSelectedItem(index, 'description', value)} />
+              <SelectedPhotoField item={item} onChange={(asset) => {
+                setSelected((current) => ({
+                  ...current,
+                  items: current.items.map((currentItem, itemIndex) => itemIndex === index ? { ...currentItem, ...asset } : currentItem),
+                }))
+                setStatus('Есть несохранённые изменения')
+              }} />
+            </section>
+          ))}
+        </div> : activeSection === 'gallery' ? <div className="admin-form-grid admin-gallery-grid">
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Галерея</h3></div></div>
+            <TextField label="Метка" value={gallery.kicker} onChange={(value) => updateGallery({ kicker: value })} />
+            <TextField label="Большой заголовок" value={gallery.title} onChange={(value) => updateGallery({ title: value })} />
+            <TextField label="Надпись в конце блока" value={gallery.moreLabel} onChange={(value) => updateGallery({ moreLabel: value })} />
+            <TextField label="Ссылка для «Смотреть ещё»" value={gallery.moreHref} placeholder="https://" onChange={(value) => updateGallery({ moreHref: value })} />
+          </section>
+          {gallery.items.map((item, index) => <GalleryPhotoField item={item} index={index} key={index} onChange={(changes) => changeGalleryItem(index, changes)} />)}
+        </div> : <div className="admin-form-grid admin-contact-grid">
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Контакты</h3></div></div>
+            <TextField label="Метка" value={contact.kicker} onChange={(value) => updateContact({ kicker: value })} />
+            <TextField label="Большой заголовок" value={contact.title} onChange={(value) => updateContact({ title: value })} />
+          </section>
+          <section className="admin-panel">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ПОДПИСЬ</span><h3>Имя и роль</h3></div></div>
+            <TextField label="Первая строка" value={contact.brandTop} onChange={(value) => updateContact({ brandTop: value })} />
+            <TextField label="Вторая строка" value={contact.brandBottom} onChange={(value) => updateContact({ brandBottom: value })} />
+            <TextField label="Подпись" value={contact.role} onChange={(value) => updateContact({ role: value })} />
+          </section>
+          <section className="admin-panel">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ОРГАНИЗАТОРАМ</span><h3>Кнопка материалов</h3></div></div>
+            <TextField label="Текст кнопки" value={contact.materialsLabel} onChange={(value) => updateContact({ materialsLabel: value })} />
+            <TextField label="Ссылка — добавим позже" value={contact.materialsHref} onChange={(value) => updateContact({ materialsHref: value })} />
+            <p className="admin-panel-intro">Портрет справа пока оставляем заглушкой. Соцсети берутся из раздела «Верх сайта», поэтому их не нужно заполнять второй раз.</p>
+          </section>
+          <section className="admin-panel admin-panel-social">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">НИЖНЯЯ СТРОКА</span><h3>Служебные ссылки</h3></div></div>
+            <div className="admin-menu-row"><TextField label="Копирайт" value={contact.copyright} onChange={(value) => updateContact({ copyright: value })} /><TextField label="Кнопка наверх" value={contact.topLabel} onChange={(value) => updateContact({ topLabel: value })} /></div>
+            <div className="admin-menu-row"><TextField label="Разработка сайта" value={contact.developmentLabel} onChange={(value) => updateContact({ developmentLabel: value })} /><TextField label="Ссылка" value={contact.developmentHref} onChange={(value) => updateContact({ developmentHref: value })} /></div>
+            <div className="admin-menu-row"><TextField label="Политика и cookie" value={contact.privacyLabel} onChange={(value) => updateContact({ privacyLabel: value })} /><TextField label="Ссылка" value={contact.privacyHref} onChange={(value) => updateContact({ privacyHref: value })} /></div>
           </section>
         </div>}
       </section>
