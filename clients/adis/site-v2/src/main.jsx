@@ -141,9 +141,9 @@ const brandLogos = [
 ]
 
 const tickerLayoutDefaults = {
-  desktop: { cardWidth: 280, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
-  tablet: { cardWidth: 240, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
-  mobile: { cardWidth: 184, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
+  desktop: { cardWidth: 220, gap: 16, paddingTop: 20, paddingBottom: 32, fade: 0, speed: 48 },
+  tablet: { cardWidth: 190, gap: 14, paddingTop: 18, paddingBottom: 28, fade: 0, speed: 44 },
+  mobile: { cardWidth: 148, gap: 10, paddingTop: 14, paddingBottom: 22, fade: 0, speed: 38 },
 }
 
 const fallbackTicker = {
@@ -291,7 +291,7 @@ const heroLayoutControls = [
   { key: 'redHeight', label: 'Высота красного поля', min: 240, max: 720, suffix: 'px' },
   { key: 'sideGutter', label: 'Единый отступ сайта по бокам', min: 12, max: 100, suffix: 'px' },
   { key: 'copyTop', label: 'Имя выше / ниже', min: 20, max: 110, suffix: 'px' },
-  { key: 'titleSize', label: 'Размер имени', min: 96, max: 240, suffix: 'px' },
+  { key: 'titleSize', label: 'Максимальный размер имени', min: 96, max: 240, suffix: 'px' },
   { key: 'titleLineHeight', label: 'Расстояние между строками имени', min: 70, max: 96, suffix: '%' },
   { key: 'roleSize', label: 'Размер подписи', min: 16, max: 40, suffix: 'px' },
   { key: 'roleGap', label: 'Расстояние до подписи', min: 0, max: 40, suffix: 'px' },
@@ -1531,13 +1531,12 @@ function AdminApp() {
               <div><span className="admin-kicker">МАСШТАБ И ДВИЖЕНИЕ</span><h3>Лента — {selectedDevice.label}</h3></div>
               <span className="admin-device-badge"><DeviceIcon device={deviceId} />{selectedDevice.width} × {selectedDevice.height}</span>
             </div>
-            <p className="admin-panel-intro">Переключи устройство в предпросмотре: размеры ленты настраиваются отдельно для компьютера, iPad и iPhone.</p>
+            <p className="admin-panel-intro">Переключи устройство в предпросмотре: размеры ленты настраиваются отдельно. По краям она аккуратно обрезается по сетке сайта — без градиентов и засветлений.</p>
             <div className="admin-precise-grid">
-              <NumberField label="Максимальная ширина одной карточки" value={ticker.layouts[deviceId].cardWidth} min={180} max={420} suffix="px" onChange={(value) => changeTickerLayout('cardWidth', value)} />
+              <NumberField label="Максимальная ширина одной карточки" value={ticker.layouts[deviceId].cardWidth} min={120} max={420} suffix="px" onChange={(value) => changeTickerLayout('cardWidth', value)} />
               <NumberField label="Расстояние между карточками" value={ticker.layouts[deviceId].gap} min={8} max={48} suffix="px" onChange={(value) => changeTickerLayout('gap', value)} />
               <NumberField label="Отступ от блока с видео" value={ticker.layouts[deviceId].paddingTop} min={0} max={100} suffix="px" onChange={(value) => changeTickerLayout('paddingTop', value)} />
               <NumberField label="Отступ после ленты" value={ticker.layouts[deviceId].paddingBottom} min={0} max={100} suffix="px" onChange={(value) => changeTickerLayout('paddingBottom', value)} />
-              <NumberField label="Мягкость краёв" value={ticker.layouts[deviceId].fade} min={0} max={14} suffix="%" onChange={(value) => changeTickerLayout('fade', value)} />
               <NumberField label="Скорость полного прохода" value={ticker.layouts[deviceId].speed} min={20} max={90} suffix="сек" onChange={(value) => changeTickerLayout('speed', value)} />
             </div>
             <label className="admin-field admin-color-field"><span>Цвет карточек</span><span><input type="color" value={ticker.cardColor} onChange={(event) => updateTicker({ cardColor: event.target.value.toUpperCase() })} /><input value={ticker.cardColor} onChange={(event) => updateTicker({ cardColor: event.target.value })} /></span></label>

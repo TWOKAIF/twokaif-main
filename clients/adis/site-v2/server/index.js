@@ -237,14 +237,14 @@ function cleanTicker(input) {
   const defaults = {
     cardColor: '#303030',
     layouts: {
-      desktop: { cardWidth: 280, gap: 24, paddingTop: 28, paddingBottom: 40, fade: 1, speed: 48 },
-      tablet: { cardWidth: 240, gap: 20, paddingTop: 24, paddingBottom: 34, fade: 1, speed: 44 },
-      mobile: { cardWidth: 184, gap: 14, paddingTop: 18, paddingBottom: 26, fade: 2, speed: 38 },
+      desktop: { cardWidth: 220, gap: 16, paddingTop: 20, paddingBottom: 32, fade: 0, speed: 48 },
+      tablet: { cardWidth: 190, gap: 14, paddingTop: 18, paddingBottom: 28, fade: 0, speed: 44 },
+      mobile: { cardWidth: 148, gap: 10, paddingTop: 14, paddingBottom: 22, fade: 0, speed: 38 },
     },
   }
   const source = input && typeof input === 'object' ? input : defaults
   const cleanLayout = (layout, fallback) => ({
-    cardWidth: clamp(layout?.cardWidth, 180, 420, fallback.cardWidth),
+    cardWidth: clamp(layout?.cardWidth, 120, 420, fallback.cardWidth),
     gap: clamp(layout?.gap, 8, 48, fallback.gap),
     paddingTop: clamp(layout?.paddingTop, 0, 100, fallback.paddingTop),
     paddingBottom: clamp(layout?.paddingBottom, 0, 100, fallback.paddingBottom),

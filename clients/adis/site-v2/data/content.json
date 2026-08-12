@@ -159,27 +159,27 @@
       "cardColor": "#303030",
       "layouts": {
         "desktop": {
-          "cardWidth": 280,
-          "gap": 10,
-          "paddingTop": 28,
-          "paddingBottom": 40,
-          "fade": 1,
-          "speed": 70
+          "cardWidth": 220,
+          "gap": 16,
+          "paddingTop": 20,
+          "paddingBottom": 32,
+          "fade": 0,
+          "speed": 56
         },
         "tablet": {
-          "cardWidth": 240,
-          "gap": 20,
-          "paddingTop": 24,
-          "paddingBottom": 34,
-          "fade": 1,
+          "cardWidth": 190,
+          "gap": 14,
+          "paddingTop": 18,
+          "paddingBottom": 28,
+          "fade": 0,
           "speed": 44
         },
         "mobile": {
-          "cardWidth": 184,
-          "gap": 14,
-          "paddingTop": 18,
-          "paddingBottom": 26,
-          "fade": 2,
+          "cardWidth": 148,
+          "gap": 10,
+          "paddingTop": 14,
+          "paddingBottom": 22,
+          "fade": 0,
           "speed": 38
         }
       },
@@ -402,27 +402,27 @@
       "cardColor": "#303030",
       "layouts": {
         "desktop": {
-          "cardWidth": 280,
-          "gap": 10,
-          "paddingTop": 28,
-          "paddingBottom": 40,
-          "fade": 1,
-          "speed": 70
+          "cardWidth": 220,
+          "gap": 16,
+          "paddingTop": 20,
+          "paddingBottom": 32,
+          "fade": 0,
+          "speed": 56
         },
         "tablet": {
-          "cardWidth": 240,
-          "gap": 20,
-          "paddingTop": 24,
-          "paddingBottom": 34,
-          "fade": 1,
+          "cardWidth": 190,
+          "gap": 14,
+          "paddingTop": 18,
+          "paddingBottom": 28,
+          "fade": 0,
           "speed": 44
         },
         "mobile": {
-          "cardWidth": 184,
-          "gap": 14,
-          "paddingTop": 18,
-          "paddingBottom": 26,
-          "fade": 2,
+          "cardWidth": 148,
+          "gap": 10,
+          "paddingTop": 14,
+          "paddingBottom": 22,
+          "fade": 0,
           "speed": 38
         }
       },
