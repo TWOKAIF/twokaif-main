@@ -29,7 +29,18 @@ if (!adminPassword || !sessionSecret) {
 const app = express()
 app.disable('x-powered-by')
 if (isProduction) app.set('trust proxy', 1)
-app.use(helmet({ contentSecurityPolicy: isProduction ? undefined : false }))
+app.use(
+  helmet({
+    contentSecurityPolicy: isProduction
+      ? {
+          directives: {
+            imgSrc: ["'self'", 'data:', 'https://kinescope.io'],
+            frameSrc: ["'self'", 'https://kinescope.io'],
+          },
+        }
+      : false,
+  }),
+)
 app.use(express.json({ limit: '128kb' }))
 app.use('/media/hero', express.static(heroUploadsDir, { immutable: true, maxAge: '1y', fallthrough: true }))
 app.use('/media/selected', express.static(selectedUploadsDir, { immutable: true, maxAge: '1y', fallthrough: true }))
