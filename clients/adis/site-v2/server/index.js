@@ -567,7 +567,7 @@ app.post('/api/admin/publish', requireAdmin, async (request, response, next) => 
 
 if (isProduction) {
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
-  app.get('/*path', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
+  app.get('/{*path}', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
 }
 
 app.use((error, _request, response, _next) => {
