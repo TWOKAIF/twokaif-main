@@ -152,6 +152,36 @@ const fallbackTicker = {
   logos: brandLogos.map((logo) => ({ name: logo.name, enabled: true, scale: logo.defaultScale || 100 })),
 }
 
+const fallbackVisibility = {
+  about: true,
+  video: true,
+  ticker: true,
+  selected: true,
+  gallery: true,
+}
+
+const visibilityControls = [
+  { key: 'about', label: 'Об Адисе' },
+  { key: 'video', label: 'Видео' },
+  { key: 'ticker', label: 'Бегущая строка' },
+  { key: 'selected', label: 'Имена и события' },
+  { key: 'gallery', label: 'Фото' },
+]
+
+function normalizeVisibility(input = {}) {
+  return Object.fromEntries(Object.entries(fallbackVisibility).map(([key, fallback]) => [key, typeof input?.[key] === 'boolean' ? input[key] : fallback]))
+}
+
+function filterHeaderByVisibility(header, visibility) {
+  const hiddenHrefs = new Set([
+    !visibility.about && '#about',
+    !visibility.video && '#video',
+    !visibility.selected && '#selected',
+    !visibility.gallery && '#photos',
+  ].filter(Boolean))
+  return { ...header, menu: (header.menu || []).filter((item) => !hiddenHrefs.has(item.href)) }
+}
+
 function normalizeTicker(input = {}) {
   const incomingLogos = Array.isArray(input?.logos) ? input.logos : []
   const knownNames = new Set(brandLogos.map((logo) => logo.name))
@@ -881,19 +911,19 @@ function ContactSection({ content = fallbackContact, header = fallbackHeader }) 
 }
 
 function PublicSite() {
-  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero, about: fallbackAbout, video: fallbackVideo, ticker: fallbackTicker, selected: fallbackSelected, gallery: fallbackGallery, contact: fallbackContact })
+  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero, about: fallbackAbout, video: fallbackVideo, ticker: fallbackTicker, selected: fallbackSelected, gallery: fallbackGallery, contact: fallbackContact, visibility: fallbackVisibility })
   const isAdminPreview = new URLSearchParams(window.location.search).get('preview') === 'admin'
   useEffect(() => {
     if (isAdminPreview) {
       const receivePreview = (event) => {
         if (event.origin !== window.location.origin || event.data?.type !== 'adis-preview-content') return
-        setContent({ header: event.data.content.header, hero: normalizeHero(event.data.content.hero), about: event.data.content.about || fallbackAbout, video: normalizeVideo(event.data.content.video), ticker: normalizeTicker(event.data.content.ticker), selected: normalizeSelected(event.data.content.selected), gallery: normalizeGallery(event.data.content.gallery), contact: normalizeContact(event.data.content.contact) })
+        setContent({ header: event.data.content.header, hero: normalizeHero(event.data.content.hero), about: event.data.content.about || fallbackAbout, video: normalizeVideo(event.data.content.video), ticker: normalizeTicker(event.data.content.ticker), selected: normalizeSelected(event.data.content.selected), gallery: normalizeGallery(event.data.content.gallery), contact: normalizeContact(event.data.content.contact), visibility: normalizeVisibility(event.data.content.visibility) })
       }
       window.addEventListener('message', receivePreview)
       window.parent.postMessage({ type: 'adis-preview-ready' }, window.location.origin)
       return () => window.removeEventListener('message', receivePreview)
     }
-    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero), about: nextContent.about || fallbackAbout, video: normalizeVideo(nextContent.video), ticker: normalizeTicker(nextContent.ticker), selected: normalizeSelected(nextContent.selected), gallery: normalizeGallery(nextContent.gallery), contact: normalizeContact(nextContent.contact) })).catch(() => {})
+    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero), about: nextContent.about || fallbackAbout, video: normalizeVideo(nextContent.video), ticker: normalizeTicker(nextContent.ticker), selected: normalizeSelected(nextContent.selected), gallery: normalizeGallery(nextContent.gallery), contact: normalizeContact(nextContent.contact), visibility: normalizeVisibility(nextContent.visibility) })).catch(() => {})
   }, [isAdminPreview])
 
   useEffect(() => {
@@ -914,16 +944,19 @@ function PublicSite() {
     return () => observer.disconnect()
   }, [content])
 
+  const visibility = normalizeVisibility(content.visibility)
+  const visibleHeader = filterHeaderByVisibility(content.header, visibility)
+
   return (
     <main className="site-shell" id="top" style={getHeroStyle(content.hero)}>
-      <SiteHeader content={content.header} preview={isAdminPreview} />
+      <SiteHeader content={visibleHeader} preview={isAdminPreview} />
       <HeroSection content={content.hero} />
-      <AboutSection content={content.about} />
-      <VideoSection content={content.video} />
-      <BrandTicker content={content.ticker} />
-      <SelectedProjects content={content.selected} />
-      <PhotoGallery content={content.gallery} />
-      <ContactSection content={content.contact} header={content.header} />
+      {visibility.about && <AboutSection content={content.about} />}
+      {visibility.video && <VideoSection content={content.video} />}
+      {visibility.ticker && <BrandTicker content={content.ticker} />}
+      {visibility.selected && <SelectedProjects content={content.selected} />}
+      {visibility.gallery && <PhotoGallery content={content.gallery} />}
+      <ContactSection content={content.contact} header={visibleHeader} />
     </main>
   )
 }
@@ -1197,6 +1230,7 @@ function AdminApp() {
   const [selected, setSelected] = useState(fallbackSelected)
   const [gallery, setGallery] = useState(fallbackGallery)
   const [contact, setContact] = useState(fallbackContact)
+  const [visibility, setVisibility] = useState(fallbackVisibility)
   const [activeSection, setActiveSection] = useState('header')
   const [deviceId, setDeviceId] = useState('desktop')
   const [status, setStatus] = useState('')
@@ -1214,6 +1248,7 @@ function AdminApp() {
     setSelected(normalizeSelected(content.draft.selected))
     setGallery(normalizeGallery(content.draft.gallery))
     setContact(normalizeContact(content.draft.contact))
+    setVisibility(normalizeVisibility(content.draft.visibility))
     setAuthenticated(true)
   }
 
@@ -1248,6 +1283,10 @@ function AdminApp() {
   }
   const updateContact = (changes) => {
     setContact((current) => ({ ...current, ...changes }))
+    setStatus('Есть несохранённые изменения')
+  }
+  const updateVisibility = (key, visible) => {
+    setVisibility((current) => ({ ...current, [key]: visible }))
     setStatus('Есть несохранённые изменения')
   }
   const changeSelectedItem = (index, key, value) => {
@@ -1314,7 +1353,7 @@ function AdminApp() {
     setSaving(true)
     setStatus('Сохраняю…')
     try {
-      const response = await fetch('/api/admin/draft', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker, selected, gallery, contact }) })
+      const response = await fetch('/api/admin/draft', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker, selected, gallery, contact, visibility }) })
       setStatus(response.ok ? 'Черновик сохранён' : 'Не удалось сохранить')
       return response.ok
     } catch {
@@ -1328,7 +1367,7 @@ function AdminApp() {
     setSaving(true)
     setStatus('Публикую…')
     try {
-      const response = await fetch('/api/admin/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker, selected, gallery, contact }) })
+      const response = await fetch('/api/admin/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ header, hero, about, video, ticker, selected, gallery, contact, visibility }) })
       setStatus(response.ok ? 'Опубликовано на сайте' : 'Не удалось опубликовать')
     } catch {
       setStatus('Не удалось опубликовать')
@@ -1347,7 +1386,7 @@ function AdminApp() {
     about: { number: '03', title: 'Об Адисе', description: 'Короткое представление, главные регалии и место для портрета.' },
     video: { number: '04', title: 'Видео', description: 'Шоурил и три направления работы. Ролики можно подключить позже.' },
     ticker: { number: '05', title: 'Бегущая строка', description: 'Логотипы брендов, их порядок, размер и движение.' },
-    selected: { number: '06', title: 'Знаковые проекты', description: 'Частные события, дни рождения и совместные выходы на сцену.' },
+    selected: { number: '06', title: 'Имена и события', description: 'Частные события, дни рождения и совместные выходы на сцену.' },
     gallery: { number: '07', title: 'Галерея', description: 'Журнальная сетка фотографий. Сами кадры добавим позже.' },
     contact: { number: '08', title: 'Контакты', description: 'Прямая связь, соцсети, материалы для организаторов и нижняя строка сайта.' },
   }[activeSection]
@@ -1362,7 +1401,7 @@ function AdminApp() {
           <button className={activeSection === 'about' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('about'); setStatus('') }}><span>03</span> Об Адисе</button>
           <button className={activeSection === 'video' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('video'); setStatus('') }}><span>04</span> Видео</button>
           <button className={activeSection === 'ticker' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('ticker'); setStatus('') }}><span>05</span> Бегущая строка</button>
-          <button className={activeSection === 'selected' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('selected'); setStatus('') }}><span>06</span> Знаковые проекты</button>
+          <button className={activeSection === 'selected' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('selected'); setStatus('') }}><span>06</span> Имена и события{!visibility.selected && <small>СКРЫТ</small>}</button>
           <button className={activeSection === 'gallery' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('gallery'); setStatus('') }}><span>07</span> Галерея</button>
           <button className={activeSection === 'contact' ? 'admin-nav-active' : ''} type="button" onClick={() => { setActiveSection('contact'); setStatus('') }}><span>08</span> Контакты</button>
         </nav>
@@ -1372,9 +1411,23 @@ function AdminApp() {
       <section className="admin-workspace">
         <div className="admin-toolbar"><div><span className="admin-kicker">БЛОК {sectionMeta.number}</span><h2>{sectionMeta.title}</h2><p className="admin-section-description">{sectionMeta.description}</p></div><div className="admin-toolbar-actions"><span role="status" aria-live="polite">{status}</span><button type="button" disabled={saving} onClick={saveDraft}>Сохранить черновик</button><button className="admin-primary" type="button" disabled={saving} onClick={publish}>Опубликовать</button></div></div>
 
-        <AdminDevicePreview content={{ header, hero, about, video, ticker, selected, gallery, contact }} deviceId={deviceId} onDeviceChange={setDeviceId} />
+        <AdminDevicePreview content={{ header, hero, about, video, ticker, selected, gallery, contact, visibility }} deviceId={deviceId} onDeviceChange={setDeviceId} />
 
         {activeSection === 'header' ? <div className="admin-form-grid">
+          <section className="admin-panel admin-panel-visibility">
+            <div className="admin-panel-heading"><div><span className="admin-kicker">ПУБЛИЧНЫЙ САЙТ</span><h3>Видимость блоков</h3></div></div>
+            <p className="admin-panel-intro">Скрытый блок остаётся в админке со всем наполнением, но не показывается посетителям и исчезает из меню.</p>
+            <div className="admin-visibility-list">
+              {visibilityControls.map((item) => (
+                <div className="admin-visibility-row" key={item.key}>
+                  <strong>{item.label}</strong>
+                  <button className={`admin-visibility-toggle${visibility[item.key] ? ' is-active' : ''}`} type="button" role="switch" aria-checked={visibility[item.key]} onClick={() => updateVisibility(item.key, !visibility[item.key])}>
+                    {visibility[item.key] ? 'ПОКАЗАН' : 'СКРЫТ'}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
           <section className="admin-panel">
             <h3>Основная строка</h3>
             <TextField label="Надпись слева" value={header.brand} onChange={(value) => setHeader({ ...header, brand: value })} />

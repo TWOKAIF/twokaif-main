@@ -341,6 +341,12 @@ function cleanContact(input) {
   }
 }
 
+function cleanVisibility(input) {
+  const fallback = { about: true, video: true, ticker: true, selected: true, gallery: true }
+  const source = input && typeof input === 'object' ? input : fallback
+  return Object.fromEntries(Object.entries(fallback).map(([key, fallbackValue]) => [key, typeof source[key] === 'boolean' ? source[key] : fallbackValue]))
+}
+
 app.get('/api/content', async (_request, response, next) => {
   try {
     const content = await readContent()
@@ -514,6 +520,7 @@ app.put('/api/admin/draft', requireAdmin, async (request, response, next) => {
       selected: cleanSelected(request.body?.selected),
       gallery: cleanGallery(request.body?.gallery),
       contact: cleanContact(request.body?.contact),
+      visibility: cleanVisibility(request.body?.visibility),
     }
     await writeContent(content)
     response.json({ ok: true, draft: content.draft })
@@ -535,6 +542,7 @@ app.post('/api/admin/publish', requireAdmin, async (request, response, next) => 
       selected: cleanSelected(request.body?.selected),
       gallery: cleanGallery(request.body?.gallery),
       contact: cleanContact(request.body?.contact),
+      visibility: cleanVisibility(request.body?.visibility),
     }
     content.draft = structuredClone(nextContent)
     content.published = structuredClone(nextContent)
@@ -547,7 +555,7 @@ app.post('/api/admin/publish', requireAdmin, async (request, response, next) => 
 
 if (isProduction) {
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
-  app.get('*', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
+  app.get('/*path', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
 }
 
 app.use((error, _request, response, _next) => {
