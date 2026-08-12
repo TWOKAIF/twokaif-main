@@ -30,25 +30,25 @@ const fallbackHeader = {
 
 const heroLayoutDefaults = {
   desktop: {
-    minHeight: 1078, redHeight: 50, sideGutter: 5, copyTop: 62, titleSize: 207,
-    titleLineHeight: 76, roleSize: 30, roleGap: 14, portraitHeight: 94,
+    minHeight: 820, redHeight: 450, sideGutter: 60, copyTop: 56, titleSize: 180,
+    titleLineHeight: 80, roleSize: 30, roleGap: 14, portraitHeight: 94,
     portraitMaxWidth: 82, portraitX: 0, portraitY: 0,
   },
   tablet: {
-    minHeight: 1020, redHeight: 54, sideGutter: 5, copyTop: 48, titleSize: 158,
+    minHeight: 1020, redHeight: 550, sideGutter: 48, copyTop: 48, titleSize: 158,
     titleLineHeight: 80, roleSize: 25, roleGap: 12, portraitHeight: 100,
     portraitMaxWidth: 110, portraitX: 0, portraitY: 0,
   },
   mobile: {
-    minHeight: 810, redHeight: 55, sideGutter: 3, copyTop: 38, titleSize: 124,
+    minHeight: 810, redHeight: 445, sideGutter: 16, copyTop: 38, titleSize: 124,
     titleLineHeight: 82, roleSize: 22, roleGap: 10, portraitHeight: 112,
     portraitMaxWidth: 165, portraitX: -14, portraitY: 0,
   },
 }
 
 const fallbackHero = {
-  nameTop: 'ADIS',
-  nameBottom: 'MAMMO',
+  nameTop: 'АДИС',
+  nameBottom: 'МАММО',
   role: 'ВЕДУЩИЙ / КОМИК',
   accent: '#9B1406',
   portrait: { url: '/images/adis-hero.png', alt: 'Адис Маммо', width: 2401, height: 2548 },
@@ -111,8 +111,8 @@ const fallbackGallery = {
 const fallbackContact = {
   kicker: '// КОНТАКТЫ',
   title: 'ПРЯМАЯ СВЯЗЬ',
-  brandTop: 'ADIS',
-  brandBottom: 'MAMMO',
+  brandTop: 'АДИС',
+  brandBottom: 'МАММО',
   role: 'ВЕДУЩИЙ / КОМИК',
   portrait: '/images/adis-contact.png',
   portraitAlt: 'Адис Маммо',
@@ -240,9 +240,19 @@ function normalizeContact(input = {}) {
 }
 
 function normalizeHero(input = {}) {
+  const normalizeLayoutUnits = (layout, defaults) => {
+    const source = { ...defaults, ...(layout || {}) }
+    return {
+      ...source,
+      redHeight: Number(source.redHeight) <= 65 ? defaults.redHeight : Number(source.redHeight),
+      sideGutter: Number(source.sideGutter) <= 8 ? defaults.sideGutter : Number(source.sideGutter),
+    }
+  }
   const legacyLayout = {
     ...heroLayoutDefaults.desktop,
-    redHeight: Number(input.redHeight ?? heroLayoutDefaults.desktop.redHeight),
+    redHeight: Number(input.redHeight ?? heroLayoutDefaults.desktop.redHeight) <= 65
+      ? heroLayoutDefaults.desktop.redHeight
+      : Number(input.redHeight),
     portraitHeight: Number(input.portraitHeight ?? heroLayoutDefaults.desktop.portraitHeight),
     portraitX: Number(input.portraitX ?? heroLayoutDefaults.desktop.portraitX),
     portraitY: Number(input.portraitY ?? heroLayoutDefaults.desktop.portraitY),
@@ -255,9 +265,9 @@ function normalizeHero(input = {}) {
     ...input,
     portrait,
     layouts: {
-      desktop: { ...legacyLayout, ...(input.layouts?.desktop || {}) },
-      tablet: { ...heroLayoutDefaults.tablet, ...(input.layouts?.tablet || {}) },
-      mobile: { ...heroLayoutDefaults.mobile, ...(input.layouts?.mobile || {}) },
+      desktop: normalizeLayoutUnits({ ...legacyLayout, ...(input.layouts?.desktop || {}) }, heroLayoutDefaults.desktop),
+      tablet: normalizeLayoutUnits(input.layouts?.tablet, heroLayoutDefaults.tablet),
+      mobile: normalizeLayoutUnits(input.layouts?.mobile, heroLayoutDefaults.mobile),
     },
   }
 }
@@ -278,9 +288,8 @@ const previewDevices = [
 ]
 
 const heroLayoutControls = [
-  { key: 'minHeight', label: 'Высота первого экрана', min: 680, max: 1180, suffix: 'px' },
-  { key: 'redHeight', label: 'Высота красного поля', min: 35, max: 65, suffix: '%' },
-  { key: 'sideGutter', label: 'Единый отступ сайта по бокам', min: 2, max: 8, suffix: '%' },
+  { key: 'redHeight', label: 'Высота красного поля', min: 240, max: 720, suffix: 'px' },
+  { key: 'sideGutter', label: 'Единый отступ сайта по бокам', min: 12, max: 100, suffix: 'px' },
   { key: 'copyTop', label: 'Имя выше / ниже', min: 20, max: 110, suffix: 'px' },
   { key: 'titleSize', label: 'Размер имени', min: 96, max: 240, suffix: 'px' },
   { key: 'titleLineHeight', label: 'Расстояние между строками имени', min: 70, max: 96, suffix: '%' },
@@ -1000,7 +1009,6 @@ function Login({ onSuccess }) {
         <TextField label="Пароль" value={password} onChange={setPassword} placeholder="Введи пароль" />
         {error && <p className="admin-error">{error}</p>}
         <button className="admin-primary" type="submit">Войти</button>
-        <p className="admin-note">Для локальной проверки пароль: adis-local</p>
       </form>
     </main>
   )

@@ -117,26 +117,28 @@ function cleanHero(input) {
     return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallbackValue
   }
   const layoutDefaults = {
-    desktop: { minHeight: 1078, redHeight: 50, sideGutter: 5, copyTop: 62, titleSize: 207, titleLineHeight: 76, roleSize: 30, roleGap: 14, portraitHeight: 94, portraitMaxWidth: 82, portraitX: 0, portraitY: 0 },
-    tablet: { minHeight: 1020, redHeight: 54, sideGutter: 5, copyTop: 48, titleSize: 158, titleLineHeight: 80, roleSize: 25, roleGap: 12, portraitHeight: 100, portraitMaxWidth: 110, portraitX: 0, portraitY: 0 },
-    mobile: { minHeight: 810, redHeight: 55, sideGutter: 3, copyTop: 38, titleSize: 124, titleLineHeight: 82, roleSize: 22, roleGap: 10, portraitHeight: 112, portraitMaxWidth: 165, portraitX: -14, portraitY: 0 },
+    desktop: { minHeight: 820, redHeight: 450, sideGutter: 60, copyTop: 56, titleSize: 180, titleLineHeight: 80, roleSize: 30, roleGap: 14, portraitHeight: 94, portraitMaxWidth: 82, portraitX: 0, portraitY: 0 },
+    tablet: { minHeight: 1020, redHeight: 550, sideGutter: 48, copyTop: 48, titleSize: 158, titleLineHeight: 80, roleSize: 25, roleGap: 12, portraitHeight: 100, portraitMaxWidth: 110, portraitX: 0, portraitY: 0 },
+    mobile: { minHeight: 810, redHeight: 445, sideGutter: 16, copyTop: 38, titleSize: 124, titleLineHeight: 82, roleSize: 22, roleGap: 10, portraitHeight: 112, portraitMaxWidth: 165, portraitX: -14, portraitY: 0 },
   }
   const fallbackPortrait = { url: '/images/adis-hero.png', alt: 'Адис Маммо', width: 2401, height: 2548 }
-  const fallback = { nameTop: 'ADIS', nameBottom: 'MAMMO', role: 'ВЕДУЩИЙ / КОМИК', accent: '#9B1406', portrait: fallbackPortrait, layouts: layoutDefaults, motion: 'text' }
+  const fallback = { nameTop: 'АДИС', nameBottom: 'МАММО', role: 'ВЕДУЩИЙ / КОМИК', accent: '#9B1406', portrait: fallbackPortrait, layouts: layoutDefaults, motion: 'text' }
   const source = input && typeof input === 'object' ? input : fallback
   const legacyDesktop = {
     ...layoutDefaults.desktop,
-    redHeight: clamp(source.redHeight, 35, 65, layoutDefaults.desktop.redHeight),
+    redHeight: Number(source.redHeight) <= 65 ? layoutDefaults.desktop.redHeight : clamp(source.redHeight, 240, 720, layoutDefaults.desktop.redHeight),
     portraitHeight: clamp(source.portraitHeight, 70, 150, layoutDefaults.desktop.portraitHeight),
     portraitX: clamp(source.portraitX, -220, 180, layoutDefaults.desktop.portraitX),
     portraitY: clamp(source.portraitY, -160, 180, layoutDefaults.desktop.portraitY),
   }
   const cleanLayout = (inputLayout, defaults) => {
     const layout = inputLayout && typeof inputLayout === 'object' ? inputLayout : defaults
+    const redHeight = Number(layout.redHeight) <= 65 ? defaults.redHeight : layout.redHeight
+    const sideGutter = Number(layout.sideGutter) <= 8 ? defaults.sideGutter : layout.sideGutter
     return {
       minHeight: clamp(layout.minHeight, 680, 1180, defaults.minHeight),
-      redHeight: clamp(layout.redHeight, 35, 65, defaults.redHeight),
-      sideGutter: clamp(layout.sideGutter, 2, 8, defaults.sideGutter),
+      redHeight: clamp(redHeight, 240, 720, defaults.redHeight),
+      sideGutter: clamp(sideGutter, 12, 100, defaults.sideGutter),
       copyTop: clamp(layout.copyTop, 20, 110, defaults.copyTop),
       titleSize: clamp(layout.titleSize, 96, 240, defaults.titleSize),
       titleLineHeight: clamp(layout.titleLineHeight, 70, 96, defaults.titleLineHeight),
@@ -338,7 +340,7 @@ function cleanGallery(input) {
 
 function cleanContact(input) {
   const fallback = {
-    kicker: '// КОНТАКТЫ', title: 'ПРЯМАЯ СВЯЗЬ', brandTop: 'ADIS', brandBottom: 'MAMMO', role: 'ВЕДУЩИЙ / КОМИК',
+    kicker: '// КОНТАКТЫ', title: 'ПРЯМАЯ СВЯЗЬ', brandTop: 'АДИС', brandBottom: 'МАММО', role: 'ВЕДУЩИЙ / КОМИК',
     portrait: '/images/adis-contact.png', portraitAlt: 'Адис Маммо', materialsLabel: 'МАТЕРИАЛЫ ДЛЯ ОРГАНИЗАТОРОВ', materialsHref: '#', copyright: '© 2026',
     developmentLabel: 'РАЗРАБОТКА САЙТА', developmentHref: '#', privacyLabel: 'ПОЛИТИКА / COOKIE', privacyHref: '#', topLabel: 'НАВЕРХ',
   }

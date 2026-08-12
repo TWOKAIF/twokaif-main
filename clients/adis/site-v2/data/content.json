@@ -62,8 +62,8 @@
       ]
     },
     "hero": {
-      "nameTop": "ADIS",
-      "nameBottom": "MAMMO",
+      "nameTop": "АДИС",
+      "nameBottom": "МАММО",
       "role": "ВЕДУЩИЙ / КОМИК",
       "accent": "#9B1406",
       "portrait": {
@@ -77,12 +77,12 @@
       },
       "layouts": {
         "desktop": {
-          "minHeight": 1078,
-          "redHeight": 50,
-          "sideGutter": 5,
-          "copyTop": 62,
-          "titleSize": 207,
-          "titleLineHeight": 76,
+          "minHeight": 820,
+          "redHeight": 450,
+          "sideGutter": 60,
+          "copyTop": 56,
+          "titleSize": 180,
+          "titleLineHeight": 80,
           "roleSize": 30,
           "roleGap": 14,
           "portraitHeight": 94,
@@ -92,8 +92,8 @@
         },
         "tablet": {
           "minHeight": 1020,
-          "redHeight": 54,
-          "sideGutter": 5,
+          "redHeight": 550,
+          "sideGutter": 48,
           "copyTop": 48,
           "titleSize": 158,
           "titleLineHeight": 80,
@@ -106,8 +106,8 @@
         },
         "mobile": {
           "minHeight": 810,
-          "redHeight": 55,
-          "sideGutter": 3,
+          "redHeight": 445,
+          "sideGutter": 16,
           "copyTop": 38,
           "titleSize": 124,
           "titleLineHeight": 82,
@@ -305,8 +305,8 @@
       ]
     },
     "hero": {
-      "nameTop": "ADIS",
-      "nameBottom": "MAMMO",
+      "nameTop": "АДИС",
+      "nameBottom": "МАММО",
       "role": "ВЕДУЩИЙ / КОМИК",
       "accent": "#9B1406",
       "portrait": {
@@ -320,12 +320,12 @@
       },
       "layouts": {
         "desktop": {
-          "minHeight": 1078,
-          "redHeight": 50,
-          "sideGutter": 5,
-          "copyTop": 62,
-          "titleSize": 207,
-          "titleLineHeight": 76,
+          "minHeight": 820,
+          "redHeight": 450,
+          "sideGutter": 60,
+          "copyTop": 56,
+          "titleSize": 180,
+          "titleLineHeight": 80,
           "roleSize": 30,
           "roleGap": 14,
           "portraitHeight": 94,
@@ -335,8 +335,8 @@
         },
         "tablet": {
           "minHeight": 1020,
-          "redHeight": 54,
-          "sideGutter": 5,
+          "redHeight": 550,
+          "sideGutter": 48,
           "copyTop": 48,
           "titleSize": 158,
           "titleLineHeight": 80,
@@ -349,8 +349,8 @@
         },
         "mobile": {
           "minHeight": 810,
-          "redHeight": 55,
-          "sideGutter": 3,
+          "redHeight": 445,
+          "sideGutter": 16,
           "copyTop": 38,
           "titleSize": 124,
           "titleLineHeight": 82,
