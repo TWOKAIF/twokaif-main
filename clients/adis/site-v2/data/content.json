@@ -132,6 +132,8 @@
     "video": {
       "kicker": "// ВИДЕО",
       "title": "В РАБОТЕ",
+      "moreLabel": "ЕЩЁ ВИДЕО",
+      "moreHref": "",
       "items": [
         {
           "title": "ШОУРИЛ 2025",
@@ -375,6 +377,8 @@
     "video": {
       "kicker": "// ВИДЕО",
       "title": "В РАБОТЕ",
+      "moreLabel": "ЕЩЁ ВИДЕО",
+      "moreHref": "",
       "items": [
         {
           "title": "ШОУРИЛ 2025",

@@ -202,7 +202,7 @@ function cleanVideo(input) {
   const fallback = {
     kicker: '// ВИДЕО',
     title: 'В РАБОТЕ',
-    moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+    moreLabel: 'ЕЩЁ ВИДЕО',
     moreHref: '',
     items: [
       { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
@@ -307,7 +307,7 @@ function cleanGallery(input) {
   const fallback = {
     kicker: '// ФОТО',
     title: 'ВНЕ СЦЕНАРИЯ',
-    moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+    moreLabel: 'ЕЩЁ ФОТО',
     moreHref: '',
     items: [
       { image: '/images/gallery/01.webp', imageAlt: 'Адис Маммо ведёт свадебную церемонию под открытым небом' },

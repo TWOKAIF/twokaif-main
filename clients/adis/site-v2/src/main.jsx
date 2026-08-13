@@ -68,7 +68,7 @@ const fallbackAbout = {
 const fallbackVideo = {
   kicker: '// ВИДЕО',
   title: 'В РАБОТЕ',
-  moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+  moreLabel: 'ЕЩЁ ВИДЕО',
   moreHref: '',
   items: [
     { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
@@ -94,7 +94,7 @@ const fallbackSelected = {
 const fallbackGallery = {
   kicker: '// ФОТО',
   title: 'ВНЕ СЦЕНАРИЯ',
-  moreLabel: 'СМОТРЕТЬ ЕЩЁ',
+  moreLabel: 'ЕЩЁ ФОТО',
   moreHref: '',
   items: [
     { image: '/images/gallery/01.webp', imageAlt: 'Адис Маммо ведёт свадебную церемонию под открытым небом' },
@@ -716,9 +716,9 @@ function EditorialArrow({ direction = 'right' }) {
     return <svg className="editorial-action-arrow editorial-action-arrow-up" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 31V3M3 12l9-9 9 9" vectorEffect="non-scaling-stroke" /></svg>
   }
   if (direction === 'left') {
-    return <svg className="editorial-action-arrow" viewBox="0 0 36 20" aria-hidden="true"><path d="M35 10H3M11 2 3 10l8 8" vectorEffect="non-scaling-stroke" /></svg>
+    return <svg className="editorial-action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12H3M11 4l-8 8 8 8" vectorEffect="non-scaling-stroke" /></svg>
   }
-  return <svg className="editorial-action-arrow" viewBox="0 0 36 20" aria-hidden="true"><path d="M1 10h32M25 2l8 8-8 8" vectorEffect="non-scaling-stroke" /></svg>
+  return <svg className="editorial-action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h19M13 4l8 8-8 8" vectorEffect="non-scaling-stroke" /></svg>
 }
 
 function EditorialAction({ className = '', href = '', label, direction = 'right', external = false }) {
@@ -1512,9 +1512,9 @@ function AdminApp() {
             <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Видео</h3></div></div>
             <TextField label="Метка" value={video.kicker} onChange={(value) => updateVideo({ kicker: value })} />
             <TextField label="Большой заголовок" value={video.title} onChange={(value) => updateVideo({ title: value })} />
-            <TextField label="Надпись в конце блока" value={video.moreLabel} onChange={(value) => updateVideo({ moreLabel: value })} />
-            <TextField label="Ссылка для «Смотреть ещё»" value={video.moreHref} placeholder="https://" onChange={(value) => updateVideo({ moreHref: value })} />
-            <p className="admin-note">Пока ссылка пустая, надпись остаётся спокойной редакционной заглушкой и не притворяется кнопкой.</p>
+            <TextField label="Текст ссылки" value={video.moreLabel} onChange={(value) => updateVideo({ moreLabel: value })} />
+            <TextField label="Ссылка «Ещё видео» — Яндекс Диск" value={video.moreHref} placeholder="https://disk.yandex.ru/" onChange={(value) => updateVideo({ moreHref: value })} />
+            <p className="admin-note">Ссылка откроется в новой вкладке. Пока поле пустое, надпись остаётся неактивной.</p>
           </section>
           {video.items.map((item, index) => (
             <section className="admin-panel" key={`${item.title}-${index}`}>
@@ -1590,8 +1590,9 @@ function AdminApp() {
             <div className="admin-panel-heading"><div><span className="admin-kicker">ЗАГОЛОВОК БЛОКА</span><h3>Галерея</h3></div></div>
             <TextField label="Метка" value={gallery.kicker} onChange={(value) => updateGallery({ kicker: value })} />
             <TextField label="Большой заголовок" value={gallery.title} onChange={(value) => updateGallery({ title: value })} />
-            <TextField label="Надпись в конце блока" value={gallery.moreLabel} onChange={(value) => updateGallery({ moreLabel: value })} />
-            <TextField label="Ссылка для «Смотреть ещё»" value={gallery.moreHref} placeholder="https://" onChange={(value) => updateGallery({ moreHref: value })} />
+            <TextField label="Текст ссылки" value={gallery.moreLabel} onChange={(value) => updateGallery({ moreLabel: value })} />
+            <TextField label="Ссылка «Ещё фото» — Яндекс Диск" value={gallery.moreHref} placeholder="https://disk.yandex.ru/" onChange={(value) => updateGallery({ moreHref: value })} />
+            <p className="admin-note">Ссылка откроется в новой вкладке. Пока поле пустое, надпись остаётся неактивной.</p>
           </section>
           {gallery.items.map((item, index) => <GalleryPhotoField item={item} index={index} key={index} onChange={(changes) => changeGalleryItem(index, changes)} />)}
         </div> : <div className="admin-form-grid admin-contact-grid">
