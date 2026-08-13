@@ -882,7 +882,7 @@ function ContactSection({ content = fallbackContact, header = fallbackHeader }) 
           {header.menu.map((item, index) => <ContactLink href={item.href} key={`${item.label}-${index}`}>{item.label}</ContactLink>)}
         </nav>
       </div>
-      <h2 id="contact-title"><span className="editorial-reveal-title">{contact.title}</span></h2>
+      <h2 className="visually-hidden" id="contact-title">{contact.title}</h2>
       <nav className="contact-socials" aria-label="Социальные сети">
         {(header.socials || fallbackHeader.socials).map((item, index) => <ContactLink className="contact-social-link" href={item.href} external key={`${item.label}-${index}`}>{item.label}</ContactLink>)}
       </nav>
