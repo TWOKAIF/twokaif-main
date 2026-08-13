@@ -326,19 +326,16 @@ function RollingMenuLabel({ label }) {
   )
 }
 
-function FormatLine({ formats, className = '', activeLabel = '' }) {
-  const contextKey = activeLabel || 'formats'
+function FormatLine({ formats, className = '' }) {
   return (
-    <div className={`format-line${activeLabel ? ' header-context' : ''}${className ? ` ${className}` : ''}`} aria-label={activeLabel ? `Текущий раздел: ${activeLabel}` : 'Форматы работы'} aria-live="polite">
-      <div className={`format-line-track${activeLabel ? ' header-context-track' : ''}`} key={contextKey}>
-        {activeLabel
-          ? <span>{activeLabel}</span>
-          : formats.map((format, index) => (
-            <React.Fragment key={`${format}-${index}`}>
-              {index > 0 && <span className="format-divider" aria-hidden="true">/</span>}
-              <span>{format}</span>
-            </React.Fragment>
-          ))}
+    <div className={`format-line${className ? ` ${className}` : ''}`} aria-label="Форматы работы">
+      <div className="format-line-track">
+        {formats.map((format, index) => (
+          <React.Fragment key={`${format}-${index}`}>
+            {index > 0 && <span className="format-divider" aria-hidden="true">/</span>}
+            <span>{format}</span>
+          </React.Fragment>
+        ))}
       </div>
     </div>
   )
@@ -347,7 +344,6 @@ function FormatLine({ formats, className = '', activeLabel = '' }) {
 function SiteHeader({ content = fallbackHeader, preview = false }) {
   const [open, setOpen] = useState(false)
   const [activeMenuIndex, setActiveMenuIndex] = useState(0)
-  const [activeSectionLabel, setActiveSectionLabel] = useState('')
   const overlayRef = useRef(null)
   const progressRef = useRef(null)
   const openButtonRef = useRef(null)
@@ -419,13 +415,6 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
     const updateHeaderContext = () => {
       frame = 0
       const viewportHeight = window.innerHeight || 1
-      const marker = (document.querySelector('.site-header')?.getBoundingClientRect().bottom || 80) + 24
-      let nextLabel = ''
-      document.querySelectorAll('[data-header-label]').forEach((section) => {
-        if (section.getBoundingClientRect().top <= marker) nextLabel = section.dataset.headerLabel || ''
-      })
-      setActiveSectionLabel((current) => current === nextLabel ? current : nextLabel)
-
       const scrollable = Math.max(1, document.documentElement.scrollHeight - viewportHeight)
       const progress = Math.min(1, Math.max(0, window.scrollY / scrollable))
       if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
@@ -464,7 +453,7 @@ function SiteHeader({ content = fallbackHeader, preview = false }) {
     <>
       <header className={`site-header${preview ? ' site-header-preview' : ''}`}>
         <button className="brand brand-button" type="button" onClick={() => followLink('#top')}>{content.brand}</button>
-        <FormatLine formats={content.formats} activeLabel={activeSectionLabel} />
+        <FormatLine formats={content.formats} />
         <div className="header-actions">
           <button className="contact-button" type="button" onClick={() => followLink(content.contactHref)}>{content.contactLabel}</button>
           <button ref={openButtonRef} className="menu-button" type="button" aria-label="Открыть меню" aria-expanded={open} aria-controls="site-menu-dialog" onClick={openMenu}><DotsIcon /></button>
