@@ -34,7 +34,7 @@ app.use(
     contentSecurityPolicy: isProduction
       ? {
           directives: {
-            imgSrc: ["'self'", 'data:', 'https://kinescope.io'],
+            imgSrc: ["'self'", 'data:', 'https://kinescope.io', 'https://*.kinescopecdn.net'],
             frameSrc: ["'self'", 'https://kinescope.io'],
           },
         }
