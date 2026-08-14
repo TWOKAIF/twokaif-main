@@ -149,9 +149,9 @@ const fallbackGallery = {
       imageAlt: 'Адис Маммо с микрофоном на камерной церемонии',
     },
     {
-      image: '/images/gallery/v2/03-kirkorov-2120.webp',
-      avifSrcSet: '/images/gallery/v2/03-kirkorov-480.avif 480w, /images/gallery/v2/03-kirkorov-800.avif 800w, /images/gallery/v2/03-kirkorov-1280.avif 1280w, /images/gallery/v2/03-kirkorov-2120.avif 2120w',
-      webpSrcSet: '/images/gallery/v2/03-kirkorov-480.webp 480w, /images/gallery/v2/03-kirkorov-800.webp 800w, /images/gallery/v2/03-kirkorov-1280.webp 1280w, /images/gallery/v2/03-kirkorov-2120.webp 2120w',
+      image: '/images/gallery/v2/03-kirkorov-v2-2120.webp',
+      avifSrcSet: '/images/gallery/v2/03-kirkorov-v2-480.avif 480w, /images/gallery/v2/03-kirkorov-v2-800.avif 800w, /images/gallery/v2/03-kirkorov-v2-1280.avif 1280w, /images/gallery/v2/03-kirkorov-v2-2120.avif 2120w',
+      webpSrcSet: '/images/gallery/v2/03-kirkorov-v2-480.webp 480w, /images/gallery/v2/03-kirkorov-v2-800.webp 800w, /images/gallery/v2/03-kirkorov-v2-1280.webp 1280w, /images/gallery/v2/03-kirkorov-v2-2120.webp 2120w',
       sizes: '(max-width: 767px) calc(100vw - 32px), (max-width: 1199px) calc((100vw - 102px)/2), calc((100vw - 126px)/2)',
       width: 2120,
       height: 1728,
