@@ -97,14 +97,78 @@ const fallbackGallery = {
   moreLabel: 'ЕЩЁ ФОТО',
   moreHref: '',
   items: [
-    { image: '/images/gallery/01.webp', imageAlt: 'Адис Маммо ведёт свадебную церемонию под открытым небом' },
-    { image: '/images/gallery/02.webp', imageAlt: 'Адис Маммо с микрофоном на камерной церемонии' },
-    { image: '/images/gallery/03.webp', imageAlt: 'Адис Маммо и Екатерина Варнава на сцене' },
-    { image: '/images/gallery/04.webp', imageAlt: 'Адис Маммо ведёт событие в белом смокинге' },
-    { image: '/images/gallery/05.webp', imageAlt: 'Портрет Адиса Маммо на открытом воздухе' },
-    { image: '/images/gallery/06.webp', imageAlt: 'Адис Маммо на фоне красной сценографии' },
-    { image: '/images/gallery/07.webp', imageAlt: 'Адис Маммо ведёт событие на сцене' },
-    { image: '/images/gallery/08.webp', imageAlt: 'Адис Маммо с гостьей светского события' },
+    {
+      image: '/images/gallery/v2/01-2160.webp',
+      avifSrcSet: '/images/gallery/v2/01-640.avif 640w, /images/gallery/v2/01-1280.avif 1280w, /images/gallery/v2/01-2160.avif 2160w',
+      webpSrcSet: '/images/gallery/v2/01-640.webp 640w, /images/gallery/v2/01-1280.webp 1280w, /images/gallery/v2/01-2160.webp 2160w',
+      sizes: '(max-width: 767px) calc(100vw - 32px), (max-width: 1199px) calc(100vw - 96px), calc(100vw - 120px)',
+      width: 2160,
+      height: 864,
+      imageAlt: 'Адис Маммо ведёт свадебную церемонию под открытым небом',
+    },
+    {
+      image: '/images/gallery/v2/02-1080.webp',
+      avifSrcSet: '/images/gallery/v2/02-480.avif 480w, /images/gallery/v2/02-800.avif 800w, /images/gallery/v2/02-1080.avif 1080w',
+      webpSrcSet: '/images/gallery/v2/02-480.webp 480w, /images/gallery/v2/02-800.webp 800w, /images/gallery/v2/02-1080.webp 1080w',
+      sizes: '(max-width: 767px) calc(100vw - 32px), (max-width: 1199px) calc((100vw - 102px)/2), calc((100vw - 126px)/2)',
+      width: 1080,
+      height: 864,
+      imageAlt: 'Адис Маммо с микрофоном на камерной церемонии',
+    },
+    {
+      image: '/images/gallery/v2/03-1060.webp',
+      avifSrcSet: '/images/gallery/v2/03-480.avif 480w, /images/gallery/v2/03-800.avif 800w, /images/gallery/v2/03-1060.avif 1060w',
+      webpSrcSet: '/images/gallery/v2/03-480.webp 480w, /images/gallery/v2/03-800.webp 800w, /images/gallery/v2/03-1060.webp 1060w',
+      sizes: '(max-width: 767px) calc(100vw - 32px), (max-width: 1199px) calc((100vw - 102px)/2), calc((100vw - 126px)/2)',
+      width: 1060,
+      height: 864,
+      imageAlt: 'Адис Маммо и Екатерина Варнава на сцене',
+    },
+    {
+      image: '/images/gallery/v2/04-2156.webp',
+      avifSrcSet: '/images/gallery/v2/04-640.avif 640w, /images/gallery/v2/04-1280.avif 1280w, /images/gallery/v2/04-2156.avif 2156w',
+      webpSrcSet: '/images/gallery/v2/04-640.webp 640w, /images/gallery/v2/04-1280.webp 1280w, /images/gallery/v2/04-2156.webp 2156w',
+      sizes: '(max-width: 767px) calc(100vw - 32px), (max-width: 1199px) calc(100vw - 96px), calc(100vw - 120px)',
+      width: 2156,
+      height: 862,
+      imageAlt: 'Адис Маммо ведёт событие в белом смокинге',
+    },
+    {
+      image: '/images/gallery/v2/05-528.webp',
+      avifSrcSet: '/images/gallery/v2/05-264.avif 264w, /images/gallery/v2/05-528.avif 528w',
+      webpSrcSet: '/images/gallery/v2/05-264.webp 264w, /images/gallery/v2/05-528.webp 528w',
+      sizes: '(max-width: 767px) calc((100vw - 38px)/2), (max-width: 1199px) calc((100vw - 114px)/4), calc((100vw - 138px)/4)',
+      width: 528,
+      height: 818,
+      imageAlt: 'Портрет Адиса Маммо на открытом воздухе',
+    },
+    {
+      image: '/images/gallery/v2/06-526.webp',
+      avifSrcSet: '/images/gallery/v2/06-263.avif 263w, /images/gallery/v2/06-526.avif 526w',
+      webpSrcSet: '/images/gallery/v2/06-263.webp 263w, /images/gallery/v2/06-526.webp 526w',
+      sizes: '(max-width: 767px) calc((100vw - 38px)/2), (max-width: 1199px) calc((100vw - 114px)/4), calc((100vw - 138px)/4)',
+      width: 526,
+      height: 818,
+      imageAlt: 'Адис Маммо на фоне красной сценографии',
+    },
+    {
+      image: '/images/gallery/v2/07-526.webp',
+      avifSrcSet: '/images/gallery/v2/07-263.avif 263w, /images/gallery/v2/07-526.avif 526w',
+      webpSrcSet: '/images/gallery/v2/07-263.webp 263w, /images/gallery/v2/07-526.webp 526w',
+      sizes: '(max-width: 767px) calc((100vw - 38px)/2), (max-width: 1199px) calc((100vw - 114px)/4), calc((100vw - 138px)/4)',
+      width: 526,
+      height: 818,
+      imageAlt: 'Адис Маммо ведёт событие на сцене',
+    },
+    {
+      image: '/images/gallery/v2/08-526.webp',
+      avifSrcSet: '/images/gallery/v2/08-263.avif 263w, /images/gallery/v2/08-526.avif 526w',
+      webpSrcSet: '/images/gallery/v2/08-263.webp 263w, /images/gallery/v2/08-526.webp 526w',
+      sizes: '(max-width: 767px) calc((100vw - 38px)/2), (max-width: 1199px) calc((100vw - 114px)/4), calc((100vw - 138px)/4)',
+      width: 526,
+      height: 818,
+      imageAlt: 'Адис Маммо с гостьей светского события',
+    },
   ],
 }
 
@@ -712,6 +776,25 @@ function SelectedProjects({ content = fallbackSelected }) {
   )
 }
 
+function GalleryImage({ item, alt, sizes, loading = 'lazy', fetchPriority }) {
+  return (
+    <picture>
+      {item.avifSrcSet && <source type="image/avif" srcSet={item.avifSrcSet} sizes={sizes || item.sizes} />}
+      <img
+        src={item.image}
+        srcSet={item.webpSrcSet || undefined}
+        sizes={sizes || item.sizes}
+        width={item.width || undefined}
+        height={item.height || undefined}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+        fetchPriority={fetchPriority}
+      />
+    </picture>
+  )
+}
+
 function PhotoGallery({ content = fallbackGallery }) {
   const gallery = normalizeGallery(content)
   const [activePhoto, setActivePhoto] = useState(null)
@@ -794,7 +877,7 @@ function PhotoGallery({ content = fallbackGallery }) {
               }}
             >
               {item.image
-                ? <img src={item.image} alt={item.imageAlt || `Адис Маммо — фото ${index + 1}`} loading="lazy" />
+                ? <GalleryImage item={item} alt={item.imageAlt || `Адис Маммо — фото ${index + 1}`} />
                 : <span>ФОТО</span>}
             </button>
           </figure>
@@ -817,7 +900,13 @@ function PhotoGallery({ content = fallbackGallery }) {
             <EditorialArrow direction="left" />
           </button>
           <figure className="gallery-lightbox-media">
-            <img src={activeItem.image} alt={activeItem.imageAlt || `Адис Маммо — фото ${activePhoto.index + 1}`} />
+            <GalleryImage
+              item={activeItem}
+              alt={activeItem.imageAlt || `Адис Маммо — фото ${activePhoto.index + 1}`}
+              sizes="100vw"
+              loading="eager"
+              fetchPriority="high"
+            />
             <figcaption>{String(activePhoto.index + 1).padStart(2, '0')} / {String(gallery.items.length).padStart(2, '0')}</figcaption>
           </figure>
           <button className="gallery-lightbox-nav gallery-lightbox-next" type="button" aria-label="Следующая фотография" onClick={showNext}>
