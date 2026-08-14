@@ -39,7 +39,8 @@ if (!cssAsset || !jsAsset) {
 
 let css = await readFile(path.join(distDir, cssAsset), 'utf8')
 let js = await readFile(path.join(distDir, jsAsset), 'utf8')
-const content = JSON.parse(contentFile).published || {}
+const contentData = JSON.parse(contentFile)
+const content = contentData.published || contentData
 let staticContent = JSON.stringify(content)
 
 const localAssetPattern = /\/(?:fonts|images|logos)\/[A-Za-z0-9А-Яа-яЁё._%+\/-]+\.(?:avif|gif|jpe?g|otf|png|svg|ttf|webp|woff2?)/gi
