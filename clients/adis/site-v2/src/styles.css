@@ -96,75 +96,77 @@
 /* Контактный постер — точная desktop-сетка 1440 × 900 из Figma. */
 @media(min-width:1200px){
   .contact-section{
+    --contact-u:min(calc((100vw - (2 * var(--gutter))) / 1320),calc((100svh - var(--header-h)) / 820));
+    --contact-side:calc((100vw - (var(--contact-u) * 1320)) / 2);
     container-type:inline-size;
     position:relative;
     height:calc(100svh - var(--header-h));
-    min-height:720px;
-    padding:0 var(--gutter);
-    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(300px,24.65fr);
+    min-height:0;
+    padding:0 var(--contact-side);
+    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(calc(var(--contact-u) * 300),24.65fr);
     grid-template-rows:1fr;
     column-gap:0;
     row-gap:0;
   }
   .contact-topline{display:contents}
-  .contact-topline>p{position:relative;top:29px;grid-column:1;grid-row:1;align-self:start;font-size:16px}
+  .contact-topline>p{position:relative;top:calc(var(--contact-u) * 29);grid-column:1;grid-row:1;align-self:start;font-size:calc(var(--contact-u) * 16)}
   .contact-menu{
     position:relative;
-    top:29px;
+    top:calc(var(--contact-u) * 29);
     grid-column:3;
     grid-row:1;
     align-self:start;
-    gap:7px;
+    gap:calc(var(--contact-u) * 7);
     font-family:Akrobat,sans-serif;
-    font-size:20px;
+    font-size:calc(var(--contact-u) * 20);
   }
-  .contact-menu strong{position:relative;top:-1px;margin-bottom:14px;font-weight:700}
+  .contact-menu strong{position:relative;top:calc(var(--contact-u) * -1);margin-bottom:calc(var(--contact-u) * 14);font-weight:700}
   .contact-menu a,.contact-menu span{color:rgba(8,8,8,.72);font-weight:400}
   .contact-section>h2{
     position:relative;
-    top:64px;
+    top:calc(var(--contact-u) * 64);
     grid-column:1;
     grid-row:1;
     align-self:start;
     max-width:none;
     margin:0;
-    font-size:136px;
+    font-size:calc(var(--contact-u) * 136);
     font-weight:500;
     letter-spacing:-.01em;
     line-height:.8;
   }
   .contact-socials{
     position:relative;
-    top:208px;
+    top:calc(var(--contact-u) * 208);
     grid-column:1 / -1;
     grid-row:1;
     align-self:start;
-    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(300px,24.65fr);
+    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(calc(var(--contact-u) * 300),24.65fr);
   }
-  .contact-social-link{grid-row:1;min-height:44px;color:rgba(8,8,8,.62);font-size:16px;font-weight:400}
+  .contact-social-link{grid-row:1;min-height:calc(var(--contact-u) * 44);color:rgba(8,8,8,.62);font-size:calc(var(--contact-u) * 16);font-weight:400}
   .contact-social-link:nth-child(1){grid-column:1;justify-self:start}
-  .contact-social-link:nth-child(2){grid-column:1;justify-self:center;transform:translateX(19px)}
+  .contact-social-link:nth-child(2){grid-column:1;justify-self:center;transform:translateX(calc(var(--contact-u) * 19))}
   .contact-social-link:nth-child(3){grid-column:1;justify-self:end}
   .contact-social-link:nth-child(4){grid-column:3;justify-self:start}
   .contact-social-link:nth-child(5){grid-column:3;justify-self:end}
   .contact-main{
     position:relative;
-    top:299px;
+    top:calc(var(--contact-u) * 299);
     grid-column:1 / -1;
     grid-row:1;
     display:grid;
-    height:390px;
-    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(300px,24.65fr);
+    height:calc(var(--contact-u) * 390);
+    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(calc(var(--contact-u) * 300),24.65fr);
     align-self:start;
     align-items:start;
     gap:0;
     margin:0;
   }
-  .contact-signature{position:relative;top:1px;grid-column:1;min-width:0}
+  .contact-signature{position:relative;top:var(--contact-u);grid-column:1;min-width:0}
   .contact-signature>p{
     display:grid;
-    margin:-7px 0 0;
-    font-size:clamp(200px,16.67cqw,240px);
+    margin:calc(var(--contact-u) * -7) 0 0;
+    font-size:calc(var(--contact-u) * 220);
     font-weight:500;
     letter-spacing:-.01em;
     line-height:.8;
@@ -173,43 +175,45 @@
   .contact-signature>p span:first-child{margin-left:-.01em;transform:scaleX(.985) scaleY(.982)}
   .contact-signature>p span:nth-child(2){margin-left:-.035em;transform:scaleX(.95) scaleY(.975)}
   .contact-signature small{
-    margin-top:24px;
+    margin-top:calc(var(--contact-u) * 24);
     margin-left:-.077em;
     position:relative;
-    top:-12px;
-    font-size:25px;
+    top:calc(var(--contact-u) * -12);
+    font-size:calc(var(--contact-u) * 25);
   }
   .contact-materials{
     grid-column:3;
     width:100%;
-    gap:24px;
+    gap:calc(var(--contact-u) * 24);
   }
+  .contact-portrait{border-radius:calc(var(--contact-u) * 16)}
   .contact-materials-link{
-    min-height:43px;
-    padding:0 14px;
+    min-height:calc(var(--contact-u) * 43);
+    padding:0 calc(var(--contact-u) * 14);
+    border-width:max(2px,calc(var(--contact-u) * 2));
     font-family:Akrobat,sans-serif;
-    font-size:20px;
+    font-size:calc(var(--contact-u) * 20);
     font-weight:700;
     letter-spacing:.028em;
   }
   .contact-footer{
     position:relative;
-    top:731px;
+    top:calc(var(--contact-u) * 731);
     grid-column:1 / -1;
     grid-row:1;
     align-self:start;
-    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(300px,24.65fr);
+    grid-template-columns:minmax(0,43fr) minmax(0,32.35fr) minmax(calc(var(--contact-u) * 300),24.65fr);
     gap:0;
     font-family:Akrobat,sans-serif;
-    font-size:19px;
+    font-size:calc(var(--contact-u) * 19);
     font-weight:700;
     letter-spacing:0;
   }
-  .contact-footer>*{grid-row:1}
-  .contact-footer>span:first-child{grid-column:1;justify-self:start;font-size:19px;font-weight:700}
-  .contact-footer>a:nth-child(2),.contact-footer>span:nth-child(2){grid-column:1;justify-self:end;font-size:20px;font-weight:400}
-  .contact-footer>a:nth-child(3),.contact-footer>span:nth-child(3){grid-column:2;justify-self:end;font-size:19px;font-weight:400}
-  .contact-footer>.contact-top-link{grid-column:3;justify-self:end;font-size:20px;font-weight:700}
+  .contact-footer>*{grid-row:1;min-height:calc(var(--contact-u) * 44)}
+  .contact-footer>span:first-child{grid-column:1;justify-self:start;font-size:calc(var(--contact-u) * 19);font-weight:700}
+  .contact-footer>a:nth-child(2),.contact-footer>span:nth-child(2){grid-column:1;justify-self:end;font-size:calc(var(--contact-u) * 20);font-weight:400}
+  .contact-footer>a:nth-child(3),.contact-footer>span:nth-child(3){grid-column:2;justify-self:end;font-size:calc(var(--contact-u) * 19);font-weight:400}
+  .contact-footer>.contact-top-link{grid-column:3;justify-self:end;font-size:calc(var(--contact-u) * 20);font-weight:700}
   .contact-top-link .editorial-action-arrow{display:none}
 }
 
