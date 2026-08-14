@@ -44,7 +44,7 @@ const fallbackHeader = {
   brand: 'АДИС МАММО',
   formats: ['ЧАСТНЫЕ СОБЫТИЯ', 'КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ', 'STAND UP'],
   contactLabel: 'СВЯЗАТЬСЯ',
-  contactHref: '#contacts',
+  contactHref: 'https://t.me/amynameis',
   menu: [
     { label: 'ОБ АДИСЕ', href: '#about' },
     { label: 'ВИДЕО', href: '#video' },
@@ -53,11 +53,11 @@ const fallbackHeader = {
     { label: 'КОНТАКТЫ', href: '#contacts' },
   ],
   socials: [
-    { label: 'TELEGRAM', href: '#' },
-    { label: 'WHATSAPP', href: '#' },
-    { label: 'MAX', href: '#' },
-    { label: 'INST', href: '#' },
-    { label: 'YOUTUBE', href: '#' },
+    { label: 'TELEGRAM', href: 'https://t.me/amynameis' },
+    { label: 'WHATSAPP', href: 'https://wa.me/79265685715' },
+    { label: 'MAX', href: 'https://max.ru/join/Ssn7W9oeTMShsawb3WxYQxVG2-3XKf8nP30z1dvLO0I' },
+    { label: 'INST', href: 'https://www.instagram.com/adismammo' },
+    { label: 'YOUTUBE', href: 'https://www.youtube.com/@adismammo3469' },
   ],
 }
 
@@ -102,7 +102,7 @@ const fallbackVideo = {
   kicker: '// ВИДЕО',
   title: 'В РАБОТЕ',
   moreLabel: 'ЕЩЁ ВИДЕО',
-  moreHref: '',
+  moreHref: 'https://t.me/contentmammo',
   items: [
     { title: 'ШОУРИЛ', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ:\nСЦЕНА, ЗАЛ И ЭНЕРГИЯ МОМЕНТА.', url: 'https://kinescope.io/embed/da7f4528-b31d-4df6-aa3d-1045ad19d59c' },
     { title: 'СВАДЕБНЫЙ ЛАЙВ', subtitle: 'СВАДЬБА БЕЗ ПОСТАНОВКИ:\nИМПРОВИЗАЦИЯ, РЕАКЦИИ И ЖИВОЙ ЗАЛ.', url: 'https://kinescope.io/embed/5e4dc825-1b11-4ba8-8bb5-87e3fa1a6c4f' },
@@ -128,7 +128,7 @@ const fallbackGallery = {
   kicker: '// ФОТО',
   title: 'ВНЕ СЦЕНАРИЯ',
   moreLabel: 'ЕЩЁ ФОТО',
-  moreHref: '',
+  moreHref: 'https://t.me/contentmammo',
   items: [
     {
       image: '/images/gallery/v2/01-2160.webp',
@@ -214,10 +214,10 @@ const fallbackContact = {
   portrait: '/images/adis-contact.png',
   portraitAlt: 'Адис Маммо',
   materialsLabel: 'МАТЕРИАЛЫ ДЛЯ ОРГАНИЗАТОРОВ',
-  materialsHref: '#',
+  materialsHref: 'https://disk.yandex.ru/d/D9CQrr6e1i4WzQ',
   copyright: '© 2026',
   developmentLabel: 'РАЗРАБОТКА САЙТА',
-  developmentHref: '#',
+  developmentHref: 'https://twokaif.ru/',
   privacyLabel: 'ПОЛИТИКА / COOKIE',
   privacyHref: '#',
   topLabel: 'НАВЕРХ',

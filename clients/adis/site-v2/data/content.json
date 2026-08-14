@@ -14,7 +14,7 @@
       "STAND UP"
     ],
     "contactLabel": "СВЯЗАТЬСЯ",
-    "contactHref": "#contacts",
+    "contactHref": "https://t.me/amynameis",
     "menu": [
       {
         "label": "ОБ АДИСЕ",
@@ -40,23 +40,23 @@
     "socials": [
       {
         "label": "TELEGRAM",
-        "href": "#"
+        "href": "https://t.me/amynameis"
       },
       {
         "label": "WHATSAPP",
-        "href": "#"
+        "href": "https://wa.me/79265685715"
       },
       {
         "label": "MAX",
-        "href": "#"
+        "href": "https://max.ru/join/Ssn7W9oeTMShsawb3WxYQxVG2-3XKf8nP30z1dvLO0I"
       },
       {
         "label": "INST",
-        "href": "#"
+        "href": "https://www.instagram.com/adismammo"
       },
       {
         "label": "YOUTUBE",
-        "href": "#"
+        "href": "https://www.youtube.com/@adismammo3469"
       }
     ]
   },
@@ -132,7 +132,7 @@
     "kicker": "// ВИДЕО",
     "title": "В РАБОТЕ",
     "moreLabel": "ЕЩЁ ВИДЕО",
-    "moreHref": "",
+    "moreHref": "https://t.me/contentmammo",
     "items": [
       {
         "title": "ШОУРИЛ",
