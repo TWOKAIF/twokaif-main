@@ -71,10 +71,10 @@ const fallbackVideo = {
   moreLabel: 'ЕЩЁ ВИДЕО',
   moreHref: '',
   items: [
-    { title: 'ШОУРИЛ 2025', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ ЗА ПОСЛЕДНЕЕ ВРЕМЯ', url: '' },
-    { title: 'СВАДЕБНЫЙ ЛАЙВ', subtitle: 'РАЗ — ТЫ В БЕЛОМ ПЛАТЬЕ.\nДВА — В МОИХ ОБЪЯТИЯХ.\nТРИ — ВИДЕОФРАГМЕНТ СМОТРИ.', url: '' },
-    { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
-    { title: 'НАЗВАНИЕ', subtitle: 'ПОДРОБНОЕ ОПИСАНИЕ ДАННОГО ВИДЕО', url: '' },
+    { title: 'ШОУРИЛ', subtitle: 'ФРАГМЕНТЫ СОБЫТИЙ:\nСЦЕНА, ЗАЛ И ЭНЕРГИЯ МОМЕНТА.', url: 'https://kinescope.io/embed/da7f4528-b31d-4df6-aa3d-1045ad19d59c' },
+    { title: 'СВАДЕБНЫЙ ЛАЙВ', subtitle: 'СВАДЬБА БЕЗ ПОСТАНОВКИ:\nИМПРОВИЗАЦИЯ, РЕАКЦИИ И ЖИВОЙ ЗАЛ.', url: 'https://kinescope.io/embed/5e4dc825-1b11-4ba8-8bb5-87e3fa1a6c4f' },
+    { title: 'ЗАЛ НА 6000', subtitle: '6000 ПРЕДПРИНИМАТЕЛЕЙ В ОДНОМ ЗАЛЕ.\nЛЕГКО, ТОЧНО И ПО ДЕЛУ.', url: 'https://kinescope.io/embed/caa1da45-c667-45f5-9663-f08343cac815' },
+    { title: 'МАММО × ВАРНАВА', subtitle: 'ДВА ХАРАКТЕРА НА ОДНОЙ СЦЕНЕ:\nИМПРОВИЗАЦИЯ И ДИАЛОГ БЕЗ СЦЕНАРИЯ.', url: 'https://kinescope.io/embed/d7b50504-d4fa-4501-b61a-2eeda6b9569f' },
   ],
 }
 
