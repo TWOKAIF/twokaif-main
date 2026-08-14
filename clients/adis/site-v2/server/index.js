@@ -44,6 +44,7 @@ app.get('/api/content', async (_request, response, next) => {
 app.use(['/admin', '/api/admin'], (_request, response) => response.sendStatus(404))
 
 if (isProduction) {
+  app.use('/fonts', express.static(path.join(distDir, 'fonts'), { index: false, immutable: true, maxAge: '1y' }))
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
   app.get('/{*path}', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
 }

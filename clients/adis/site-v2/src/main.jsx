@@ -7,6 +7,39 @@ import './styles.css'
 
 gsap.registerPlugin(useGSAP)
 
+const CRITICAL_FONT_TIMEOUT = 1800
+
+function showCriticalTypography() {
+  document.documentElement.classList.remove('fonts-loading')
+  document.documentElement.classList.add('fonts-ready')
+}
+
+async function prepareCriticalTypography() {
+  if (!document.fonts?.load) {
+    showCriticalTypography()
+    return
+  }
+
+  let timeoutId
+  try {
+    await Promise.race([
+      Promise.all([
+        document.fonts.load('500 1em "CoFo Kak"', 'АДИС МАММО'),
+        document.fonts.load('400 1em Akrobat', 'АДИС МАММО'),
+        document.fonts.load('700 1em Akrobat', 'АДИС МАММО'),
+      ]),
+      new Promise((resolve) => { timeoutId = window.setTimeout(resolve, CRITICAL_FONT_TIMEOUT) }),
+    ])
+  } catch {
+    // Не держим первый экран скрытым, если браузер или сеть не отдали шрифт.
+  } finally {
+    window.clearTimeout(timeoutId)
+    showCriticalTypography()
+  }
+}
+
+prepareCriticalTypography()
+
 const fallbackHeader = {
   brand: 'АДИС МАММО',
   formats: ['ЧАСТНЫЕ СОБЫТИЯ', 'КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ', 'STAND UP'],
