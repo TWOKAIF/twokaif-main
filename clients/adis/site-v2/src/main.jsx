@@ -926,21 +926,22 @@ function PhotoGallery({ content = fallbackGallery }) {
           ref={dialogRef}
           onMouseDown={(event) => event.target === event.currentTarget && closeLightbox()}
         >
-          <button className="gallery-lightbox-close" type="button" aria-label="Закрыть фотографию" ref={closeButtonRef} onClick={closeLightbox}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
-          </button>
           <button className="gallery-lightbox-nav gallery-lightbox-prev" type="button" aria-label="Предыдущая фотография" onClick={showPrevious}>
             <EditorialArrow direction="left" />
           </button>
           <figure className="gallery-lightbox-media">
-            <GalleryImage
-              item={activeItem}
-              alt={activeItem.imageAlt || `Адис Маммо — фото ${activePhoto.index + 1}`}
-              sizes="100vw"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <figcaption>{String(activePhoto.index + 1).padStart(2, '0')} / {String(gallery.items.length).padStart(2, '0')}</figcaption>
+            <div className="gallery-lightbox-frame">
+              <GalleryImage
+                item={activeItem}
+                alt={activeItem.imageAlt || `Адис Маммо — фото ${activePhoto.index + 1}`}
+                sizes="100vw"
+                loading="eager"
+                fetchPriority="high"
+              />
+              <button className="gallery-lightbox-close" type="button" aria-label="Закрыть фотографию" ref={closeButtonRef} onClick={closeLightbox}>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+              </button>
+            </div>
           </figure>
           <button className="gallery-lightbox-nav gallery-lightbox-next" type="button" aria-label="Следующая фотография" onClick={showNext}>
             <EditorialArrow direction="right" />
