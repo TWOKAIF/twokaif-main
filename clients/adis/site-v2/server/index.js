@@ -17,9 +17,11 @@ app.disable('x-powered-by')
 if (isProduction) app.set('trust proxy', 1)
 app.use(
   helmet({
+    xFrameOptions: false,
     contentSecurityPolicy: isProduction
       ? {
           directives: {
+            frameAncestors: ["'self'", 'https://check.twokaif.ru'],
             imgSrc: ["'self'", 'data:', 'https://kinescope.io', 'https://*.kinescopecdn.net'],
             frameSrc: ["'self'", 'https://kinescope.io'],
           },
@@ -27,9 +29,22 @@ app.use(
       : false,
   }),
 )
+app.use((_request, response, next) => {
+  response.set('Permissions-Policy', 'camera=(), geolocation=(), microphone=(), payment=(), usb=()')
+  next()
+})
 
-async function readContent() {
-  return JSON.parse(await fs.readFile(contentPath, 'utf8'))
+let contentPromise
+function readContent() {
+  if (!contentPromise) {
+    contentPromise = fs.readFile(contentPath, 'utf8')
+      .then((source) => JSON.parse(source))
+      .catch((error) => {
+        contentPromise = undefined
+        throw error
+      })
+  }
+  return contentPromise
 }
 
 app.get('/api/content', async (_request, response, next) => {
@@ -42,18 +57,21 @@ app.get('/api/content', async (_request, response, next) => {
 })
 
 app.use(['/admin', '/api/admin'], (_request, response) => response.sendStatus(404))
+app.get('/favicon.ico', (_request, response) => response.sendStatus(204))
 
 if (isProduction) {
   app.use('/fonts', express.static(path.join(distDir, 'fonts'), { index: false, immutable: true, maxAge: '1y' }))
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
-  app.get('/{*path}', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
+  app.get('/', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
 }
+
+app.use((_request, response) => response.sendStatus(404))
 
 app.use((error, _request, response, _next) => {
   console.error(error)
   response.status(500).json({ error: 'Не удалось загрузить сайт' })
 })
 
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '127.0.0.1', () => {
   console.log(`Adis site server: http://localhost:${port}`)
 })
