@@ -9,6 +9,8 @@ const rootDir = path.resolve(__dirname, '..')
 const dataDir = process.env.DATA_DIR || path.join(rootDir, 'data')
 const contentPath = path.join(dataDir, 'content.json')
 const distDir = path.join(rootDir, 'dist')
+const indexPath = path.join(distDir, 'index.html')
+const contentMarker = '<!--__SITE_CONTENT__-->'
 const isProduction = process.env.NODE_ENV === 'production'
 const port = Number(process.env.PORT || 8787)
 
@@ -34,17 +36,33 @@ app.use((_request, response, next) => {
   next()
 })
 
-let contentPromise
 function readContent() {
-  if (!contentPromise) {
-    contentPromise = fs.readFile(contentPath, 'utf8')
-      .then((source) => JSON.parse(source))
-      .catch((error) => {
-        contentPromise = undefined
-        throw error
-      })
+  return fs.readFile(contentPath, 'utf8').then((source) => JSON.parse(source))
+}
+
+let indexTemplatePromise
+function readIndexTemplate() {
+  if (!indexTemplatePromise) {
+    indexTemplatePromise = fs.readFile(indexPath, 'utf8').catch((error) => {
+      indexTemplatePromise = undefined
+      throw error
+    })
   }
-  return contentPromise
+  return indexTemplatePromise
+}
+
+function escapeHtmlAttribute(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+}
+
+async function renderIndex() {
+  const [template, content] = await Promise.all([readIndexTemplate(), readContent()])
+  const payload = escapeHtmlAttribute(JSON.stringify(content))
+  return template.replace(contentMarker, `<div id="site-content" hidden data-json="${payload}"></div>`)
 }
 
 app.get('/api/content', async (_request, response, next) => {
@@ -62,7 +80,14 @@ app.get('/favicon.ico', (_request, response) => response.sendStatus(204))
 if (isProduction) {
   app.use('/fonts', express.static(path.join(distDir, 'fonts'), { index: false, immutable: true, maxAge: '1y' }))
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
-  app.get('/', (_request, response) => response.sendFile(path.join(distDir, 'index.html')))
+  app.get('/', async (_request, response, next) => {
+    try {
+      response.set('Cache-Control', 'no-store')
+      response.type('html').send(await renderIndex())
+    } catch (error) {
+      next(error)
+    }
+  })
 }
 
 app.use((_request, response) => response.sendStatus(404))

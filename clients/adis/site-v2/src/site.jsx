@@ -301,6 +301,55 @@ function normalizeContact(input = {}) {
   return { ...fallbackContact, ...(input || {}) }
 }
 
+function normalizeHeader(input = {}) {
+  return {
+    ...fallbackHeader,
+    ...(input || {}),
+    menu: Array.isArray(input?.menu) ? input.menu : fallbackHeader.menu,
+    socials: Array.isArray(input?.socials) ? input.socials : fallbackHeader.socials,
+  }
+}
+
+function normalizeSiteContent(input = {}) {
+  return {
+    header: normalizeHeader(input.header),
+    hero: normalizeHero(input.hero),
+    about: { ...fallbackAbout, ...(input.about || {}) },
+    video: normalizeVideo(input.video),
+    ticker: normalizeTicker(input.ticker),
+    selected: normalizeSelected(input.selected),
+    gallery: normalizeGallery(input.gallery),
+    contact: normalizeContact(input.contact),
+    visibility: normalizeVisibility(input.visibility),
+  }
+}
+
+function readBootstrappedContent() {
+  if (window.__ADIS_STANDALONE_CONTENT__) return window.__ADIS_STANDALONE_CONTENT__
+  const node = document.getElementById('site-content')
+  if (!node?.dataset.json) return null
+  try {
+    return JSON.parse(node.dataset.json)
+  } catch {
+    return null
+  }
+}
+
+const bootstrappedContent = readBootstrappedContent()
+let contentRequest
+
+function requestContent() {
+  if (!contentRequest) {
+    contentRequest = fetch('/api/content')
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error(`HTTP ${response.status}`)))
+      .catch((error) => {
+        contentRequest = undefined
+        throw error
+      })
+  }
+  return contentRequest
+}
+
 function normalizeHero(input = {}) {
   const normalizeLayoutUnits = (layout, defaults) => {
     const source = { ...defaults, ...(layout || {}) }
@@ -1065,9 +1114,19 @@ function ContactSection({ content = fallbackContact, header = fallbackHeader }) 
 }
 
 export default function PublicSite() {
-  const [content, setContent] = useState({ header: fallbackHeader, hero: fallbackHero, about: fallbackAbout, video: fallbackVideo, ticker: fallbackTicker, selected: fallbackSelected, gallery: fallbackGallery, contact: fallbackContact, visibility: fallbackVisibility })
+  const [content, setContent] = useState(() => bootstrappedContent ? normalizeSiteContent(bootstrappedContent) : null)
+  const [contentFailed, setContentFailed] = useState(false)
   useEffect(() => {
-    fetch('/api/content').then((response) => response.ok ? response.json() : Promise.reject()).then((nextContent) => setContent({ header: nextContent.header || fallbackHeader, hero: normalizeHero(nextContent.hero), about: nextContent.about || fallbackAbout, video: normalizeVideo(nextContent.video), ticker: normalizeTicker(nextContent.ticker), selected: normalizeSelected(nextContent.selected), gallery: normalizeGallery(nextContent.gallery), contact: normalizeContact(nextContent.contact), visibility: normalizeVisibility(nextContent.visibility) })).catch(() => {})
+    if (bootstrappedContent) return undefined
+    let cancelled = false
+    requestContent()
+      .then((nextContent) => {
+        if (!cancelled) setContent(normalizeSiteContent(nextContent))
+      })
+      .catch(() => {
+        if (!cancelled) setContentFailed(true)
+      })
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
@@ -1120,6 +1179,15 @@ export default function PublicSite() {
     sections.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
   }, [content])
+
+  if (!content) {
+    return (
+      <main className="content-loading-shell" aria-busy={!contentFailed}>
+        <span>АДИС МАММО</span>
+        {contentFailed && <button type="button" onClick={() => window.location.reload()}>ОБНОВИТЬ</button>}
+      </main>
+    )
+  }
 
   const visibility = normalizeVisibility(content.visibility)
   const visibleHeader = filterHeaderByVisibility(content.header, visibility)
