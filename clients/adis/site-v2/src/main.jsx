@@ -1053,5 +1053,56 @@ function PublicSite() {
   )
 }
 
+function SmallScreenHolding() {
+  return (
+    <main className="screen-holding">
+      <header className="screen-holding-header">
+        <span>АДИС МАММО</span>
+        <span>// САЙТ</span>
+      </header>
+      <section className="screen-holding-stage" aria-labelledby="screen-holding-title">
+        <p className="screen-holding-kicker">// МОБИЛЬНАЯ ВЕРСИЯ</p>
+        <h1 id="screen-holding-title">СКОРО</h1>
+        <div className="screen-holding-field">
+          <picture>
+            <source
+              type="image/webp"
+              srcSet="/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w"
+              sizes="100vw"
+            />
+            <img
+              src="/images/hero/v2/adis-hero-v2.png"
+              alt="Адис Маммо"
+              width="2349"
+              height="2496"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
+          <p className="screen-holding-note">ПОКА САЙТ ДОСТУПЕН<br />НА КОМПЬЮТЕРЕ</p>
+        </div>
+      </section>
+      <footer className="screen-holding-footer">
+        <span>ВЕДУЩИЙ / КОМИК</span>
+        <a href="https://t.me/amynameis" target="_blank" rel="noopener noreferrer">СВЯЗАТЬСЯ</a>
+      </footer>
+    </main>
+  )
+}
 
-createRoot(document.getElementById('root')).render(<React.StrictMode><PublicSite /></React.StrictMode>)
+function ViewportGate() {
+  const desktopQuery = '(min-width: 1200px)'
+  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(desktopQuery).matches)
+
+  useEffect(() => {
+    const media = window.matchMedia(desktopQuery)
+    const updateViewport = (event) => setIsDesktop(event.matches)
+    media.addEventListener('change', updateViewport)
+    return () => media.removeEventListener('change', updateViewport)
+  }, [])
+
+  return isDesktop ? <PublicSite /> : <SmallScreenHolding />
+}
+
+
+createRoot(document.getElementById('root')).render(<React.StrictMode><ViewportGate /></React.StrictMode>)

@@ -247,3 +247,29 @@ html.fonts-loading .site-header{visibility:hidden;opacity:0}html.fonts-ready .si
 
 .gallery-lightbox-close svg{stroke-width:2.2}.gallery-lightbox-nav .editorial-action-arrow{width:36px;height:20px}
 @media(max-width:620px){.editorial-action-arrow{width:.86em;height:.86em}.editorial-action-arrow-up{width:.7em;height:1em;stroke-width:2.35}}
+
+/* Временная фирменная обложка для экранов уже 1200 px. */
+.screen-holding{display:grid;width:100%;min-height:100svh;padding:0 clamp(16px,4.7vw,48px) max(18px,env(safe-area-inset-bottom));grid-template-rows:auto 1fr auto;overflow:hidden;background:var(--paper);color:var(--ink);isolation:isolate}
+.screen-holding-header,.screen-holding-footer{position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;font-size:clamp(13px,1.85vw,18px);font-weight:700;line-height:1;text-transform:uppercase}
+.screen-holding-header{min-height:clamp(64px,9vw,82px);border-bottom:1px solid rgba(8,8,8,.58)}
+.screen-holding-header span:last-child{color:rgba(8,8,8,.48)}
+.screen-holding-stage{position:relative;display:grid;min-height:0;padding-top:clamp(30px,5.7vh,60px);grid-template-rows:auto auto 1fr;align-content:start}
+.screen-holding-kicker{position:relative;z-index:3;margin:0;font-size:clamp(13px,1.8vw,17px);font-weight:700;line-height:1;text-transform:uppercase}
+.screen-holding h1{position:relative;z-index:3;padding:.04em 0 .08em;margin:clamp(18px,3vh,32px) 0 0;font-family:'CoFo Kak',sans-serif;font-size:clamp(112px,28vw,300px);font-weight:500;letter-spacing:-.035em;line-height:.72;text-transform:uppercase}
+.screen-holding-field{position:relative;align-self:end;width:100%;height:clamp(310px,48svh,590px);margin-top:clamp(24px,4vh,42px);overflow:hidden;border-radius:clamp(14px,2vw,22px);corner-shape:squircle;background:var(--red)}
+.screen-holding-field picture{position:absolute;inset:0;display:block}
+.screen-holding-field img{position:absolute;right:clamp(-42px,-3vw,-16px);bottom:0;display:block;width:auto;height:112%;max-width:82%;object-fit:contain;object-position:right bottom;filter:contrast(1.02)}
+.screen-holding-note{position:absolute;z-index:2;left:clamp(18px,3.8vw,42px);bottom:clamp(20px,4vw,42px);max-width:12ch;margin:0;color:#fff;font-size:clamp(20px,4.4vw,44px);font-weight:700;letter-spacing:-.02em;line-height:.88;text-transform:uppercase;text-wrap:balance}
+.screen-holding-footer{min-height:clamp(70px,10vw,92px);gap:18px}
+.screen-holding-footer>span{color:rgba(8,8,8,.58);font-weight:400}
+.screen-holding-footer a{display:grid;min-height:44px;padding:2px clamp(18px,3.5vw,34px) 0;place-items:center;border:1.5px solid currentColor;border-radius:999px;transition:background-color .22s ease,color .22s ease}
+.screen-holding-footer a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+html.fonts-loading .screen-holding-header,html.fonts-loading .screen-holding-stage,html.fonts-loading .screen-holding-footer{visibility:hidden;opacity:0}
+html.fonts-ready .screen-holding-header{animation:critical-ui-in .22s ease-out both}
+html.fonts-ready .screen-holding-kicker,html.fonts-ready .screen-holding h1,html.fonts-ready .screen-holding-field,html.fonts-ready .screen-holding-footer{animation:holding-in .72s var(--motion-ease) both}
+html.fonts-ready .screen-holding h1{animation-delay:.06s}
+html.fonts-ready .screen-holding-field{animation-delay:.12s}
+html.fonts-ready .screen-holding-footer{animation-delay:.18s}
+@media(hover:hover) and (pointer:fine){.screen-holding-footer a:hover{background:var(--ink);color:var(--paper)}}
+@media(max-width:620px){.screen-holding{padding-inline:12px}.screen-holding-header{min-height:58px}.screen-holding-stage{padding-top:28px}.screen-holding h1{font-size:clamp(108px,33vw,142px);line-height:.74}.screen-holding-field{height:44svh;min-height:330px;margin-top:20px}.screen-holding-field img{right:-54px;height:105%;max-width:105%}.screen-holding-note{max-width:8.5ch;font-size:clamp(25px,7.8vw,34px)}.screen-holding-footer{font-size:12px}.screen-holding-footer>span{max-width:10ch;line-height:.9}.screen-holding-footer a{padding-inline:16px}}
+@keyframes holding-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
