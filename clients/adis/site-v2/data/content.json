@@ -67,11 +67,13 @@
     "accent": "#9B1406",
     "portrait": {
       "id": "",
-      "url": "/images/adis-hero.png",
+      "url": "/images/hero/v2/adis-hero-v2.png",
+      "webpSrcSet": "/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w, /images/hero/v2/adis-hero-v2-2349.webp 2349w",
+      "sizes": "(max-width: 767px) min(165vw, 854px), (max-width: 1199px) min(110vw, 961px), min(82vw, calc(89svh - 71px))",
       "alt": "Адис Маммо",
       "originalName": "",
-      "width": 2401,
-      "height": 2548,
+      "width": 2349,
+      "height": 2496,
       "bytes": 0
     },
     "layouts": {

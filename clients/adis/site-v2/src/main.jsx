@@ -84,7 +84,14 @@ const fallbackHero = {
   nameBottom: 'МАММО',
   role: 'ВЕДУЩИЙ / КОМИК',
   accent: '#9B1406',
-  portrait: { url: '/images/adis-hero.png', alt: 'Адис Маммо', width: 2401, height: 2548 },
+  portrait: {
+    url: '/images/hero/v2/adis-hero-v2.png',
+    webpSrcSet: '/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w, /images/hero/v2/adis-hero-v2-2349.webp 2349w',
+    sizes: '(max-width: 767px) min(165vw, 854px), (max-width: 1199px) min(110vw, 961px), min(82vw, calc(89svh - 71px))',
+    alt: 'Адис Маммо',
+    width: 2349,
+    height: 2496,
+  },
   layouts: heroLayoutDefaults,
   motion: 'text',
 }
@@ -569,7 +576,18 @@ function HeroSection({ content = fallbackHero }) {
         <h1 id="hero-title"><span>{hero.nameTop}</span><span>{hero.nameBottom}</span></h1>
         <p>{hero.role}</p>
       </div>
-      <img className="hero-portrait" src={hero.portrait.url} alt={hero.portrait.alt || 'Адис Маммо'} />
+      <picture>
+        {hero.portrait.webpSrcSet && <source type="image/webp" srcSet={hero.portrait.webpSrcSet} sizes={hero.portrait.sizes} />}
+        <img
+          className="hero-portrait"
+          src={hero.portrait.url}
+          alt={hero.portrait.alt || 'Адис Маммо'}
+          width={hero.portrait.width}
+          height={hero.portrait.height}
+          decoding="async"
+          fetchPriority="high"
+        />
+      </picture>
     </section>
   )
 }
