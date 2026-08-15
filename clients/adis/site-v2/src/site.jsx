@@ -526,8 +526,19 @@ function SiteHeader({ content = fallbackHeader }) {
     }
     window.open(href, '_blank', 'noopener,noreferrer')
   }
+  const getCurrentMenuIndex = () => {
+    const readingLine = Math.min(window.innerHeight * 0.35, 320)
+    let currentIndex = 0
+    content.menu.forEach((item, index) => {
+      if (!item.href?.startsWith('#')) return
+      const section = document.querySelector(item.href)
+      if (section?.getBoundingClientRect().top <= readingLine) currentIndex = index
+    })
+    return currentIndex
+  }
   const openMenu = () => {
     lastFocusedRef.current = document.activeElement || openButtonRef.current
+    setActiveMenuIndex(getCurrentMenuIndex())
     setOpen(true)
   }
 
@@ -556,7 +567,7 @@ function SiteHeader({ content = fallbackHeader }) {
           <figure className="menu-portrait" aria-hidden="true">
             {open && <img src="/images/optimized/adis-menu-640.webp" alt="" width="640" height="1138" decoding="async" />}
           </figure>
-          <nav className="menu-list" aria-label="Основная навигация" onMouseLeave={() => setActiveMenuIndex(0)}>
+          <nav className="menu-list" aria-label="Основная навигация" onMouseLeave={() => setActiveMenuIndex(getCurrentMenuIndex())}>
             {content.menu.map((item, index) => (
               <button
                 className={`menu-link${index === activeMenuIndex ? ' is-active' : ''}`}
@@ -585,7 +596,7 @@ function SiteHeader({ content = fallbackHeader }) {
 function HeroSection({ content = fallbackHero }) {
   const hero = normalizeHero(content)
   return (
-    <section className={`hero hero-motion-${hero.motion}`} aria-labelledby="hero-title" style={getHeroStyle(hero)}>
+    <section className={`hero hero-motion-${hero.motion}`} id="main-content" tabIndex="-1" aria-labelledby="hero-title" style={getHeroStyle(hero)}>
       <div className="hero-red-field" aria-hidden="true" />
       <div className="hero-copy">
         <h1 id="hero-title"><span>{hero.nameTop}</span><span>{hero.nameBottom}</span></h1>
@@ -1182,7 +1193,7 @@ export default function PublicSite() {
 
   if (!content) {
     return (
-      <main className="content-loading-shell" aria-busy={!contentFailed}>
+      <main className="content-loading-shell" id="main-content" tabIndex="-1" aria-busy={!contentFailed}>
         <span>АДИС МАММО</span>
         {contentFailed && <button type="button" onClick={() => window.location.reload()}>ОБНОВИТЬ</button>}
       </main>

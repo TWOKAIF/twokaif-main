@@ -41,7 +41,7 @@ prepareCriticalTypography()
 
 function SmallScreenHolding() {
   return (
-    <main className="screen-holding">
+    <main className="screen-holding" id="main-content" tabIndex="-1">
       <header className="screen-holding-header">
         <span>АДИС МАММО</span>
         <span>// САЙТ</span>
@@ -108,9 +108,14 @@ function ViewportGate() {
     }
   }, [])
 
-  return isDesktop
-    ? <Suspense fallback={null}><DesktopSite /></Suspense>
-    : <SmallScreenHolding />
+  return (
+    <>
+      <a className="skip-link" href="#main-content">К ОСНОВНОМУ СОДЕРЖИМОМУ</a>
+      {isDesktop
+        ? <Suspense fallback={null}><DesktopSite /></Suspense>
+        : <SmallScreenHolding />}
+    </>
+  )
 }
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><ViewportGate /></React.StrictMode>)
