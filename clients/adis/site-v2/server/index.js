@@ -80,6 +80,10 @@ app.get('/favicon.ico', (_request, response) => response.sendStatus(204))
 if (isProduction) {
   app.use('/fonts', express.static(path.join(distDir, 'fonts'), { index: false, immutable: true, maxAge: '1y' }))
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
+  app.get(['/privacy', '/privacy/'], (_request, response) => {
+    response.set('Cache-Control', 'no-store')
+    response.sendFile(path.join(distDir, 'privacy.html'))
+  })
   app.get('/', async (_request, response, next) => {
     try {
       response.set('Cache-Control', 'no-store')

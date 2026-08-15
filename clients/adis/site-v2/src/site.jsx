@@ -192,7 +192,7 @@ const fallbackContact = {
   developmentLabel: 'РАЗРАБОТКА САЙТА',
   developmentHref: 'https://twokaif.ru/',
   privacyLabel: 'ПОЛИТИКА / COOKIE',
-  privacyHref: '#',
+  privacyHref: '/privacy',
   topLabel: 'НАВЕРХ',
 }
 
