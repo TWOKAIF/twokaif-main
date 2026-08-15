@@ -4,6 +4,9 @@ import './styles.css'
 
 const DesktopSite = React.lazy(() => import('./site.jsx'))
 const CRITICAL_FONT_TIMEOUT = 1800
+const DESKTOP_VIEWPORT_QUERY = '(min-width: 1200px)'
+const DESKTOP_POINTER_QUERY = '(hover: hover) and (pointer: fine)'
+const MIN_DESKTOP_SCREEN_SIZE = 1200
 
 function showCriticalTypography() {
   document.documentElement.classList.remove('fonts-loading')
@@ -79,15 +82,30 @@ function SmallScreenHolding() {
   )
 }
 
+function shouldShowDesktopSite() {
+  if (window.matchMedia(DESKTOP_VIEWPORT_QUERY).matches) return true
+
+  const hasDesktopPointer = window.matchMedia(DESKTOP_POINTER_QUERY).matches
+  const displaySize = Math.max(window.screen.width, window.screen.height)
+  return hasDesktopPointer && displaySize >= MIN_DESKTOP_SCREEN_SIZE
+}
+
 function ViewportGate() {
-  const desktopQuery = '(min-width: 1200px)'
-  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(desktopQuery).matches)
+  const [isDesktop, setIsDesktop] = useState(shouldShowDesktopSite)
 
   useEffect(() => {
-    const media = window.matchMedia(desktopQuery)
-    const updateViewport = (event) => setIsDesktop(event.matches)
-    media.addEventListener('change', updateViewport)
-    return () => media.removeEventListener('change', updateViewport)
+    const viewportMedia = window.matchMedia(DESKTOP_VIEWPORT_QUERY)
+    const pointerMedia = window.matchMedia(DESKTOP_POINTER_QUERY)
+    const updateExperience = () => setIsDesktop(shouldShowDesktopSite())
+
+    viewportMedia.addEventListener('change', updateExperience)
+    pointerMedia.addEventListener('change', updateExperience)
+    window.addEventListener('resize', updateExperience)
+    return () => {
+      viewportMedia.removeEventListener('change', updateExperience)
+      pointerMedia.removeEventListener('change', updateExperience)
+      window.removeEventListener('resize', updateExperience)
+    }
   }, [])
 
   return isDesktop
