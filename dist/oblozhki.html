@@ -84,7 +84,6 @@
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-png"}, "priceCurrency": "RUB", "price": "4900"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-presentations"}, "priceCurrency": "RUB", "price": "2600"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-covers-posters"}, "priceCurrency": "RUB", "price": "2000"},
-          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-gpt-agent"}, "priceCurrency": "RUB", "price": "1990"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-interactives"}, "priceCurrency": "RUB", "price": "1000"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-calendar"}, "priceCurrency": "RUB", "price": "290"}
         ]
@@ -149,11 +148,10 @@
       "@type": "Service",
       "@id": "https://twokaif.ru/#service-gpt-agent",
       "name": "GPT-агент для создания визуала",
-      "description": "AI-помощник для каруселей, бесшовных публикаций, обложек Reels, афиш и постов под стиль пользователя. Для работы нужен GPT.",
+      "description": "AI-помощник для создания визуала. Продукт обновляется, новые подключения временно на паузе.",
       "provider": {"@id": "https://twokaif.ru/#org"},
       "serviceType": "Цифровой продукт",
       "areaServed": {"@type": "Country", "name": "Россия"},
-      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "1990"},
       "image": "https://twokaif.ru/images/og-image.jpg"
     },
     {
@@ -309,12 +307,12 @@
     if (/^https?:\/\/t\.me\//.test(href)) goal('goal_telegram');
     // Клик на wedding.twokaif.ru (карточка акции / раздел услуг АНКЕТЫ)
     if (/wedding\.twokaif\.ru/.test(href)) goal('goal_wedding_open');
-    // Карточка PNG в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
-    // Карточка АГЕНТ в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
-    // Карточка МЖ (МУЖЧИНЫ vs ЖЕНЩИНЫ) в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_mzh_bot/.test(href)) goal('goal_mzh_open');
+    // Карточка PNG в блоке продуктов
+    if (a.closest && a.closest('#promo-card-png')) goal('goal_png_open');
+    // Карточка АГЕНТ в блоке продуктов (сработает, когда ссылка вернётся)
+    if (a.closest && a.closest('#promo-card-agent')) goal('goal_agent_open');
+    // Ручной заказ МЖ теперь ведёт в личный Telegram Руслана
+    if (a.closest && a.closest('#promo-card-mzh')) goal('goal_mzh_open');
     // Раздел АНКЕТЫ в Услугах
     if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
   }, {capture:true, passive:true});

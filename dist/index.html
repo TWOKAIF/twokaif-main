@@ -84,7 +84,6 @@
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-png"}, "priceCurrency": "RUB", "price": "4900"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-presentations"}, "priceCurrency": "RUB", "price": "2600"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-covers-posters"}, "priceCurrency": "RUB", "price": "2000"},
-          {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-gpt-agent"}, "priceCurrency": "RUB", "price": "1990"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-interactives"}, "priceCurrency": "RUB", "price": "1000"},
           {"@type": "Offer", "itemOffered": {"@id": "https://twokaif.ru/#service-calendar"}, "priceCurrency": "RUB", "price": "290"}
         ]
@@ -149,11 +148,10 @@
       "@type": "Service",
       "@id": "https://twokaif.ru/#service-gpt-agent",
       "name": "GPT-агент для создания визуала",
-      "description": "AI-помощник для каруселей, бесшовных публикаций, обложек Reels, афиш и постов под стиль пользователя. Для работы нужен GPT.",
+      "description": "AI-помощник для создания визуала. Продукт обновляется, новые подключения временно на паузе.",
       "provider": {"@id": "https://twokaif.ru/#org"},
       "serviceType": "Цифровой продукт",
       "areaServed": {"@type": "Country", "name": "Россия"},
-      "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": "1990"},
       "image": "https://twokaif.ru/images/og-image.jpg"
     },
     {
@@ -309,12 +307,12 @@
     if (/^https?:\/\/t\.me\//.test(href)) goal('goal_telegram');
     // Клик на wedding.twokaif.ru (карточка акции / раздел услуг АНКЕТЫ)
     if (/wedding\.twokaif\.ru/.test(href)) goal('goal_wedding_open');
-    // Карточка PNG в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_ruslan/.test(href)) goal('goal_png_open');
-    // Карточка АГЕНТ в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me\/tukaif_agent_bot/.test(href)) goal('goal_agent_open');
-    // Карточка МЖ (МУЖЧИНЫ vs ЖЕНЩИНЫ) в блоке акций
-    if (a.closest && a.closest('.promo-card') && /t\.me\/twokaif_mzh_bot/.test(href)) goal('goal_mzh_open');
+    // Карточка PNG в блоке продуктов
+    if (a.closest && a.closest('#promo-card-png')) goal('goal_png_open');
+    // Карточка АГЕНТ в блоке продуктов (сработает, когда ссылка вернётся)
+    if (a.closest && a.closest('#promo-card-agent')) goal('goal_agent_open');
+    // Ручной заказ МЖ теперь ведёт в личный Telegram Руслана
+    if (a.closest && a.closest('#promo-card-mzh')) goal('goal_mzh_open');
     // Раздел АНКЕТЫ в Услугах
     if (a.classList && a.classList.contains('service-item') && /wedding/.test(href)) goal('goal_anketa_service');
   }, {capture:true, passive:true});
@@ -3013,20 +3011,19 @@ if (ar) aboutObserver.observe(ar);
           <span class="pricing-card-index">06</span>
           <span class="pricing-card-name">Агент для GPT</span>
           <div class="pricing-card-right">
-            <span class="pricing-card-price">1&nbsp;990&nbsp;₽</span>
+            <span class="pricing-card-price">Пауза</span>
             <span class="pricing-toggle"></span>
           </div>
         </div>
         <div class="pricing-card-body"><div class="pricing-card-body-inner">
           <div class="pricing-mobile-preview service-art service-art--agent active" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>06 · GPT</span><i class="service-art__brand"></i></div><div class="service-art__mark">&gt;_<small>prompt</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Агент для GPT</div><div class="service-art__foot"><span>Задача</span><span>Результат</span></div></div></div></div>
-          <span class="pricing-card-note">Для работы нужен GPT</span>
-          <p class="pricing-card-desc">AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.</p>
+          <span class="pricing-card-note">Новые подключения временно на&nbsp;паузе</span>
+          <p class="pricing-card-desc">Пересобираем AI&#8209;помощника и&nbsp;перепроверяем совместимость. Откроем новые подключения после полной проверки.</p>
           <div class="pricing-card-tags">
             <span class="pricing-tag">Карусели и&nbsp;посты</span>
             <span class="pricing-tag">Афиши и&nbsp;Reels</span>
             <span class="pricing-tag">Под твой стиль</span>
           </div>
-          <a href="https://telegram.me/tukaif_agent_bot" target="_blank" rel="noopener" class="pricing-card-btn">Узнать подробнее</a>
         </div></div>
       </li>
 
@@ -5039,18 +5036,18 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
     </div>
 
     <!-- ╭─ Карточка 3: АГЕНТ — AI-дизайнер ─╮ -->
-    <div class="promo-card" id="promo-card-agent" data-cd-end="">
+    <div class="promo-card is-soon" id="promo-card-agent">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">АКЦИЯ</span>
+          <span class="promo-tag">ПАУЗА</span>
         </div>
         <h3 class="promo-title">Агент<br>помощник GPT</h3>
         <div class="promo-prices">
-          <span class="promo-price">1 990 ₽</span>
+          <span class="promo-price">Обновляем</span>
         </div>
-        <span class="promo-pricenote">Доступ навсегда — нужен&nbsp;GPT</span>
+        <span class="promo-pricenote">Новые подключения временно на&nbsp;паузе</span>
         <p class="promo-sub">
-          AI&#8209;помощник для&nbsp;визуала: карусели, бесшовки, обложки Reels, афиши и&nbsp;посты под&nbsp;твой стиль. Без&nbsp;подписки, доступ навсегда + обновления.
+          Пересобираем AI&#8209;помощника и&nbsp;перепроверяем совместимость. Вернём новые подключения, когда выдача и&nbsp;результат будут проверены.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -5067,32 +5064,19 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
           </span>
         </div>
       </div>
-      <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-row">
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        </div>
-        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
-        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
-      </div>
-      <a href="https://telegram.me/tukaif_agent_bot" class="promo-cta" target="_blank" rel="noopener">
-        <span class="promo-cta-label">Узнать подробнее</span>
-        <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
     </div>
 
     <!-- ╭─ Карточка 4: МУЖЧИНЫ vs ЖЕНЩИНЫ ─╮ -->
-    <div class="promo-card" id="promo-card-mzh" data-cd-end="2026-06-30T23:59:59+03:00">
+    <div class="promo-card" id="promo-card-mzh">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">НОВИНКА</span>
+          <span class="promo-tag">РУЧНОЙ ЗАКАЗ</span>
         </div>
         <h3 class="promo-title">Мужчины<br>vs&nbsp;Женщины</h3>
         <div class="promo-prices">
-          <span class="promo-price">225&nbsp;₽</span>
+          <span class="promo-price">450&nbsp;₽ / пара</span>
         </div>
-        <span class="promo-pricenote">За&nbsp;пару лиц — 450&nbsp;₽</span>
+        <span class="promo-pricenote">Аванс 1&nbsp;990&nbsp;₽ идёт в&nbsp;зачёт · минимум 5&nbsp;пар — 2&nbsp;250&nbsp;₽</span>
         <p class="promo-sub">
           Игра про&nbsp;твоих гостей на&nbsp;любой праздник. Лица гостей на&nbsp;экране, зал угадывает факты&nbsp;— и&nbsp;все&nbsp;ржут. Собираем под&nbsp;твой ивент, играешь в&nbsp;обычном PowerPoint.
         </p>
@@ -5111,17 +5095,8 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
           </span>
         </div>
       </div>
-      <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-row">
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        </div>
-        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
-        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
-      </div>
-      <a href="https://telegram.me/twokaif_mzh_bot" class="promo-cta" target="_blank" rel="noopener">
-        <span class="promo-cta-label">Узнать подробнее</span>
+      <a href="https://telegram.me/twokaif_ruslan" class="promo-cta" target="_blank" rel="noopener">
+        <span class="promo-cta-label">Обсудить игру</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
@@ -5231,14 +5206,6 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
   // PNG-карточка — тоже evergreen (таймер до конца месяца)
   const pngCard = document.getElementById('promo-card-png');
   if (pngCard){ pngCard.dataset.cdEnd = ''; pngCard.dataset.cdMonthly = '1'; }
-
-  // АГЕНТ-карточка — тоже evergreen (таймер до конца месяца)
-  const agentCard = document.getElementById('promo-card-agent');
-  if (agentCard){ agentCard.dataset.cdEnd = ''; agentCard.dataset.cdMonthly = '1'; }
-
-  // МЖ-карточка — таймер до 30 июня (потом пара 450 ₽), фикс-дата НЕ evergreen
-  const mzhCard = document.getElementById('promo-card-mzh');
-  if (mzhCard){ mzhCard.dataset.cdEnd = '2026-06-30T23:59:59+03:00'; mzhCard.dataset.cdMonthly = ''; }
 
   // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
