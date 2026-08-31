@@ -3968,12 +3968,11 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
 <!-- ============================================
      БЛОК 4b: ПРЕДЛОЖЕНИЯ — карточки продуктов
      Идут после Hero, до «Обо мне».
-     У акционных карточек — живой countdown до конца акции.
-     PNG — постоянная карточка продукта без ложного таймера.
+     Сейчас все карточки постоянные — без ложных таймеров.
 
      Где править:
-     — Свадебная анкета: массив PROMOS в <script> внизу (даты + цены).
-     — ТУКАЙФ-PNG: постоянный продукт без таймера.
+     — Реальная временная цена анкеты: promos.json с настоящей датой окончания.
+     — Постоянные цены и условия: разметка карточек ниже.
      ============================================ -->
 <style>
 .promos {
@@ -4902,7 +4901,7 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
 }
 </style>
 
-<section class="promos" id="promos" aria-label="Активные предложения">
+<section class="promos" id="promos" aria-label="Текущие предложения">
  <div class="promos-inner">
   <div class="promos-head">
     <div>
@@ -4947,20 +4946,20 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
       </a>
     </div>
 
-    <!-- ╭─ Карточка 1: Свадебная анкета (авто-акция) ─╮ -->
-    <div class="promo-card" id="promo-card-anketa" data-cd-end="">
+    <!-- ╭─ Карточка 1: Свадебная анкета ─╮ -->
+    <div class="promo-card" id="promo-card-anketa">
       <div>
         <div class="promo-head">
-          <span class="promo-tag" id="promo-tag">АКЦИЯ</span>
+          <span class="promo-tag" id="promo-tag">ПРОДУКТ</span>
         </div>
         <h3 class="promo-title">Анкета<br>свадебная</h3>
         <div class="promo-prices">
           <span class="promo-price" id="promo-price">7 500 ₽</span>
           <span class="promo-old" id="promo-old"></span>
         </div>
-        <span class="promo-pricenote">Можно с&nbsp;твоими вопросами — год бесплатно</span>
+        <span class="promo-pricenote">Можно с&nbsp;твоими вопросами — первый год включён</span>
         <p class="promo-sub" id="promo-sub">
-          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>1&nbsp;год работы бесплатно</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.
+          Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>Первый год включён</b>, дальше&nbsp;— <b>1&nbsp;000&nbsp;₽/год</b>.
         </p>
         <div class="promo-chips">
           <span class="promo-chip">
@@ -4976,15 +4975,6 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
             Файл в&nbsp;Word
           </span>
         </div>
-      </div>
-      <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-row">
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        </div>
-        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
-        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://wedding.twokaif.ru" class="promo-cta" target="_blank" rel="noopener">
         <span class="promo-cta-label">Узнать подробнее</span>
@@ -5094,7 +5084,7 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
     </div>
 
     <!-- ╭─ Карточка 6: Календарь занятости ─╮ -->
-    <div class="promo-card" id="promo-card-cal" data-cd-end="" data-cd-monthly="1">
+    <div class="promo-card" id="promo-card-cal">
       <div>
         <div class="promo-head">
           <span class="promo-tag">НОВИНКА</span>
@@ -5122,15 +5112,6 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
           </span>
         </div>
       </div>
-      <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-row">
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        </div>
-        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
-        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
-      </div>
       <a href="https://telegram.me/twokaif_calendar_bot" class="promo-cta" target="_blank" rel="noopener">
         <span class="promo-cta-label">Узнать подробнее</span>
         <svg class="promo-cta-arr" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -5143,34 +5124,22 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
 
 <script>
 (async function(){
-  // === Источник правды по акциям — /promos.json (синкается из _shared/promos.json) ===
-  // Embedded fallback на случай если JSON не загрузился (offline / 404).
+  // В /promos.json лежат только реальные временные предложения.
+  // Пустой список или ошибка загрузки = обычная цена без акции.
   let REGULAR = 7500;
-  let SUBSCRIPTION = 1000;
-  let PROMOS = [
-    { id:'evergreen-2026', monthly:true, start:'2026-01-01T00:00:00+03:00', end:'2099-12-31T23:59:59+03:00', price:7500, title_short:'Акция', support_text:'1 год', after_promo_text:'1 000 ₽/год' }
-  ];
+  let PROMOS = [];
   try {
     const r = await fetch('/promos.json', {cache:'no-store'});
     if (r.ok) {
       const j = await r.json();
       if (typeof j.regular_price === 'number') REGULAR = j.regular_price;
-      if (typeof j.subscription_price === 'number') SUBSCRIPTION = j.subscription_price;
       if (Array.isArray(j.promos)) PROMOS = j.promos;
     }
   } catch(e){}
 
   const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
-  // конец ТЕКУЩЕГО месяца 23:59:59 по МСК → реальный UTC-ms (evergreen-таймер)
-  function endOfMonthMSK(){
-    const MSK = 3*3600000;
-    const d = new Date(Date.now() + MSK);
-    const y = d.getUTCFullYear(), mo = d.getUTCMonth();
-    return Date.UTC(y, mo+1, 1, 0,0,0) - 1000 - MSK;
-  }
   const now = Date.now();
   const active = PROMOS.find(p => now >= new Date(p.start).getTime() && now <= new Date(p.end).getTime());
-  const card = document.getElementById('promo-card-anketa');
   const section = document.getElementById('promos');
 
   if (active) {
@@ -5183,89 +5152,8 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
       oldEl.textContent = fmt(REGULAR);
       oldEl.style.display = '';
     }
-    const subEl = document.getElementById('promo-sub');
-    if (subEl && active.support_text && active.after_promo_text) {
-      subEl.innerHTML = 'Твоё имя, твои вопросы, твой Telegram. Молодожёны заполняют&nbsp;— ты&nbsp;получаешь готовый Word&#8209;документ со&nbsp;всеми ответами. <b>'+active.support_text.replace(/ /g,'&nbsp;')+' работы бесплатно</b>, дальше&nbsp;— <b>'+active.after_promo_text.replace(/ /g,'&nbsp;')+'</b>.';
-    }
-    card.dataset.cdEnd = active.monthly ? '' : active.end;
-    card.dataset.cdMonthly = active.monthly ? '1' : '';
-  } else {
-    // вне акций — карточка анкет уходит, остаётся только PNG
-    card.style.display = 'none';
   }
   section.classList.add('is-active');
-
-  // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
-  function pad(n){ return n<10?'0'+n:n; }
-  function plural(n, one, few, many){
-    const m10 = n%10, m100 = n%100;
-    if (m10===1 && m100!==11) return one;
-    if (m10>=2 && m10<=4 && (m100<12||m100>14)) return few;
-    return many;
-  }
-  let promosVisible = true;
-  function tick(){
-    if (!promosVisible) return; // блок акций не на экране — не дёргаем DOM
-    document.querySelectorAll('.promo-card').forEach(el => {
-      const timer = el.querySelector('[data-cd-timer]');
-      if (!timer) return;
-      const monthly = el.dataset.cdMonthly === '1';
-      let endTs = monthly ? endOfMonthMSK() : (el.dataset.cdEnd ? new Date(el.dataset.cdEnd).getTime() : 0);
-      if (!endTs) return;
-      let diff = endTs - Date.now();
-      const dEl = timer.querySelector('[data-cd-d]');
-      const hEl = timer.querySelector('[data-cd-h]');
-      const mEl = timer.querySelector('[data-cd-m]');
-      const sEl = timer.querySelector('[data-cd-s]');
-      const fEl = timer.querySelector('[data-cd-fill]');
-      const sweepEl = timer.querySelector('.promo-timer-sweep');
-      const scapEl = timer.querySelector('.promo-timer-scap');
-      if (diff <= 0) {
-        if (monthly) { endTs = endOfMonthMSK(); diff = endTs - Date.now(); }
-        else {
-          timer.classList.add('is-end');
-          if (dEl) dEl.textContent = 'скоро';
-          if (hEl) hEl.parentElement.style.display = 'none';
-          if (mEl) mEl.parentElement.style.display = 'none';
-          if (sweepEl) sweepEl.style.display = 'none';
-          if (scapEl) scapEl.style.display = 'none';
-          return;
-        }
-      }
-      const days = Math.floor(diff/86400000);
-      const hours = Math.floor(diff/3600000) % 24;
-      const mins = Math.floor(diff/60000) % 60;
-      const secs = Math.floor(diff/1000) % 60;
-      if (dEl){ dEl.textContent = pad(days); dEl.parentElement.style.display = days>0 ? '' : 'none'; }
-      if (hEl) hEl.textContent = pad(hours);
-      if (mEl) mEl.textContent = pad(mins);
-      if (sEl) sEl.textContent = pad(secs);
-      const dLbl = dEl && dEl.parentElement.querySelector('.promo-timer-lbl');
-      const hLbl = hEl && hEl.parentElement.querySelector('.promo-timer-lbl');
-      const mLbl = mEl && mEl.parentElement.querySelector('.promo-timer-lbl');
-      if (dLbl) dLbl.textContent = plural(days,'день','дня','дней');
-      if (hLbl) hLbl.textContent = plural(hours,'час','часа','часов');
-      if (mLbl) mLbl.textContent = plural(mins,'минута','минуты','минут');
-      // секунды — бегущая линия (0→полная за минуту), снап в 0 на стыке
-      if (fEl) {
-        if (secs === 0) {
-          fEl.classList.remove('run');
-          fEl.style.transform = 'scaleX(0)';
-          void fEl.offsetWidth;
-          fEl.classList.add('run');
-        } else {
-          fEl.classList.add('run');
-          fEl.style.transform = 'scaleX(' + (secs/60).toFixed(4) + ')';
-        }
-      }
-    });
-  }
-  tick();
-  setInterval(tick, 1000);
-  const promosSection = document.getElementById('promos');
-  if (promosSection && 'IntersectionObserver' in window) {
-    new IntersectionObserver(es => { promosVisible = es[0].isIntersecting; if (promosVisible) tick(); }, { threshold: 0 }).observe(promosSection);
-  }
 
   // === Reveal on scroll ===
   if ('IntersectionObserver' in window) {
