@@ -1122,7 +1122,7 @@ if (document.readyState === 'loading') {
       <li><a href="#about"><span class="nav-link-flip" data-text="Обо мне">Обо&nbsp;мне</span></a></li>
       <li><a href="#services"><span class="nav-link-flip" data-text="Услуги и цены">Услуги&nbsp;и&nbsp;цены</span></a></li>
       <li><a href="#cases"><span class="nav-link-flip" data-text="Кейсы">Кейсы</span></a></li>
-      <li><a href="#promos"><span class="nav-link-flip" data-text="Акции">Акции</span></a></li>
+      <li><a href="#promos"><span class="nav-link-flip" data-text="Сейчас">Сейчас</span></a></li>
       <li><a href="#portfolio"><span class="nav-link-flip" data-text="Портфолио">Портфолио</span></a></li>
       <li><a href="#faq"><span class="nav-link-flip" data-text="Вопросы">Вопросы</span></a></li>
       <li><a href="#contacts"><span class="nav-link-flip" data-text="Контакты">Контакты</span></a></li>
@@ -1147,7 +1147,7 @@ if (document.readyState === 'loading') {
         <li><a href="#about"><span class="menu-flip"><span class="menu-flip-inner" data-text="Обо мне">Обо&nbsp;мне</span></span></a></li>
         <li><a href="#services"><span class="menu-flip"><span class="menu-flip-inner" data-text="Услуги и цены">Услуги&nbsp;и&nbsp;цены</span></span></a></li>
         <li><a href="#cases"><span class="menu-flip"><span class="menu-flip-inner" data-text="Кейсы">Кейсы</span></span></a></li>
-        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Акции">Акции</span></span></a></li>
+        <li><a href="#promos"><span class="menu-flip"><span class="menu-flip-inner" data-text="Сейчас">Сейчас</span></span></a></li>
         <li><a href="#portfolio"><span class="menu-flip"><span class="menu-flip-inner" data-text="Портфолио">Портфолио</span></span></a></li>
         <li><a href="#faq"><span class="menu-flip"><span class="menu-flip-inner" data-text="Вопросы">Вопросы</span></span></a></li>
         <li><a href="#contacts"><span class="menu-flip"><span class="menu-flip-inner" data-text="Контакты">Контакты</span></span></a></li>
@@ -3966,13 +3966,14 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
 
 <!-- ═══ 04b_Акция-баннер ═══ -->
 <!-- ============================================
-     БЛОК 4b: АКЦИИ — две карточки
+     БЛОК 4b: ПРЕДЛОЖЕНИЯ — карточки продуктов
      Идут после Hero, до «Обо мне».
-     В каждой карточке — живой countdown до конца акции.
+     У акционных карточек — живой countdown до конца акции.
+     PNG — постоянная карточка продукта без ложного таймера.
 
      Где править:
      — Свадебная анкета: массив PROMOS в <script> внизу (даты + цены).
-     — ТУКАЙФ-PNG: data-end="..." и data-price="..." на самой карточке.
+     — ТУКАЙФ-PNG: постоянный продукт без таймера.
      ============================================ -->
 <style>
 .promos {
@@ -4906,7 +4907,7 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
   <div class="promos-head">
     <div>
       <span class="promos-label"><span class="promos-label-dot"></span>Сейчас</span>
-      <h2 class="promos-h2">Активные акции</h2>
+      <h2 class="promos-h2">Сейчас у ТУКАЙФ</h2>
     </div>
   </div>
   <div class="promos-grid">
@@ -4992,12 +4993,12 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
     </div>
 
     <!-- ╭─ Карточка 2: Приложение ТУКАЙФ—PNG ─╮ -->
-    <div class="promo-card" id="promo-card-png" data-cd-end="">
+    <div class="promo-card" id="promo-card-png">
       <div>
         <div class="promo-head">
-          <span class="promo-tag">АКЦИЯ</span>
+          <span class="promo-tag">ПРОДУКТ</span>
         </div>
-        <h3 class="promo-title">Png<br>для&nbsp;сторис</h3>
+        <h3 class="promo-title">PNG<br>для&nbsp;сторис</h3>
         <div class="promo-prices">
           <span class="promo-price">4 900 ₽</span>
         </div>
@@ -5019,15 +5020,6 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
             Свои цвета
           </span>
         </div>
-      </div>
-      <div class="promo-timer" data-cd-timer>
-        <div class="promo-timer-row">
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-d>—</span><span class="promo-timer-lbl">дней</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-h>—</span><span class="promo-timer-lbl">часов</span></div>
-          <div class="promo-timer-cell"><span class="promo-timer-num" data-cd-m>—</span><span class="promo-timer-lbl">минут</span></div>
-        </div>
-        <div class="promo-timer-sweep"><span class="promo-timer-sweepfill" data-cd-fill></span></div>
-        <div class="promo-timer-scap"><span>Секунды</span><span data-cd-s>—</span></div>
       </div>
       <a href="https://png-info.twokaif.ru" class="promo-cta" target="_blank" rel="noopener">
         <span class="promo-cta-label">Узнать подробнее</span>
@@ -5202,10 +5194,6 @@ if(window.matchMedia("(max-width:1068px)").matches&&pC[0]){
     card.style.display = 'none';
   }
   section.classList.add('is-active');
-
-  // PNG-карточка — тоже evergreen (таймер до конца месяца)
-  const pngCard = document.getElementById('promo-card-png');
-  if (pngCard){ pngCard.dataset.cdEnd = ''; pngCard.dataset.cdMonthly = '1'; }
 
   // === Countdown render (evergreen: до конца месяца, авто-сброс 1-го числа) ===
   function pad(n){ return n<10?'0'+n:n; }
