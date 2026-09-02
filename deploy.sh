@@ -67,7 +67,7 @@ check_mzh_legal() {
     done
   done
 
-  grep -Fq 'полученный файл для личного архива' "$legal_root/oferta/index.html" || {
+  grep -Fq 'хранить переданный ему файл в личном архиве' "$legal_root/oferta/index.html" || {
     echo "ОШИБКА: оферта МЖ ($where) не разрешает личный архив клиенту"
     exit 1
   }
