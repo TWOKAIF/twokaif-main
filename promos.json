@@ -1,21 +1,7 @@
 {
-  "_comment": "Единый источник правды. ВЕЧНАЯ АКЦИЯ (evergreen): одна запись monthly:true — таймер тикает до конца ТЕКУЩЕГО месяца по МСК, в полночь 1-го числа JS сам перекидывает на конец следующего. Цена/условия не меняются. Меняешь здесь → sync-promos.sh (wedding+main+mir).",
+  "_comment": "Единый источник правды. Сейчас действует обычная цена без акции. В promos добавляем только реальные предложения с настоящей датой окончания.",
   "regular_price": 7500,
   "subscription_price": 1000,
   "tg_username": "twokaif_ruslan",
-  "promos": [
-    {
-      "id": "evergreen-2026",
-      "monthly": true,
-      "start": "2026-01-01T00:00:00+03:00",
-      "end": "2099-12-31T23:59:59+03:00",
-      "price": 7500,
-      "title_countdown": "До конца акции",
-      "title_ribbon": "Акция",
-      "title_short": "АКЦИЯ",
-      "after_text": "со 2-го года",
-      "support_text": "1 год",
-      "after_promo_text": "1 000 ₽/год"
-    }
-  ]
+  "promos": []
 }
