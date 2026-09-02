@@ -124,6 +124,61 @@ BLOCKS="$TMP_BLOCKS"
   echo '</html>'
 } > "$DIST/oferta.html"
 
+# ─── ДОКУМЕНТЫ МЖ — новые заказы, старые страницы не трогаем ───
+# $1=slug $2=block $3=title $4=description
+build_mzh_legal() {
+  local slug="$1" block="$2" title="$3" desc="$4"
+  mkdir -p "$DIST/mzh/$slug"
+  {
+    echo '<!DOCTYPE html>'
+    echo '<html lang="ru">'
+    echo '<head>'
+    echo '<meta charset="UTF-8">'
+    cat "$BLOCKS/00_HEAD-код.html" \
+      | perl -pe "s~<title>[^<]+</title>~<title>$title</title>~" \
+      | perl -pe "s~<meta name=\"description\"[^>]*>~<meta name=\"description\" content=\"$desc\">~" \
+      | perl -pe "s~<link rel=\"canonical\"[^>]+>~<link rel=\"canonical\" href=\"https://twokaif.ru/mzh/$slug/\">~" \
+      | perl -pe "s~<meta property=\"og:title\"[^>]*>~<meta property=\"og:title\" content=\"$title\">~" \
+      | perl -pe "s~<meta property=\"og:description\"[^>]*>~<meta property=\"og:description\" content=\"$desc\">~" \
+      | perl -pe "s~<meta property=\"og:url\"[^>]*>~<meta property=\"og:url\" content=\"https://twokaif.ru/mzh/$slug/\">~" \
+      | perl -pe "s~<meta name=\"twitter:title\"[^>]*>~<meta name=\"twitter:title\" content=\"$title\">~" \
+      | perl -pe "s~<meta name=\"twitter:description\"[^>]*>~<meta name=\"twitter:description\" content=\"$desc\">~"
+    echo '<meta name="robots" content="noindex,nofollow">'
+    echo '</head>'
+    echo '<body>'
+    echo '<!-- ═══ 01_Глобальные-стили ═══ -->'
+    cat "$BLOCKS/01_Глобальные-стили.html"
+    echo
+    echo '<!-- ═══ 19_МЖ-Юр-стили ═══ -->'
+    cat "$BLOCKS/19_МЖ-Юр-стили.html"
+    echo
+    echo "<!-- ═══ $block ═══ -->"
+    cat "$BLOCKS/${block}.html"
+    echo
+    echo '<!-- ═══ 14_Футер ═══ -->'
+    cat "$BLOCKS/14_Футер.html"
+    echo
+    echo '<!-- ═══ 15_Куки-баннер ═══ -->'
+    cat "$BLOCKS/15_Куки-баннер.html"
+    echo
+    echo '</body>'
+    echo '</html>'
+  } > "$DIST/mzh/$slug/index.html"
+}
+
+build_mzh_legal "oferta" "20_МЖ-Оферта" \
+  "Оферта на игру МУЖЧИНЫ vs ЖЕНЩИНЫ — ТУКАЙФ" \
+  "Условия ручного заказа интерактивной игры МУЖЧИНЫ vs ЖЕНЩИНЫ."
+build_mzh_legal "privacy" "21_МЖ-Политика" \
+  "Политика обработки данных МУЖЧИНЫ vs ЖЕНЩИНЫ — ТУКАЙФ" \
+  "Правила обработки персональных данных при изготовлении игры МУЖЧИНЫ vs ЖЕНЩИНЫ."
+build_mzh_legal "consent" "22_МЖ-Согласие-клиента" \
+  "Согласие заказчика МУЖЧИНЫ vs ЖЕНЩИНЫ — ТУКАЙФ" \
+  "Согласие заказчика на обработку персональных данных при оформлении игры."
+build_mzh_legal "guest-consent" "23_МЖ-Согласие-гостя" \
+  "Согласие гостя МУЖЧИНЫ vs ЖЕНЩИНЫ — ТУКАЙФ" \
+  "Шаблон согласия гостя на использование материалов в одной игре."
+
 # ─── ПОСАДОЧНЫЕ (SEO landing) — нав-якоря ведут на главную ───
 # $1=slug $2=block $3=title $4=description $5=schema-json-file $6=gallery-block(опц.)
 build_landing() {

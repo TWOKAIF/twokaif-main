@@ -1,0 +1,104 @@
+<!-- Общая шапка и стили документов «МУЖЧИНЫ vs ЖЕНЩИНЫ» -->
+<style>
+.mzh-legal-bar{position:sticky;top:0;z-index:1000;height:64px;padding:0 var(--edge);background:rgba(255,255,255,.88);border-bottom:1px solid var(--border);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}
+.mzh-legal-bar__inner{width:min(1180px,100%);height:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.mzh-legal-bar__brand{display:flex;align-items:center;gap:10px;color:var(--text)!important;text-decoration:none;min-width:0}
+.mzh-legal-bar__mark{width:22px;height:22px;flex:0 0 auto;color:var(--text)}
+.mzh-legal-bar__mark .snowflake{transform-box:fill-box;transform-origin:center;will-change:transform;animation:spin 8s linear infinite}
+.mzh-legal-bar__name{font-size:15px;font-weight:700;letter-spacing:-.03em}
+.mzh-legal-bar__sep{width:1px;height:24px;background:var(--border-row)}
+.mzh-legal-bar__context{color:var(--muted);font-size:12px;line-height:1.05;letter-spacing:-.01em}
+.mzh-legal-bar__contact{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 16px;border:1px solid var(--text);background:var(--text);color:#fff!important;font-size:13px;font-weight:600;text-decoration:none;transition:background .25s var(--ease),color .25s var(--ease)}
+.mzh-legal-bar__contact:hover{background:#fff;color:var(--text)!important}
+
+.mzh-legal{width:min(1180px,100%);margin:0 auto;padding:clamp(56px,8vw,112px) var(--edge) clamp(80px,10vw,140px);counter-reset:mzh-section}
+.mzh-legal__tabs{display:flex;gap:6px;width:max-content;max-width:100%;margin:0 0 clamp(48px,7vw,88px);padding:5px;background:var(--surface);overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none}
+.mzh-legal__tabs::-webkit-scrollbar{display:none}
+.mzh-legal__tab{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;color:var(--muted)!important;font-size:13px;font-weight:550;line-height:1;text-decoration:none;white-space:nowrap;transition:background .25s var(--ease),color .25s var(--ease)}
+.mzh-legal__tab:hover{color:var(--text)!important}
+.mzh-legal__tab--active,.mzh-legal__tab.is-active{background:#fff;color:var(--text)!important;box-shadow:0 1px 4px rgba(29,29,31,.08)}
+.mzh-legal__back{display:inline-flex;margin:0 0 20px;color:var(--muted)!important;font-size:13px;text-decoration:none}
+.mzh-legal__back:hover{color:var(--text)!important}
+
+.mzh-legal__header{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);align-items:end;gap:clamp(28px,6vw,88px);padding-bottom:clamp(48px,7vw,88px);border-bottom:1px solid var(--border-row)}
+.mzh-legal__eyebrow{grid-column:1/-1;margin:0 0 -10px!important;color:var(--muted);font-size:11px!important;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.mzh-legal__title,.mzh-legal__header h1{max-width:850px;margin:0;color:var(--text);font-size:clamp(42px,6.1vw,82px);font-weight:650;line-height:.91;letter-spacing:clamp(-4.6px,-.34vw,-1.8px);text-wrap:balance}
+.mzh-legal__meta,.mzh-legal__lead,.mzh-legal__header>.mzh-legal__notice{max-width:34ch;margin:0;color:var(--muted);font-size:clamp(14px,1.25vw,17px);line-height:1.42;letter-spacing:-.015em;text-wrap:pretty}
+.mzh-legal__header>.mzh-legal__lead{align-self:end}
+.mzh-legal__intro{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:36px 0 8px}
+
+.mzh-legal__section{display:grid;grid-template-columns:minmax(190px,270px) minmax(0,680px);column-gap:clamp(32px,7vw,104px);padding:clamp(44px,6vw,72px) 0;border-bottom:1px solid var(--border)}
+.mzh-legal__section:last-child{border-bottom:0}
+.mzh-legal__heading,.mzh-legal__section>h2{grid-column:1;grid-row:1/span 30;align-self:start;position:sticky;top:92px;margin:0;color:var(--text);font-size:clamp(20px,2.1vw,29px);font-weight:620;line-height:1.02;letter-spacing:-.045em;text-wrap:balance}
+.mzh-legal__subheading,.mzh-legal__section>h3{grid-column:2;margin:24px 0 10px;color:var(--text);font-size:17px;font-weight:650;line-height:1.2;letter-spacing:-.025em}
+.mzh-legal__section>h3:first-of-type{margin-top:0}
+.mzh-legal__paragraph,.mzh-legal__section>p,.mzh-legal__list,.mzh-legal__copy{grid-column:2}
+.mzh-legal__paragraph,.mzh-legal__section>p{max-width:68ch;margin:0 0 14px;color:#3a3a3c;font-size:clamp(16px,1.45vw,18px);line-height:1.54;letter-spacing:-.018em;text-wrap:pretty}
+.mzh-legal__section>p:last-child,.mzh-legal__paragraph:last-child{margin-bottom:0}
+.mzh-legal__list{display:grid;gap:10px;margin:2px 0 18px;padding:0;list-style:none}
+.mzh-legal__item{position:relative;padding-left:22px;color:#3a3a3c;font-size:clamp(16px,1.45vw,18px);line-height:1.5;letter-spacing:-.018em;text-wrap:pretty}
+.mzh-legal__item::before{content:'';position:absolute;left:0;top:.67em;width:5px;height:5px;border-radius:50%;background:var(--text)}
+.mzh-legal__list--details{gap:8px;padding:22px;background:var(--surface)}
+.mzh-legal__list--details .mzh-legal__item{font-size:15px;line-height:1.45}
+.mzh-legal__link{color:var(--text)!important;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.mzh-legal__link:hover{opacity:.6}
+.mzh-legal__code{padding:2px 5px;background:var(--surface);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em}
+.mzh-legal__notice{padding:16px 18px;border-left:2px solid var(--text);background:var(--surface);color:#515154!important;font-size:14px!important;line-height:1.45!important}
+
+.mzh-legal__copy{margin-top:10px;padding:24px;background:#1d1d1f;color:#fff}
+.mzh-legal__copy-text{display:grid;gap:12px;color:rgba(255,255,255,.84);font-size:15px;line-height:1.48;letter-spacing:-.012em;white-space:pre-line}
+.mzh-legal__copy-text p{margin:0;color:inherit;font-size:inherit;line-height:inherit}
+.mzh-legal__copy-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;margin-top:22px;padding:0 16px;border:1px solid rgba(255,255,255,.26);background:transparent;color:#fff;font:600 13px/1 var(--font-body);cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease)}
+.mzh-legal__copy-button:hover{background:#fff;color:#1d1d1f}
+.mzh-legal__copy-button svg{width:17px;height:17px;flex:0 0 auto}
+
+@media(max-width:780px){
+  .mzh-legal-bar{height:56px}
+  .mzh-legal-bar__inner{gap:12px}
+  .mzh-legal-bar__sep,.mzh-legal-bar__context{display:none}
+  .mzh-legal-bar__contact{min-height:34px;padding:0 13px;font-size:12px}
+  .mzh-legal{padding-top:36px}
+  .mzh-legal__tabs{width:calc(100% + var(--edge));max-width:none;margin-right:calc(var(--edge) * -1);padding-right:var(--edge)}
+  .mzh-legal__header{grid-template-columns:1fr;gap:24px;padding-bottom:44px}
+  .mzh-legal__title,.mzh-legal__header h1{font-size:clamp(38px,12.5vw,56px);line-height:.93;letter-spacing:-.055em}
+  .mzh-legal__meta,.mzh-legal__lead,.mzh-legal__header>.mzh-legal__notice{max-width:40ch}
+  .mzh-legal__intro{grid-template-columns:1fr;gap:0;padding-top:28px}
+  .mzh-legal__section{display:block;padding:42px 0}
+  .mzh-legal__heading,.mzh-legal__section>h2{position:static;margin:0 0 24px;font-size:25px}
+  .mzh-legal__subheading,.mzh-legal__section>h3{margin-top:28px}
+  .mzh-legal__list--details{padding:18px}
+  .mzh-legal__copy{padding:20px}
+  .mzh-legal__copy-button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.mzh-legal-bar__mark .snowflake{animation:none}.mzh-legal *{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+
+<header class="mzh-legal-bar">
+  <div class="mzh-legal-bar__inner">
+    <a class="mzh-legal-bar__brand" href="/" aria-label="ТУКАЙФ — на главную">
+      <svg class="mzh-legal-bar__mark" viewBox="-3 18 81 81" aria-hidden="true"><g class="snowflake"><path d="M47.3818 41.2734L64.4385 31.4268L74.5459 48.9346L57.4883 58.7822L74.5469 68.6309L64.4395 86.1377L47.3818 76.2891V95.9863H27.166V76.2891L10.1084 86.1377L0 68.6299L17.0566 58.7812L0.000976562 48.9346L10.1094 31.4277L27.166 41.2754V21.5801H47.3818V41.2734Z" fill="currentColor"/></g></svg>
+      <span class="mzh-legal-bar__name">ТУКАЙФ</span>
+      <span class="mzh-legal-bar__sep" aria-hidden="true"></span>
+      <span class="mzh-legal-bar__context">Документы<br>МУЖЧИНЫ VS ЖЕНЩИНЫ</span>
+    </a>
+    <a class="mzh-legal-bar__contact" href="https://telegram.me/twokaif_ruslan" target="_blank" rel="noopener"><span>Написать</span></a>
+  </div>
+</header>
+
+<script>
+(function(){
+  document.addEventListener('click',function(event){
+    var button=event.target.closest('[data-copy-target]');
+    if(!button) return;
+    var target=document.querySelector(button.getAttribute('data-copy-target'));
+    if(!target) return;
+    var text=target.innerText.trim();
+    var label=button.querySelector('span');
+    function done(){if(label){label.textContent='Скопировано';window.setTimeout(function(){label.textContent='Скопировать'},1800)}}
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done);return}
+    var area=document.createElement('textarea');
+    area.value=text;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';
+    document.body.appendChild(area);area.select();document.execCommand('copy');document.body.removeChild(area);done();
+  });
+})();
+</script>
