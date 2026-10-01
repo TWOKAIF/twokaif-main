@@ -34,22 +34,19 @@ def check(page, url: str, width: int, height: int) -> None:
     section.wait_for(state="visible")
     page.wait_for_timeout(500)
 
-    assert page.locator("#promos .promo-card").count() == 6
-    wedding = page.locator("#promo-card-anketa")
-    calendar = page.locator("#promo-card-cal")
-    assert wedding.locator("#promo-tag").inner_text() == "ПРОДУКТ"
-    assert wedding.locator("#promo-price").inner_text() == "7 500 ₽"
-    assert "первый год включён" in wedding.inner_text().lower()
-    assert "бесплат" not in wedding.inner_text().lower()
-    assert wedding.locator("[data-cd-timer]").count() == 0
-    assert calendar.locator("[data-cd-timer]").count() == 0
-    assert wedding.get_attribute("data-cd-monthly") is None
-    assert calendar.get_attribute("data-cd-monthly") is None
-    assert wedding.locator(".promo-cta").get_attribute("href") == "https://wedding.twokaif.ru"
-    assert calendar.locator(".promo-cta").get_attribute("href") == "https://telegram.me/twokaif_calendar_bot"
-    assert page.locator("#promo-card-agent .promo-tag").inner_text() == "ПАУЗА"
-    assert page.locator("#promo-card-agent .promo-cta").count() == 0
-    assert page.locator("#promo-card-mzh .promo-tag").inner_text() == "РУЧНОЙ ЗАКАЗ"
+    assert page.locator("#promos .promo-card").count() == 3
+    assert page.locator("#promo-card-center .promo-tag").inner_text() == "ГОТОВИТСЯ"
+    assert page.locator(".pricing-card-name").all_text_contents() == ["Сайт", "Презентации", "PNG-приложение", "Центр анкет", "Интерактив", "Обложка или афиша"]
+    for old in ["#promo-card-anketa", "#promo-card-agent", "#promo-card-cal", "#promo-card-mzh"]:
+        assert page.locator(old).count() == 0
+    for key in ["0", "3", "2", "8", "6", "4"]:
+        card = page.locator('.pricing-card[data-price="' + key + '"]')
+        head = card.locator(".pricing-card-head")
+        if head.get_attribute("aria-expanded") != "true":
+            head.click()
+        page.wait_for_timeout(700)
+        assert card.locator(".pricing-card-body").evaluate("e => e.getBoundingClientRect().height") > 30
+        assert page.evaluate("document.documentElement.scrollWidth - innerWidth") <= 1
     overflow = page.evaluate("document.documentElement.scrollWidth - window.innerWidth")
     assert overflow <= 1, f"Горизонтальное переполнение: {overflow}px"
     assert errors == [], f"Ошибки браузера: {errors}"

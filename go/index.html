@@ -164,18 +164,6 @@
 <script>
 (() => {
   const routes = {
-    calendar: {
-      name: 'Календарь',
-      kind: 'telegram',
-      username: 'twokaif_calendar_bot',
-      button: 'Открыть Календарь'
-    },
-    agent: {
-      name: 'Агент',
-      kind: 'paused',
-      url: 'https://twokaif.ru/',
-      button: 'Вернуться на сайт'
-    },
     syntx: {
       name: 'Syntx',
       kind: 'telegram',
@@ -195,16 +183,10 @@
       url: 'https://png-info.twokaif.ru/',
       button: 'Посмотреть ПНГ'
     },
-    wedding: {
-      name: 'Свадебная анкета',
-      kind: 'web',
-      url: 'https://wedding.twokaif.ru/',
-      button: 'Посмотреть анкету'
-    }
   };
 
   const slug = location.pathname.split('/').filter(Boolean).pop();
-  const route = routes[slug] || routes.calendar;
+  const route = routes[slug] || {name:'ТУКАЙФ',kind:'web',url:'https://twokaif.ru/',button:'Открыть сайт'};
   const previewMode = new URLSearchParams(location.search).has('preview');
   const product = document.getElementById('product');
   const status = document.getElementById('status');

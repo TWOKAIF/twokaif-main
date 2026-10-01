@@ -1,87 +1,33 @@
 #!/usr/bin/env python3
-from __future__ import annotations
-
 import json
 import re
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
-BLOCK = ROOT / "blocks" / "04b_Акция-баннер.html"
-DIST = ROOT / "dist" / "index.html"
-PROMOS = ROOT / "promos.json"
 
+class CurrentServicesTest(unittest.TestCase):
+    def test_current_services_and_removed_products(self):
+        html = (ROOT / "dist/index.html").read_text()
+        names = re.findall(r'<span class="pricing-card-name">(.*?)</span>', html)
+        self.assertEqual(names, ["Сайт", "Презентации", "PNG-приложение", "Центр анкет", "Интерактив", "Обложка или афиша"])
+        for old in ["service-gpt-agent", "promo-card-agent", "promo-card-anketa", "promo-card-cal", "twokaif_calendar_bot", "wedding.twokaif.ru", "Свадебная анкета"]:
+            self.assertNotIn(old, html)
+        self.assertIn('id="promo-card-center"', html)
+        self.assertIn('ГОТОВИТСЯ', html)
+        self.assertNotIn('data-cd-timer', html)
+        self.assertNotIn('data-cd-monthly', html)
+        self.assertNotIn("fetch('/promos.json'", html)
 
-def card(html: str, card_id: str) -> str:
-    match = re.search(
-        rf'<div class="promo-card[^"]*" id="{re.escape(card_id)}".*?(?=\n    <!-- ╭─ Карточка|\n  </div>\n </div>\n</section>)',
-        html,
-        re.DOTALL,
-    )
-    if not match:
-        raise AssertionError(f"Не найдена карточка {card_id}")
-    return match.group(0)
-
-
-class HonestPromosTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.block = BLOCK.read_text(encoding="utf-8")
-        cls.dist = DIST.read_text(encoding="utf-8")
-        cls.promos = json.loads(PROMOS.read_text(encoding="utf-8"))
-
-    def test_no_fake_promotion_is_configured(self) -> None:
-        self.assertEqual(self.promos["regular_price"], 7500)
-        self.assertEqual(self.promos["subscription_price"], 1000)
-        self.assertEqual(self.promos["promos"], [])
-
-    def test_wedding_is_a_permanent_product(self) -> None:
-        for html in (self.block, self.dist):
-            wedding = card(html, "promo-card-anketa")
-            self.assertIn('id="promo-tag">ПРОДУКТ</span>', wedding)
-            self.assertIn('id="promo-price">7 500 ₽</span>', wedding)
-            self.assertIn("первый год включён", wedding.lower())
-            self.assertIn("1&nbsp;000&nbsp;₽/год", wedding)
-            self.assertIn('href="https://wedding.twokaif.ru"', wedding)
-            self.assertNotIn("бесплат", wedding.lower())
-            self.assertNotIn("data-cd-", wedding)
-            self.assertNotIn("promo-timer", wedding)
-
-    def test_calendar_keeps_price_and_loses_fake_timer(self) -> None:
-        for html in (self.block, self.dist):
-            calendar = card(html, "promo-card-cal")
-            self.assertIn("от&nbsp;290&nbsp;₽", calendar)
-            self.assertIn("1&nbsp;990&nbsp;₽", calendar)
-            self.assertIn('href="https://telegram.me/twokaif_calendar_bot"', calendar)
-            self.assertNotIn("data-cd-", calendar)
-            self.assertNotIn("promo-timer", calendar)
-
-    def test_evergreen_countdown_code_is_gone(self) -> None:
-        for html in (self.block, self.dist):
-            self.assertNotIn("evergreen-2026", html)
-            self.assertNotIn("monthly:true", html)
-            self.assertNotIn("data-cd-monthly", html)
-            self.assertNotIn("data-cd-timer", html)
-            self.assertNotIn("endOfMonthMSK", html)
-            self.assertNotIn("setInterval(tick", html)
-            self.assertIn('aria-label="Текущие предложения"', html)
-
-    def test_other_sales_states_and_destinations_are_unchanged(self) -> None:
-        expected = {
-            "promo-card-sites": "https://telegram.me/twokaif_ruslan",
-            "promo-card-png": "https://png-info.twokaif.ru",
-            "promo-card-mzh": "https://telegram.me/twokaif_ruslan",
-        }
-        for html in (self.block, self.dist):
-            for card_id, url in expected.items():
-                self.assertIn(f'href="{url}"', card(html, card_id))
-            agent = card(html, "promo-card-agent")
-            self.assertIn("ПАУЗА", agent)
-            self.assertNotIn("promo-cta", agent)
-            self.assertIn("РУЧНОЙ ЗАКАЗ", card(html, "promo-card-mzh"))
-            self.assertNotIn("tochkaplace.com", html)
-
+    def test_schema_matches_visible_prices(self):
+        html = (ROOT / "dist/index.html").read_text()
+        schema = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)[1])
+        services = {item.get("@id", "").split("#")[-1]: item for item in schema["@graph"] if item["@type"] == "Service"}
+        expected = {"service-websites": "79000", "service-png": "7000", "service-presentations": "3700", "service-covers-posters": "4000"}
+        for name, price in expected.items():
+            self.assertEqual(services[name]["offers"]["price"], price)
+        self.assertNotIn("offers", services["service-center"])
+        self.assertNotIn("offers", services["service-interactives"])
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
