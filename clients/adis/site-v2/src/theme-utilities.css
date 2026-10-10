@@ -1,0 +1,6 @@
+/* Keep existing site reset and typography; utilities are scoped to the new UI. */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "../components";
+.theme-toggle { opacity: 1; -webkit-tap-highlight-color: transparent; }

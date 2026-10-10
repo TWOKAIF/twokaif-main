@@ -1,0 +1,159 @@
+/* Approved menu 02: one shared utility row above the social links. */
+.menu-overlay.menu-with-materials {
+  height: 100dvh;
+  grid-template-rows: auto minmax(min-content, 1fr) auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.menu-overlay.menu-with-materials .menu-stage {
+  align-self: center;
+  margin-block: 28px;
+}
+
+.menu-overlay.menu-with-materials .menu-bottom {
+  display: grid;
+  grid-template-rows: auto auto;
+  min-width: 0;
+  margin-inline: var(--gutter);
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+.menu-overlay.menu-with-materials .menu-materials-link {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 64px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 0;
+  background: transparent;
+  color: var(--paper);
+  font-family: Akrobat, sans-serif;
+  font-size: clamp(22px, 1.8vw, 26px);
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.menu-overlay.menu-with-materials .menu-materials-link .editorial-action-label {
+  min-width: 0;
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.menu-overlay.menu-with-materials .menu-materials-link .editorial-action-arrow {
+  width: .75em;
+  height: .75em;
+  flex: none;
+  stroke-width: 1.4;
+}
+
+.menu-overlay.menu-with-materials .menu-materials-link:focus-visible {
+  color: var(--paper);
+  outline-color: var(--paper);
+  outline-offset: -3px;
+}
+
+.menu-overlay.menu-with-materials .menu-socials {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-overlay.menu-with-materials .menu-social-link:nth-child(n) {
+  flex: none;
+  min-height: 44px;
+  justify-self: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-overlay.menu-with-materials .menu-materials-link:hover {
+    color: rgba(255, 255, 255, .72);
+  }
+}
+
+@media (max-width: 1199px) {
+  .menu-overlay.menu-with-materials .menu-stage {
+    margin-block: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .menu-overlay.menu-with-materials .menu-bottom {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .menu-overlay.menu-with-materials .menu-materials-link {
+    min-height: 56px;
+    gap: 14px;
+    font-size: 20px;
+  }
+}
+
+@media (max-height: 450px) and (min-width: 621px) {
+  .menu-overlay.menu-with-materials .menu-stage {
+    display: block;
+    width: calc(100% - 2 * var(--gutter));
+    margin-block: 20px;
+  }
+
+  .menu-overlay.menu-with-materials .menu-portrait {
+    display: none;
+  }
+
+  .menu-overlay.menu-with-materials .menu-list {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+  }
+
+  .menu-overlay.menu-with-materials .menu-link-inner {
+    font-size: clamp(30px, 4vw, 40px);
+  }
+
+  .menu-overlay.menu-with-materials .menu-materials-link {
+    min-height: 48px;
+    padding-block: 10px;
+    font-size: 20px;
+  }
+
+  .menu-overlay.menu-with-materials .menu-bottom {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+}
+
+.fonts-fallback .menu-overlay.menu-with-materials .menu-materials-link {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.fonts-fallback .menu-overlay.menu-with-materials .menu-socials {
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+@media (max-height: 450px) and (min-width: 621px) {
+  .fonts-fallback .menu-overlay.menu-with-materials .menu-list {
+    flex-wrap: wrap;
+    gap: 12px 20px;
+  }
+
+  .fonts-fallback .menu-overlay.menu-with-materials .menu-link-inner {
+    font-size: 28px;
+  }
+}

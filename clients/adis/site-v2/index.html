@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="ru" class="fonts-loading">
   <head>
+    <meta name="theme-color" content="#060607" />
     <meta charset="UTF-8" />
+    <script src="/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href="https://adismammo.ru/" />
@@ -12,6 +14,7 @@
       rel="preload"
       as="image"
       type="image/webp"
+      fetchpriority="high"
       href="/images/hero/v2/adis-hero-v2-1280.webp"
       media="(min-width: 1200px)"
       imagesrcset="/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w, /images/hero/v2/adis-hero-v2-2349.webp 2349w"
@@ -21,19 +24,20 @@
       rel="preload"
       as="image"
       type="image/webp"
+      fetchpriority="high"
       href="/images/hero/v2/adis-hero-v2-1280.webp"
       media="(max-width: 1199px)"
-      imagesrcset="/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w"
-      imagesizes="100vw"
+      imagesrcset="/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w, /images/hero/v2/adis-hero-v2-2349.webp 2349w"
+      imagesizes="(max-width: 767px) calc(100vw - 32px), calc(100vw - 64px)"
     />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="description" content="Адис Маммо — ведущий и комик. Частные события, корпоративные мероприятия и stand up." />
+    <meta name="google-site-verification" content="3Tv6u6tr7vuywW9ScFU5I1gXGTXS5CkisA4DHWYzP-Q" />
+    <meta name="yandex-verification" content="e97791466a78bcd6" />
+    <meta name="description" content="Адис Маммо — ведущий свадеб, юбилеев и корпоративов в Москве, Санкт-Петербурге, Астане, Алматы, Ташкенте, Ларнаке, Дубае и на Пхукете. Видео и прямая связь." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:site_name" content="Адис Маммо" />
-    <meta property="og:title" content="Адис Маммо — ведущий и комик" />
-    <meta property="og:description" content="Частные события, корпоративные мероприятия и stand up." />
+    <meta property="og:title" content="Адис Маммо — ведущий свадеб, юбилеев и корпоративов" />
+    <meta property="og:description" content="Адис Маммо — ведущий свадеб, юбилеев и корпоративов в Москве, Санкт-Петербурге, Астане, Алматы, Ташкенте, Ларнаке, Дубае и на Пхукете. Видео и прямая связь." />
     <meta property="og:url" content="https://adismammo.ru/" />
     <meta property="og:image" content="https://adismammo.ru/images/social/adis-mammo-og-1200x630.png" />
     <meta property="og:image:secure_url" content="https://adismammo.ru/images/social/adis-mammo-og-1200x630.png" />
@@ -42,15 +46,15 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Адис Маммо — ведущий и комик" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Адис Маммо — ведущий и комик" />
-    <meta name="twitter:description" content="Частные события, корпоративные мероприятия и stand up." />
+    <meta name="twitter:title" content="Адис Маммо — ведущий свадеб, юбилеев и корпоративов" />
+    <meta name="twitter:description" content="Адис Маммо — ведущий свадеб, юбилеев и корпоративов в Москве, Санкт-Петербурге, Астане, Алматы, Ташкенте, Ларнаке, Дубае и на Пхукете. Видео и прямая связь." />
     <meta name="twitter:image" content="https://adismammo.ru/images/social/adis-mammo-og-1200x630.png" />
     <meta name="twitter:image:alt" content="Адис Маммо — ведущий и комик" />
-    <title>Адис Маммо — ведущий и комик</title>
+    <title>Адис Маммо — ведущий свадеб, юбилеев и корпоративов</title>
   </head>
   <body>
     <!--__SITE_CONTENT__-->
-    <div id="root"></div>
+    <div id="root"><!--__APP_HTML__--></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

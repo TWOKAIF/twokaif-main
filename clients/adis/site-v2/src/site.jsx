@@ -1,14 +1,63 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { ScrollInk, useScrollInk } from './scroll-ink.jsx'
+import { useMobileMotion } from './mobile-motion.js'
+import { DepthTicker } from './depth-ticker.jsx'
+import { useSmoothSurfaces } from './smooth-surfaces.js'
+import { ThemeToggle } from '../components/ui/theme-toggle'
 import { createPortal } from 'react-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import 'lenis/dist/lenis.css'
+import { CopyThoughts, readableText } from './typography.jsx'
 
 gsap.registerPlugin(useGSAP)
 
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(null)
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+  return reduced
+}
+
+let scrollLockCount = 0
+let releasePageScroll
+
+function lockPageScroll() {
+  if (scrollLockCount++ === 0) {
+    const root = document.documentElement
+    const body = document.body
+    const scrollX = window.scrollX
+    const scrollY = window.scrollY
+    const previousRootOverflow = root.style.overflow
+    const previousBodyStyles = Object.fromEntries(['overflow', 'position', 'top', 'left', 'width'].map((property) => [property, body.style[property]]))
+    window.dispatchEvent(new CustomEvent('adis:scroll-lock', { detail: true }))
+    root.style.overflow = 'hidden'
+    Object.assign(body.style, { overflow: 'hidden', position: 'fixed', top: `${-scrollY}px`, left: `${-scrollX}px`, width: '100%' })
+    releasePageScroll = () => {
+      Object.assign(body.style, previousBodyStyles)
+      root.style.overflow = previousRootOverflow
+      window.dispatchEvent(new CustomEvent('adis:scroll-lock', { detail: false }))
+      window.scrollTo({ left: scrollX, top: scrollY, behavior: 'instant' })
+    }
+  }
+  let released = false
+  return () => {
+    if (released) return
+    released = true
+    if (--scrollLockCount === 0) {
+      releasePageScroll?.()
+      releasePageScroll = undefined
+    }
+  }
+}
+
 const fallbackHeader = {
   brand: 'АДИС МАММО',
-  formats: ['ЧАСТНЫЕ СОБЫТИЯ', 'КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ', 'STAND UP'],
+  formats: ['СВАДЬБЫ И ЮБИЛЕИ', 'КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ', 'STAND UP'],
   contactLabel: 'СВЯЗАТЬСЯ',
   contactHref: 'https://t.me/amynameis',
   menu: [
@@ -53,7 +102,7 @@ const fallbackHero = {
   portrait: {
     url: '/images/hero/v2/adis-hero-v2.png',
     webpSrcSet: '/images/hero/v2/adis-hero-v2-768.webp 768w, /images/hero/v2/adis-hero-v2-1280.webp 1280w, /images/hero/v2/adis-hero-v2-1920.webp 1920w, /images/hero/v2/adis-hero-v2-2349.webp 2349w',
-    sizes: '(max-width: 767px) min(165vw, 854px), (max-width: 1199px) min(110vw, 961px), min(82vw, calc(89svh - 71px))',
+    sizes: '(max-width: 767px) calc(100vw - 32px), (max-width: 1199px) calc(100vw - 64px), min(82vw, calc(89svh - 71px))',
     alt: 'Адис Маммо',
     width: 2349,
     height: 2496,
@@ -69,6 +118,26 @@ const fallbackAbout = {
   imageAlt: 'Портрет Адиса Маммо',
   lead: 'ПОБЕДИТЕЛЬ ПРЕМИИ WEDDING AWARDS\nВ НОМИНАЦИИ «ЛУЧШИЙ ВЕДУЩИЙ РОССИИ».\nУЧАСТНИК «ОТКРЫТОГО МИКРОФОНА» НА ТНТ\nИ ROAST BATTLE ОТ LABELCOM.',
   secondary: 'АВТОР YOUTUBE-КАНАЛА «САРКАЗМОШНАЯ».\nВЕДУЩИЙ ПРОЕКТОВ «ИСТОРИИ НА СПОР» И «У МЕНЯ ХУЖЕ».\nВЫПУСТИЛ СОЛЬНЫЙ СТЕНДАП-КОНЦЕРТ.',
+  rubrics: [
+    {
+      title: 'Признание',
+      paragraphs: ['Победитель премии WEDDING AWARDS в номинации «Лучший ведущий России».'],
+    },
+    {
+      title: 'ТВ и комедия',
+      paragraphs: [
+        'Участник «Открытого микрофона» на ТНТ и ROAST BATTLE от LABELCOM.',
+        'Выпустил сольный стендап‑концерт.',
+      ],
+    },
+    {
+      title: 'Свои проекты',
+      paragraphs: [
+        'Автор YouTube‑канала «Сарказмошная».',
+        'Ведущий проектов «Истории на спор» и «У меня хуже».',
+      ],
+    },
+  ],
 }
 
 const fallbackVideo = {
@@ -149,12 +218,12 @@ const fallbackGallery = {
       imageAlt: 'Портрет Адиса Маммо на открытом воздухе',
     },
     {
-      image: '/images/gallery/v2/06-526.webp',
-      avifSrcSet: '/images/gallery/v2/06-263.avif 263w, /images/gallery/v2/06-526.avif 526w',
-      webpSrcSet: '/images/gallery/v2/06-263.webp 263w, /images/gallery/v2/06-526.webp 526w',
+      image: '/images/gallery/retina/06-1600.webp',
+      avifSrcSet: '/images/gallery/retina/06-526.avif 526w, /images/gallery/retina/06-1052.avif 1052w, /images/gallery/retina/06-1600.avif 1600w',
+      webpSrcSet: '/images/gallery/retina/06-526.webp 526w, /images/gallery/retina/06-1052.webp 1052w, /images/gallery/retina/06-1600.webp 1600w',
       sizes: '(max-width: 767px) calc((100vw - 38px)/2), (max-width: 1199px) calc((100vw - 114px)/4), calc((100vw - 138px)/4)',
-      width: 526,
-      height: 818,
+      width: 1600,
+      height: 2488,
       imageAlt: 'Адис Маммо на фоне красной сценографии',
     },
     {
@@ -186,6 +255,7 @@ const fallbackContact = {
   role: 'ВЕДУЩИЙ / КОМИК',
   portrait: '/images/adis-contact.png',
   portraitAlt: 'Адис Маммо',
+  actionLabel: 'ОБСУДИТЬ СОБЫТИЕ',
   materialsLabel: 'МАТЕРИАЛЫ ДЛЯ ОРГАНИЗАТОРОВ',
   materialsHref: 'https://disk.yandex.ru/d/D9CQrr6e1i4WzQ',
   copyright: '© 2026',
@@ -281,6 +351,25 @@ function normalizeVideo(input = {}) {
   }
 }
 
+function normalizeAbout(input = {}) {
+  // Older API responses contain only lead/secondary; keep the approved rubric layout.
+  const rubrics = Array.isArray(input?.rubrics) ? input.rubrics : []
+  return {
+    ...fallbackAbout,
+    ...(input || {}),
+    rubrics: fallbackAbout.rubrics.map((fallbackRubric, index) => {
+      const rubric = rubrics[index]
+      const paragraphs = Array.isArray(rubric?.paragraphs)
+        ? rubric.paragraphs.filter((paragraph) => typeof paragraph === 'string' && paragraph.trim())
+        : []
+      return {
+        title: typeof rubric?.title === 'string' && rubric.title.trim() ? rubric.title : fallbackRubric.title,
+        paragraphs: paragraphs.length ? paragraphs : fallbackRubric.paragraphs,
+      }
+    }),
+  }
+}
+
 function normalizeSelected(input = {}) {
   return {
     ...fallbackSelected,
@@ -314,7 +403,7 @@ function normalizeSiteContent(input = {}) {
   return {
     header: normalizeHeader(input.header),
     hero: normalizeHero(input.hero),
-    about: { ...fallbackAbout, ...(input.about || {}) },
+    about: normalizeAbout(input.about),
     video: normalizeVideo(input.video),
     ticker: normalizeTicker(input.ticker),
     selected: normalizeSelected(input.selected),
@@ -324,18 +413,6 @@ function normalizeSiteContent(input = {}) {
   }
 }
 
-function readBootstrappedContent() {
-  if (window.__ADIS_STANDALONE_CONTENT__) return window.__ADIS_STANDALONE_CONTENT__
-  const node = document.getElementById('site-content')
-  if (!node?.dataset.json) return null
-  try {
-    return JSON.parse(node.dataset.json)
-  } catch {
-    return null
-  }
-}
-
-const bootstrappedContent = readBootstrappedContent()
 let contentRequest
 
 function requestContent() {
@@ -371,6 +448,8 @@ function normalizeHero(input = {}) {
   const portrait = typeof input.portrait === 'object' && input.portrait
     ? { ...fallbackHero.portrait, ...input.portrait }
     : { ...fallbackHero.portrait, url: input.image || fallbackHero.portrait.url }
+  // Image selection follows the responsive layout, including content saved before it existed.
+  portrait.sizes = fallbackHero.portrait.sizes
   return {
     ...fallbackHero,
     ...input,
@@ -419,7 +498,7 @@ function RollingMenuLabel({ label }) {
 
 function FormatLine({ formats, className = '' }) {
   return (
-    <div className={`format-line${className ? ` ${className}` : ''}`} aria-label="Форматы работы">
+    <div className={`format-line${className ? ` ${className}` : ''}`} role="group" aria-label="Форматы работы">
       <div className="format-line-track">
         {formats.map((format, index) => (
           <React.Fragment key={`${format}-${index}`}>
@@ -432,7 +511,9 @@ function FormatLine({ formats, className = '' }) {
   )
 }
 
-function SiteHeader({ content = fallbackHeader }) {
+function SiteHeader({ content = fallbackHeader, contact: contactContent = fallbackContact }) {
+  const contact = normalizeContact(contactContent)
+  const reduceMotion = useReducedMotion()
   const [open, setOpen] = useState(false)
   const [activeMenuIndex, setActiveMenuIndex] = useState(0)
   const overlayRef = useRef(null)
@@ -442,9 +523,8 @@ function SiteHeader({ content = fallbackHeader }) {
   const lastFocusedRef = useRef(null)
 
   useGSAP(() => {
-    if (!overlayRef.current) return
+    if (!overlayRef.current || reduceMotion === null) return
     gsap.killTweensOf(overlayRef.current)
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion) {
       gsap.set(overlayRef.current, { y: open ? 0 : window.innerHeight, opacity: open ? 1 : 0, visibility: open ? 'visible' : 'hidden' })
       return
@@ -462,13 +542,23 @@ function SiteHeader({ content = fallbackHeader }) {
         onComplete: () => gsap.set(overlayRef.current, { visibility: 'hidden' }),
       })
     }
-  }, { dependencies: [open], scope: overlayRef })
+  }, { dependencies: [open, reduceMotion], scope: overlayRef })
 
   useEffect(() => {
     if (!open) return undefined
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const focusFrame = requestAnimationFrame(() => closeButtonRef.current?.focus())
+    const unlockScroll = lockPageScroll()
+    // WebKit may still apply the closed overlay's visibility during the first frame.
+    let focusFrame = 0
+    let focusAttempts = 0
+    const focusCloseButton = () => {
+      closeButtonRef.current?.focus({ preventScroll: true })
+      if (document.activeElement !== closeButtonRef.current && ++focusAttempts < 4) {
+        focusFrame = requestAnimationFrame(focusCloseButton)
+      }
+    }
+    focusFrame = requestAnimationFrame(() => {
+      focusFrame = requestAnimationFrame(focusCloseButton)
+    })
     const keepFocusInside = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault()
@@ -476,19 +566,30 @@ function SiteHeader({ content = fallbackHeader }) {
         return
       }
       if (event.key !== 'Tab' || !overlayRef.current) return
+      overlayRef.current.dataset.keyboardFocus = 'true'
       const focusable = Array.from(overlayRef.current.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),[tabindex]:not([tabindex="-1"])'))
       if (!focusable.length) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+      // Safari can skip buttons in native Tab navigation, so move focus explicitly.
+      event.preventDefault()
+      const currentIndex = focusable.indexOf(document.activeElement)
+      const nextIndex = currentIndex < 0
+        ? (event.shiftKey ? focusable.length - 1 : 0)
+        : (currentIndex + (event.shiftKey ? -1 : 1) + focusable.length) % focusable.length
+      const next = focusable[nextIndex]
+      next.focus({ preventScroll: true })
+      const targetBounds = next.getBoundingClientRect()
+      const menuBounds = overlayRef.current.getBoundingClientRect()
+      if (targetBounds.top < menuBounds.top || targetBounds.bottom > menuBounds.bottom) {
+        next.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' })
+      }
     }
     window.addEventListener('keydown', keepFocusInside)
     return () => {
       cancelAnimationFrame(focusFrame)
-      document.body.style.overflow = previousOverflow
+      unlockScroll()
       window.removeEventListener('keydown', keepFocusInside)
-      lastFocusedRef.current?.focus?.()
+      if (overlayRef.current) delete overlayRef.current.dataset.keyboardFocus
+      lastFocusedRef.current?.focus?.({ preventScroll: true })
     }
   }, [open])
 
@@ -519,7 +620,7 @@ function SiteHeader({ content = fallbackHeader }) {
     if (closeMenu) setOpen(false)
     if (!href || href === '#') return
     if (href.startsWith('#')) {
-      const scrollToSection = () => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const scrollToSection = () => document.querySelector(href)?.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' })
       if (closeMenu) requestAnimationFrame(scrollToSection)
       else scrollToSection()
       return
@@ -537,7 +638,7 @@ function SiteHeader({ content = fallbackHeader }) {
     return currentIndex
   }
   const openMenu = () => {
-    lastFocusedRef.current = document.activeElement || openButtonRef.current
+    lastFocusedRef.current = openButtonRef.current
     setActiveMenuIndex(getCurrentMenuIndex())
     setOpen(true)
   }
@@ -548,24 +649,26 @@ function SiteHeader({ content = fallbackHeader }) {
         <button className="brand brand-button" type="button" onClick={() => followLink('#top')}>{content.brand}</button>
         <FormatLine formats={content.formats} />
         <div className="header-actions">
-          <button className="contact-button" type="button" onClick={() => followLink(content.contactHref)}>{content.contactLabel}</button>
+          <ThemeToggle />
+          <a className="contact-button" href={content.contactHref} target="_blank" rel="noopener noreferrer"><RollLabel>{content.contactLabel}</RollLabel></a>
           <button ref={openButtonRef} className="menu-button" type="button" aria-label="Открыть меню" aria-expanded={open} aria-controls="site-menu-dialog" onClick={openMenu}><DotsIcon /></button>
         </div>
         <span className="header-scroll-progress" ref={progressRef} aria-hidden="true" />
       </header>
 
-      <aside ref={overlayRef} id="site-menu-dialog" className="menu-overlay" role="dialog" aria-modal="true" aria-label="Меню сайта" aria-hidden={!open}>
+      <aside ref={overlayRef} id="site-menu-dialog" className="menu-overlay menu-with-materials" role="dialog" aria-modal="true" aria-label="Меню сайта" aria-hidden={!open} inert={!open} onPointerDown={() => { if (overlayRef.current) delete overlayRef.current.dataset.keyboardFocus }} data-lenis-prevent>
         <div className="menu-header">
           <button className="brand brand-button" type="button" onClick={() => followLink('#top', true)}>{content.brand}</button>
           <FormatLine formats={content.formats} className="menu-format-line" />
           <div className="header-actions">
-            <button className="contact-button contact-button-dark" type="button" onClick={() => followLink(content.contactHref, true)}>{content.contactLabel}</button>
+          <ThemeToggle />
+            <a className="contact-button contact-button-dark" href={content.contactHref} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}><RollLabel>{content.contactLabel}</RollLabel></a>
             <button ref={closeButtonRef} className="menu-button menu-button-dark" type="button" aria-label="Закрыть меню" onClick={() => setOpen(false)}><DotsIcon close /></button>
           </div>
         </div>
         <div className="menu-stage">
           <figure className="menu-portrait" aria-hidden="true">
-            {open && <img src="/images/optimized/adis-menu-640.webp" alt="" width="640" height="1138" decoding="async" />}
+            {open && <img src="/images/optimized/adis-menu-640.webp" srcSet="/images/optimized/adis-menu-640.webp 640w, /images/adis-menu.webp 1000w" sizes="(min-width: 1200px) clamp(201px, 23.4vw, 300px), 0px" alt="" width="1000" height="1778" decoding="async" />}
           </figure>
           <nav className="menu-list" aria-label="Основная навигация" onMouseLeave={() => setActiveMenuIndex(getCurrentMenuIndex())}>
             {content.menu.map((item, index) => (
@@ -583,11 +686,14 @@ function SiteHeader({ content = fallbackHeader }) {
             ))}
           </nav>
         </div>
-        <nav className="menu-socials" aria-label="Социальные сети">
-          {(content.socials || fallbackHeader.socials).map((item, index) => (
-            <button className="menu-social-link" type="button" onClick={() => followLink(item.href, true)} key={`${item.label}-${index}`}>{item.label}</button>
-          ))}
-        </nav>
+        <div className="menu-bottom">
+          <EditorialAction className="menu-materials-link" href={contact.materialsHref} label={contact.materialsLabel} direction="up-right" external />
+          <nav className="menu-socials" aria-label="Социальные сети">
+            {(content.socials || fallbackHeader.socials).map((item, index) => (
+              <button className="menu-social-link" type="button" onClick={() => followLink(item.href, true)} key={`${item.label}-${index}`}><RollLabel>{item.label}</RollLabel></button>
+            ))}
+          </nav>
+        </div>
       </aside>
     </>
   )
@@ -619,19 +725,19 @@ function HeroSection({ content = fallbackHero }) {
 }
 
 function AboutSection({ content = fallbackAbout }) {
-  const about = { ...fallbackAbout, ...(content || {}) }
+  const about = normalizeAbout(content)
   const usesOptimizedPortrait = about.image === fallbackAbout.image
   return (
-    <section className="about-section" id="about" aria-labelledby="about-title" data-header-label={about.kicker}>
-      <div className="about-column editorial-reveal editorial-reveal-no-line" data-editorial-reveal>
-        <p className="about-kicker editorial-reveal-kicker">{about.kicker}</p>
-        <div className="about-media editorial-reveal-media">
+    <section className="about-section editorial-reveal editorial-reveal-no-line" id="about" aria-labelledby="about-title" data-header-label={about.kicker} data-editorial-reveal>
+      <h2 className="about-kicker editorial-reveal-kicker" id="about-title">{readableText(about.kicker)}</h2>
+      <div className="about-layout">
+        <figure className="about-media editorial-reveal-media">
           <picture>
             {usesOptimizedPortrait && (
               <source
                 type="image/webp"
-                srcSet="/images/optimized/adis-about-320.webp 320w, /images/optimized/adis-about-640.webp 640w, /images/optimized/adis-about-960.webp 960w"
-                sizes="(max-width: 767px) min(62vw, 260px), min(19vw, 274px)"
+                srcSet="/images/optimized/adis-about-320.webp 320w, /images/optimized/adis-about-640.webp 640w, /images/optimized/adis-about-960.webp 960w, /images/adis-about-02-clean.png 2062w"
+                sizes="(min-width: 1200px) 340px, (min-width: 700px) min(calc(32.5vw - 41.6px), 280px), min(calc(68vw - 27.2px), 250px)"
               />
             )}
             <img
@@ -643,9 +749,18 @@ function AboutSection({ content = fallbackAbout }) {
               decoding="async"
             />
           </picture>
+        </figure>
+        <div className="about-rubrics">
+          {about.rubrics.map((rubric, index) => (
+            <div className="about-rubric" key={index}>
+              <span className="about-rubric-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{readableText(rubric.title)}</h3>
+                {rubric.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}><ScrollInk text={readableText(paragraph)} /></p>)}
+              </div>
+            </div>
+          ))}
         </div>
-        <h2 id="about-title"><span className="editorial-reveal-title">{about.lead}</span></h2>
-        <p className="about-secondary">{about.secondary}</p>
       </div>
     </section>
   )
@@ -672,7 +787,7 @@ function getKinescopePoster(url) {
   if (localName) {
     return {
       src: `/images/video-posters/${localName}-1280.webp`,
-      srcSet: `/images/video-posters/${localName}-640.webp 640w, /images/video-posters/${localName}-1280.webp 1280w`,
+      srcSet: `/images/video-posters/${localName}-640.webp 640w, /images/video-posters/${localName}-1280.webp 1280w, /images/video-posters/${localName}-1920-original.jpg 1920w`,
     }
   }
   return { src: videoId ? `https://kinescope.io/${videoId}/poster/lg.jpg` : '', srcSet: undefined }
@@ -705,6 +820,7 @@ function VideoSection({ content = fallbackVideo }) {
   const playerShellRef = useRef(null)
   const expandButtonRef = useRef(null)
   const closeButtonRef = useRef(null)
+  const mobilePlaybackRef = useRef(false)
   const playingVideo = playingIndex === null ? null : video.items[playingIndex]
 
   useEffect(() => {
@@ -737,36 +853,57 @@ function VideoSection({ content = fallbackVideo }) {
 
   useEffect(() => {
     if (!isExpanded) return undefined
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    window.requestAnimationFrame(() => closeButtonRef.current?.focus())
+    const unlockScroll = lockPageScroll()
+    // The player is portaled to body; keep the page behind its dialog inactive.
+    const pageRoot = document.getElementById('root')
+    const wasInert = pageRoot?.inert
+    if (pageRoot) pageRoot.inert = true
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }))
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault()
-        setIsExpanded(false)
-        window.requestAnimationFrame(() => expandButtonRef.current?.focus())
+        collapsePlayer()
         return
       }
       if (event.key === 'Tab') {
-        event.preventDefault()
-        closeButtonRef.current?.focus()
+        const focusable = [...(playerShellRef.current?.querySelectorAll('iframe,button:not(.video-player-backdrop):not([disabled])') || [])]
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => {
-      document.body.style.overflow = previousOverflow
+      window.cancelAnimationFrame(focusFrame)
+      unlockScroll()
+      if (pageRoot) pageRoot.inert = wasInert
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [isExpanded])
 
   const startVideo = (index) => {
+    mobilePlaybackRef.current = window.matchMedia('(max-width: 767px), (pointer: coarse) and (max-height: 600px)').matches
+    const rect = videoSlotsRef.current[index]?.getBoundingClientRect()
+    if (rect) setPlayerRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
     setPlayingIndex(index)
+    setIsExpanded(mobilePlaybackRef.current)
+  }
+
+  const closePlayer = () => {
+    const slot = videoSlotsRef.current[playingIndex]
     setIsExpanded(false)
+    setPlayingIndex(null)
+    setPlayerRect(null)
+    window.requestAnimationFrame(() => slot?.querySelector('.video-launch')?.focus({ preventScroll: true }))
   }
 
   const collapsePlayer = () => {
-    setIsExpanded(false)
-    window.requestAnimationFrame(() => expandButtonRef.current?.focus())
+    if (mobilePlaybackRef.current) closePlayer()
+    else {
+      setIsExpanded(false)
+      window.requestAnimationFrame(() => expandButtonRef.current?.focus({ preventScroll: true }))
+    }
   }
 
   return (
@@ -774,7 +911,7 @@ function VideoSection({ content = fallbackVideo }) {
       <section className="video-section" id="video" aria-labelledby="video-title" data-header-label={video.kicker}>
         <header className="video-heading editorial-reveal" data-editorial-reveal>
           <p className="editorial-reveal-kicker">{video.kicker}</p>
-          <h2 id="video-title"><span className="editorial-reveal-title">{video.title}</span></h2>
+          <h2 id="video-title"><span className="editorial-reveal-title">{readableText(video.title)}</span></h2>
         </header>
         <div className="video-list">
           {video.items.map((item, index) => (
@@ -792,8 +929,8 @@ function VideoSection({ content = fallbackVideo }) {
                 )}
               </div>
               <div className="video-copy">
-                <h3>{item.title}</h3>
-                <p>{item.subtitle}</p>
+                <h3>{readableText(item.title)}</h3>
+                <p><CopyThoughts text={item.subtitle} animate /></p>
               </div>
             </article>
           ))}
@@ -808,8 +945,11 @@ function VideoSection({ content = fallbackVideo }) {
           role={isExpanded ? 'dialog' : undefined}
           aria-modal={isExpanded ? 'true' : undefined}
           aria-label={isExpanded ? `Видео: ${playingVideo.title}` : undefined}
+          data-lenis-prevent={isExpanded ? '' : undefined}
         >
-          {isExpanded && <button className="video-player-backdrop" type="button" aria-label="Вернуть видео в карточку" onClick={collapsePlayer} />}
+          {/* Tab events inside a cross-origin iframe do not reach our key handler. */}
+          {isExpanded && <span className="visually-hidden" tabIndex={0} onFocus={() => closeButtonRef.current?.focus({ preventScroll: true })} />}
+          {isExpanded && <button className="video-player-backdrop" type="button" tabIndex={-1} aria-label={mobilePlaybackRef.current ? 'Закрыть видео' : 'Вернуть видео в карточку'} onClick={collapsePlayer} />}
           <div className="video-player-stage" key="video-player-stage">
             <iframe
               key={playingVideo.url}
@@ -819,16 +959,22 @@ function VideoSection({ content = fallbackVideo }) {
               allowFullScreen
             />
             {!isExpanded && (
+              <button className="video-player-stop" type="button" aria-label="Закрыть видео" onClick={closePlayer}>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+              </button>
+            )}
+            {!isExpanded && (
               <button className="video-player-expand" type="button" aria-label="Развернуть видео" ref={expandButtonRef} onClick={() => setIsExpanded(true)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" /></svg>
               </button>
             )}
+          </div>
             {isExpanded && (
-              <button className="video-lightbox-close" type="button" aria-label="Вернуть видео в карточку" ref={closeButtonRef} onClick={collapsePlayer}>
+              <button className="video-lightbox-close" type="button" aria-label={mobilePlaybackRef.current ? 'Закрыть видео' : 'Вернуть видео в карточку'} ref={closeButtonRef} onClick={collapsePlayer}>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
               </button>
             )}
-          </div>
+          {isExpanded && <span className="visually-hidden" tabIndex={0} onFocus={() => closeButtonRef.current?.focus({ preventScroll: true })} />}
         </div>,
         document.body,
       )}
@@ -838,49 +984,22 @@ function VideoSection({ content = fallbackVideo }) {
 
 function BrandTicker({ content = fallbackTicker }) {
   const ticker = normalizeTicker(content)
-  const tickerRef = useRef(null)
-  const visibleLogos = ticker.logos
-    .filter((logo) => logo.enabled)
-    .map((logo) => ({ ...brandLogos.find((asset) => asset.name === logo.name), ...logo }))
-    .filter((logo) => logo.src)
-  useEffect(() => {
-    const element = tickerRef.current
-    if (!element) return undefined
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      element.classList.add('is-visible')
-      return undefined
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      element.classList.toggle('is-visible', entry.isIntersecting)
-    }, { rootMargin: '120px 0px' })
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [])
-  if (!visibleLogos.length) return null
-  return (
-    <section ref={tickerRef} className="brand-ticker" id="brands" aria-label="Бренды, для которых Адис проводил мероприятия" style={getTickerStyle(ticker)}>
-      <h2 className="visually-hidden">Бренды и компании</h2>
-      <div className="brand-ticker-viewport">
-        <div className="brand-ticker-track">
-          {[0, 1].map((setIndex) => (
-            <div className="brand-ticker-set" aria-hidden={setIndex === 1} key={setIndex}>
-              {visibleLogos.map((logo) => (
-                <div className={`brand-logo-card brand-logo-${logo.shape}`} style={{ '--logo-scale': logo.scale / 100 }} key={`${setIndex}-${logo.name}`}>
-                  <img src={logo.src} alt={setIndex === 0 ? logo.name : ''} loading="lazy" draggable="false" />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
+  const logos = ticker.logos.filter(logo => logo.enabled)
+    .map(logo => ({ ...brandLogos.find(asset => asset.name === logo.name), ...logo }))
+    .filter(logo => logo.src)
+  if (!logos.length) return null
+  return <section className="brand-ticker brand-ticker-depth" id="brands" aria-label="Бренды, для которых Адис проводил мероприятия">
+    <h2 className="visually-hidden">Бренды и компании</h2>
+    <DepthTicker logos={logos}/>
+  </section>
 }
 
 function EditorialArrow({ direction = 'right' }) {
+  if (direction === 'up-right') {
+    return <svg className="editorial-action-arrow editorial-action-arrow-diagonal" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" vectorEffect="non-scaling-stroke" /></svg>
+  }
   if (direction === 'up') {
-    return <svg className="editorial-action-arrow editorial-action-arrow-up" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 31V3M3 12l9-9 9 9" vectorEffect="non-scaling-stroke" /></svg>
+    return <svg className="editorial-action-arrow editorial-action-arrow-up" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 31V1M3 10l9-9 9 9" vectorEffect="non-scaling-stroke" /></svg>
   }
   if (direction === 'left') {
     return <svg className="editorial-action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12H3M11 4l-8 8 8 8" vectorEffect="non-scaling-stroke" /></svg>
@@ -888,9 +1007,13 @@ function EditorialArrow({ direction = 'right' }) {
   return <svg className="editorial-action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h19M13 4l8 8-8 8" vectorEffect="non-scaling-stroke" /></svg>
 }
 
+function RollLabel({ children }) {
+  return <span className="roll-label"><span className="roll-primary">{children}</span><span className="roll-secondary" aria-hidden="true">{children}</span></span>
+}
+
 function EditorialAction({ className = '', href = '', label, direction = 'right', external = false }) {
   const classes = `editorial-action editorial-action-${direction}${href && href !== '#' ? '' : ' is-disabled'}${className ? ` ${className}` : ''}`
-  const content = <><span className="editorial-action-label">{label}</span><EditorialArrow direction={direction} /></>
+  const content = <><span className="editorial-action-label"><RollLabel>{label}</RollLabel></span><EditorialArrow direction={direction} /></>
   if (!href || href === '#') return <span className={classes} aria-disabled="true">{content}</span>
   return <a className={classes} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{content}</a>
 }
@@ -901,7 +1024,7 @@ function SelectedProjects({ content = fallbackSelected }) {
     <section className="selected-section" id="selected" aria-labelledby="selected-title" data-header-label={`// ${selected.title}`}>
       <header className="selected-heading editorial-reveal" data-editorial-reveal>
         <p className="editorial-reveal-kicker">{selected.kicker}</p>
-        <h2 id="selected-title"><span className="editorial-reveal-title">{selected.title}</span></h2>
+        <h2 id="selected-title"><span className="editorial-reveal-title">{readableText(selected.title)}</span></h2>
       </header>
       <div className="selected-list">
         {selected.items.map((item, index) => (
@@ -927,16 +1050,32 @@ function SelectedProjects({ content = fallbackSelected }) {
   )
 }
 
-function GalleryImage({ item, alt, sizes, loading = 'lazy', fetchPriority }) {
+function galleryGridSizes(item, index) {
+  const wide = index === 0 || index === 3
+  const portrait = index >= 4
+  const mobileWidth = portrait
+    ? '((100vw - clamp(32px, 8.4vw, 56px) - 8px) / 2)'
+    : '(100vw - clamp(32px, 8.4vw, 56px))'
+  // Cover crops panoramic photos to 4:3 on phones: select for the full bitmap,
+  // including the pixels cropped outside the visible card.
+  const coverScale = Math.max(1, (item.width / item.height) / (portrait ? .72 : 4 / 3))
+  const mobile = `calc(${mobileWidth} * ${(coverScale * 1.05).toFixed(4)})`
+  const tablet = wide ? '92vw' : portrait ? 'calc((92vw - 12px) / 4)' : 'calc((92vw - 4px) / 2)'
+  const desktop = wide ? 'calc(100vw - 120px)' : portrait ? 'calc((100vw - 138px) / 4)' : 'calc((100vw - 126px) / 2)'
+  return `(max-width: 767px) ${mobile}, (max-width: 1199px) ${tablet}, ${desktop}`
+}
+
+function GalleryImage({ item, alt, sizes, loading = 'lazy', fetchPriority, limitToSource = false }) {
   return (
     <picture>
-      {item.avifSrcSet && <source type="image/avif" srcSet={item.avifSrcSet} sizes={sizes || item.sizes} />}
+      {/* Prefer the less compressed WebP exports to preserve skin and fabric detail. */}
       <img
         src={item.image}
         srcSet={item.webpSrcSet || undefined}
         sizes={sizes || item.sizes}
         width={item.width || undefined}
         height={item.height || undefined}
+        style={limitToSource && item.width ? { maxWidth: `min(100%, ${item.width}px)` } : undefined}
         alt={alt}
         loading={loading}
         decoding="async"
@@ -953,20 +1092,21 @@ function PhotoGallery({ content = fallbackGallery }) {
   const closeButtonRef = useRef(null)
   const photoButtonsRef = useRef([])
   const openerIndexRef = useRef(null)
+  const touchStartRef = useRef(null)
 
   const closeLightbox = () => {
     const trigger = openerIndexRef.current !== null ? photoButtonsRef.current[openerIndexRef.current] : null
     setActivePhoto(null)
-    window.requestAnimationFrame(() => trigger?.focus())
+    window.requestAnimationFrame(() => trigger?.focus({ preventScroll: true }))
   }
   const showPrevious = () => setActivePhoto((current) => current && ({ ...current, index: (current.index - 1 + gallery.items.length) % gallery.items.length }))
   const showNext = () => setActivePhoto((current) => current && ({ ...current, index: (current.index + 1) % gallery.items.length }))
 
   useEffect(() => {
     if (activePhoto === null) return undefined
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    if (!activePhoto.instant) window.requestAnimationFrame(() => closeButtonRef.current?.focus())
+    const unlockScroll = lockPageScroll()
+    let focusFrame
+    if (!activePhoto.instant) focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }))
     else closeButtonRef.current?.focus({ preventScroll: true })
 
     const handleKeyDown = (event) => {
@@ -988,19 +1128,18 @@ function PhotoGallery({ content = fallbackGallery }) {
       if (event.key !== 'Tab') return
       const focusable = [...(dialogRef.current?.querySelectorAll('button:not([disabled])') || [])]
       if (!focusable.length) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault()
-        last.focus()
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault()
-        first.focus()
-      }
+      // Keep button navigation inside the dialog even with Safari's default Tab mode.
+      event.preventDefault()
+      const currentIndex = focusable.indexOf(document.activeElement)
+      const nextIndex = currentIndex < 0
+        ? (event.shiftKey ? focusable.length - 1 : 0)
+        : (currentIndex + (event.shiftKey ? -1 : 1) + focusable.length) % focusable.length
+      focusable[nextIndex].focus({ preventScroll: true })
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => {
-      document.body.style.overflow = previousOverflow
+      if (focusFrame) window.cancelAnimationFrame(focusFrame)
+      unlockScroll()
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [activePhoto !== null, gallery.items.length])
@@ -1010,7 +1149,7 @@ function PhotoGallery({ content = fallbackGallery }) {
     <section className="gallery-section" id="photos" aria-labelledby="gallery-title" data-header-label={gallery.kicker}>
       <header className="gallery-heading editorial-reveal" data-editorial-reveal>
         <p className="editorial-reveal-kicker">{gallery.kicker}</p>
-        <h2 id="gallery-title"><span className="editorial-reveal-title">{gallery.title}</span></h2>
+        <h2 id="gallery-title"><span className="editorial-reveal-title">{readableText(gallery.title)}</span></h2>
       </header>
       <div className="gallery-grid">
         {gallery.items.map((item, index) => (
@@ -1028,7 +1167,10 @@ function PhotoGallery({ content = fallbackGallery }) {
               }}
             >
               {item.image
-                ? <GalleryImage item={item} alt={item.imageAlt || `Адис Маммо — фото ${index + 1}`} />
+                ? <>
+                    <span className="gallery-hover-backdrop" aria-hidden="true"><GalleryImage item={item} sizes={galleryGridSizes(item, index)} alt="" /></span>
+                    <span className="gallery-hover-front"><GalleryImage item={item} sizes={galleryGridSizes(item, index)} alt={item.imageAlt || `Адис Маммо — фото ${index + 1}`} /></span>
+                  </>
                 : <span>ФОТО</span>}
             </button>
           </figure>
@@ -1042,7 +1184,24 @@ function PhotoGallery({ content = fallbackGallery }) {
           aria-modal="true"
           aria-label={`Фотография ${activePhoto.index + 1} из ${gallery.items.length}`}
           ref={dialogRef}
+          data-lenis-prevent
           onMouseDown={(event) => event.target === event.currentTarget && closeLightbox()}
+          onTouchStart={(event) => {
+            touchStartRef.current = event.touches.length === 1 && !event.target.closest('button')
+              ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+              : null
+          }}
+          onTouchCancel={() => { touchStartRef.current = null }}
+          onTouchEnd={(event) => {
+            const start = touchStartRef.current
+            touchStartRef.current = null
+            if (!start || event.touches.length || event.changedTouches.length !== 1) return
+            const deltaX = event.changedTouches[0].clientX - start.x
+            const deltaY = event.changedTouches[0].clientY - start.y
+            if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.4 || window.visualViewport?.scale > 1) return
+            if (deltaX < 0) showNext()
+            else showPrevious()
+          }}
         >
           <button className="gallery-lightbox-nav gallery-lightbox-prev" type="button" aria-label="Предыдущая фотография" onClick={showPrevious}>
             <EditorialArrow direction="left" />
@@ -1055,12 +1214,13 @@ function PhotoGallery({ content = fallbackGallery }) {
                 sizes="100vw"
                 loading="eager"
                 fetchPriority="high"
+                limitToSource
               />
-              <button className="gallery-lightbox-close" type="button" aria-label="Закрыть фотографию" ref={closeButtonRef} onClick={closeLightbox}>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
-              </button>
             </div>
           </figure>
+          <button className="gallery-lightbox-close" type="button" aria-label="Закрыть фотографию" ref={closeButtonRef} onClick={closeLightbox}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+          </button>
           <button className="gallery-lightbox-nav gallery-lightbox-next" type="button" aria-label="Следующая фотография" onClick={showNext}>
             <EditorialArrow direction="right" />
           </button>
@@ -1072,63 +1232,71 @@ function PhotoGallery({ content = fallbackGallery }) {
 
 function ContactLink({ className, href, children, external = false }) {
   if (!href || href === '#') return <span className={className}>{children}</span>
-  return <a className={className} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{children}</a>
+  return <a className={className} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{typeof children === 'string' ? <RollLabel>{children}</RollLabel> : children}</a>
 }
 
 function ContactSection({ content = fallbackContact, header = fallbackHeader }) {
   const contact = normalizeContact(content)
   const usesOptimizedPortrait = contact.portrait === fallbackContact.portrait
   return (
-    <section className="contact-section editorial-reveal editorial-reveal-no-line" id="contacts" aria-labelledby="contact-title" data-header-label={contact.kicker} data-editorial-reveal>
-      <div className="contact-topline">
-        <p className="editorial-reveal-kicker">{contact.kicker}</p>
-        <nav className="contact-menu" aria-label="Навигация в подвале">
-          <strong>МЕНЮ</strong>
-          {header.menu.map((item, index) => <ContactLink href={item.href} key={`${item.label}-${index}`}>{item.label}</ContactLink>)}
-        </nav>
+    <section className="contact-section contact-poster editorial-reveal editorial-reveal-no-line" id="contacts" aria-label="Контакты Адиса Маммо" data-header-label={contact.kicker} data-editorial-reveal>
+      <p className="contact-kicker editorial-reveal-kicker">{contact.kicker}</p>
+      <div className="contact-signature">
+        <h2 className="contact-name" id="contact-title"><span>{contact.brandTop}</span><span>{contact.brandBottom}</span></h2>
+        <p className="contact-role">{contact.role}</p>
       </div>
-      <h2 id="contact-title"><span className="editorial-reveal-title">{contact.title}</span></h2>
+      <div className="contact-portrait-slot">
+        <div className={`contact-portrait${contact.portrait ? ' has-image' : ''}`}>
+          <div className="contact-red-field" aria-hidden="true"/>
+          {contact.portrait ? (
+            <picture>
+              {usesOptimizedPortrait && (
+                <source
+                  srcSet="/images/optimized/adis-contact-320.webp 320w, /images/optimized/adis-contact-640.webp 640w, /images/optimized/adis-contact-960.webp 960w, /images/adis-contact.png 2092w"
+                  sizes="(min-width: 1200px) min(46vw, 62svh), (orientation: landscape) and (max-height: 600px) min(28vw, 60svh), (min-width: 700px) min(calc(100vw - 64px), 60svh), min(calc(100vw - 32px), 55svh)"
+                />
+              )}
+              <img src={contact.portrait} alt={contact.portraitAlt} width="2092" height="2343" loading="lazy" decoding="async" />
+              {usesOptimizedPortrait && <svg className="contact-lint-retouch" viewBox="0 0 2092 2343" aria-hidden="true">
+                <defs><clipPath id="contact-lint-patches">
+                  {[[464,2071],[1131,2080],[1032,2320],[1258,2232],[918,2257],[1219,1999],[996,2214],[745,1813],[715,2151],[973,2317],[967,1996],[1443,2259]].map(([x,y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="5"/>)}
+                </clipPath></defs>
+                {/* Only these tiny cloth patches use the retouched texture. The
+                    original portrait, face, silhouette and fabric stay intact. */}
+                <image href="/images/retouch/contact-lint-texture.webp" width="2092" height="2343" preserveAspectRatio="none" clipPath="url(#contact-lint-patches)"/>
+              </svg>}
+            </picture>
+          ) : <span>ФОТО</span>}
+        </div>
+      </div>
+      <div className="contact-inquiry">
+        <a className="contact-inquiry-button" href={header.contactHref} target="_blank" rel="noopener noreferrer">
+          <RollLabel>{contact.actionLabel}</RollLabel><EditorialArrow direction="up-right" />
+        </a>
+      </div>
       <nav className="contact-socials" aria-label="Социальные сети">
         {(header.socials || fallbackHeader.socials).map((item, index) => <ContactLink className="contact-social-link" href={item.href} external key={`${item.label}-${index}`}>{item.label}</ContactLink>)}
       </nav>
-      <div className="contact-main">
-        <div className="contact-signature">
-          <p><span>{contact.brandTop}</span><span>{contact.brandBottom}</span></p>
-          <small>{contact.role}</small>
-        </div>
-        <div className="contact-materials">
-          <div className={`contact-portrait${contact.portrait ? ' has-image' : ''}`}>
-            {contact.portrait ? (
-              <picture>
-                {usesOptimizedPortrait && (
-                  <source
-                    type="image/webp"
-                    srcSet="/images/optimized/adis-contact-320.webp 320w, /images/optimized/adis-contact-640.webp 640w, /images/optimized/adis-contact-960.webp 960w"
-                    sizes="(min-width: 1200px) min(24vw, 420px), 40vw"
-                  />
-                )}
-                <img src={contact.portrait} alt={contact.portraitAlt} width="2092" height="2343" loading="lazy" decoding="async" />
-              </picture>
-            ) : <span>ФОТО</span>}
-          </div>
-          <ContactLink className="contact-materials-link" href={contact.materialsHref} external>{contact.materialsLabel}</ContactLink>
-        </div>
-      </div>
+      <ContactLink className="contact-materials-link" href={contact.materialsHref} external><RollLabel>{contact.materialsLabel}</RollLabel><EditorialArrow direction="up-right" /></ContactLink>
       <footer className="contact-footer">
         <span>{contact.copyright}</span>
-        <ContactLink className="contact-footer-link" href={contact.developmentHref} external>{contact.developmentLabel}</ContactLink>
-        <ContactLink className="contact-footer-link" href={contact.privacyHref}>{contact.privacyLabel}</ContactLink>
+        <ContactLink className="contact-footer-link" href={contact.developmentHref} external><span className="studio-credit-copy"><RollLabel>Сделано <strong>ТУКАЙФ</strong></RollLabel></span></ContactLink>
+        <ContactLink className="contact-footer-link" href={contact.privacyHref} external><RollLabel>{contact.privacyLabel}</RollLabel></ContactLink>
         <EditorialAction className="contact-top-link" href="#top" label={contact.topLabel} direction="up" />
       </footer>
     </section>
   )
 }
 
-export default function PublicSite() {
-  const [content, setContent] = useState(() => bootstrappedContent ? normalizeSiteContent(bootstrappedContent) : null)
+export default function PublicSite({ initialContent = null }) {
+  useSmoothSurfaces()
+  const reduceMotion = useReducedMotion()
+  const [content, setContent] = useState(() => initialContent ? normalizeSiteContent(initialContent) : null)
+  useScrollInk(content, reduceMotion)
+  useMobileMotion(content, reduceMotion)
   const [contentFailed, setContentFailed] = useState(false)
   useEffect(() => {
-    if (bootstrappedContent) return undefined
+    if (initialContent) return undefined
     let cancelled = false
     requestContent()
       .then((nextContent) => {
@@ -1138,14 +1306,19 @@ export default function PublicSite() {
         if (!cancelled) setContentFailed(true)
       })
     return () => { cancelled = true }
-  }, [])
+  }, [initialContent])
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+    if (reduceMotion === null || reduceMotion) return undefined
     let cancelled = false
     let lenis
     let idleId
     let timeoutId
+    const syncScrollLock = (event) => {
+      if (event.detail) lenis?.stop()
+      else lenis?.start()
+    }
+    window.addEventListener('adis:scroll-lock', syncScrollLock)
     const initialize = async () => {
       try {
         const { default: Lenis } = await import('lenis')
@@ -1153,12 +1326,13 @@ export default function PublicSite() {
         lenis = new Lenis({
           autoRaf: true,
           autoToggle: true,
-          anchors: { offset: -80 },
+          anchors: true,
           duration: 1.05,
           smoothWheel: true,
           syncTouch: false,
           wheelMultiplier: 0.9,
         })
+        if (scrollLockCount > 0) lenis.stop()
       } catch {
         // Нативная прокрутка остаётся рабочей, если модуль не загрузился.
       }
@@ -1169,15 +1343,19 @@ export default function PublicSite() {
       cancelled = true
       if (idleId) window.cancelIdleCallback(idleId)
       if (timeoutId) window.clearTimeout(timeoutId)
+      window.removeEventListener('adis:scroll-lock', syncScrollLock)
       lenis?.destroy()
     }
-  }, [])
+  }, [reduceMotion])
 
   useEffect(() => {
+    if (reduceMotion === null) return undefined
     const sections = Array.from(document.querySelectorAll('[data-editorial-reveal]'))
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      sections.forEach((section) => section.classList.add('is-revealed'))
+      sections.forEach((section) => {
+        section.classList.remove('is-reveal-pending')
+        section.classList.add('is-revealed')
+      })
       return undefined
     }
     const observer = new IntersectionObserver((entries) => {
@@ -1187,9 +1365,20 @@ export default function PublicSite() {
         observer.unobserve(entry.target)
       })
     }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' })
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
-  }, [content])
+    sections.forEach((section) => {
+      // Preserve HTML already visible before hydration, including deep links.
+      if (section.classList.contains('is-revealed') || section.getBoundingClientRect().top < window.innerHeight) {
+        section.classList.add('is-revealed')
+      } else {
+        section.classList.add('is-reveal-pending')
+        observer.observe(section)
+      }
+    })
+    return () => {
+      observer.disconnect()
+      sections.forEach((section) => section.classList.remove('is-reveal-pending'))
+    }
+  }, [content, reduceMotion])
 
   if (!content) {
     return (
@@ -1205,7 +1394,7 @@ export default function PublicSite() {
 
   return (
     <main className="site-shell" id="top" style={getHeroStyle(content.hero)}>
-      <SiteHeader content={visibleHeader} />
+      <SiteHeader content={visibleHeader} contact={content.contact} />
       <HeroSection content={content.hero} />
       {visibility.about && <AboutSection content={content.about} />}
       {visibility.video && <VideoSection content={content.video} />}

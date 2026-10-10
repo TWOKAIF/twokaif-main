@@ -1,4 +1,5 @@
 import React from 'react'
+import { readableChildren } from './typography.jsx'
 
 const sections = [
   {
@@ -80,7 +81,7 @@ function ArrowLeft() {
 }
 
 export default function PrivacyPage() {
-  return (
+  return readableChildren(
     <main className="privacy-page" id="privacy-top">
       <header className="privacy-header">
         <a className="privacy-brand" href="/">АДИС МАММО</a>

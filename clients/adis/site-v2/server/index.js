@@ -11,8 +11,12 @@ const contentPath = path.join(dataDir, 'content.json')
 const distDir = path.join(rootDir, 'dist')
 const indexPath = path.join(distDir, 'index.html')
 const contentMarker = '<!--__SITE_CONTENT__-->'
+const appMarker = '<!--__APP_HTML__-->'
 const isProduction = process.env.NODE_ENV === 'production'
+const isPreview = process.env.SITE_PREVIEW === '1'
 const port = Number(process.env.PORT || 8787)
+// Fail before listening if the release omitted its server renderer.
+const renderApp = isProduction ? (await import('../dist-server/entry-server.js')).render : null
 
 const app = express()
 app.disable('x-powered-by')
@@ -23,6 +27,7 @@ app.use(
     contentSecurityPolicy: isProduction
       ? {
           directives: {
+            upgradeInsecureRequests: isPreview ? null : [],
             frameAncestors: ["'self'", 'https://check.twokaif.ru'],
             imgSrc: ["'self'", 'data:', 'https://kinescope.io', 'https://*.kinescopecdn.net'],
             frameSrc: ["'self'", 'https://kinescope.io'],
@@ -32,6 +37,7 @@ app.use(
   }),
 )
 app.use((_request, response, next) => {
+  if (isPreview) response.set('X-Robots-Tag', 'noindex, nofollow, noarchive')
   response.set('Permissions-Policy', 'camera=(), geolocation=(), microphone=(), payment=(), usb=()')
   next()
 })
@@ -61,8 +67,14 @@ function escapeHtmlAttribute(value) {
 
 async function renderIndex() {
   const [template, content] = await Promise.all([readIndexTemplate(), readContent()])
+  if (!template.includes(contentMarker) || !template.includes(appMarker)) {
+    throw new Error('SSR template markers are missing; rebuild the client and server together')
+  }
   const payload = escapeHtmlAttribute(JSON.stringify(content))
-  return template.replace(contentMarker, `<div id="site-content" hidden data-json="${payload}"></div>`)
+  const appHtml = renderApp(content)
+  return (isPreview ? template.replace('</head>', '<meta name="robots" content="noindex,nofollow,noarchive" /></head>') : template)
+    .replace(contentMarker, () => `<div id="site-content" hidden data-json="${payload}"></div>`)
+    .replace(appMarker, () => appHtml)
 }
 
 app.get('/api/content', async (_request, response, next) => {
@@ -78,7 +90,14 @@ app.use(['/admin', '/api/admin'], (_request, response) => response.sendStatus(40
 app.get('/favicon.ico', (_request, response) => response.sendStatus(204))
 
 if (isProduction) {
+  // The build's HTML is a template; /index.html must not bypass per-request SSR.
+  app.get('/index.html', (_request, response) => response.redirect(301, '/'))
   app.use('/fonts', express.static(path.join(distDir, 'fonts'), { index: false, immutable: true, maxAge: '1y' }))
+  app.get('/twokaif-source.json', (_request, response) => response.sendStatus(404))
+  app.get('/robots.txt', (_request, response, next) => {
+    if (!isPreview) return next()
+    response.type('text').send('User-agent: *\nDisallow: /\n')
+  })
   app.use(express.static(distDir, { index: false, maxAge: '1h' }))
   app.get(['/privacy', '/privacy/'], (_request, response) => {
     response.set('Cache-Control', 'no-store')
@@ -101,6 +120,11 @@ app.use((error, _request, response, _next) => {
   response.status(500).json({ error: 'Не удалось загрузить сайт' })
 })
 
-app.listen(port, '127.0.0.1', () => {
-  console.log(`Adis site server: http://localhost:${port}`)
+const server = app.listen(port, '127.0.0.1', (error) => {
+  if (error) {
+    console.error(error)
+    process.exitCode = 1
+    return
+  }
+  console.log(`Adis site server: http://localhost:${server.address().port}`)
 })

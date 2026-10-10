@@ -1,2 +1,6 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://adismammo.ru/sitemap.xml
