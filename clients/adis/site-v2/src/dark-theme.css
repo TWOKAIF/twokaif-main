@@ -339,7 +339,7 @@ html[data-theme="light"] .theme-toggle-icon.is-selected { background:#e4e4e7; co
 @media (max-width:767px), (pointer:coarse) and (max-width:1024px) {
   .site-shell { padding-top:var(--header-h); }
   .site-header { position:fixed; top:0; left:0; right:0; width:100%; isolation:isolate; transform:translateZ(0); }
-  .site-header::before { content:""; position:absolute; left:0; right:0; bottom:100%; height:max(120px,env(safe-area-inset-top)); background:var(--paper); pointer-events:none; }
+  .site-header::before { content:""; position:absolute; left:0; right:0; top:calc(-1 * max(160px,env(safe-area-inset-top))); bottom:0; z-index:-1; background:var(--paper); pointer-events:none; }
 }
 
 .brand-color-defs { position:absolute; pointer-events:none; }
