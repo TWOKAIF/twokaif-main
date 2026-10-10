@@ -347,3 +347,6 @@ html[data-theme="light"] .theme-toggle-icon.is-selected { background:#e4e4e7; co
   .brand-depth .brand-mobile-set .brand-depth-face img,
   html[data-theme="light"] .brand-depth .brand-mobile-set .brand-depth-face img { filter:url('#adis-logo-red'); }
 }
+
+/* Matching fallback crops for portrait exports and their backdrops. */
+.site-shell :is(.hero-portrait,.hero-red-field,.contact-red-field,.contact-portrait picture) { clip-path:inset(0 2px 2px 0 round 8px); }

@@ -13,7 +13,9 @@ export function useSmoothSurfaces() {
         const box = borderBoxSize[0]
         if (!box) continue
         const radius = target.classList.contains('video-player-stage') ? 12 : 8
-        const path = getSmoothCornerPath(Math.max(1,box.inlineSize), Math.max(1,box.blockSize), radius, 1)
+        // Crop the export fringe and its backdrop to the same visible edge.
+        const portraitEdge = target.matches('.hero-portrait,.hero-red-field,.contact-red-field,.contact-portrait picture') ? 2 : 0
+        const path = getSmoothCornerPath(Math.max(1,box.inlineSize-portraitEdge), Math.max(1,box.blockSize-portraitEdge), radius, 1)
         target.style.clipPath = path ? `path("${path}")` : ''
       }
     })
