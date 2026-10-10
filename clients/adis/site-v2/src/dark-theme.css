@@ -321,7 +321,10 @@ html[data-theme="light"] .theme-toggle-icon.is-selected { background:#e4e4e7; co
   .brand-mobile-track { display:flex; width:max-content; height:100%; animation:brand-mobile-travel 44s linear infinite; animation-play-state:paused; }
   .brand-depth[data-active="true"] .brand-mobile-track { animation-play-state:running; }
   .brand-mobile-set { display:flex; align-items:center; gap:32px; padding-right:32px; }
-  .brand-mobile-set .brand-depth-item { flex:0 0 112px; width:112px; }
+  .brand-mobile-set .brand-depth-item { flex:0 0 auto; width:auto; }
+  .brand-mobile-set .brand-depth-face img { width:auto; height:26px; max-width:140px; max-height:26px; transform:none; }
+  .brand-mobile-set .brand-depth-mark img { width:auto; height:29px; max-height:29px; }
+  .brand-mobile-set .brand-depth-mark-wide img { width:auto; height:26px; }
   .brand-mobile-set .brand-depth-face { filter:none!important; opacity:1!important; }
   .site-shell .gallery-media.has-image .gallery-hover-front img { transform:scale(var(--mobile-photo-scale,1)); transform-origin:center; transition:transform 180ms ease-out; }
 }
@@ -335,8 +338,8 @@ html[data-theme="light"] .theme-toggle-icon.is-selected { background:#e4e4e7; co
 /* iOS: keep the header attached to the viewport, as on Ismailov's site. */
 @media (max-width:767px), (pointer:coarse) and (max-width:1024px) {
   .site-shell { padding-top:var(--header-h); }
-  .site-header { position:fixed; top:0; left:0; right:0; width:100%; isolation:isolate; }
-  .site-header::before { content:""; position:absolute; left:0; right:0; bottom:100%; height:max(2px,env(safe-area-inset-top)); background:var(--paper); pointer-events:none; }
+  .site-header { position:fixed; top:0; left:0; right:0; width:100%; isolation:isolate; transform:translateZ(0); }
+  .site-header::before { content:""; position:absolute; left:0; right:0; bottom:100%; height:max(120px,env(safe-area-inset-top)); background:var(--paper); pointer-events:none; }
 }
 
 .brand-color-defs { position:absolute; pointer-events:none; }
