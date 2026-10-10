@@ -6,15 +6,14 @@ import { getSmoothCornerPath } from '../lib/smooth-corners'
 export function useSmoothSurfaces() {
   useEffect(() => {
     if (!('ResizeObserver' in window) || !CSS.supports('clip-path', 'path("M0 0H1V1H0Z")')) return
-    const selector = '.hero-red-field,.about-media img,.video-placeholder,.selected-media,.gallery-media picture,.gallery-lightbox-frame picture,.menu-portrait,.contact-red-field,.contact-portrait picture,.video-player-stage'
+    const selector = '.hero-portrait,.hero-red-field,.about-media img,.video-placeholder,.selected-media,.gallery-media picture,.gallery-lightbox-frame picture,.menu-portrait,.contact-red-field,.contact-portrait picture,.video-player-stage'
     const tracked = new Set()
     const observer = new ResizeObserver(entries => {
       for (const {target, borderBoxSize} of entries) {
         const box = borderBoxSize[0]
         if (!box) continue
         const radius = target.classList.contains('video-player-stage') ? 12 : 8
-        const underlap = target.classList.contains('hero-red-field') ? 2 : 0
-        const path = getSmoothCornerPath(Math.max(1,box.inlineSize-underlap), Math.max(1,box.blockSize-underlap), radius, 1)
+        const path = getSmoothCornerPath(Math.max(1,box.inlineSize), Math.max(1,box.blockSize), radius, 1)
         target.style.clipPath = path ? `path("${path}")` : ''
       }
     })

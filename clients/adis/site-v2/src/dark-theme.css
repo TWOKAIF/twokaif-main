@@ -102,10 +102,10 @@ body::after {
 .contact-red-field { position:absolute; inset:10% 0 0; z-index:-1; background:var(--red); }
 .contact-portrait picture { display:block; }
 .site-shell .hero-red-field {
-  /* Transparent export borders must not expose a red seam under the photo. */
-  clip-path:inset(0 2px 2px 0 round 8px);
+  clip-path:inset(0 round 8px);
 }
-.site-shell .contact-red-field { inset:10% 2px 2px; }
+.site-shell .contact-red-field { inset:10% 0 0; }
+.hero-portrait { border-radius:8px; }
 
 /* A slow rotating cylinder: the far side falls out of focus. */
 /* One symmetric spacer owns the gap between the video CTA and photo heading. */
