@@ -11,6 +11,7 @@ export default function App({ initialContent = null }) {
     <>
       <a className="skip-link" href="#main-content">К ОСНОВНОМУ СОДЕРЖИМОМУ</a>
       <PublicSite initialContent={initialContent} />
+      <div className="film-grain" aria-hidden="true" />
     </>
   )
 }

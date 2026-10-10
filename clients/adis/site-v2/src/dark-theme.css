@@ -61,18 +61,26 @@ html, body { background: var(--paper); color: var(--ink); }
 
 /* Fine monochrome film grain across the entire composition, including portals.
    One composited transform, no canvas redraw, no animated SVG filters. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: -128px;
-  z-index: 2147483000;
-  pointer-events: none;
-  background: url('/textures/film-grain.png') repeat;
-  background-size: 128px 128px;
-  opacity: .24;
-  mix-blend-mode: soft-light;
-  will-change: transform;
-  animation: adis-film-grain .72s steps(1, end) infinite;
+/* The moving texture is clipped by a stationary viewport-sized surface.
+   Never paint the 128px animation bleed into iOS overscroll/safe areas. */
+.film-grain {
+  position:fixed;
+  inset:0;
+  z-index:2147483000;
+  pointer-events:none;
+  overflow:hidden;
+  clip-path:inset(0);
+  opacity:.24;
+  mix-blend-mode:soft-light;
+}
+.film-grain::before {
+  content:"";
+  position:absolute;
+  inset:-128px;
+  background:url('/textures/film-grain.png') repeat;
+  background-size:128px 128px;
+  will-change:transform;
+  animation:adis-film-grain .72s steps(1,end) infinite;
 }
 @keyframes adis-film-grain {
   0%, 100% { transform: translate3d(0, 0, 0); }
@@ -85,9 +93,9 @@ body::after {
   87.5% { transform: translate3d(37px, -83px, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  body::after { animation: none; will-change: auto; }
+  .film-grain::before { animation: none; will-change: auto; }
 }
-@media print { body::after { display: none; } }
+@media print { .film-grain { display: none; } }
 
 /* White progress and section rules; the red accent belongs to large surfaces. */
 .header-scroll-progress, .editorial-reveal::after { background: var(--ink); }
@@ -348,5 +356,17 @@ html[data-theme="light"] .theme-toggle-icon.is-selected { background:#e4e4e7; co
   html[data-theme="light"] .brand-depth .brand-mobile-set .brand-depth-face img { filter:url('#adis-logo-red'); }
 }
 
-/* Matching fallback crops for portrait exports and their backdrops. */
-.site-shell :is(.hero-portrait,.hero-red-field,.contact-red-field,.contact-portrait picture) { clip-path:inset(0 2px 2px 0 round 8px); }
+/* Portraits and backdrops share a single outer clip (useSmoothSurfaces).
+   Never clip their edges independently: that exposes red through image alpha. */
+.site-shell :is(.hero-portrait,.hero-red-field,.contact-red-field,.contact-portrait picture) { clip-path:none; }
+.site-shell :is(.hero-portrait,.contact-portrait picture) { border-radius:0; }
+.site-shell :is(.hero-red-field,.contact-red-field) { border-radius:8px 8px 0 0; }
+.site-shell .contact-portrait { clip-path:inset(0 1px 1px 0 round 8px); }
+.site-shell .hero { clip-path:polygon(0 0,100% 0,100% calc(100% - var(--gutter) - 1px),0 calc(100% - var(--gutter) - 1px)); }
+
+/* Hero text remains outside the red-field left edge in landscape layouts. */
+.site-shell .hero-red-field { border-bottom-left-radius:8px; }
+
+/* Force an offscreen group before the shared clip. Without grouping, WebKit
+   antialiases the child image separately and exposes its red backdrop. */
+.site-shell :is(.hero,.contact-portrait) { opacity:.9999; }
