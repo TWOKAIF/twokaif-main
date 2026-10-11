@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ScrollInk, useScrollInk } from './scroll-ink.jsx'
 import { useMobileMotion } from './mobile-motion.js'
 import { DepthTicker } from './depth-ticker.jsx'
 import { useSmoothSurfaces } from './smooth-surfaces.js'
 import { ThemeToggle } from '../components/ui/theme-toggle'
-import { createPortal } from 'react-dom'
+import { flushSync } from 'react-dom'
+import { VideoPlayer, startVideo } from '../components/ui/video-player'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { CopyThoughts, readableText } from './typography.jsx'
@@ -813,97 +814,16 @@ function VideoPoster({ url }) {
 function VideoSection({ content = fallbackVideo }) {
   const video = normalizeVideo(content)
   const [playingIndex, setPlayingIndex] = useState(null)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [playerRect, setPlayerRect] = useState(null)
-  const videoSlotsRef = useRef([])
-  const frameRequestRef = useRef(null)
-  const playerShellRef = useRef(null)
-  const expandButtonRef = useRef(null)
-  const closeButtonRef = useRef(null)
-  const mobilePlaybackRef = useRef(false)
-  const playingVideo = playingIndex === null ? null : video.items[playingIndex]
-
-  useEffect(() => {
-    if (playingIndex === null || isExpanded) return undefined
-    const syncPlayerRect = () => {
-      if (frameRequestRef.current) window.cancelAnimationFrame(frameRequestRef.current)
-      frameRequestRef.current = window.requestAnimationFrame(() => {
-        frameRequestRef.current = null
-        const slot = videoSlotsRef.current[playingIndex]
-        if (!slot) return
-        const rect = slot.getBoundingClientRect()
-        const nextRect = { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
-        if (playerShellRef.current) Object.assign(playerShellRef.current.style, Object.fromEntries(Object.entries(nextRect).map(([key, value]) => [key, `${value}px`])))
-        else setPlayerRect(nextRect)
-      })
-    }
-    syncPlayerRect()
-    const resizeObserver = new ResizeObserver(syncPlayerRect)
-    const slot = videoSlotsRef.current[playingIndex]
-    if (slot) resizeObserver.observe(slot)
-    window.addEventListener('resize', syncPlayerRect)
-    window.addEventListener('scroll', syncPlayerRect, true)
-    return () => {
-      if (frameRequestRef.current) window.cancelAnimationFrame(frameRequestRef.current)
-      resizeObserver.disconnect()
-      window.removeEventListener('resize', syncPlayerRect)
-      window.removeEventListener('scroll', syncPlayerRect, true)
-    }
-  }, [playingIndex, isExpanded])
-
-  useEffect(() => {
-    if (!isExpanded) return undefined
-    const unlockScroll = lockPageScroll()
-    // The player is portaled to body; keep the page behind its dialog inactive.
-    const pageRoot = document.getElementById('root')
-    const wasInert = pageRoot?.inert
-    if (pageRoot) pageRoot.inert = true
-    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }))
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        collapsePlayer()
-        return
-      }
-      if (event.key === 'Tab') {
-        const focusable = [...(playerShellRef.current?.querySelectorAll('iframe,button:not(.video-player-backdrop):not([disabled])') || [])]
-        const first = focusable[0]
-        const last = focusable[focusable.length - 1]
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
-        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => {
-      window.cancelAnimationFrame(focusFrame)
-      unlockScroll()
-      if (pageRoot) pageRoot.inert = wasInert
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isExpanded])
-
-  const startVideo = (index) => {
-    mobilePlaybackRef.current = window.matchMedia('(max-width: 767px), (pointer: coarse) and (max-height: 600px)').matches
-    const rect = videoSlotsRef.current[index]?.getBoundingClientRect()
-    if (rect) setPlayerRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
-    setPlayingIndex(index)
-    setIsExpanded(mobilePlaybackRef.current)
-  }
-
-  const closePlayer = () => {
-    const slot = videoSlotsRef.current[playingIndex]
-    setIsExpanded(false)
+  const mediaRef = useRef(null)
+  const triggerRef = useRef(null)
+  const closePlayer = useCallback(() => {
     setPlayingIndex(null)
-    setPlayerRect(null)
-    window.requestAnimationFrame(() => slot?.querySelector('.video-launch')?.focus({ preventScroll: true }))
-  }
-
-  const collapsePlayer = () => {
-    if (mobilePlaybackRef.current) closePlayer()
-    else {
-      setIsExpanded(false)
-      window.requestAnimationFrame(() => expandButtonRef.current?.focus({ preventScroll: true }))
-    }
+    window.requestAnimationFrame(() => triggerRef.current?.focus({ preventScroll: true }))
+  }, [])
+  const openVideo = (index, trigger) => {
+    triggerRef.current = trigger
+    flushSync(() => setPlayingIndex(index))
+    startVideo(mediaRef.current)
   }
 
   return (
@@ -918,15 +838,21 @@ function VideoSection({ content = fallbackVideo }) {
             <article className="video-row" key={`${item.title}-${index}`}>
               <div
                 className={`video-placeholder${item.url ? ' has-video' : ''}${playingIndex === index ? ' is-playing' : ''}`}
-                ref={(node) => { videoSlotsRef.current[index] = node }}
               >
-                {item.url && playingIndex !== index && (
-                  <button className="video-launch" type="button" aria-label={`Смотреть: ${item.title}`} onClick={() => startVideo(index)}>
+                {item.url && (
+                  <button className="video-launch" type="button" aria-label={`Смотреть: ${item.title}`} onClick={(event) => openVideo(index, event.currentTarget)} hidden={playingIndex === index}>
                     <VideoPoster url={item.url} />
                     <span className="video-poster-shade" aria-hidden="true" />
                     <span className="video-play"><PlayIcon /></span>
                   </button>
                 )}
+                {playingIndex === index && <VideoPlayer
+                  key={item.url}
+                  item={{ video: item.url.split('/').filter(Boolean).pop(), title: item.title, aspectRatio: 16 / 9 }}
+                  mediaRef={mediaRef}
+                  onDismiss={closePlayer}
+                  lockScroll={lockPageScroll}
+                />}
               </div>
               <div className="video-copy">
                 <h3>{readableText(item.title)}</h3>
@@ -937,47 +863,7 @@ function VideoSection({ content = fallbackVideo }) {
         </div>
         <EditorialAction className="video-more" href={video.moreHref} label={video.moreLabel} external />
       </section>
-      {playingVideo && playerRect && createPortal(
-        <div
-          ref={playerShellRef}
-          className={`video-player-shell${isExpanded ? ' is-expanded' : ' is-inline'}`}
-          style={isExpanded ? undefined : playerRect}
-          role={isExpanded ? 'dialog' : undefined}
-          aria-modal={isExpanded ? 'true' : undefined}
-          aria-label={isExpanded ? `Видео: ${playingVideo.title}` : undefined}
-          data-lenis-prevent={isExpanded ? '' : undefined}
-        >
-          {/* Tab events inside a cross-origin iframe do not reach our key handler. */}
-          {isExpanded && <span className="visually-hidden" tabIndex={0} onFocus={() => closeButtonRef.current?.focus({ preventScroll: true })} />}
-          {isExpanded && <button className="video-player-backdrop" type="button" tabIndex={-1} aria-label={mobilePlaybackRef.current ? 'Закрыть видео' : 'Вернуть видео в карточку'} onClick={collapsePlayer} />}
-          <div className="video-player-stage" key="video-player-stage">
-            <iframe
-              key={playingVideo.url}
-              src={`${playingVideo.url}?autoplay=1`}
-              title={`${playingVideo.title} — видео`}
-              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock"
-              allowFullScreen
-            />
-            {!isExpanded && (
-              <button className="video-player-stop" type="button" aria-label="Закрыть видео" onClick={closePlayer}>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
-              </button>
-            )}
-            {!isExpanded && (
-              <button className="video-player-expand" type="button" aria-label="Развернуть видео" ref={expandButtonRef} onClick={() => setIsExpanded(true)}>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" /></svg>
-              </button>
-            )}
-          </div>
-            {isExpanded && (
-              <button className="video-lightbox-close" type="button" aria-label={mobilePlaybackRef.current ? 'Закрыть видео' : 'Вернуть видео в карточку'} ref={closeButtonRef} onClick={collapsePlayer}>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
-              </button>
-            )}
-          {isExpanded && <span className="visually-hidden" tabIndex={0} onFocus={() => closeButtonRef.current?.focus({ preventScroll: true })} />}
-        </div>,
-        document.body,
-      )}
+
     </>
   )
 }

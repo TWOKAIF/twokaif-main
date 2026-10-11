@@ -30,6 +30,8 @@ app.use(
             upgradeInsecureRequests: isPreview ? null : [],
             frameAncestors: ["'self'", 'https://check.twokaif.ru'],
             imgSrc: ["'self'", 'data:', 'https://kinescope.io', 'https://*.kinescopecdn.net'],
+            connectSrc: ["'self'", 'https://kinescope.io', 'https://*.kinescopecdn.net'],
+            mediaSrc: ["'self'", 'blob:', 'https://kinescope.io', 'https://*.kinescopecdn.net'],
             frameSrc: ["'self'", 'https://kinescope.io'],
           },
         }

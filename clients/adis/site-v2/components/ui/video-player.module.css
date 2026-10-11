@@ -1,0 +1,278 @@
+/* One media node and one control surface, in the card and expanded view. */
+.dialog {
+  --player-edge-x: max(
+    12px,
+    env(safe-area-inset-left),
+    env(safe-area-inset-right)
+  );
+  --player-edge-y: max(
+    12px,
+    env(safe-area-inset-top),
+    env(safe-area-inset-bottom)
+  );
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+.dialog[open] {
+  display: block;
+}
+.dialog[data-expanded='true'] {
+  position: fixed;
+  right: auto;
+  bottom: auto;
+  top: calc(
+    var(--player-viewport-top, 0px) + var(--player-viewport-height, 100dvh) / 2
+  );
+  left: calc(
+    var(--player-viewport-left, 0px) + var(--player-viewport-width, 100vw) / 2
+  );
+  transform: translate(-50%, -50%);
+  width: min(
+    calc(var(--player-viewport-width, 100vw) - 2 * var(--player-edge-x)),
+    calc(
+      (var(--player-viewport-height, 100dvh) - 2 * var(--player-edge-y)) *
+        var(--video-ratio)
+    )
+  );
+}
+.dialog::backdrop {
+  background: rgb(9 13 17 / 92%);
+  backdrop-filter: blur(8px);
+}
+.stage {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #101214;
+  isolation: isolate;
+}
+.dialog[data-expanded='true'] .stage {
+  aspect-ratio: var(--video-ratio);
+}
+.stage video {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #101214;
+  object-fit: contain;
+  color-scheme: dark;
+}
+.playerSurface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.playerChrome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+.dialog[data-controls='false'] .playerChrome {
+  opacity: 0;
+  visibility: hidden;
+}
+.playerControls {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  border-radius: 14px;
+  background: rgb(20 22 25 / 70%);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+}
+.playerButton {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+}
+.playerButton svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.playerButton .playbackIcon {
+  fill: currentColor;
+  stroke: none;
+  width: 22px;
+  height: 22px;
+}
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 50%;
+  background: rgb(20 22 25 / 64%);
+  backdrop-filter: blur(12px);
+  pointer-events: auto;
+}
+.playerButton:focus-visible,
+.timeline:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+.timeline {
+  flex: 1;
+  width: 0;
+  min-width: 24px;
+  height: 44px;
+  margin: 0 4px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  accent-color: #fff;
+}
+.timeline::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    #fff var(--progress),
+    #ffffff55 var(--progress)
+  );
+}
+.timeline::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+  background: #ffffff55;
+}
+.timeline::-moz-range-progress {
+  height: 3px;
+  background: #fff;
+}
+.timeline::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -3.5px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+.timeline::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+.playerTime {
+  min-width: 32px;
+  font-size: 11px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff55;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: player-loading 800ms linear infinite;
+}
+.playerError {
+  position: absolute;
+  inset: 52px 8px 60px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 4px 16px;
+  padding: 8px;
+  background: rgb(16 18 20 / 94%);
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+.playerError p {
+  width: 100%;
+}
+.playerError button,
+.playerError a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+@keyframes player-loading {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .playerButton:hover {
+    background: rgb(255 255 255 / 16%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .playerChrome {
+    transition: none;
+  }
+}
+
+@container (max-width: 260px) {
+  .playerTime {
+    display: none;
+  }
+  .playerControls {
+    gap: 0;
+    padding-inline: 0;
+    left: 4px;
+    right: 4px;
+  }
+  .timeline {
+    margin-inline: 2px;
+  }
+}
