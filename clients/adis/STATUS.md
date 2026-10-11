@@ -1,3 +1,13 @@
+## 11.10.2026 — плеер опубликован на основном домене
+
+Разрешение Руслана: «гоу» после прямого вопроса о push и деплое adismammo.ru. Опубликовано: https://adismammo.ru/?v=player-1110#video . Основной рабочий сайт остаётся adismammo.ru.
+
+Код в GitHub main:6355f83. BuildID194ccc4fc1486d081eb1; sourceSHA194ccc4fc1486d081eb15cdc00754ac9e7cd01650adb8337de6cd64dd2c181cd. Релиз:/opt/adis-mammo-site/releases/20261011-player-194ccc4f. Предыдущий:/opt/adis-mammo-site/releases/20261010-composite-20caa928 сохранён.
+Резервная копия кода и данных:/opt/adis-mammo-site/backups/20261011-before-player-194ccc4f/site-and-data.tar.gz; SHA256c13dc6c37d707adb7d8ed690c6b9a3d28504da9fd86354416f774073f27a01fd. Общие данные не менялись. Nginx не менялся. Публичные файлы нормализованы0644/каталоги0755. Сначала preflightSSR/HTTP на8792, затем атомарная ссылка current и restart только adis-mammo-site.service.
+
+Проверка на домене:HTTP200,BuildIDсовпадает,serviceactive,ошибокjournalнет,sha256server/SSRсовпадаютс проверенной сборкой. 4/4 живых сценария Chromium/WebKit428×926 и1440×900 PASS: первый жест со звуком, телефон сразу центрированныйmodal (отклонение≤0.125px), ПКinline, разворот/сворачивание сохраняютузел, закрытие останавливает и возвращаетfocus/scroll. Chromiumдекодируетаудио,WebKitактивнаяаудиодорожка; CSPнарушений0. Итоговый мобильный WebKitснимок просмотрен. Локальные4ролика ранее проверены на ненулевойRMS. Физический iPhone/Safari/Telegram NOT_RUN.
+Evidence:qa/player-1110/public-results.json,public-428.png,deploy/release.json. Откат: временная symlink на предыдущий релиз → mv -Tf поверх current → restart adis-mammo-site.service → проверить BUILD_ID/HTTPS. Более ранние записи о неопубликованной подготовке ниже исторические.
+
 # Основной сайт Адиса — решение Руслана 11.10.2026
 
 Единственный рабочий сайт: https://adismammo.ru/ . Работаем с его текущим оформлением и исходниками. Другие дизайн-версии не поддерживаем. Название папки «Адис_чёрная_версия_10-10» историческое: это текущий основной сайт, а не отдельный вариант.
