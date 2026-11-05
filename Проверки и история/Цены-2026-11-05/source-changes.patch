@@ -1,0 +1,89 @@
+--- a/blocks/00_HEAD-код.html
++++ b/blocks/00_HEAD-код.html
+@@ -92,7 +92,7 @@
+               "@id": "https://twokaif.ru/#service-websites"
+             },
+             "priceCurrency": "RUB",
+-            "price": "150000"
++            "price": "100000"
+           },
+           {
+             "@type": "Offer",
+@@ -108,7 +108,7 @@
+               "@id": "https://twokaif.ru/#service-presentations"
+             },
+             "priceCurrency": "RUB",
+-            "price": "3700"
++            "price": "2600"
+           },
+           {
+             "@type": "Offer",
+@@ -137,7 +137,7 @@
+       "offers": {
+         "@type": "Offer",
+         "priceCurrency": "RUB",
+-        "price": "150000"
++        "price": "100000"
+       },
+       "image": "https://twokaif.ru/images/og-image.jpg"
+     },
+@@ -165,7 +165,7 @@
+       "@type": "Service",
+       "@id": "https://twokaif.ru/#service-presentations",
+       "name": "Презентации для премий, выступлений и продаж",
+-      "description": "Wedding Awards — 3 700 ₽ за слайд. Ноябрь +15%, декабрь +30% от базы, ставка по месяцу бронирования, бронь 50%. Другие презентации: первые 10 слайдов 3 200 ₽, с 11-го по 20-й 2 900 ₽, с 21-го 2 600 ₽; ступени считаются отдельно.",
++      "description": "Презентации для любых задач: первые 10 слайдов — 3 200 ₽ за слайд, с 11-го по 20-й — 2 900 ₽ за слайд, с 21-го — 2 600 ₽ за слайд. Каждая ступень считается отдельно.",
+       "provider": {
+         "@id": "https://twokaif.ru/#org"
+       },
+@@ -177,7 +177,7 @@
+       "offers": {
+         "@type": "Offer",
+         "priceCurrency": "RUB",
+-        "price": "3700"
++        "price": "2600"
+       },
+       "image": "https://twokaif.ru/images/og-image.jpg"
+     },
+--- a/blocks/04b_Акция-баннер.html
++++ b/blocks/04b_Акция-баннер.html
+@@ -949,7 +949,7 @@
+         </div>
+         <h3 class="promo-title">Сайт<br>ведущего</h3>
+         <div class="promo-prices">
+-          <span class="promo-price">от&nbsp;150&nbsp;000&nbsp;₽</span>
++          <span class="promo-price">от&nbsp;100&nbsp;000&nbsp;₽</span>
+         </div>
+         <span class="promo-pricenote">До&nbsp;10 блоков · первый год хостинга включён</span>
+         <p class="promo-sub">
+--- a/blocks/09_Цены.html
++++ b/blocks/09_Цены.html
+@@ -449,7 +449,7 @@
+           <span class="pricing-card-index">01</span>
+           <span class="pricing-card-name">Сайт</span>
+           <div class="pricing-card-right">
+-            <span class="pricing-card-price">от&nbsp;150&nbsp;000&nbsp;₽</span>
++            <span class="pricing-card-price">от&nbsp;100&nbsp;000&nbsp;₽</span>
+             <span class="pricing-toggle"></span>
+           </div>
+         </div>
+@@ -475,15 +475,15 @@
+           <span class="pricing-card-index">02</span>
+           <span class="pricing-card-name">Презентации</span>
+           <div class="pricing-card-right">
+-            <span class="pricing-card-price">3&nbsp;700&nbsp;₽/слайд</span>
++            <span class="pricing-card-price">от&nbsp;2&nbsp;600&nbsp;₽/слайд</span>
+             <span class="pricing-toggle"></span>
+           </div>
+         </div>
+         <div class="pricing-card-body"><div class="pricing-card-body-inner">
+           <div class="pricing-mobile-preview service-art service-art--slides" aria-hidden="true"><div class="service-art__inner"><div class="service-art__meta"><span>02 · Слайды</span><i class="service-art__brand"></i></div><div class="service-art__mark">01/27<small>slides</small></div><div class="service-art__rule"></div><div class="service-art__bottom"><div class="service-art__title">Презентация</div><div class="service-art__foot"><span>Сценарий</span><span>Дизайн</span></div></div></div></div>
+-          <span class="pricing-card-note">Wedding Awards · с&nbsp;полным погружением</span>
+-          <p class="pricing-card-desc"><b>Wedding Awards&nbsp;— 3&nbsp;700&nbsp;₽/слайд</b>: изучаю материалы и&nbsp;выстраиваю историю под&nbsp;номинацию. Месяц бронирования определяет ставку: октябрь&nbsp;— базовая, ноябрь&nbsp;— +15% (4&nbsp;255&nbsp;₽), декабрь&nbsp;— +30% (4&nbsp;810&nbsp;₽). Надбавки считаются от&nbsp;базы. Бронь&nbsp;— 50% после согласования объёма и&nbsp;месяца работы, фиксирует цену и&nbsp;место.</p>
+-          <p class="pricing-card-desc"><b>Другие презентации</b>&nbsp;— дизайн по&nbsp;твоим материалам. Первые 10&nbsp;слайдов&nbsp;— <b>3&nbsp;200&nbsp;₽/слайд</b>, с&nbsp;11-го по&nbsp;20-й&nbsp;— <b>2&nbsp;900&nbsp;₽/слайд</b>, с&nbsp;21-го&nbsp;— <b>2&nbsp;600&nbsp;₽/слайд</b>. Каждая ступень считается отдельно: 15&nbsp;слайдов&nbsp;— 46&nbsp;500&nbsp;₽.</p>
++          <span class="pricing-card-note">Цена за&nbsp;один слайд</span>
++          <p class="pricing-card-desc">1–10&nbsp;слайдов&nbsp;— <b>3&nbsp;200&nbsp;₽/слайд</b><br>11–20&nbsp;слайдов&nbsp;— <b>2&nbsp;900&nbsp;₽/слайд</b><br>С&nbsp;21-го&nbsp;— <b>2&nbsp;600&nbsp;₽/слайд</b></p>
++          <p class="pricing-card-desc">Каждая ступень считается отдельно: 15&nbsp;слайдов&nbsp;— 46&nbsp;500&nbsp;₽.</p>
+           <div class="pricing-card-tags">
+             <span class="pricing-tag">WA</span>
+             <span class="pricing-tag">TOP100</span>

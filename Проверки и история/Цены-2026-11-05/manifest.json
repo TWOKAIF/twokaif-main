@@ -1,0 +1,62 @@
+{
+  "404.html": {
+    "before": "c0abd3274681c1199efaa1990ca3b9b4e951576f71bf713e6ae469c24473fdba",
+    "prepared": "dc685531380c208925bda88353ef9a7ab77961b04938e6b66970ffc208465137",
+    "replacements": 5
+  },
+  "afishi.html": {
+    "before": "f1bd6f634b1664406ffa135c7f9f99b1d833b72a242f8a811d8a605af7c61240",
+    "prepared": "3626ecb2c4fea0bd197020385ff1211f3168c25379d4115255d9a1b5289ccdbd",
+    "replacements": 5
+  },
+  "index.html": {
+    "before": "f445bcd735d0ffb5c00fa77921a4f1e49132517f772283ce24ce38fb70e3b79f",
+    "prepared": "f41738f3e73537fe061f576ac131d7063cabf54b783bb4d73a10fb0b99ac2756",
+    "replacements": 9
+  },
+  "mzh/consent/index.html": {
+    "before": "83bbfc1c7a65c729520e2a4ad0cfcdc2b565f0cbaffd41e09f20d39b23b55120",
+    "prepared": "e8c2d0e5b70fe8b4307a04eed6047ee195f6e72653b906c0562ff39987e610ce",
+    "replacements": 5
+  },
+  "mzh/guest-consent/index.html": {
+    "before": "3e986d886afd5c2584c7725865af5aae911b180b77459d67ae6113f0da71a620",
+    "prepared": "3e205d6c110607360f92bb38126e935dc891997e853b8cd1e15c6919fff73daf",
+    "replacements": 5
+  },
+  "mzh/oferta/index.html": {
+    "before": "bdfcc8218fceacc3a7b26787a5e5a256d5ce900927041006ca4d97b41a4c5053",
+    "prepared": "6c1b31c844738c3154755a3414ecd172fe5d3f96387f6722eed8d6d4e241efd7",
+    "replacements": 5
+  },
+  "mzh/privacy/index.html": {
+    "before": "95cbbf36977ba23eda7a75241940db86ad4c6752c44f48dff92b422ff4b35f34",
+    "prepared": "1bfc94fc00c26c04822a109bd095de6a2cde2b2aeb09041c907816b8a2ab119e",
+    "replacements": 5
+  },
+  "oblozhki.html": {
+    "before": "8253f08789da3abe3cde4a477d95429ea4dcb477221dd553d41001d3a9618670",
+    "prepared": "d1beefb46c865a221f9df77930c05eb77c7af2d6c9f93be3616dc737cc95c015",
+    "replacements": 5
+  },
+  "oferta.html": {
+    "before": "8e3d84b9b462df3b98309573909b9a0bb8fce03915e160e7aa59394dd88d65be",
+    "prepared": "c782cf67bf79e770353e3af0209d237aa639eab3325204fc887ee73f61c3d1cc",
+    "replacements": 5
+  },
+  "prezentacii.html": {
+    "before": "5184f5ed0c77d0ea4c9ae429b1a4951c230f8809986e33ee5cb8d3cca7f8c9b5",
+    "prepared": "a53af48a736f81b5b2e391bb81f7e0a158119835c0c28d87dc2a11421513bb91",
+    "replacements": 5
+  },
+  "privacy.html": {
+    "before": "c355a9e075ee82481bcb7eb455e45dbc9423e2038956a5df471a2dfa4366c5f1",
+    "prepared": "4e197eaba280b166399ad76d6c0451a7f90a5b3544f76a8f5c8029b83a12ab39",
+    "replacements": 5
+  },
+  "sajty-vedushim.html": {
+    "before": "ead876e5a1f99f392a35de082d504a5c647399d4d6de1165cd95721b6844f15b",
+    "prepared": "343a575bcbeb4c68a52056a5ec3df5102ea1fdf1505b5515fc12f3ce94c8daa3",
+    "replacements": 5
+  }
+}
