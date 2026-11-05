@@ -87,3 +87,14 @@
            <div class="pricing-card-tags">
              <span class="pricing-tag">WA</span>
              <span class="pricing-tag">TOP100</span>
+--- a/deploy.sh
++++ b/deploy.sh
+@@ -20,7 +20,7 @@
+ assert 'data-cd-monthly' not in html
+ schema = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)[1])
+ services = {item.get("@id", "").split("#")[-1]: item for item in schema["@graph"] if item["@type"] == "Service"}
+-for name, price in {"service-websites": "150000", "service-png": "7000", "service-presentations": "3700", "service-covers-posters": "4000"}.items():
++for name, price in {"service-websites": "100000", "service-png": "7000", "service-presentations": "2600", "service-covers-posters": "4000"}.items():
+     assert services[name]["offers"]["price"] == price, name
+ assert "offers" not in services["service-center"]
+ CHECK

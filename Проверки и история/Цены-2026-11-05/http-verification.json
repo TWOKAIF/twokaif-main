@@ -1,0 +1,170 @@
+[
+  {
+    "target": "public",
+    "path": "404.html",
+    "http_status": 200,
+    "sha256": "dc685531380c208925bda88353ef9a7ab77961b04938e6b66970ffc208465137",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "afishi.html",
+    "http_status": 200,
+    "sha256": "3626ecb2c4fea0bd197020385ff1211f3168c25379d4115255d9a1b5289ccdbd",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "index.html",
+    "http_status": 200,
+    "sha256": "f41738f3e73537fe061f576ac131d7063cabf54b783bb4d73a10fb0b99ac2756",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "mzh/consent/index.html",
+    "http_status": 200,
+    "sha256": "e8c2d0e5b70fe8b4307a04eed6047ee195f6e72653b906c0562ff39987e610ce",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "mzh/guest-consent/index.html",
+    "http_status": 200,
+    "sha256": "3e205d6c110607360f92bb38126e935dc891997e853b8cd1e15c6919fff73daf",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "mzh/oferta/index.html",
+    "http_status": 200,
+    "sha256": "6c1b31c844738c3154755a3414ecd172fe5d3f96387f6722eed8d6d4e241efd7",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "mzh/privacy/index.html",
+    "http_status": 200,
+    "sha256": "1bfc94fc00c26c04822a109bd095de6a2cde2b2aeb09041c907816b8a2ab119e",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "oblozhki.html",
+    "http_status": 200,
+    "sha256": "d1beefb46c865a221f9df77930c05eb77c7af2d6c9f93be3616dc737cc95c015",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "oferta.html",
+    "http_status": 200,
+    "sha256": "c782cf67bf79e770353e3af0209d237aa639eab3325204fc887ee73f61c3d1cc",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "prezentacii.html",
+    "http_status": 200,
+    "sha256": "a53af48a736f81b5b2e391bb81f7e0a158119835c0c28d87dc2a11421513bb91",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "privacy.html",
+    "http_status": 200,
+    "sha256": "4e197eaba280b166399ad76d6c0451a7f90a5b3544f76a8f5c8029b83a12ab39",
+    "matches_prepared": true
+  },
+  {
+    "target": "public",
+    "path": "sajty-vedushim.html",
+    "http_status": 200,
+    "sha256": "343a575bcbeb4c68a52056a5ec3df5102ea1fdf1505b5515fc12f3ce94c8daa3",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "404.html",
+    "http_status": 200,
+    "sha256": "dc685531380c208925bda88353ef9a7ab77961b04938e6b66970ffc208465137",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "afishi.html",
+    "http_status": 200,
+    "sha256": "24e83d25a7c8717af1bcb53131e5242a1103d88e82529e85a0cc411749d4bf67",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "index.html",
+    "http_status": 200,
+    "sha256": "214ca6b9b642474cae4b6920d4e539594d6c1fe006c33bfec54d5ec8adb99858",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "mzh/consent/index.html",
+    "http_status": 200,
+    "sha256": "e8c2d0e5b70fe8b4307a04eed6047ee195f6e72653b906c0562ff39987e610ce",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "mzh/guest-consent/index.html",
+    "http_status": 200,
+    "sha256": "3e205d6c110607360f92bb38126e935dc891997e853b8cd1e15c6919fff73daf",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "mzh/oferta/index.html",
+    "http_status": 200,
+    "sha256": "6c1b31c844738c3154755a3414ecd172fe5d3f96387f6722eed8d6d4e241efd7",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "mzh/privacy/index.html",
+    "http_status": 200,
+    "sha256": "1bfc94fc00c26c04822a109bd095de6a2cde2b2aeb09041c907816b8a2ab119e",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "oblozhki.html",
+    "http_status": 200,
+    "sha256": "c52edacd6c14f4152daf414ad1e3cd2cd00c33758577a5c3dc72b6db0ec7a27b",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "oferta.html",
+    "http_status": 200,
+    "sha256": "73eb5c4df9e8c4451b7c70028f462cf76ccfb6a3d56acc2037245fdf27cb84cd",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "prezentacii.html",
+    "http_status": 200,
+    "sha256": "6cbf7eb31faac7b3cd01f7586098820fc20dcb5f41dc50a30151b64c678c7955",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "privacy.html",
+    "http_status": 200,
+    "sha256": "7d372c444b72d8be2a70ba896cbab0b077e3a1cb3e69a91afcf20e49586424b5",
+    "matches_prepared": true
+  },
+  {
+    "target": "mirror",
+    "path": "sajty-vedushim.html",
+    "http_status": 200,
+    "sha256": "e692ba75f44be50e210b894baea63d64e56e1cbb4146c7f8c7a9d0e8909de779",
+    "matches_prepared": true
+  }
+]

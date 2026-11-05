@@ -1,0 +1,20 @@
+{
+  "host": "213.165.41.1",
+  "backup": "/var/backups/twokaif/pricing-20261105T140740Z",
+  "files": {
+    "404.html": "dc685531380c208925bda88353ef9a7ab77961b04938e6b66970ffc208465137",
+    "afishi.html": "3626ecb2c4fea0bd197020385ff1211f3168c25379d4115255d9a1b5289ccdbd",
+    "index.html": "f41738f3e73537fe061f576ac131d7063cabf54b783bb4d73a10fb0b99ac2756",
+    "mzh/consent/index.html": "e8c2d0e5b70fe8b4307a04eed6047ee195f6e72653b906c0562ff39987e610ce",
+    "mzh/guest-consent/index.html": "3e205d6c110607360f92bb38126e935dc891997e853b8cd1e15c6919fff73daf",
+    "mzh/oferta/index.html": "6c1b31c844738c3154755a3414ecd172fe5d3f96387f6722eed8d6d4e241efd7",
+    "mzh/privacy/index.html": "1bfc94fc00c26c04822a109bd095de6a2cde2b2aeb09041c907816b8a2ab119e",
+    "oblozhki.html": "d1beefb46c865a221f9df77930c05eb77c7af2d6c9f93be3616dc737cc95c015",
+    "oferta.html": "c782cf67bf79e770353e3af0209d237aa639eab3325204fc887ee73f61c3d1cc",
+    "prezentacii.html": "a53af48a736f81b5b2e391bb81f7e0a158119835c0c28d87dc2a11421513bb91",
+    "privacy.html": "4e197eaba280b166399ad76d6c0451a7f90a5b3544f76a8f5c8029b83a12ab39",
+    "sajty-vedushim.html": "343a575bcbeb4c68a52056a5ec3df5102ea1fdf1505b5515fc12f3ce94c8daa3"
+  },
+  "nginx_changed": false,
+  "service_restart": false
+}
